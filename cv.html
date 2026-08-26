@@ -72,7 +72,67 @@
   </a>
 </nav>
 
-      
+      <section
+  class="cv-body"
+  data-cv-url="/ag-website/data/cv.json"
+>
+  <div class="cv-header-block reveal delay-40">
+    <h1 class="cv-title">Curriculum Vitae</h1>
+    <a
+      href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1"
+      class="download-link"
+    >
+      <i class="fas fa-download" aria-hidden="true"></i>
+      Download PDF
+    </a>
+  </div>
+
+  <div id="cv-target-before" class="reveal delay-120" aria-live="polite"></div>
+
+  <section class="cv-section reveal delay-160" aria-labelledby="education-title">
+    <h2 id="education-title" class="cv-section-title">Education</h2>
+
+    <div class="cv-item">
+      <div>
+        <div class="cv-item-role">Ph.D. in Economics</div>
+        <div class="cv-item-institution">University of Glasgow, United Kingdom</div>
+      </div>
+      <div class="cv-item-date">2017 – 2022</div>
+      <div class="cv-item-details">Doctorate funded by the Economic and Social Research Council (ESRC).<br>Supervisors: Professor Tatiana Kirsanova, Professor Charles Nolan and Professor Richard Dennis.<br>Thesis Examiners: Doctor Kalin Nikolov and Professor Campbell Leith.<br>Thesis Title: <i>“Asset Price Bubbles and Macroeconomic Policies”</i></div>
+    </div>
+
+    <div class="cv-item">
+      <div>
+        <div class="cv-item-role">MRes in Economics</div>
+        <div class="cv-item-institution">University of Glasgow, United Kingdom</div>
+      </div>
+      <div class="cv-item-date">2015 – 2017</div>
+      <div class="cv-item-details">Graduated with Merit. Two-year programme in economics structured as Doctoral training.<br>Master’s Dissertation: <i>“How to Model Credit Frictions?”</i></div>
+    </div>
+
+    <div class="cv-item">
+      <div>
+        <div class="cv-item-role">Master 1 in Economics and Management</div>
+        <div class="cv-item-institution">University of Caen, France</div>
+      </div>
+      <div class="cv-item-date">2014 – 2015</div>
+      <div class="cv-item-details">Graduated with Merit. Exchange programme: the programme was taught and assessed at Texas A&amp;M University, USA.<br>The Master 1 is the French equivalent of the Master of Science.<br>Master’s Dissertation: <i>“A Comparative Analysis of Fed and ECB Monetary Policies”</i></div>
+    </div>
+
+    <div class="cv-item">
+      <div>
+        <div class="cv-item-role">Licence in Economics and Management</div>
+        <div class="cv-item-institution">University of Caen, France</div>
+      </div>
+      <div class="cv-item-date">2011 – 2014</div>
+      <div class="cv-item-details">The Licence is the French equivalent of the Bachelor’s degree.</div>
+    </div>
+  </section>
+
+  <div id="cv-target-after" class="reveal delay-220" aria-live="polite"></div>
+  <p id="cv-update" class="cv-update reveal delay-280" aria-live="polite"></p>
+</section>
+
 
       <footer class="foot reveal delay-340">
   <div class="socials">
@@ -113,6 +173,8 @@
   </main>
 
   <script src="/ag-website/assets/js/site.js" defer></script>
+  
+  <script src="/ag-website/assets/js/cv.js" defer></script>
   
 </body>
 </html>
