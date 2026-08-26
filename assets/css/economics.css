@@ -1,0 +1,159 @@
+.economics-body { padding: 3rem 2.5rem; }
+
+.economics-body .page-title { margin-bottom: 2rem; }
+
+.lead {
+  width: 100%;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.75;
+  text-align: justify;
+}
+
+.development-note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+  padding: 1.15rem 1.25rem;
+  color: var(--warning, #8a5a12);
+  background: var(--warning-soft, #fff8e8);
+  border-left: 4px solid var(--warning, #8a5a12);
+  border-radius: 4px;
+  font-size: 0.91rem;
+  line-height: 1.6;
+}
+
+.development-note i { margin-top: 0.18rem; }
+
+.section-introduction {
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.portal-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1.35rem;
+  color: var(--ink);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+}
+
+.portal-card.is-next {
+  background: var(--accent-soft);
+  border-color: rgba(59, 90, 117, 0.3);
+}
+
+.portal-card.is-wide { grid-column: 1 / -1; }
+
+.portal-icon {
+  width: 2.65rem;
+  height: 2.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 50%;
+  font-size: 0.92rem;
+}
+
+.portal-content { min-width: 0; }
+
+.portal-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.portal-title {
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.status-badge {
+  flex: 0 0 auto;
+  padding: 0.25rem 0.45rem;
+  color: var(--muted);
+  background: var(--sheet);
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.is-next .status-badge {
+  color: var(--accent-strong);
+  border-color: rgba(59, 90, 117, 0.28);
+}
+
+.portal-description {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.portal-note {
+  margin-top: 1.25rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.copyright-note {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.copyright-note strong {
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.delay-180 { --reveal-delay: 180ms; }
+.delay-260 { --reveal-delay: 260ms; }
+.delay-300 { --reveal-delay: 300ms; }
+
+@media (max-width: 768px) {
+  .economics-body { padding: 2rem 1.5rem; }
+  .portal-grid { grid-template-columns: 1fr; }
+  .portal-card.is-wide { grid-column: auto; }
+}
+
+@media (max-width: 680px) {
+  .portal-heading {
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+}
