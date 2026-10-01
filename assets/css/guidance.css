@@ -1,1 +1,499 @@
+/* =========================================================
+   Dissertation guidance notes
+   Shared by all pages under /teaching/guidance/
+   Global layout, navigation, footer, back links, page titles,
+   reveal animations, and design tokens remain in site.css.
+   ========================================================= */
 
+.guidance-body {
+  padding: 3rem 2.5rem;
+}
+
+.guidance-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.guidance-toolbar .back-link {
+  margin-bottom: 0;
+}
+
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.16s ease;
+}
+
+.download-link:hover {
+  color: var(--accent-strong);
+}
+
+.download-link i {
+  margin-right: 0.3rem;
+}
+
+.guidance-title {
+  margin-bottom: 2rem;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* =========================================================
+   Pandoc-generated note content
+   ========================================================= */
+
+.guidance-content {
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.72;
+  overflow-wrap: anywhere;
+}
+
+.guidance-content > * + * {
+  margin-top: 1rem;
+}
+
+.guidance-content h1,
+.guidance-content h2,
+.guidance-content h3,
+.guidance-content h4,
+.guidance-content h5,
+.guidance-content h6 {
+  color: var(--accent-strong);
+  font-family: var(--display);
+  line-height: 1.3;
+}
+
+.guidance-content h1,
+.guidance-content h2 {
+  padding-bottom: 0.4rem;
+  margin-top: 2.6rem;
+  margin-bottom: 1rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.guidance-content h1:first-child,
+.guidance-content h2:first-child {
+  margin-top: 0;
+}
+
+.guidance-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.18rem;
+  font-weight: 700;
+}
+
+.guidance-content h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.guidance-content h5,
+.guidance-content h6 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.guidance-content p {
+  text-align: justify;
+}
+
+.guidance-content strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.guidance-content ul,
+.guidance-content ol {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1.5rem;
+}
+
+.guidance-content ul ul,
+.guidance-content ol ol,
+.guidance-content ul ol,
+.guidance-content ol ul {
+  margin-top: 0.45rem;
+  padding-left: 1.35rem;
+}
+
+.guidance-content li {
+  padding-left: 0.12rem;
+}
+
+.guidance-content li::marker {
+  color: var(--accent);
+}
+
+.guidance-content a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-color: rgba(59, 90, 117, 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  transition: color 0.16s ease, text-decoration-color 0.16s ease;
+}
+
+.guidance-content a:hover {
+  color: var(--accent-strong);
+  text-decoration-color: var(--accent-strong);
+}
+
+.guidance-content blockquote {
+  padding: 1rem 1.2rem;
+  color: var(--ink-soft);
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 3px;
+}
+
+.guidance-content blockquote > * + * {
+  margin-top: 0.75rem;
+}
+
+.guidance-content hr {
+  height: 0;
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+/* =========================================================
+   Images and figures
+
+   The generator may set either:
+   - style="--image-width: 60%"
+   - style="width: 60%"
+
+   The first form is preferred because it permits responsive
+   enlargement while retaining the LaTeX width on desktop.
+   ========================================================= */
+
+.guidance-content img {
+  display: block;
+  width: min(var(--image-width, 100%), 100%);
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+}
+
+.guidance-content figure {
+  width: 100%;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.guidance-content figure img {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.guidance-content figcaption {
+  max-width: 760px;
+  margin: 0.55rem auto 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Compatibility with widths written directly by Pandoc or the generator. */
+.guidance-content img[style*="width"] {
+  max-width: 100%;
+}
+
+/* =========================================================
+   Tables
+   ========================================================= */
+
+.guidance-content table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 1.4rem 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.guidance-content thead,
+.guidance-content tbody,
+.guidance-content tr {
+  width: 100%;
+}
+
+.guidance-content th,
+.guidance-content td {
+  min-width: 8rem;
+  padding: 0.7rem 0.8rem;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--line-strong);
+}
+
+.guidance-content th {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  font-weight: 700;
+}
+
+.guidance-content tbody tr:nth-child(even) {
+  background: var(--paper-soft);
+}
+
+.guidance-content caption {
+  margin-bottom: 0.6rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* =========================================================
+   Mathematics, code, and technical content
+   ========================================================= */
+
+.guidance-content .math.display,
+.guidance-content mjx-container[display="true"] {
+  max-width: 100%;
+  margin: 1.4rem 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: center;
+  -webkit-overflow-scrolling: touch;
+}
+
+.guidance-content .math.inline,
+.guidance-content mjx-container:not([display="true"]) {
+  max-width: 100%;
+}
+
+.guidance-content code {
+  padding: 0.12rem 0.3rem;
+  color: var(--ink);
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.88em;
+}
+
+.guidance-content pre {
+  max-width: 100%;
+  padding: 1rem;
+  overflow-x: auto;
+  color: var(--ink-soft);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  line-height: 1.55;
+  -webkit-overflow-scrolling: touch;
+}
+
+.guidance-content pre code {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  font-size: 0.86rem;
+}
+
+.guidance-content sup,
+.guidance-content sub {
+  line-height: 0;
+}
+
+/* Pandoc footnotes */
+.guidance-content .footnotes {
+  padding-top: 1.25rem;
+  margin-top: 2.5rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line-strong);
+  font-size: 0.86rem;
+}
+
+.guidance-content .footnotes hr {
+  display: none;
+}
+
+.guidance-content .footnotes ol {
+  gap: 0.65rem;
+}
+
+/* =========================================================
+   Previous/next navigation and update date
+   ========================================================= */
+
+.guidance-navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-strong);
+}
+
+.guidance-navigation.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.guidance-nav-link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  color: var(--ink);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: color 0.16s ease, background-color 0.16s ease,
+              border-color 0.16s ease, box-shadow 0.16s ease,
+              transform 0.16s ease;
+}
+
+.guidance-nav-link.is-next {
+  grid-template-columns: minmax(0, 1fr) auto;
+  text-align: right;
+}
+
+.guidance-nav-link:hover {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-color: rgba(59, 90, 117, 0.4);
+  box-shadow: 0 7px 18px rgba(28, 28, 30, 0.06);
+  transform: translateY(-1px);
+}
+
+.guidance-nav-link i {
+  color: var(--accent);
+  font-size: 0.78rem;
+}
+
+.guidance-nav-copy {
+  min-width: 0;
+}
+
+.guidance-nav-direction {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.guidance-nav-title {
+  display: block;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.guidance-update {
+  margin-top: 2rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+/* =========================================================
+   Responsive behaviour
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .guidance-body {
+    padding: 2rem 1.5rem;
+  }
+
+  .guidance-content img {
+    /* A 60% desktop image becomes approximately 90% on mobile
+       when the generator supplies --image-width-mobile: 90%. */
+    width: min(var(--image-width-mobile, var(--image-width, 100%)), 100%);
+  }
+}
+
+@media (max-width: 680px) {
+  .guidance-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .guidance-toolbar .back-link {
+    align-self: flex-start;
+  }
+
+  .download-link {
+    align-self: center;
+    justify-content: center;
+  }
+
+  .guidance-title {
+    font-size: 2.15rem;
+  }
+
+  .guidance-content p {
+    text-align: left;
+  }
+
+  .guidance-content h1,
+  .guidance-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .guidance-navigation,
+  .guidance-navigation.is-single {
+    grid-template-columns: 1fr;
+  }
+
+  .guidance-nav-link,
+  .guidance-nav-link.is-next {
+    text-align: left;
+  }
+
+  .guidance-nav-link.is-next {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .download-link,
+  .guidance-content a,
+  .guidance-nav-link {
+    transition: none;
+  }
+}
