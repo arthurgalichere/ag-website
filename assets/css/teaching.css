@@ -1,4 +1,20 @@
-.teaching-body { padding: 3rem 2.5rem; }
+/* =========================================================
+   Teaching family
+   Used by:
+   - /teaching.html
+   - /teaching/dissertation.html
+   - /teaching/supervision.html
+   ========================================================= */
+
+.teaching-body,
+.dissertation-body,
+.supervision-body {
+  padding: 3rem 2.5rem;
+}
+
+/* =========================================================
+   Main Teaching page
+   ========================================================= */
 
 .teaching-introduction {
   width: 100%;
@@ -71,8 +87,13 @@
   font-size: 0.72rem;
 }
 
-.institution-section { margin-bottom: 3.5rem; }
-.institution-section:last-child { margin-bottom: 0; }
+.institution-section {
+  margin-bottom: 3.5rem;
+}
+
+.institution-section:last-child {
+  margin-bottom: 0;
+}
 
 .institution-title {
   padding-bottom: 0.4rem;
@@ -95,7 +116,9 @@
   transition: border-color 0.16s ease, box-shadow 0.16s ease;
 }
 
-.module-ribbon:last-child { margin-bottom: 0; }
+.module-ribbon:last-child {
+  margin-bottom: 0;
+}
 
 .module-ribbon[open] {
   border-color: rgba(59, 90, 117, 0.5);
@@ -115,8 +138,13 @@
   transition: color 0.16s ease, background-color 0.16s ease;
 }
 
-.module-ribbon summary::-webkit-details-marker { display: none; }
-.module-ribbon summary:hover { background: var(--accent-soft); }
+.module-ribbon summary::-webkit-details-marker {
+  display: none;
+}
+
+.module-ribbon summary:hover {
+  background: var(--accent-soft);
+}
 
 .module-ribbon[open] summary {
   background: var(--accent-soft);
@@ -144,7 +172,9 @@
   transition: transform 0.2s ease;
 }
 
-.module-ribbon[open] .module-chevron { transform: rotate(180deg); }
+.module-ribbon[open] .module-chevron {
+  transform: rotate(180deg);
+}
 
 .module-content {
   padding: 1.25rem;
@@ -153,7 +183,9 @@
   line-height: 1.65;
 }
 
-.module-content > * + * { margin-top: 0.8rem; }
+.module-content > * + * {
+  margin-top: 0.8rem;
+}
 
 .module-content h3 {
   margin-top: 1.25rem;
@@ -166,9 +198,17 @@
   text-transform: uppercase;
 }
 
-.module-content h3:first-child { margin-top: 0; }
-.module-content ul { padding-left: 1.25rem; }
-.module-content li + li { margin-top: 0.3rem; }
+.module-content h3:first-child {
+  margin-top: 0;
+}
+
+.module-content ul {
+  padding-left: 1.25rem;
+}
+
+.module-content li + li {
+  margin-top: 0.3rem;
+}
 
 .teaching-roles {
   display: flex;
@@ -195,7 +235,9 @@
   list-style: none;
 }
 
-.resource-list li + li { margin-top: 0.5rem; }
+.resource-list li + li {
+  margin-top: 0.5rem;
+}
 
 .resource-link {
   display: inline-flex;
@@ -207,7 +249,9 @@
   transition: color 0.16s ease;
 }
 
-.resource-link:hover { color: var(--accent-strong); }
+.resource-link:hover {
+  color: var(--accent-strong);
+}
 
 .resource-link i {
   width: 0.9rem;
@@ -215,11 +259,474 @@
   text-align: center;
 }
 
-.reading-item + .reading-item { margin-top: 0.5rem; }
+.reading-item + .reading-item {
+  margin-top: 0.5rem;
+}
+
+/* =========================================================
+   Dissertation supervision and guidance portal
+   ========================================================= */
+
+.dissertation-body .page-title {
+  margin-bottom: 1.25rem;
+}
+
+.dissertation-body .lead {
+  width: 100%;
+}
+
+.supervision-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  color: var(--ink);
+  background: var(--accent-soft);
+  border: 1px solid rgba(59, 90, 117, 0.28);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease,
+              transform 0.16s ease;
+}
+
+.supervision-card:hover {
+  border-color: rgba(59, 90, 117, 0.55);
+  box-shadow: 0 8px 20px rgba(28, 28, 30, 0.07);
+  transform: translateY(-1px);
+}
+
+.supervision-icon {
+  width: 2.8rem;
+  height: 2.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.resource-content {
+  min-width: 0;
+}
+
+.resource-title {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.resource-description {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.91rem;
+  line-height: 1.6;
+}
+
+.resource-arrow {
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.guidance-introduction {
+  margin-bottom: 1.5rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.guidance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  counter-reset: guidance-note;
+}
+
+.guidance-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1.35rem;
+  color: var(--ink);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  text-decoration: none;
+  counter-increment: guidance-note;
+  transition: background-color 0.16s ease, border-color 0.16s ease,
+              box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.guidance-card:hover {
+  background: var(--accent-soft);
+  border-color: rgba(59, 90, 117, 0.4);
+  box-shadow: 0 7px 18px rgba(28, 28, 30, 0.06);
+  transform: translateY(-1px);
+}
+
+.guidance-number {
+  width: 2.15rem;
+  height: 2.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-strong);
+  background: var(--sheet);
+  border: 1px solid rgba(59, 90, 117, 0.25);
+  border-radius: 50%;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.guidance-number::before {
+  content: counter(guidance-note, decimal-leading-zero);
+}
+
+.guidance-card .resource-arrow {
+  margin-top: 0.65rem;
+}
+
+.guidance-note {
+  margin-top: 1.25rem;
+  padding: 1rem 1.15rem;
+  color: var(--muted);
+  background: var(--paper-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 3px;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   Dissertation supervision statement
+   ========================================================= */
+
+.supervision-body .page-title {
+  margin-bottom: 1.25rem;
+}
+
+.supervision-body > .lead {
+  margin-bottom: 1.1rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.intro-copy {
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.intro-copy p + p {
+  margin-top: 1rem;
+}
+
+.availability-note {
+  margin-top: 1.5rem;
+  padding: 1.15rem 1.25rem;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.availability-note i {
+  margin-right: 0.35rem;
+}
+
+.supervision-paths {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  padding-left: 1.35rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.supervision-paths li {
+  padding-left: 0.25rem;
+}
+
+.supervision-paths li::marker {
+  color: var(--accent);
+}
+
+.supervision-paths strong {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.section-copy {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.section-copy p + p {
+  margin-top: 1rem;
+}
+
+.interest-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+  list-style: none;
+}
+
+.interest-grid li {
+  position: relative;
+  padding: 1rem 1rem 1rem 2.2rem;
+  color: var(--ink-soft);
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.interest-grid li strong {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.interest-grid li::before {
+  content: '';
+  position: absolute;
+  top: 1.42rem;
+  left: 1rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.expectation-panel {
+  padding: 1.35rem 1.5rem;
+  color: var(--ink-soft);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.expectation-panel p + p {
+  margin-top: 1rem;
+}
+
+.contact-link,
+.content-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-color: rgba(59, 90, 117, 0.35);
+  text-underline-offset: 0.16em;
+}
+
+.contact-link:hover,
+.content-link:hover {
+  color: var(--accent-strong);
+  text-decoration-color: var(--accent-strong);
+}
+
+.topic-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.topic-card {
+  padding: 1.35rem 1.45rem;
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+}
+
+.topic-title {
+  margin-bottom: 0.65rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.topic-card p {
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+  line-height: 1.65;
+  text-align: justify;
+}
+
+.examples-section .section-title {
+  margin-bottom: 2.1rem;
+}
+
+.example-group + .example-group {
+  margin-top: 2.8rem;
+}
+
+.example-group-title {
+  margin-bottom: 0.55rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.16rem;
+  font-weight: 700;
+}
+
+.example-group-intro {
+  margin-bottom: 1.15rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.project-ribbon {
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  background: var(--sheet);
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.project-ribbon:last-child {
+  margin-bottom: 0;
+}
+
+.project-ribbon[open] {
+  border-color: rgba(59, 90, 117, 0.5);
+  box-shadow: 0 7px 18px rgba(28, 28, 30, 0.06);
+}
+
+.project-ribbon summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.05rem 1.2rem;
+  color: var(--accent-strong);
+  background: var(--sheet);
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 0.16s ease;
+}
+
+.project-ribbon summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-ribbon summary:hover {
+  background: var(--accent-soft);
+}
+
+.project-ribbon[open] summary {
+  background: var(--accent-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.project-title {
+  min-width: 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.project-chevron {
+  color: var(--accent);
+  font-size: 0.72rem;
+  transition: transform 0.2s ease;
+}
+
+.project-ribbon[open] .project-chevron {
+  transform: rotate(180deg);
+}
+
+.project-content {
+  padding: 1.2rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  text-align: justify;
+}
+
+.project-content p + p {
+  margin-top: 0.75rem;
+}
+
+.project-meta {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.75rem;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border: 1px solid rgba(59, 90, 117, 0.25);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.16s ease, background-color 0.16s ease,
+              border-color 0.16s ease;
+}
+
+.project-link:hover {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* =========================================================
+   Responsive behaviour
+   ========================================================= */
 
 @media (max-width: 768px) {
-  .teaching-body { padding: 2rem 1.5rem; }
-  .admin-links { grid-template-columns: 1fr; }
+  .teaching-body,
+  .dissertation-body,
+  .supervision-body {
+    padding: 2rem 1.5rem;
+  }
+
+  .admin-links,
+  .guidance-grid,
+  .interest-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 680px) {
@@ -228,12 +735,32 @@
     gap: 0.45rem 0.8rem;
   }
 
-  .module-title { grid-column: 1 / -1; }
-  .module-date { grid-column: 1; }
+  .module-title {
+    grid-column: 1 / -1;
+  }
+
+  .module-date {
+    grid-column: 1;
+  }
 
   .module-chevron {
     grid-column: 2;
     grid-row: 2;
+  }
+
+  .supervision-card,
+  .guidance-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .supervision-card .resource-arrow,
+  .guidance-card .resource-arrow {
+    display: none;
+  }
+
+  .project-ribbon summary,
+  .project-content {
+    padding: 1rem;
   }
 }
 
@@ -242,5 +769,13 @@
   .module-ribbon,
   .module-ribbon summary,
   .module-chevron,
-  .resource-link { transition: none; }
+  .resource-link,
+  .supervision-card,
+  .guidance-card,
+  .project-ribbon,
+  .project-ribbon summary,
+  .project-chevron,
+  .project-link {
+    transition: none;
+  }
 }
