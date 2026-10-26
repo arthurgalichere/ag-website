@@ -7,38 +7,7 @@
 
   if (!researchBody || !papersTarget || !presentationTarget) return;
 
-  function cleanText(value) {
-    return value == null ? '' : String(value).replace(/\s+/g, ' ').trim();
-  }
-
-  function cleanMultilineText(value) {
-    if (value == null) return '';
-
-    return String(value)
-      .replace(/\r\n?/g, '\n')
-      .split('\n')
-      .map(line => line.replace(/[\t ]+/g, ' ').trim())
-      .filter(Boolean)
-      .join('\n');
-  }
-
-  function escapeHTML(value, preserveLineBreaks = false) {
-    const text = preserveLineBreaks ? cleanMultilineText(value) : cleanText(value);
-    return text.replace(/[&<>'"]/g, character => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    })[character]);
-  }
-
-  function restartReveal(element) {
-    if (!element || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    element.classList.remove('reveal');
-    void element.offsetWidth;
-    element.classList.add('reveal');
-  }
+  const { cleanText, cleanMultilineText, escapeText: escapeHTML, restartReveal, fetchFresh } = window.AGSite;
 
   function normalizeCategory(value) {
     const category = cleanText(value);
@@ -178,11 +147,7 @@
 
   async function loadResearchData() {
     try {
-      const cvUrl = researchBody.dataset.cvUrl;
-      if (!cvUrl) throw new Error('The research data URL is not configured.');
-
-      const response = await fetch(`${cvUrl}?v=${Date.now()}`);
-      if (!response.ok) throw new Error(`The server returned status ${response.status}.`);
+      const response = await fetchFresh(researchBody.dataset.cvUrl);
 
       const data = await response.json();
       const sections = Array.isArray(data.sections) ? data.sections : [];

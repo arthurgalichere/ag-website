@@ -6,15 +6,7 @@
 
   if (!officeHoursBody || !target) return;
 
-  function escapeHTML(value) {
-    return String(value == null ? '' : value).replace(/[&<>'"]/g, character => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    })[character]);
-  }
+  const { escapeHTML, restartReveal, fetchFresh } = window.AGSite;
 
   function safeURL(value) {
     try {
@@ -232,23 +224,11 @@
     return output.join('');
   }
 
-  function restartReveal(element) {
-    if (!element || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    element.classList.remove('reveal');
-    void element.offsetWidth;
-    element.classList.add('reveal');
-  }
-
   async function loadOfficeHours() {
     const sourceURL = officeHoursBody.dataset.officeHoursUrl;
 
     try {
-      if (!sourceURL) throw new Error('The office-hours data URL is not configured.');
-
-      const response = await fetch(`${sourceURL}?v=${Date.now()}`);
-      if (!response.ok) {
-        throw new Error(`The server returned status ${response.status}.`);
-      }
+      const response = await fetchFresh(sourceURL);
 
       const markdown = await response.text();
       if (!markdown.trim()) {

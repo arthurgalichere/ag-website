@@ -7,7 +7,7 @@
 /* The next resource to be released is highlighted. */
 .tile.is-next {
   background: var(--accent-soft);
-  border-color: rgba(59, 90, 117, 0.3);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .tile-heading {
@@ -40,7 +40,7 @@
 
 .is-next .status-badge {
   color: var(--accent-strong);
-  border-color: rgba(59, 90, 117, 0.28);
+  border-color: color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 .portal-note {

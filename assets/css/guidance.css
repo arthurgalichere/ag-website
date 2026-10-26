@@ -107,7 +107,7 @@
   color: var(--accent);
   font-weight: 600;
   text-decoration-line: underline;
-  text-decoration-color: rgba(59, 90, 117, 0.35);
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.16em;
   transition: color var(--transition), text-decoration-color var(--transition);
@@ -344,7 +344,7 @@
 .guidance-nav-link:hover {
   color: var(--accent-strong);
   background: var(--accent-soft);
-  border-color: rgba(59, 90, 117, 0.4);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
   box-shadow: 0 7px 18px rgba(28, 28, 30, 0.06);
   transform: translateY(-1px);
 }

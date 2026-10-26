@@ -28,7 +28,7 @@
 .admin-link:hover {
   color: var(--accent-strong);
   background: var(--accent-soft);
-  border-color: rgba(59, 90, 117, 0.38);
+  border-color: color-mix(in srgb, var(--accent) 38%, transparent);
   transform: translateY(-1px);
 }
 
@@ -79,7 +79,7 @@
   padding: 0.28rem 0.55rem;
   color: var(--accent-strong);
   background: var(--accent-soft);
-  border: 1px solid rgba(59, 90, 117, 0.18);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
   border-radius: 3px;
   font-family: var(--mono);
   font-size: 0.72rem;
@@ -137,7 +137,7 @@
   justify-content: center;
   color: var(--accent-strong);
   background: var(--sheet);
-  border: 1px solid rgba(59, 90, 117, 0.25);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
   border-radius: 50%;
   font-family: var(--mono);
   font-size: 0.76rem;
