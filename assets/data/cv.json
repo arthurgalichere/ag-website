@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-24",
+  "last_updated": "2026-10-26",
   "sections": [
     {
       "title": "Employment",
@@ -62,6 +62,18 @@
           "role": "Continuous-Time Heterogeneous-Agent Models",
           "institution": "taught by Christos Koulovatianos",
           "date": "2020",
+          "details": "",
+          "category": ""
+        }
+      ]
+    },
+    {
+      "title": "Referee for Academic Journals",
+      "items": [
+        {
+          "role": "Bulletin of Economic Research",
+          "institution": "",
+          "date": "2026",
           "details": "",
           "category": ""
         }
