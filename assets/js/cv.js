@@ -92,7 +92,7 @@
     });
 
     return orderedYears.map((year, index) => `
-      <h3 class="cv-subsection-title${index === 0 ? ' is-first' : ''}">${escapeHTML(year)}</h3>
+      <h3 class="subsection-title${index === 0 ? ' is-first' : ''}">${escapeHTML(year)}</h3>
       ${groups.get(year).map(item => renderCVItem(item, { hideDate: true })).join('')}
     `).join('');
   }
@@ -111,7 +111,7 @@
 
     let html = `
       <section class="${classes.join(' ')}">
-        <h2 class="cv-section-title">${escapeHTML(title)}</h2>
+        <h2 class="section-title">${escapeHTML(title)}</h2>
     `;
 
     html += isResearchPresentations
@@ -124,7 +124,7 @@
       const subsectionTitle = cleanText(subsection.title) || 'Untitled Category';
       const subsectionItems = Array.isArray(subsection.items) ? subsection.items : [];
 
-      html += `<h3 class="cv-subsection-title${index === 0 ? ' is-first' : ''}">${escapeHTML(subsectionTitle)}</h3>`;
+      html += `<h3 class="subsection-title${index === 0 ? ' is-first' : ''}">${escapeHTML(subsectionTitle)}</h3>`;
       html += subsectionItems
         .map(item => renderCVItem(item, { hideInstitution: isTeaching }))
         .join('');

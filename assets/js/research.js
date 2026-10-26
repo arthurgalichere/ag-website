@@ -115,8 +115,8 @@
     });
 
     papersTarget.innerHTML = orderedCategories.map(category => `
-      <section class="research-section">
-        <h2 class="research-section-title">${escapeHTML(category)}</h2>
+      <section class="content-section">
+        <h2 class="section-title">${escapeHTML(category)}</h2>
         ${groups.get(category).map(renderPaper).join('')}
       </section>
     `).join('');
@@ -171,7 +171,7 @@
     });
 
     presentationTarget.innerHTML = orderedYears.map((year, index) => `
-      <h3 class="cv-subsection-title${index === 0 ? ' is-first' : ''}">${escapeHTML(year)}</h3>
+      <h3 class="subsection-title${index === 0 ? ' is-first' : ''}">${escapeHTML(year)}</h3>
       ${groups.get(year).map(renderPresentation).join('')}
     `).join('');
   }
@@ -194,7 +194,7 @@
       renderPapers(papers);
       renderPresentations(presentationSection && presentationSection.items);
       restartReveal(papersTarget);
-      restartReveal(presentationTarget.closest('.research-section'));
+      restartReveal(presentationTarget.closest('.content-section'));
     } catch (error) {
       console.error('Research data render fault:', error);
       papersTarget.innerHTML = '';

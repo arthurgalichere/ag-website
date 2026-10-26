@@ -1,53 +1,10 @@
 /* =========================================================
-   Dissertation guidance notes
-   Shared by all pages under /teaching/guidance/
-   Global layout, navigation, footer, back links, page titles,
-   reveal animations, and design tokens remain in site.css.
+   Dissertation guidance notes (/teaching/guidance/*.html).
+   Shared by all notes through _layouts/guidance.html.
+   Toolbar, title, download link and update note come from
+   site.css; this file styles the converted LaTeX content and
+   the previous/next navigation.
    ========================================================= */
-
-.guidance-body {
-  padding: 3rem 2.5rem;
-}
-
-.guidance-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.guidance-toolbar .back-link {
-  margin-bottom: 0;
-}
-
-.download-link {
-  display: inline-flex;
-  align-items: center;
-  flex: 0 0 auto;
-  color: var(--accent);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.16s ease;
-}
-
-.download-link:hover {
-  color: var(--accent-strong);
-}
-
-.download-link i {
-  margin-right: 0.3rem;
-}
-
-.guidance-title {
-  margin-bottom: 2rem;
-  color: var(--ink);
-  font-family: var(--display);
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1.15;
-}
 
 /* =========================================================
    Pandoc-generated note content
@@ -153,7 +110,7 @@
   text-decoration-color: rgba(59, 90, 117, 0.35);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.16em;
-  transition: color 0.16s ease, text-decoration-color 0.16s ease;
+  transition: color var(--transition), text-decoration-color var(--transition);
 }
 
 .guidance-content a:hover {
@@ -374,9 +331,9 @@
   border: 1px solid var(--line-strong);
   border-radius: 5px;
   text-decoration: none;
-  transition: color 0.16s ease, background-color 0.16s ease,
-              border-color 0.16s ease, box-shadow 0.16s ease,
-              transform 0.16s ease;
+  transition: color var(--transition), background-color var(--transition),
+              border-color var(--transition), box-shadow var(--transition),
+              transform var(--transition);
 }
 
 .guidance-nav-link.is-next {
@@ -422,50 +379,20 @@
   line-height: 1.4;
 }
 
-.guidance-update {
-  margin-top: 2rem;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
-  text-align: center;
-}
 
 /* =========================================================
    Responsive behaviour
    ========================================================= */
 
 @media (max-width: 768px) {
-  .guidance-body {
-    padding: 2rem 1.5rem;
-  }
-
+  /* A 60% desktop image becomes about 90% on tablets and phones;
+     the generator supplies --image-width-mobile. */
   .guidance-content img {
-    /* A 60% desktop image becomes approximately 90% on mobile
-       when the generator supplies --image-width-mobile: 90%. */
     width: min(var(--image-width-mobile, var(--image-width, 100%)), 100%);
   }
 }
 
 @media (max-width: 680px) {
-  .guidance-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .guidance-toolbar .back-link {
-    align-self: flex-start;
-  }
-
-  .download-link {
-    align-self: center;
-    justify-content: center;
-  }
-
-  .guidance-title {
-    font-size: 2.15rem;
-  }
-
   .guidance-content p {
     text-align: left;
   }
@@ -480,18 +407,12 @@
     grid-template-columns: 1fr;
   }
 
-  .guidance-nav-link,
   .guidance-nav-link.is-next {
     text-align: left;
-  }
-
-  .guidance-nav-link.is-next {
-    grid-template-columns: minmax(0, 1fr) auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .download-link,
   .guidance-content a,
   .guidance-nav-link {
     transition: none;

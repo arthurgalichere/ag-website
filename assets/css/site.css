@@ -1,3 +1,28 @@
+/* =========================================================
+   site.css — the single source of the site-wide design.
+
+   Loaded by every page (via _layouts/default.html), before any
+   page-family stylesheet. Change a value here and every page
+   follows.
+
+   Contents
+   1. Design tokens
+   2. Base elements
+   3. Page canvas, card, navigation
+   4. Page structure (body, headings, lead, sections)
+   5. Shared components
+      5a. Links and buttons
+      5b. Text blocks, panels and callouts
+      5c. Action cards and tile grids
+      5d. Accordion ribbons
+      5e. Loading, empty, error and update notes
+   6. Footer
+   7. Reveal animation
+   8. Responsive rules and reduced motion
+   ========================================================= */
+
+/* 1. Design tokens ======================================== */
+
 :root {
   --paper: #f4f5f7;
   --paper-soft: #fafbfc;
@@ -12,6 +37,10 @@
   --accent-strong: #25394b;
   --accent-soft: #edf2f6;
   --accent-line: rgba(59, 90, 117, 0.35);
+  --accent-border: rgba(59, 90, 117, 0.28);
+  --accent-border-strong: rgba(59, 90, 117, 0.5);
+  --warning: #8a5a12;
+  --warning-soft: #fff8e8;
   --error: #9f2d25;
   --error-background: #fdf2f2;
   --error-border: #f5c6cb;
@@ -19,7 +48,18 @@
   --display: 'Bitter', Georgia, serif;
   --sans: 'Montserrat', system-ui, sans-serif;
   --mono: 'JetBrains Mono', monospace;
+
+  --radius: 5px;
+  --radius-small: 4px;
+  --shadow-hover: 0 7px 18px rgba(28, 28, 30, 0.06);
+  --transition: 0.16s ease;
+
+  /* Body padding of every page; the card width is set on .card. */
+  --body-padding: 3rem 2.5rem;
+  --body-padding-mobile: 2rem 1.5rem;
 }
+
+/* 2. Base elements ======================================== */
 
 *, *::before, *::after {
   margin: 0;
@@ -31,7 +71,7 @@ html {
   width: 100%;
   overflow-x: hidden;
   background: var(--paper);
-  scroll-behavior: smooth; 
+  scroll-behavior: smooth;
   scrollbar-gutter: stable;
 }
 
@@ -43,12 +83,6 @@ body {
   background: linear-gradient(180deg, var(--paper-soft) 0%, var(--paper) 100%);
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
-}
- 
-
-body,
-.card {
-  min-width: 0;
 }
 
 a {
@@ -86,6 +120,8 @@ summary:focus-visible {
   top: 1rem;
   left: 1rem;
 }
+
+/* 3. Page canvas, card, navigation ======================== */
 
 .page {
   width: 100%;
@@ -130,7 +166,7 @@ summary:focus-visible {
   color: var(--ink);
   border-left: 1px solid var(--line);
   text-decoration: none;
-  transition: color 0.16s ease, background-color 0.16s ease;
+  transition: color var(--transition), background-color var(--transition);
 }
 
 .index-card:first-child {
@@ -172,24 +208,60 @@ summary:focus-visible {
   color: #fff;
 }
 
+/* 4. Page structure ======================================= */
+
+/* Every page wraps its content in <section class="page-body ...">. */
 .page-body {
-  padding: 3rem 2.5rem;
+  padding: var(--body-padding);
 }
 
 .page-title {
   margin-bottom: 2rem;
+  color: var(--ink);
   font-family: var(--display);
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.15;
 }
 
-.page-introduction {
+/* Title with an action on the right (e.g. Download PDF). */
+.page-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-heading .page-title {
+  margin-bottom: 0;
+}
+
+/* Back button and an action on one row (guidance notes). */
+.page-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-toolbar .back-link {
+  margin-bottom: 0;
+}
+
+/* Introductory paragraph under the page title. */
+.lead {
   width: 100%;
   color: var(--ink-soft);
   font-size: 1rem;
   line-height: 1.75;
   text-align: justify;
+}
+
+/* A block directly after the lead paragraph (cards, notes, callouts). */
+.lead + :not(.content-section) {
+  margin-top: 1.5rem;
 }
 
 .content-section {
@@ -208,6 +280,46 @@ summary:focus-visible {
   text-transform: uppercase;
 }
 
+/* Short explanatory sentence directly under a section title. */
+.section-introduction {
+  margin-bottom: 1.5rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+/* Grouping inside a section: dashed divider above, except the first. */
+.subsection-title {
+  padding-top: 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  color: var(--accent-strong);
+  border-top: 1px dashed var(--line-strong);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.subsection-title.is-first {
+  padding-top: 0;
+  margin-top: 0;
+  border-top: none;
+}
+
+/* Smaller display heading for a group of items (e.g. project groups). */
+.group-title {
+  margin-bottom: 0.55rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.16rem;
+  font-weight: 700;
+}
+
+/* 5a. Links and buttons =================================== */
+
 .back-link {
   display: inline-flex;
   align-items: center;
@@ -217,12 +329,12 @@ summary:focus-visible {
   color: var(--accent-strong);
   background: var(--accent-soft);
   border: 1px solid rgba(59, 90, 117, 0.25);
-  border-radius: 4px;
+  border-radius: var(--radius-small);
   font-size: 0.86rem;
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.16s ease, background-color 0.16s ease,
-              border-color 0.16s ease, transform 0.16s ease;
+  transition: color var(--transition), background-color var(--transition),
+              border-color var(--transition), transform var(--transition);
 }
 
 .back-link:hover {
@@ -231,6 +343,449 @@ summary:focus-visible {
   border-color: var(--accent);
   transform: translateY(-1px);
 }
+
+/* CV-style text link, e.g. "Download PDF". */
+.download-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.download-link:hover {
+  color: var(--accent-strong);
+}
+
+.download-link i {
+  margin-right: 0.3rem;
+}
+
+/* Underlined link inside running text. */
+.text-link,
+.prose a:not([class]) {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-color: var(--accent-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  transition: color var(--transition), text-decoration-color var(--transition);
+}
+
+.text-link:hover,
+.prose a:not([class]):hover {
+  color: var(--accent-strong);
+  text-decoration-color: var(--accent-strong);
+}
+
+/* Small rectangular button, e.g. "Read the paper". */
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.75rem;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border: 1px solid rgba(59, 90, 117, 0.25);
+  border-radius: var(--radius-small);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--transition), background-color var(--transition),
+              border-color var(--transition);
+}
+
+.button-link:hover {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* 5b. Text blocks, panels and callouts ==================== */
+
+/* Running text: paragraphs and lists with consistent rhythm. */
+.prose {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.prose > * + * {
+  margin-top: 1rem;
+}
+
+.prose ul,
+.prose ol {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1.4rem;
+  text-align: left;
+}
+
+.prose li::marker {
+  color: var(--accent);
+}
+
+.prose strong {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+/* Soft boxed area. */
+.panel {
+  padding: 1.35rem 1.5rem;
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+}
+
+/* Highlighted note with a coloured left border. */
+.callout {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 1.15rem 1.25rem;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-small);
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.callout > i {
+  flex: 0 0 auto;
+}
+
+.callout.is-quiet {
+  color: var(--muted);
+  background: var(--paper-soft);
+  border-left-width: 3px;
+  font-size: 0.86rem;
+  font-weight: 400;
+}
+
+.callout.is-warning {
+  color: var(--warning);
+  background: var(--warning-soft);
+  border-left-color: var(--warning);
+  font-size: 0.91rem;
+  font-weight: 400;
+}
+
+.callout.is-warning strong {
+  font-weight: 700;
+}
+
+/* Small uppercase label in monospace, e.g. "Empirical analysis". */
+.meta-label {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+/* 5c. Action cards and tile grids ========================= */
+
+/* A prominent link: round icon, title + description, chevron. */
+.action-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.35rem 1.5rem;
+  color: var(--ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color var(--transition), box-shadow var(--transition),
+              transform var(--transition);
+}
+
+.action-card:hover {
+  border-color: rgba(59, 90, 117, 0.55);
+  box-shadow: 0 8px 20px rgba(28, 28, 30, 0.07);
+  transform: translateY(-1px);
+}
+
+.action-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 50%;
+  font-size: 0.95rem;
+}
+
+.action-content {
+  min-width: 0;
+}
+
+.action-title {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.action-description {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.action-arrow {
+  color: var(--accent);
+  font-size: 0.78rem;
+}
+
+/* Two-column grid of cards; one column on narrow screens. */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+/* A card in a tile grid (link or static). */
+.tile {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1.35rem;
+  color: var(--ink);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background-color var(--transition), border-color var(--transition),
+              box-shadow var(--transition), transform var(--transition);
+}
+
+a.tile:hover {
+  background: var(--accent-soft);
+  border-color: rgba(59, 90, 117, 0.4);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+.tile-wide {
+  grid-column: 1 / -1;
+}
+
+.tile-content {
+  min-width: 0;
+}
+
+.tile-title {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.tile-description {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* 5d. Accordion ribbons (native <details>) ================ */
+
+.ribbon {
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+  background: var(--sheet);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.ribbon:last-child {
+  margin-bottom: 0;
+}
+
+.ribbon[open] {
+  border-color: var(--accent-border-strong);
+  box-shadow: var(--shadow-hover);
+}
+
+.ribbon summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.05rem 1.2rem;
+  color: var(--accent-strong);
+  background: var(--sheet);
+  cursor: pointer;
+  list-style: none;
+  transition: color var(--transition), background-color var(--transition);
+}
+
+.ribbon summary::-webkit-details-marker {
+  display: none;
+}
+
+.ribbon summary:hover,
+.ribbon[open] summary {
+  background: var(--accent-soft);
+}
+
+.ribbon[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.ribbon-title {
+  grid-column: 1;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.ribbon-date {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ribbon-chevron {
+  grid-column: -2;
+  color: var(--accent);
+  font-size: 0.72rem;
+  transition: transform 0.2s ease;
+}
+
+.ribbon[open] .ribbon-chevron {
+  transform: rotate(180deg);
+}
+
+.ribbon-content {
+  padding: 1.25rem;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.ribbon-content > * + * {
+  margin-top: 0.8rem;
+}
+
+.ribbon-content h3 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.55rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ribbon-content h3:first-child {
+  margin-top: 0;
+}
+
+.ribbon-content ul {
+  padding-left: 1.25rem;
+}
+
+.ribbon-content li + li {
+  margin-top: 0.3rem;
+}
+
+/* 5e. Loading, empty, error and update notes ============== */
+
+.loading-message,
+.empty-message {
+  padding: 1rem 1.1rem;
+  color: var(--muted);
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  font-size: 0.94rem;
+  font-style: italic;
+}
+
+.render-error {
+  padding: 1.2rem;
+  color: var(--error);
+  background: var(--error-background);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius-small);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.render-error strong,
+.render-error-title {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+.render-error-message {
+  padding: 0.4rem;
+  color: var(--ink-soft);
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+/* "Information updated on DD/MM/YYYY", centred at the end of a page. */
+.update-note {
+  margin-top: 3rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+/* Small centred note at the end of a page (copyright, status). */
+.page-note {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.page-note strong {
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+/* 6. Footer =============================================== */
 
 .foot {
   display: grid;
@@ -259,15 +814,15 @@ summary:focus-visible {
   border: 1px solid var(--line-strong);
   font-size: 0.85rem;
   text-decoration: none;
-  transition: color 0.16s ease, background-color 0.16s ease,
-              border-color 0.16s ease, transform 0.16s ease,
-              box-shadow 0.16s ease;
+  transition: color var(--transition), background-color var(--transition),
+              border-color var(--transition), transform var(--transition),
+              box-shadow var(--transition);
 }
 
 .socials a {
   width: 2rem;
   height: 2rem;
-  border-radius: 4px;
+  border-radius: var(--radius-small);
 }
 
 .back-to-top {
@@ -300,6 +855,8 @@ summary:focus-visible {
   text-transform: uppercase;
 }
 
+/* 7. Reveal animation ===================================== */
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -322,9 +879,14 @@ summary:focus-visible {
 .delay-120 { --reveal-delay: 120ms; }
 .delay-140 { --reveal-delay: 140ms; }
 .delay-160 { --reveal-delay: 160ms; }
+.delay-180 { --reveal-delay: 180ms; }
 .delay-220 { --reveal-delay: 220ms; }
+.delay-260 { --reveal-delay: 260ms; }
 .delay-280 { --reveal-delay: 280ms; }
+.delay-300 { --reveal-delay: 300ms; }
 .delay-340 { --reveal-delay: 340ms; }
+
+/* 8. Responsive rules and reduced motion ================== */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -337,6 +899,15 @@ summary:focus-visible {
 
   .index-card,
   .back-link,
+  .download-link,
+  .text-link,
+  .prose a,
+  .button-link,
+  .action-card,
+  .tile,
+  .ribbon,
+  .ribbon summary,
+  .ribbon-chevron,
   .socials a,
   .back-to-top {
     transition: none;
@@ -349,7 +920,15 @@ summary:focus-visible {
   }
 
   .page-body {
-    padding: 2rem 1.5rem;
+    padding: var(--body-padding-mobile);
+  }
+
+  .tile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tile-wide {
+    grid-column: auto;
   }
 }
 
@@ -369,6 +948,49 @@ summary:focus-visible {
 
   .page-title {
     font-size: 2.15rem;
+  }
+
+  .page-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-card,
+  .tile {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .action-arrow,
+  .tile .action-arrow {
+    display: none;
+  }
+
+  .ribbon summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.45rem 0.8rem;
+    padding: 1rem;
+  }
+
+  .ribbon summary:has(.ribbon-date) .ribbon-title {
+    grid-column: 1 / -1;
+  }
+
+  .ribbon-date {
+    grid-column: 1;
+  }
+
+  .ribbon summary:has(.ribbon-date) .ribbon-chevron {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .ribbon-content {
+    padding: 1rem;
   }
 
   .foot {
