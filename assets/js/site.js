@@ -42,6 +42,14 @@ window.AGSite = (() => {
     element.classList.add('reveal');
   }
 
+  /* Start the page-opening animation held by body.is-loading. */
+  function releaseReveal() {
+    document.body.classList.remove('is-loading');
+  }
+
+  /* Safety net: never keep a page hidden if its data is slow or a script fails. */
+  setTimeout(releaseReveal, 3000);
+
   /* Fetch a data file, bypassing stale caches. */
   async function fetchFresh(url) {
     if (!url) throw new Error('The data URL is not configured.');
@@ -50,5 +58,5 @@ window.AGSite = (() => {
     return response;
   }
 
-  return { cleanText, cleanMultilineText, escapeHTML, escapeText, restartReveal, fetchFresh };
+  return { cleanText, cleanMultilineText, escapeHTML, escapeText, restartReveal, releaseReveal, fetchFresh };
 })();

@@ -7,7 +7,7 @@
 
   if (!researchBody || !papersTarget || !presentationTarget) return;
 
-  const { cleanText, cleanMultilineText, escapeText: escapeHTML, restartReveal, fetchFresh } = window.AGSite;
+  const { cleanText, cleanMultilineText, escapeText: escapeHTML, releaseReveal, fetchFresh } = window.AGSite;
 
   function normalizeCategory(value) {
     const category = cleanText(value);
@@ -158,8 +158,6 @@
 
       renderPapers(papers);
       renderPresentations(presentationSection && presentationSection.items);
-      restartReveal(papersTarget);
-      restartReveal(presentationTarget.closest('.content-section'));
     } catch (error) {
       console.error('Research data render fault:', error);
       papersTarget.innerHTML = '';
@@ -171,5 +169,5 @@
     }
   }
 
-  loadResearchData();
+  loadResearchData().finally(releaseReveal);
 })();

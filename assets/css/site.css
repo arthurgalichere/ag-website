@@ -52,6 +52,11 @@
   --sans: 'Montserrat', system-ui, sans-serif;
   --mono: 'JetBrains Mono', monospace;
 
+  /* Page-opening animation. Raise --reveal-pace to slow the whole
+     sequence (1 = original timing), --reveal-duration for each element. */
+  --reveal-pace: 1.5;
+  --reveal-duration: 0.7s;
+
   --radius: 5px;
   --radius-small: 4px;
   --shadow-hover: 0 7px 18px rgba(28, 28, 30, 0.06);
@@ -873,8 +878,15 @@ a.tile:hover {
 }
 
 .reveal {
-  animation: rise 0.55s cubic-bezier(0.2, 0.6, 0.2, 1) both;
-  animation-delay: var(--reveal-delay, 0ms);
+  animation: rise var(--reveal-duration) cubic-bezier(0.2, 0.6, 0.2, 1) both;
+  animation-delay: calc(var(--reveal-delay, 0ms) * var(--reveal-pace));
+}
+
+/* Pages that load data (CV, Research, A&F hours) set body_class: is-loading.
+   Their animation waits until the data is in (site.js removes the class),
+   so sections appear in reading order instead of static ones first. */
+.is-loading .reveal {
+  animation-play-state: paused;
 }
 
 .delay-40  { --reveal-delay: 40ms; }

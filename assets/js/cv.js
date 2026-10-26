@@ -8,7 +8,7 @@
 
   if (!cvBody || !targetBefore || !targetAfter || !updateElement) return;
 
-  const { cleanText, cleanMultilineText, escapeText: escapeHTML, restartReveal, fetchFresh } = window.AGSite;
+  const { cleanText, cleanMultilineText, escapeText: escapeHTML, releaseReveal, fetchFresh } = window.AGSite;
 
   function renderCVItem(item, options = {}) {
     if (!item || typeof item !== 'object') return '';
@@ -134,8 +134,6 @@
         ? `Information updated on ${formattedDate}`
         : '';
 
-      restartReveal(targetBefore);
-      restartReveal(targetAfter);
     } catch (error) {
       console.error('CV render fault:', error);
       updateElement.textContent = '';
@@ -148,5 +146,5 @@
     }
   }
 
-  loadCV();
+  loadCV().finally(releaseReveal);
 })();

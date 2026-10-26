@@ -6,7 +6,7 @@
 
   if (!officeHoursBody || !target) return;
 
-  const { escapeHTML, restartReveal, fetchFresh } = window.AGSite;
+  const { escapeHTML, releaseReveal, fetchFresh } = window.AGSite;
 
   function safeURL(value) {
     try {
@@ -238,7 +238,6 @@
 
       const rendered = markdownToHTML(markdown);
       target.innerHTML = rendered || '<p class="empty-message">No current advice and feedback hours have been published.</p>';
-      restartReveal(target.closest('.content-section'));
     } catch (error) {
       console.error('Office-hours timetable could not be loaded:', error);
       target.innerHTML = `
@@ -252,5 +251,5 @@
     }
   }
 
-  loadOfficeHours();
+  loadOfficeHours().finally(releaseReveal);
 })();
