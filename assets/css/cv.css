@@ -13,10 +13,6 @@
   margin-bottom: 2.5rem;
 }
 
-.cv-section:last-child {
-  margin-bottom: 0;
-}
-
 .cv-section.teaching-tight .cv-item {
   margin-bottom: 0.45rem;
 }
