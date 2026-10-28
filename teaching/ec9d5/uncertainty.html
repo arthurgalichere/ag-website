@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AG: Uncertainty and the Euler Equation</title>
+  <meta name="description" content="An interactive EC9D5 explanation of uncertainty, expected marginal utility, and precautionary saving in a two-period consumption model." />
+
+  
+
+  <link rel="icon" type="image/png" href="/ag-website/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/ag-website/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/ag-website/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/ag-website/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/ag-website/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/ag-website/assets/css/site.css" />
+
+  
+
+  
+  <link rel="stylesheet" href="/ag-website/assets/css/uncertainty.css" />
+  
+</head>
+<body id="top" class="">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      <nav class="index-nav" aria-label="Academic Directory">
+  <a href="/ag-website/index.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/ag-website/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/ag-website/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/ag-website/teaching.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/ag-website/economics.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="uncertainty-body"
+  data-w1="10"
+  data-w2="10"
+  data-beta="1"
+  data-interest-rate="0"
+>
+  <a href="/ag-website/teaching.html" class="back-link reveal delay-40">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Teaching
+  </a>
+
+  <header class="uncertainty-header reveal delay-80">
+    <p class="eyebrow">EC9D5 · Advanced Macroeconomics</p>
+    <h1 class="page-title">Uncertainty, the Euler Equation, and Precautionary Saving</h1>
+    <p class="lead">
+      This interactive example separates the immediate effect of a mean-preserving income risk on expected marginal utility from the household’s equilibrium saving response.
+    </p>
+  </header>
+
+  <section class="model-section reveal delay-120" aria-labelledby="model-title">
+    <h2 id="model-title" class="section-title">1. Quick Model Overview</h2>
+
+    <div class="overview-grid">
+      <article class="model-card">
+        <span class="model-card-label">Household problem</span>
+        <h3>Maximisation problem</h3>
+        <div class="equation-block">
+          \[
+            \max_A\; u(c_1)+\beta\,\mathbb{E}[u(c_2)]
+          \]
+          \[
+            c_1=W_1-A, \qquad c_2=(1+r)A+W_2.
+          \]
+        </div>
+        <p>The household chooses risk-free saving \(A\) in period 1, before period-2 income is realised.</p>
+      </article>
+
+      <article class="model-card">
+        <span class="model-card-label">Resource constraint</span>
+        <h3>Intertemporal budget constraint</h3>
+        <div class="equation-block">
+          \[
+            c_1+\frac{c_2^s}{1+r}
+            =W_1+\frac{W_2^s}{1+r},
+            \qquad s\in\{L,H\}.
+          \]
+        </div>
+        <p>The present value of consumption equals the present value of resources in each possible income state.</p>
+      </article>
+
+      <article class="model-card">
+        <span class="model-card-label">Optimality condition</span>
+        <h3>Euler equation</h3>
+        <div class="equation-block">
+          \[
+            u'(c_1)=\beta(1+r)\,\mathbb{E}[u'(c_2)].
+          \]
+        </div>
+        <p>Current marginal utility equals the discounted expected return-weighted marginal utility of future consumption.</p>
+      </article>
+    </div>
+
+    <div class="derivation-panel">
+      <h3>Mean-preserving income risk</h3>
+      <div class="equation-block equation-wide">
+        \[
+          W_2=
+          \begin{cases}
+            W-\varepsilon & \text{with probability }1/2,\\
+            W+\varepsilon & \text{with probability }1/2,
+          \end{cases}
+          \qquad \mathbb{E}[W_2]=W.
+        \]
+        \[
+          c_2^L=(1+r)A+W-\varepsilon,
+          \qquad
+          c_2^H=(1+r)A+W+\varepsilon,
+        \]
+        \[
+          \mathbb{E}[c_2]=(1+r)A+W,
+          \qquad
+          c_2^L=\mathbb{E}[c_2]-\varepsilon,
+          \qquad
+          c_2^H=\mathbb{E}[c_2]+\varepsilon.
+        \]
+      </div>
+      <p>Increasing \(\varepsilon\) raises the dispersion of future income and consumption without changing their expected value before saving adjusts.</p>
+    </div>
+  </section>
+
+  <section class="model-section reveal delay-160" aria-labelledby="solution-title">
+    <h2 id="solution-title" class="section-title">2. CRRA Utility and the Two Euler Equations</h2>
+
+    <div class="solution-panel">
+      <div class="crra-summary">
+        <div>
+          <h3>CRRA utility</h3>
+          <div class="equation-block">
+            \[
+              u(c)=
+              \begin{cases}
+                \dfrac{c^{1-\gamma}-1}{1-\gamma}, & \gamma\neq1,\\[1ex]
+                \ln(c), & \gamma=1,
+              \end{cases}
+              \qquad \gamma&gt;0.
+            \]
+          </div>
+        </div>
+        <div>
+          <h3>Marginal utility</h3>
+          <div class="equation-block">
+            \[
+              u'(c)=c^{-\gamma}.
+            \]
+          </div>
+        </div>
+      </div>
+
+      <p class="normalisation-note">For the interactive exercise, \(\beta(1+r)=1\). The relevant Euler equation therefore depends on whether \(\varepsilon\) is zero or positive.</p>
+
+      <div class="equation-case-grid" aria-live="polite">
+        <article id="certainty-equation" class="equation-case is-active">
+          <div class="equation-case-heading">
+            <span>Certainty case</span>
+            <span id="certainty-status" class="equation-status">Active when \(\varepsilon=0\)</span>
+          </div>
+          <div class="equation-block equation-wide">
+            \[
+              c_1^{-\gamma}=\mathbb{E}[c_2]^{-\gamma}
+              \quad\Longrightarrow\quad
+              c_1=\mathbb{E}[c_2].
+            \]
+          </div>
+        </article>
+
+        <article id="uncertainty-equation" class="equation-case is-muted">
+          <div class="equation-case-heading">
+            <span>Uncertainty case</span>
+            <span id="uncertainty-status" class="equation-status">Inactive when \(\varepsilon=0\)</span>
+          </div>
+          <div class="equation-block equation-wide">
+            \[
+              c_1^{-\gamma}
+              =\frac12\left(\mathbb{E}[c_2]-\varepsilon\right)^{-\gamma}
+              +\frac12\left(\mathbb{E}[c_2]+\varepsilon\right)^{-\gamma}.
+            \]
+          </div>
+        </article>
+      </div>
+
+      <div class="key-result">
+        <i class="fas fa-lightbulb" aria-hidden="true"></i>
+        <div>
+          <strong>Jensen’s inequality:</strong> when \(\varepsilon&gt;0\), convex marginal utility implies
+          \[
+            \mathbb{E}[u'(c_2)]&gt;u'(\mathbb{E}[c_2]).
+          \]
+          Expected marginal utility rises, so the household reduces \(c_1\) and increases saving until the uncertain Euler equation holds again.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="interactive-section reveal delay-220" aria-labelledby="interactive-title">
+    <div class="interactive-heading">
+      <div>
+        <h2 id="interactive-title" class="section-title">3. Interactive Decomposition</h2>
+        <p>Change the income shock and risk-aversion parameter. The remaining model values are fixed at \(W_1=W=10\), \(r=0\), and \(\beta=1\).</p>
+      </div>
+    </div>
+
+    <div class="control-panel" aria-label="Interactive model controls">
+      <label class="control" for="epsilon-slider">
+        <span class="control-heading">
+          <span>Income shock, \(\varepsilon\)</span>
+          <output id="epsilon-output" for="epsilon-slider">3.0</output>
+        </span>
+        <input id="epsilon-slider" type="range" min="0" max="7.5" step="0.1" value="3" />
+        <span class="control-scale"><span>No uncertainty</span><span>Larger spread</span></span>
+      </label>
+
+      <label class="control" for="gamma-slider">
+        <span class="control-heading">
+          <span>Risk aversion, \(\gamma\)</span>
+          <output id="gamma-output" for="gamma-slider">2.0</output>
+        </span>
+        <input id="gamma-slider" type="range" min="0.5" max="5" step="0.1" value="2" />
+        <span class="control-scale"><span>Flatter marginal utility</span><span>More curvature</span></span>
+      </label>
+    </div>
+
+    <div class="insight-strip" aria-live="polite">
+      <div>
+        <span class="insight-label">Jensen gap</span>
+        <strong id="jensen-gap">—</strong>
+      </div>
+      <div>
+        <span class="insight-label">Precautionary saving</span>
+        <strong id="precautionary-saving">—</strong>
+      </div>
+      <div>
+        <span class="insight-label">Current consumption change</span>
+        <strong id="current-consumption-change">—</strong>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <article class="chart-card">
+        <div class="chart-copy">
+          <span class="step-number">Step 1</span>
+          <h3>Risk before saving adjusts</h3>
+          <p>
+            Hold savings at its certainty level. The low and high consumption states spread around unchanged expected consumption. Convex marginal utility makes \(\mathbb{E}[u'(c_2)]\) rise above \(u'(\mathbb{E}[c_2])\).
+          </p>
+        </div>
+        <div id="partial-chart" class="chart" role="img" aria-label="Marginal utility graph before saving adjusts"></div>
+        <p class="chart-note" id="partial-chart-note"></p>
+      </article>
+
+      <article class="chart-card">
+        <div class="chart-copy">
+          <span class="step-number">Step 2</span>
+          <h3>Equilibrium after saving adjusts</h3>
+          <p>
+            The household lowers \(c_1\) and raises \(A\). This shifts both \(c_2^L\) and \(c_2^H\) to the right until current marginal utility equals expected future marginal utility.
+          </p>
+        </div>
+        <div id="equilibrium-chart" class="chart" role="img" aria-label="Marginal utility graph after precautionary saving adjusts"></div>
+        <p class="chart-note" id="equilibrium-chart-note"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="comparison-section reveal delay-280" aria-labelledby="comparison-title">
+    <h2 id="comparison-title" class="section-title">4. Certainty and Uncertainty Compared</h2>
+    <p class="comparison-introduction">
+      The table reports the certainty allocation and the fully adjusted uncertain equilibrium. Precautionary saving is the increase in \(A\) caused by the income risk.
+    </p>
+
+    <div class="table-wrap">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th scope="col">Variable</th>
+            <th scope="col">Certainty</th>
+            <th scope="col">Uncertainty</th>
+            <th scope="col">Change</th>
+          </tr>
+        </thead>
+        <tbody id="comparison-body"></tbody>
+      </table>
+    </div>
+
+    <div class="takeaway" id="takeaway" aria-live="polite"></div>
+  </section>
+</section>
+
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/ag-website/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/ag-website/assets/js/uncertainty.js" defer></script>
+  
+</body>
+</html>
