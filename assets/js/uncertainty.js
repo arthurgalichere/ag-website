@@ -27,7 +27,19 @@
     certaintyCase: byId('certainty-equation'),
     uncertaintyCase: byId('uncertainty-equation'),
     certaintyStatus: byId('certainty-status'),
-    uncertaintyStatus: byId('uncertainty-status')
+    uncertaintyStatus: byId('uncertainty-status'),
+    /* Section 1: Euler equation under certainty. */
+    certGamma: byId('certainty-gamma-slider'),
+    certReturn: byId('certainty-return-slider'),
+    certGammaOutput: byId('certainty-gamma-output'),
+    certReturnOutput: byId('certainty-return-output'),
+    certChart: byId('certainty-chart'),
+    certNote: byId('certainty-chart-note'),
+    certEquation: byId('certainty-equation-line'),
+    certC1: byId('certainty-c1'),
+    certC2: byId('certainty-c2'),
+    certGrowth: byId('certainty-growth'),
+    certSaving: byId('certainty-saving')
   };
 
   const readNumber = (value, fallback) => {
@@ -105,6 +117,17 @@
     };
   }
 
+  /* Section 1, no risk: u'(c1) = β(1+r) u'(c2) gives c2/c1 = [β(1+r)]^(1/γ).
+     β stays at its data-* value, so moving β(1+r) moves the interest rate. */
+  function solveCertainty(betaR, gamma) {
+    const gross = betaR / P.beta;
+    const growth = Math.pow(betaR, 1 / gamma);
+    const wealth = P.W1 + P.W / gross;
+    const c1 = wealth / (1 + growth / gross);
+    const c2 = growth * c1;
+    return { betaR, gamma, r: gross - 1, c1, c2, growth, A: P.W1 - c1 };
+  }
+
   /* ---------- Formatting ---------- */
 
   const isZero = value => Math.abs(value) < 5e-7;
@@ -140,7 +163,6 @@
   const WIDTH = 560;
   const HEIGHT = 420;
   const MARGIN = { top: 36, right: 22, bottom: 78, left: 24 };
-  const AXIS_Y = HEIGHT - MARGIN.bottom;
 
   /* Text scale set in uncertainty.css (larger on phones). */
   const textScale = () => readNumber(
@@ -153,39 +175,44 @@
     return node;
   }
 
-  /* Both charts share one consumption axis, so shifts can be compared.
+  /* Section 3: both charts share one consumption axis, so shifts can be compared.
      Each chart caps its vertical axis just above its own highest marked
      point; the curve is clipped beyond it, so steep curvature (large γ,
      large ε) does not flatten everything else. */
-  function chartScales(model, lowestMarked) {
-    const { fixedSaving: f, uncertainty: u, certainty: c } = model;
-    const points = [f.c2Low, f.c2High, f.meanC2, model.impliedC1,
-      u.c2Low, u.c2High, u.meanC2, u.c1, c.c1].filter(v => Number.isFinite(v) && v > 0);
-    const low = Math.min(...points);
-    const high = Math.max(...points);
+  function chartScales({ points, gamma, lowestMarked, width = WIDTH, height = HEIGHT, domain = null }) {
+    const valid = points.filter(v => Number.isFinite(v) && v > 0);
+    const low = Math.min(...valid);
+    const high = Math.max(...valid);
     const pad = Math.max(1, 0.14 * (high - low));
-    const xMin = Math.max(0.05, low - pad);
-    const xMax = high + pad;
-    const yMax = 1.22 * mu(lowestMarked, model.gamma);
-    const plotWidth = WIDTH - MARGIN.left - MARGIN.right;
-    const plotHeight = AXIS_Y - MARGIN.top;
+    const xMin = domain ? domain[0] : Math.max(0.05, low - pad);
+    const xMax = domain ? domain[1] : high + pad;
+    const yMax = 1.22 * mu(lowestMarked, gamma);
+    const axisY = height - MARGIN.bottom;
+    const plotWidth = width - MARGIN.left - MARGIN.right;
+    const plotHeight = axisY - MARGIN.top;
 
     return {
+      width,
+      height,
+      axisY,
       xMin,
       xMax,
       x: value => MARGIN.left + (value - xMin) / (xMax - xMin) * plotWidth,
-      y: value => AXIS_Y - Math.min(value, yMax * 1.05) / yMax * plotHeight,
+      y: value => axisY - Math.min(value, yMax * 1.05) / yMax * plotHeight,
       isVisible: value => value <= yMax
     };
   }
 
   function baseChart(id, scales, gamma) {
-    const svg = el('svg', { viewBox: `0 0 ${WIDTH} ${HEIGHT}`, 'aria-hidden': 'true', focusable: 'false' });
+    const W = scales.width;
+    const H = scales.height;
+    const AXIS_Y = scales.axisY;
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, 'aria-hidden': 'true', focusable: 'false' });
     const defs = el('defs');
     const clip = el('clipPath', { id: `${id}-clip` });
     clip.appendChild(el('rect', {
       x: MARGIN.left, y: MARGIN.top - 4,
-      width: WIDTH - MARGIN.left - MARGIN.right, height: AXIS_Y - MARGIN.top + 4
+      width: W - MARGIN.left - MARGIN.right, height: AXIS_Y - MARGIN.top + 4
     }));
     const marker = el('marker', {
       id: `${id}-arrow`, viewBox: '0 0 10 10', refX: '9', refY: '5',
@@ -196,8 +223,8 @@
     svg.appendChild(defs);
 
     svg.appendChild(el('line', { x1: MARGIN.left, y1: MARGIN.top - 10, x2: MARGIN.left, y2: AXIS_Y, class: 'chart-axis' }));
-    svg.appendChild(el('line', { x1: MARGIN.left, y1: AXIS_Y, x2: WIDTH - MARGIN.right, y2: AXIS_Y, class: 'chart-axis' }));
-    svg.appendChild(el('text', { x: WIDTH - MARGIN.right, y: HEIGHT - 8, 'text-anchor': 'end', class: 'chart-axis-label' }, 'consumption, c'));
+    svg.appendChild(el('line', { x1: MARGIN.left, y1: AXIS_Y, x2: W - MARGIN.right, y2: AXIS_Y, class: 'chart-axis' }));
+    svg.appendChild(el('text', { x: W - MARGIN.right, y: H - 8, 'text-anchor': 'end', class: 'chart-axis-label' }, 'consumption, c'));
     svg.appendChild(el('text', { x: MARGIN.left + 6, y: MARGIN.top - 16, 'text-anchor': 'start', class: 'chart-axis-label' }, 'marginal utility, u′(c)'));
 
     let path = '';
@@ -209,6 +236,7 @@
 
     return {
       svg,
+      axisY: AXIS_Y,
       arrowId: `${id}-arrow`,
       line(x1, y1, x2, y2, className, arrow = false) {
         const attributes = { x1, y1, x2, y2, class: className };
@@ -242,7 +270,7 @@
     const k = textScale();
     const rowEnds = [];
     groups.forEach(group => {
-      group.items.forEach(item => chart.line(item.x, AXIS_Y, item.x, item.y, `chart-guide ${item.tone}`));
+      group.items.forEach(item => chart.line(item.x, chart.axisY, item.x, item.y, `chart-guide ${item.tone}`));
       chart.point(group.x, group.y);
 
       const label = group.items.map(item => item.label).join(' = ');
@@ -251,7 +279,7 @@
       if (row === -1) row = rowEnds.length;
       rowEnds[row] = group.x + halfWidth;
       const tone = group.items.length === 1 ? group.items[0].tone : '';
-      chart.text(group.x, AXIS_Y + (20 + row * 16) * k, label, `chart-label ${tone}`);
+      chart.text(group.x, chart.axisY + (20 + row * 16) * k, label, `chart-label ${tone}`);
     });
 
     return Object.fromEntries(placed.map(guide => [guide.key, guide]));
@@ -267,7 +295,7 @@
     sorted.forEach((level, index) => {
       chart.line(MARGIN.left, level.y, level.toX, level.y, `chart-guide ${level.tone}`);
       const wanted = index === 0 ? level.y - 7 : level.y + 15 * k;
-      const y = Math.min(Math.max(wanted, previous + 13 * k, MARGIN.top + 8 * k), AXIS_Y - 6);
+      const y = Math.min(Math.max(wanted, previous + 13 * k, MARGIN.top + 8 * k), chart.axisY - 6);
       previous = y;
       chart.text(MARGIN.left + 6, y, level.label, `chart-label-small ${level.tone}`, 'start');
     });
@@ -276,7 +304,7 @@
   /* Short arrow just above the axis showing how a consumption level moves. */
   function drawShift(chart, fromX, toX, row, label) {
     if (Math.abs(toX - fromX) < 14) return;
-    const y = AXIS_Y - (12 + row * 16) * textScale();
+    const y = chart.axisY - (12 + row * 16) * textScale();
     const direction = Math.sign(toX - fromX);
     chart.line(fromX, y, toX - direction * 2, y, 'chart-guide is-ghost', true);
     if (label) chart.text((fromX + toX) / 2, y - 5, label, 'chart-label-small');
@@ -284,9 +312,53 @@
 
   /* ---------- Charts ---------- */
 
+  const uncertaintyPoints = model => {
+    const { fixedSaving: f, uncertainty: u, certainty: c } = model;
+    return [f.c2Low, f.c2High, f.meanC2, model.impliedC1, u.c2Low, u.c2High, u.meanC2, u.c1, c.c1];
+  };
+
+  /* Section 1. Fixed consumption range, so c1 and c2 visibly move. */
+  function renderCertaintyChart(model) {
+    const { gamma, c1, c2, betaR } = model;
+    const wide = ui.certChart.clientWidth > 600;
+    const scales = chartScales({
+      points: [c1, c2], gamma, lowestMarked: Math.min(c1, c2),
+      width: wide ? 980 : WIDTH, height: wide ? 380 : HEIGHT, domain: [7, 13.5]
+    });
+    const chart = baseChart('certainty', scales, gamma);
+    const g = drawGuides(chart, scales, gamma, [
+      { key: 'c1', c: c1, label: 'c₁', tone: 'is-current' },
+      { key: 'c2', c: c2, label: 'c₂', tone: 'is-mean' }
+    ]);
+
+    const equal = Math.abs(g.c1.y - g.c2.y) < 0.5;
+    drawLevels(chart, equal
+      ? [{ y: g.c1.y, toX: g.c2.x, tone: 'is-current', label: 'u′(c₁) = u′(c₂)' }]
+      : [
+        { y: g.c1.y, toX: g.c1.x, tone: 'is-current', label: 'u′(c₁)' },
+        { y: g.c2.y, toX: g.c2.x, tone: 'is-mean', label: 'u′(c₂)' }
+      ]);
+
+    ui.certEquation.textContent =
+      `u′(c₁) / u′(c₂) = β(1+r) = ${betaR.toFixed(2)}   ⇒   c₂ / c₁ = ${model.growth.toFixed(3)}`;
+
+    ui.certChart.replaceChildren(chart.svg);
+
+    const note = betaR === 1
+      ? `With β(1+r) = 1, the Euler equation requires u′(c₁) = u′(c₂), so consumption is perfectly smoothed: c₁ = c₂ = ${formatNumber(c1)}.`
+      : `With β(1+r) = ${betaR.toFixed(2)} (r = ${formatPercent(model.r)}), marginal utility today must be ${betaR.toFixed(2)} times marginal utility tomorrow. Because u′ is decreasing, c₂ = ${formatNumber(c2)} lies above c₁ = ${formatNumber(c1)}. A higher γ makes u′ steeper, so a smaller consumption gap is enough.`;
+    ui.certNote.textContent = note;
+    ui.certChart.setAttribute('aria-label', `Marginal utility curve with the certainty Euler equation. ${note}`);
+
+    ui.certC1.textContent = formatNumber(c1);
+    ui.certC2.textContent = formatNumber(c2);
+    ui.certGrowth.textContent = formatNumber(model.growth);
+    ui.certSaving.textContent = formatSigned(model.A);
+  }
+
   function renderPartialChart(model) {
     const { gamma, fixedSaving: s, certainty } = model;
-    const scales = chartScales(model, Math.min(s.c2Low, model.impliedC1));
+    const scales = chartScales({ points: uncertaintyPoints(model), gamma, lowestMarked: Math.min(s.c2Low, model.impliedC1) });
     const chart = baseChart('partial', scales, gamma);
     const hasRisk = model.epsilon > 0;
 
@@ -329,7 +401,7 @@
 
   function renderEquilibriumChart(model) {
     const { gamma, fixedSaving: f, uncertainty: u, certainty } = model;
-    const scales = chartScales(model, Math.min(u.c2Low, u.c1));
+    const scales = chartScales({ points: uncertaintyPoints(model), gamma, lowestMarked: Math.min(u.c2Low, u.c1) });
     const chart = baseChart('equilibrium', scales, gamma);
     const hasRisk = model.epsilon > 0;
 
@@ -463,13 +535,38 @@
     }
   }
 
-  let frame = 0;
-  const scheduleRender = () => {
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(render);
-  };
+  function renderCertainty() {
+    const gamma = Number(ui.certGamma.value);
+    const betaR = Number(ui.certReturn.value);
+    ui.certGammaOutput.value = gamma.toFixed(1);
+    ui.certReturnOutput.value = betaR.toFixed(2);
+    renderCertaintyChart(solveCertainty(betaR, gamma));
+  }
+
+  /* Redraw at most once per frame while a slider moves. */
+  function throttled(callback) {
+    let frame = 0;
+    return () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(callback);
+    };
+  }
+
+  const scheduleRender = throttled(render);
+  const scheduleCertainty = throttled(renderCertainty);
 
   ui.epsilon.addEventListener('input', scheduleRender);
   ui.gamma.addEventListener('input', scheduleRender);
+  ui.certGamma.addEventListener('input', scheduleCertainty);
+  ui.certReturn.addEventListener('input', scheduleCertainty);
+
+  /* The certainty chart is wider on large screens; text size changes on phones. */
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { renderCertainty(); render(); }, 150);
+  });
+
+  renderCertainty();
   render();
 })();

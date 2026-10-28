@@ -26,17 +26,18 @@
 
 /* --- Sections 1 and 2: model cards and equations -------- */
 
-.overview-grid,
-.crra-summary,
+/* Model cards sit one below the other. */
+.model-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Side-by-side pairs: the two Euler equations and the two charts. */
 .equation-case-grid,
 .chart-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-}
-
-.overview-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .model-card,
@@ -49,8 +50,7 @@
 }
 
 .model-card h3,
-.panel h3,
-.chart-copy h3 {
+.chart-head h3 {
   margin-bottom: 0.75rem;
   color: var(--accent-strong);
   font-family: var(--display);
@@ -59,7 +59,6 @@
 }
 
 .model-card p,
-.panel p,
 .chart-copy p,
 .normalisation-note {
   color: var(--ink-soft);
@@ -86,12 +85,15 @@
   color: var(--ink);
 }
 
-.panel.derivation-panel {
-  margin-top: 1rem;
+/* Text between equations inside a card. */
+.model-card .equation-block + p,
+.model-card p + .equation-block {
+  margin-top: 0.6rem;
 }
 
-.crra-summary .panel {
-  min-width: 0;
+/* Interactive block that follows the model cards in section 1. */
+.model-stack + .subsection-title {
+  margin-top: 2.5rem;
 }
 
 .normalisation-note {
@@ -217,11 +219,17 @@
   font-size: 0.68rem;
 }
 
+/* Sliders sit right above the charts; the live values right below. */
+.control-panel + .chart-card,
+.control-panel + .chart-key {
+  margin-top: 1rem;
+}
+
 .insight-strip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   gap: 0.75rem;
-  margin: 1rem 0;
+  margin-top: 1rem;
 }
 
 .insight-strip > div {
@@ -280,15 +288,36 @@
   border-radius: 50%;
 }
 
-/* Side by side, the two cards share rows (text, chart, note),
-   so the charts line up even when the texts differ in length. */
+/* Title, chart, explanation, live note. Side by side, the two cards
+   share these rows, so the charts line up. */
 .chart-card {
   display: grid;
-  grid-row: span 3;
+  grid-row: span 4;
   grid-template-rows: subgrid;
   row-gap: 0;
   align-content: start;
   background: var(--sheet);
+}
+
+.chart-card.is-single {
+  grid-template-rows: none;
+}
+
+.chart-head h3 {
+  margin-bottom: 0;
+}
+
+.chart-copy {
+  margin-top: 1rem;
+}
+
+/* Live Euler equation above the certainty chart. */
+.chart-equation {
+  margin-top: 0.5rem;
+  color: var(--accent-strong);
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  white-space: pre-wrap;
 }
 
 .step-number {
@@ -458,7 +487,6 @@
 /* --- Responsive ------------------------------------------ */
 
 @media (max-width: 900px) {
-  .overview-grid,
   .chart-grid {
     grid-template-columns: 1fr;
   }
@@ -466,8 +494,6 @@
 
 @media (max-width: 768px) {
   .control-panel,
-  .insight-strip,
-  .crra-summary,
   .equation-case-grid {
     grid-template-columns: 1fr;
   }
@@ -489,7 +515,11 @@
   }
 
   .chart {
-    --chart-text-scale: 1.5;
+    --chart-text-scale: 1.7;
+  }
+
+  .insight-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
