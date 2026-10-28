@@ -76,7 +76,7 @@
   </a>
 </nav>
 
-      <!-- Model parameters read by uncertainty.js. The text in sections 1 and 3 states the same values. -->
+      <!-- Model parameters read by uncertainty.js. The text in sections 2 and 4 states the same values. -->
 <section
   class="page-body uncertainty-body"
   data-w1="10"
@@ -93,13 +93,81 @@
     <p class="eyebrow">EC9D5 · Advanced Macroeconomics</p>
     <h1 class="page-title">Uncertainty, the Euler Equation, and Precautionary Saving</h1>
     <p class="lead">
-      This page starts from the two-period consumption–saving problem under certainty, then adds a mean-preserving income risk. The interactive graphs separate the immediate effect of the risk on expected marginal utility from the household’s equilibrium saving response.
+      This page introduces the isoelastic utility function, solves the two-period consumption–saving problem under certainty, then adds a mean-preserving income risk. The interactive graphs separate the immediate effect of the risk on expected marginal utility from the household’s equilibrium saving response.
     </p>
   </header>
 
   <!-- ===================================================== -->
-  <section class="content-section reveal delay-120" aria-labelledby="certainty-title">
-    <h2 id="certainty-title" class="section-title">1. Model Overview under Certainty</h2>
+  <section class="content-section reveal delay-120" aria-labelledby="utility-title">
+    <h2 id="utility-title" class="section-title">1. The Isoelastic Utility Function</h2>
+
+    <div class="model-stack">
+      <article class="model-card has-figure">
+        <div class="model-card-text">
+          <span class="model-card-label">Preferences</span>
+          <h3>Isoelastic utility</h3>
+          <div class="equation-block">
+            \[
+              u(c)=
+              \begin{cases}
+                \dfrac{c^{1-\gamma}-1}{1-\gamma}, & \gamma\neq1,\\[1ex]
+                \ln(c), & \gamma=1,
+              \end{cases}
+              \qquad \gamma&gt;0,
+            \]
+            \[
+              u'(c)=c^{-\gamma}&gt;0,
+              \qquad
+              u''(c)=-\gamma c^{-\gamma-1}&lt;0,
+            \]
+            \[
+              u'''(c)=\gamma(\gamma+1)c^{-\gamma-2}&gt;0,
+              \qquad
+              -\frac{c\,u''(c)}{u'(c)}=\gamma .
+            \]
+          </div>
+          <p>Utility is increasing and concave. The parameter \(\gamma\) determines its curvature, and that curvature, \(-c\,u''(c)/u'(c)\), is the same at every level of consumption, hence “isoelastic”. Every curve passes through \(u(1)=0\) with slope \(u'(1)=1\), so the graph isolates the effect of \(\gamma\).</p>
+        </div>
+
+        <figure class="model-card-figure">
+          <div class="control">
+            <label class="control-heading" for="utility-gamma-slider">
+              <span>Curvature, \(\gamma\)</span>
+              <output id="utility-gamma-output" for="utility-gamma-slider">2.0</output>
+            </label>
+            <input id="utility-gamma-slider" type="range" min="0.5" max="5" step="0.1" value="2" />
+            <span class="control-scale" aria-hidden="true"><span>Almost linear</span><span>More curved</span></span>
+          </div>
+          <div id="utility-chart" class="chart" role="img" aria-label="Isoelastic utility function"></div>
+          <figcaption class="chart-note" id="utility-chart-note"></figcaption>
+        </figure>
+      </article>
+
+      <article class="model-card">
+        <span class="model-card-label">Interpretation</span>
+        <h3>What \(\gamma\) measures</h3>
+        <dl class="gamma-roles">
+          <div>
+            <dt>Over time: a dynamic problem under certainty</dt>
+            <dd>\(\gamma\) is the inverse of the elasticity of intertemporal substitution, \(\text{EIS}=1/\gamma\). It sets the curvature of the instantaneous utility function, and therefore of the value function, and measures how strongly the household wants to smooth consumption across periods.</dd>
+          </div>
+          <div>
+            <dt>Across states: uncertainty</dt>
+            <dd>\(\gamma\) is the coefficient of relative risk aversion, \(-c\,u''(c)/u'(c)\). The same curvature now measures how much the household dislikes consumption that varies across states of the world, hence the name constant relative risk aversion (CRRA).</dd>
+          </div>
+          <div>
+            <dt>Both at once: a dynamic problem with uncertainty</dt>
+            <dd>One parameter does both jobs. Choosing a degree of risk aversion fixes the EIS at its inverse, and vice versa, although the data may call for quite different values of the two. Recursive (Epstein–Zin) preferences relax this restriction by separating them.</dd>
+          </div>
+        </dl>
+        <p>The third derivative matters too: prudence, \(-c\,u'''(c)/u''(c)=\gamma+1\), drives the precautionary saving studied in sections 3 to 5.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-140" aria-labelledby="certainty-title">
+    <h2 id="certainty-title" class="section-title">2. Model Overview under Certainty</h2>
 
     <div class="model-stack">
       <article class="model-card">
@@ -110,7 +178,7 @@
             \max_{A}\; u(c_1)+\beta\,u(c_2)
           \]
         </div>
-        <p>The household chooses saving \(A\) in period 1. Income \(W_1\) and \(W_2\) are known with certainty.</p>
+        <p>The household chooses saving \(A\) in period 1. Income \(W_1\) and \(W_2\) is known with certainty, and \(u\) is any increasing, concave utility function.</p>
       </article>
 
       <article class="model-card">
@@ -149,57 +217,42 @@
       </article>
 
       <article class="model-card">
-        <span class="model-card-label">Preferences</span>
-        <h3>Isoelastic (CRRA) utility</h3>
-        <div class="equation-block">
-          \[
-            u(c)=
-            \begin{cases}
-              \dfrac{c^{1-\gamma}-1}{1-\gamma}, & \gamma\neq1,\\[1ex]
-              \ln(c), & \gamma=1,
-            \end{cases}
-            \qquad \gamma&gt;0,
-          \]
-          \[
-            u'(c)=c^{-\gamma},
-            \qquad
-            u''(c)=-\gamma c^{-\gamma-1}&lt;0,
-            \qquad
-            u'''(c)=\gamma(\gamma+1)c^{-\gamma-2}&gt;0.
-          \]
-        </div>
-        <p>Marginal utility is decreasing and convex; the larger \(\gamma\), the more curved it is. Substituting into the Euler equation:</p>
+        <span class="model-card-label">Optimality condition</span>
+        <h3>Euler equation with isoelastic utility</h3>
         <div class="equation-block">
           \[
             c_1^{-\gamma}=\beta(1+r)\,c_2^{-\gamma}
             \quad\Longrightarrow\quad
-            \frac{c_2}{c_1}=\left[\beta(1+r)\right]^{1/\gamma}.
+            \frac{c_2}{c_1}=\left[\beta(1+r)\right]^{1/\gamma},
+          \]
+          \[
+            \ln\frac{c_2}{c_1}=\frac{1}{\gamma}\,\ln\left[\beta(1+r)\right].
           \]
         </div>
-        <p>The elasticity of intertemporal substitution is \(1/\gamma\): the more curved marginal utility, the less consumption growth responds to \(\beta(1+r)\).</p>
+        <p>With no uncertainty, \(\gamma\) plays only its intertemporal role: consumption growth responds to \(\beta(1+r)\) with elasticity \(\text{EIS}=1/\gamma\). If \(\beta(1+r)=1\), consumption is perfectly smoothed; above 1 it rises over time, below 1 it falls.</p>
       </article>
     </div>
 
     <h3 class="subsection-title">The Euler equation on the marginal-utility curve</h3>
-    <p class="section-introduction">Choose \(\gamma\) and \(\beta(1+r)\). Income is \(W_1=W_2=10\) and \(\beta=1\), so moving \(\beta(1+r)\) changes the interest rate \(r\).</p>
+    <p class="section-introduction">Choose \(\gamma\) and \(\beta(1+r)\). Income is \(W_1=W_2=10\) and \(r=0\), so moving \(\beta(1+r)\) changes the discount factor \(\beta\) while the budget constraint stays \(c_1+c_2=20\). Only the product \(\beta(1+r)\) enters the Euler equation.</p>
 
     <div class="control-panel" aria-label="Certainty model controls">
       <div class="control">
         <label class="control-heading" for="certainty-gamma-slider">
-          <span>Relative risk aversion, \(\gamma\)</span>
+          <span>Curvature, \(\gamma\) (EIS \(=1/\gamma\))</span>
           <output id="certainty-gamma-output" for="certainty-gamma-slider">2.0</output>
         </label>
         <input id="certainty-gamma-slider" type="range" min="0.5" max="5" step="0.1" value="2" />
-        <span class="control-scale" aria-hidden="true"><span>Flatter marginal utility</span><span>More curvature</span></span>
+        <span class="control-scale" aria-hidden="true"><span>High EIS</span><span>Low EIS</span></span>
       </div>
 
       <div class="control">
         <label class="control-heading" for="certainty-return-slider">
           <span>Discounted return, \(\beta(1+r)\)</span>
-          <output id="certainty-return-output" for="certainty-return-slider">1.10</output>
+          <output id="certainty-return-output" for="certainty-return-slider">1.00</output>
         </label>
-        <input id="certainty-return-slider" type="range" min="1" max="1.2" step="0.01" value="1.1" />
-        <span class="control-scale" aria-hidden="true"><span>Perfect smoothing</span><span>Rising consumption</span></span>
+        <input id="certainty-return-slider" type="range" min="0.85" max="1.15" step="0.01" value="1" />
+        <span class="control-scale" aria-hidden="true"><span>Falling consumption</span><span>Rising consumption</span></span>
       </div>
     </div>
 
@@ -237,7 +290,7 @@
 
   <!-- ===================================================== -->
   <section class="content-section reveal delay-160" aria-labelledby="uncertainty-title">
-    <h2 id="uncertainty-title" class="section-title">2. Model Overview under Uncertainty</h2>
+    <h2 id="uncertainty-title" class="section-title">3. Model Overview under Uncertainty</h2>
 
     <div class="model-stack">
       <article class="model-card">
@@ -311,7 +364,7 @@
       </article>
     </div>
 
-    <p class="normalisation-note">With CRRA utility and, for the interactive exercise below, \(\beta(1+r)=1\), the relevant Euler equation depends on whether \(\varepsilon\) is zero or positive.</p>
+    <p class="normalisation-note">With isoelastic utility, \(\gamma\) is now also the coefficient of relative risk aversion. For the interactive exercise below, \(\beta(1+r)=1\), so the relevant Euler equation depends only on whether \(\varepsilon\) is zero or positive.</p>
 
     <div class="equation-case-grid">
       <article id="certainty-equation" class="equation-case is-active">
@@ -350,14 +403,14 @@
         \[
           \mathbb{E}\left[u'(c_2^s)\right]&gt;u'\!\left(\mathbb{E}[c_2^s]\right).
         \]
-        Expected marginal utility rises, so the household reduces \(c_1\) and increases saving until the uncertain Euler equation holds again. This is precautionary saving. It requires \(u'''&gt;0\) (prudence), which CRRA utility always satisfies.
+        Expected marginal utility rises, so the household reduces \(c_1\) and increases saving until the uncertain Euler equation holds again. This is precautionary saving. It requires \(u'''&gt;0\) (prudence), which isoelastic utility always satisfies.
       </div>
     </div>
   </section>
 
   <!-- ===================================================== -->
   <section class="content-section reveal delay-220" aria-labelledby="interactive-title">
-    <h2 id="interactive-title" class="section-title">3. Interactive Decomposition under Uncertainty</h2>
+    <h2 id="interactive-title" class="section-title">4. Interactive Decomposition under Uncertainty</h2>
     <p class="section-introduction">Change the income shock and the curvature of marginal utility. The remaining values are fixed at \(W_1=W=10\), \(r=0\) and \(\beta=1\).</p>
 
     <div class="control-panel" aria-label="Uncertainty model controls">
@@ -372,7 +425,7 @@
 
       <div class="control">
         <label class="control-heading" for="gamma-slider">
-          <span>Relative risk aversion, \(\gamma\)</span>
+          <span>Risk aversion, \(\gamma\) (EIS \(=1/\gamma\))</span>
           <output id="gamma-output" for="gamma-slider">2.0</output>
         </label>
         <input id="gamma-slider" type="range" min="0.5" max="5" step="0.1" value="2" />
@@ -431,9 +484,9 @@
 
   <!-- ===================================================== -->
   <section class="content-section reveal delay-280" aria-labelledby="comparison-title">
-    <h2 id="comparison-title" class="section-title">4. Certainty and Uncertainty Compared</h2>
+    <h2 id="comparison-title" class="section-title">5. Certainty and Uncertainty Compared</h2>
     <p class="section-introduction">
-      The table reports the certainty allocation and the fully adjusted equilibrium under uncertainty, for the \(\varepsilon\) and \(\gamma\) chosen in section 3. Precautionary saving is the increase in \(A\) caused by the income risk.
+      The table reports the certainty allocation and the fully adjusted equilibrium under uncertainty, for the \(\varepsilon\) and \(\gamma\) chosen in section 4. Precautionary saving is the increase in \(A\) caused by the income risk.
     </p>
 
     <div class="table-wrap">

@@ -85,6 +85,64 @@
   color: var(--ink);
 }
 
+/* Card with the formula on the left and a small interactive graph on the right. */
+.model-card.has-figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.model-card-text {
+  min-width: 0;
+}
+
+.model-card-figure {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 0;
+  padding: 1rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius);
+}
+
+.model-card-figure .chart {
+  margin-top: 0;
+}
+
+.model-card-figure .chart-note {
+  min-height: 0;
+  margin-top: 0;
+}
+
+/* The three roles of γ. */
+.gamma-roles {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.gamma-roles > div {
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--accent-border-strong);
+}
+
+.gamma-roles dt {
+  margin-bottom: 0.2rem;
+  color: var(--accent-strong);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.gamma-roles dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+
 /* Text between equations inside a card. */
 .model-card .equation-block + p,
 .model-card p + .equation-block {
@@ -368,6 +426,12 @@
   stroke-width: 2.4;
 }
 
+.chart-curve.is-reference {
+  stroke: var(--chart-ghost);
+  stroke-width: 1.4;
+  stroke-dasharray: 5 4;
+}
+
 .chart-chord {
   fill: none;
   stroke: var(--muted);
@@ -487,6 +551,7 @@
 /* --- Responsive ------------------------------------------ */
 
 @media (max-width: 900px) {
+  .model-card.has-figure,
   .chart-grid {
     grid-template-columns: 1fr;
   }

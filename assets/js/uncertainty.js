@@ -39,7 +39,12 @@
     certC1: byId('certainty-c1'),
     certC2: byId('certainty-c2'),
     certGrowth: byId('certainty-growth'),
-    certSaving: byId('certainty-saving')
+    certSaving: byId('certainty-saving'),
+    /* Section 1: the utility function. */
+    utilGamma: byId('utility-gamma-slider'),
+    utilGammaOutput: byId('utility-gamma-output'),
+    utilChart: byId('utility-chart'),
+    utilNote: byId('utility-chart-note')
   };
 
   const readNumber = (value, fallback) => {
@@ -117,15 +122,16 @@
     };
   }
 
-  /* Section 1, no risk: u'(c1) = β(1+r) u'(c2) gives c2/c1 = [β(1+r)]^(1/γ).
-     β stays at its data-* value, so moving β(1+r) moves the interest rate. */
+  /* Section 2, no risk: u'(c1) = β(1+r) u'(c2) gives c2/c1 = [β(1+r)]^(1/γ).
+     r stays at its data-* value (0), so moving β(1+r) moves β and the
+     budget constraint does not change. */
   function solveCertainty(betaR, gamma) {
-    const gross = betaR / P.beta;
+    const gross = R;
     const growth = Math.pow(betaR, 1 / gamma);
     const wealth = P.W1 + P.W / gross;
     const c1 = wealth / (1 + growth / gross);
     const c2 = growth * c1;
-    return { betaR, gamma, r: gross - 1, c1, c2, growth, A: P.W1 - c1 };
+    return { betaR, gamma, beta: betaR / gross, c1, c2, growth, A: P.W1 - c1 };
   }
 
   /* ---------- Formatting ---------- */
@@ -317,7 +323,57 @@
     return [f.c2Low, f.c2High, f.meanC2, model.impliedC1, u.c2Low, u.c2High, u.meanC2, u.c1, c.c1];
   };
 
-  /* Section 1. Fixed consumption range, so c1 and c2 visibly move. */
+  /* Section 1. u(c) normalised so that u(1) = 0 and u'(1) = 1 for every γ;
+     the log case (γ = 1) is drawn faintly for reference. */
+  const utility = (c, gamma) => (Math.abs(gamma - 1) < 1e-9 ? Math.log(c) : (Math.pow(c, 1 - gamma) - 1) / (1 - gamma));
+
+  function renderUtilityChart(gamma) {
+    const W = 480;
+    const H = 340;
+    const M = { top: 30, right: 18, bottom: 34, left: 34 };
+    const cMin = 0.15;
+    const cMax = 4;
+    const uMin = -3;
+    const uMax = 2.2;
+    const x = c => M.left + (c - 0) / (cMax - 0) * (W - M.left - M.right);
+    const y = u => M.top + (uMax - u) / (uMax - uMin) * (H - M.top - M.bottom);
+    const k = readNumber(getComputedStyle(ui.utilChart).getPropertyValue('--chart-text-scale'), 1) || 1;
+
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, 'aria-hidden': 'true', focusable: 'false' });
+    const clip = el('clipPath', { id: 'utility-clip' });
+    clip.appendChild(el('rect', { x: M.left, y: M.top, width: W - M.left - M.right, height: H - M.top - M.bottom }));
+    const defs = el('defs');
+    defs.appendChild(clip);
+    svg.appendChild(defs);
+
+    const curve = g => {
+      let d = '';
+      for (let i = 0; i <= 200; i += 1) {
+        const c = cMin + (cMax - cMin) * i / 200;
+        d += `${i ? 'L' : 'M'}${x(c).toFixed(2)} ${y(Math.max(utility(c, g), uMin - 1)).toFixed(2)} `;
+      }
+      return d;
+    };
+
+    svg.appendChild(el('line', { x1: x(0), y1: M.top - 8, x2: x(0), y2: H - M.bottom, class: 'chart-axis' }));
+    svg.appendChild(el('line', { x1: x(0), y1: y(0), x2: W - M.right, y2: y(0), class: 'chart-axis' }));
+    svg.appendChild(el('text', { x: W - M.right, y: y(0) + 18 * k, 'text-anchor': 'end', class: 'chart-axis-label' }, 'consumption, c'));
+    svg.appendChild(el('text', { x: x(0) + 6, y: M.top - 12, 'text-anchor': 'start', class: 'chart-axis-label' }, 'utility, u(c)'));
+
+    svg.appendChild(el('path', { d: curve(1), class: 'chart-curve is-reference', 'clip-path': 'url(#utility-clip)' }));
+    svg.appendChild(el('path', { d: curve(gamma), class: 'chart-curve', 'clip-path': 'url(#utility-clip)' }));
+    svg.appendChild(el('circle', { cx: x(1), cy: y(0), r: 4, class: 'chart-point' }));
+    svg.appendChild(el('text', { x: x(1), y: y(0) + 18 * k, 'text-anchor': 'middle', class: 'chart-label' }, '1'));
+    svg.appendChild(el('text', { x: x(3.2), y: y(utility(3.2, 1)) + 18 * k, 'text-anchor': 'middle', class: 'chart-label-small' }, 'γ = 1 (log)'));
+
+    ui.utilChart.replaceChildren(svg);
+
+    const note = `γ = ${gamma.toFixed(1)}: EIS = 1/γ = ${(1 / gamma).toFixed(2)}; under uncertainty, relative risk aversion = ${gamma.toFixed(1)} and prudence = ${(gamma + 1).toFixed(1)}.`;
+    ui.utilNote.textContent = note;
+    ui.utilChart.setAttribute('aria-label', `Isoelastic utility function with the log case for reference. ${note}`);
+  }
+
+  /* Section 2. Fixed consumption range, so c1 and c2 visibly move. */
   function renderCertaintyChart(model) {
     const { gamma, c1, c2, betaR } = model;
     const wide = ui.certChart.clientWidth > 600;
@@ -344,9 +400,15 @@
 
     ui.certChart.replaceChildren(chart.svg);
 
-    const note = betaR === 1
-      ? `With β(1+r) = 1, the Euler equation requires u′(c₁) = u′(c₂), so consumption is perfectly smoothed: c₁ = c₂ = ${formatNumber(c1)}.`
-      : `With β(1+r) = ${betaR.toFixed(2)} (r = ${formatPercent(model.r)}), marginal utility today must be ${betaR.toFixed(2)} times marginal utility tomorrow. Because u′ is decreasing, c₂ = ${formatNumber(c2)} lies above c₁ = ${formatNumber(c1)}. A higher γ makes u′ steeper, so a smaller consumption gap is enough.`;
+    const ratio = betaR.toFixed(2);
+    let note;
+    if (Math.abs(betaR - 1) < 1e-9) {
+      note = `With β(1+r) = 1, the Euler equation requires u′(c₁) = u′(c₂), so consumption is perfectly smoothed: c₁ = c₂ = ${formatNumber(c1)}.`;
+    } else if (betaR > 1) {
+      note = `With β(1+r) = ${ratio}, the household is patient relative to the return: marginal utility today must be ${ratio} times marginal utility tomorrow. Because u′ is decreasing, c₂ = ${formatNumber(c2)} lies above c₁ = ${formatNumber(c1)}. A higher γ (lower EIS) makes u′ steeper, so a smaller consumption gap is enough.`;
+    } else {
+      note = `With β(1+r) = ${ratio}, the household is impatient relative to the return: marginal utility today must be only ${ratio} times marginal utility tomorrow. Because u′ is decreasing, c₁ = ${formatNumber(c1)} lies above c₂ = ${formatNumber(c2)}. A higher γ (lower EIS) makes u′ steeper, so a smaller consumption gap is enough.`;
+    }
     ui.certNote.textContent = note;
     ui.certChart.setAttribute('aria-label', `Marginal utility curve with the certainty Euler equation. ${note}`);
 
@@ -552,9 +614,17 @@
     };
   }
 
+  function renderUtility() {
+    const gamma = Number(ui.utilGamma.value);
+    ui.utilGammaOutput.value = gamma.toFixed(1);
+    renderUtilityChart(gamma);
+  }
+
   const scheduleRender = throttled(render);
+  const scheduleUtility = throttled(renderUtility);
   const scheduleCertainty = throttled(renderCertainty);
 
+  ui.utilGamma.addEventListener('input', scheduleUtility);
   ui.epsilon.addEventListener('input', scheduleRender);
   ui.gamma.addEventListener('input', scheduleRender);
   ui.certGamma.addEventListener('input', scheduleCertainty);
@@ -564,9 +634,10 @@
   let resizeTimer = 0;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { renderCertainty(); render(); }, 150);
+    resizeTimer = setTimeout(() => { renderUtility(); renderCertainty(); render(); }, 150);
   });
 
+  renderUtility();
   renderCertainty();
   render();
 })();
