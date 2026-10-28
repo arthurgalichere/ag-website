@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AG: Uncertainty and the Euler Equation</title>
+  <title>Uncertainty and the Euler Equation</title>
   <meta name="description" content="An interactive EC9D5 explanation of uncertainty, expected marginal utility, and precautionary saving in a two-period consumption model." />
 
   
@@ -76,8 +76,9 @@
   </a>
 </nav>
 
-      <section
-  class="uncertainty-body"
+      <!-- Model parameters read by uncertainty.js. The text in section 3 states the same values. -->
+<section
+  class="page-body uncertainty-body"
   data-w1="10"
   data-w2="10"
   data-beta="1"
@@ -88,7 +89,7 @@
     Back to Teaching
   </a>
 
-  <header class="uncertainty-header reveal delay-80">
+  <header class="reveal delay-80">
     <p class="eyebrow">EC9D5 · Advanced Macroeconomics</p>
     <h1 class="page-title">Uncertainty, the Euler Equation, and Precautionary Saving</h1>
     <p class="lead">
@@ -96,35 +97,34 @@
     </p>
   </header>
 
-  <section class="model-section reveal delay-120" aria-labelledby="model-title">
+  <section class="content-section reveal delay-120" aria-labelledby="model-title">
     <h2 id="model-title" class="section-title">1. Quick Model Overview</h2>
 
     <div class="overview-grid">
       <article class="model-card">
         <span class="model-card-label">Household problem</span>
-        <h3>Maximisation problem</h3>
+        <h3>Expected-utility maximisation</h3>
         <div class="equation-block">
           \[
-            \max_A\; u(c_1)+\beta\,\mathbb{E}[u(c_2)]
-          \]
-          \[
-            c_1=W_1-A, \qquad c_2=(1+r)A+W_2.
+            \max_{A}\; u(c_1)+\beta\,\mathbb{E}\left[u(c_2^s)\right]
           \]
         </div>
-        <p>The household chooses risk-free saving \(A\) in period 1, before period-2 income is realised.</p>
+        <p>The household chooses risk-free saving \(A\) in period 1, before period-2 income \(W_2^s\) is realised.</p>
       </article>
 
       <article class="model-card">
-        <span class="model-card-label">Resource constraint</span>
-        <h3>Intertemporal budget constraint</h3>
+        <span class="model-card-label">Constraints</span>
+        <h3>Budget constraints</h3>
         <div class="equation-block">
           \[
-            c_1+\frac{c_2^s}{1+r}
-            =W_1+\frac{W_2^s}{1+r},
+            c_1=W_1-A, \qquad c_2^s=(1+r)A+W_2^s,
+          \]
+          \[
+            c_1+\frac{c_2^s}{1+r}=W_1+\frac{W_2^s}{1+r},
             \qquad s\in\{L,H\}.
           \]
         </div>
-        <p>The present value of consumption equals the present value of resources in each possible income state.</p>
+        <p>Consumption in each period, and its present value in each possible income state, must match the household’s resources.</p>
       </article>
 
       <article class="model-card">
@@ -132,145 +132,142 @@
         <h3>Euler equation</h3>
         <div class="equation-block">
           \[
-            u'(c_1)=\beta(1+r)\,\mathbb{E}[u'(c_2)].
+            -u'(c_1)+\beta(1+r)\,\mathbb{E}\left[u'(c_2^s)\right]=0
+          \]
+          \[
+            \Longrightarrow\quad u'(c_1)=\beta(1+r)\,\mathbb{E}\left[u'(c_2^s)\right].
           \]
         </div>
-        <p>Current marginal utility equals the discounted expected return-weighted marginal utility of future consumption.</p>
+        <p>The marginal utility cost of saving one more unit today equals its discounted expected marginal utility gain tomorrow.</p>
       </article>
     </div>
 
-    <div class="derivation-panel">
+    <div class="panel derivation-panel">
       <h3>Mean-preserving income risk</h3>
-      <div class="equation-block equation-wide">
+      <div class="equation-block">
         \[
-          W_2=
+          W_2^s=
           \begin{cases}
-            W-\varepsilon & \text{with probability }1/2,\\
-            W+\varepsilon & \text{with probability }1/2,
+            W-\varepsilon & \text{with probability }1/2 \quad (s=L),\\
+            W+\varepsilon & \text{with probability }1/2 \quad (s=H),
           \end{cases}
-          \qquad \mathbb{E}[W_2]=W.
+          \qquad \mathbb{E}[W_2^s]=W.
         \]
         \[
-          c_2^L=(1+r)A+W-\varepsilon,
+          \mathbb{E}[c_2^s]=(1+r)A+W,
           \qquad
-          c_2^H=(1+r)A+W+\varepsilon,
-        \]
-        \[
-          \mathbb{E}[c_2]=(1+r)A+W,
+          c_2^L=\mathbb{E}[c_2^s]-\varepsilon,
           \qquad
-          c_2^L=\mathbb{E}[c_2]-\varepsilon,
-          \qquad
-          c_2^H=\mathbb{E}[c_2]+\varepsilon.
+          c_2^H=\mathbb{E}[c_2^s]+\varepsilon.
         \]
       </div>
-      <p>Increasing \(\varepsilon\) raises the dispersion of future income and consumption without changing their expected value before saving adjusts.</p>
+      <p>Increasing \(\varepsilon\) spreads future income and consumption without changing their expected value, as long as saving is unchanged.</p>
     </div>
   </section>
 
-  <section class="model-section reveal delay-160" aria-labelledby="solution-title">
+  <section class="content-section reveal delay-160" aria-labelledby="solution-title">
     <h2 id="solution-title" class="section-title">2. CRRA Utility and the Two Euler Equations</h2>
 
-    <div class="solution-panel">
-      <div class="crra-summary">
-        <div>
-          <h3>CRRA utility</h3>
-          <div class="equation-block">
-            \[
-              u(c)=
-              \begin{cases}
-                \dfrac{c^{1-\gamma}-1}{1-\gamma}, & \gamma\neq1,\\[1ex]
-                \ln(c), & \gamma=1,
-              \end{cases}
-              \qquad \gamma&gt;0.
-            \]
-          </div>
-        </div>
-        <div>
-          <h3>Marginal utility</h3>
-          <div class="equation-block">
-            \[
-              u'(c)=c^{-\gamma}.
-            \]
-          </div>
-        </div>
-      </div>
-
-      <p class="normalisation-note">For the interactive exercise, \(\beta(1+r)=1\). The relevant Euler equation therefore depends on whether \(\varepsilon\) is zero or positive.</p>
-
-      <div class="equation-case-grid" aria-live="polite">
-        <article id="certainty-equation" class="equation-case is-active">
-          <div class="equation-case-heading">
-            <span>Certainty case</span>
-            <span id="certainty-status" class="equation-status">Active when \(\varepsilon=0\)</span>
-          </div>
-          <div class="equation-block equation-wide">
-            \[
-              c_1^{-\gamma}=\mathbb{E}[c_2]^{-\gamma}
-              \quad\Longrightarrow\quad
-              c_1=\mathbb{E}[c_2].
-            \]
-          </div>
-        </article>
-
-        <article id="uncertainty-equation" class="equation-case is-muted">
-          <div class="equation-case-heading">
-            <span>Uncertainty case</span>
-            <span id="uncertainty-status" class="equation-status">Inactive when \(\varepsilon=0\)</span>
-          </div>
-          <div class="equation-block equation-wide">
-            \[
-              c_1^{-\gamma}
-              =\frac12\left(\mathbb{E}[c_2]-\varepsilon\right)^{-\gamma}
-              +\frac12\left(\mathbb{E}[c_2]+\varepsilon\right)^{-\gamma}.
-            \]
-          </div>
-        </article>
-      </div>
-
-      <div class="key-result">
-        <i class="fas fa-lightbulb" aria-hidden="true"></i>
-        <div>
-          <strong>Jensen’s inequality:</strong> when \(\varepsilon&gt;0\), convex marginal utility implies
+    <div class="crra-summary">
+      <div class="panel">
+        <h3>CRRA utility</h3>
+        <div class="equation-block">
           \[
-            \mathbb{E}[u'(c_2)]&gt;u'(\mathbb{E}[c_2]).
+            u(c)=
+            \begin{cases}
+              \dfrac{c^{1-\gamma}-1}{1-\gamma}, & \gamma\neq1,\\[1ex]
+              \ln(c), & \gamma=1,
+            \end{cases}
+            \qquad \gamma&gt;0.
           \]
-          Expected marginal utility rises, so the household reduces \(c_1\) and increases saving until the uncertain Euler equation holds again.
         </div>
+      </div>
+      <div class="panel">
+        <h3>Marginal utility</h3>
+        <div class="equation-block">
+          \[
+            u'(c)=c^{-\gamma},
+            \qquad
+            u''(c)=-\gamma c^{-\gamma-1}&lt;0,
+            \qquad
+            u'''(c)=\gamma(\gamma+1)c^{-\gamma-2}&gt;0.
+          \]
+        </div>
+        <p>Marginal utility is decreasing and convex. The larger \(\gamma\), the more curved it is.</p>
+      </div>
+    </div>
+
+    <p class="normalisation-note">For the interactive exercise, \(\beta(1+r)=1\). Which Euler equation applies depends on whether \(\varepsilon\) is zero or positive.</p>
+
+    <div class="equation-case-grid">
+      <article id="certainty-equation" class="equation-case is-active">
+        <div class="equation-case-heading">
+          <span>Certainty case</span>
+          <span id="certainty-status" class="equation-status" aria-live="polite">Active because ε = 0</span>
+        </div>
+        <div class="equation-block">
+          \[
+            c_1^{-\gamma}=\mathbb{E}[c_2^s]^{-\gamma}
+            \quad\Longrightarrow\quad
+            c_1=\mathbb{E}[c_2^s].
+          \]
+        </div>
+      </article>
+
+      <article id="uncertainty-equation" class="equation-case is-muted">
+        <div class="equation-case-heading">
+          <span>Uncertainty case</span>
+          <span id="uncertainty-status" class="equation-status" aria-live="polite">Inactive because ε = 0</span>
+        </div>
+        <div class="equation-block">
+          \[
+            c_1^{-\gamma}
+            =\tfrac12\left(\mathbb{E}[c_2^s]-\varepsilon\right)^{-\gamma}
+            +\tfrac12\left(\mathbb{E}[c_2^s]+\varepsilon\right)^{-\gamma}.
+          \]
+        </div>
+      </article>
+    </div>
+
+    <div class="callout key-result">
+      <i class="fas fa-lightbulb" aria-hidden="true"></i>
+      <div>
+        <strong>Jensen’s inequality:</strong> when \(\varepsilon&gt;0\), convex marginal utility implies
+        \[
+          \mathbb{E}\left[u'(c_2^s)\right]&gt;u'\!\left(\mathbb{E}[c_2^s]\right).
+        \]
+        Expected marginal utility rises, so the household reduces \(c_1\) and increases saving until the uncertain Euler equation holds again. This is precautionary saving. It requires \(u'''&gt;0\) (prudence), which CRRA utility always satisfies.
       </div>
     </div>
   </section>
 
-  <section class="interactive-section reveal delay-220" aria-labelledby="interactive-title">
-    <div class="interactive-heading">
-      <div>
-        <h2 id="interactive-title" class="section-title">3. Interactive Decomposition</h2>
-        <p>Change the income shock and risk-aversion parameter. The remaining model values are fixed at \(W_1=W=10\), \(r=0\), and \(\beta=1\).</p>
+  <section class="content-section reveal delay-220" aria-labelledby="interactive-title">
+    <h2 id="interactive-title" class="section-title">3. Interactive Decomposition</h2>
+    <p class="section-introduction">Change the income shock and the curvature of marginal utility. The remaining values are fixed at \(W_1=W=10\), \(r=0\) and \(\beta=1\).</p>
+
+    <div class="control-panel" aria-label="Interactive model controls">
+      <div class="control">
+        <label class="control-heading" for="epsilon-slider">
+          <span>Income shock, \(\varepsilon\)</span>
+          <output id="epsilon-output" for="epsilon-slider">3.0</output>
+        </label>
+        <input id="epsilon-slider" type="range" min="0" max="7.5" step="0.1" value="3" />
+        <span class="control-scale" aria-hidden="true"><span>No uncertainty</span><span>Larger spread</span></span>
+      </div>
+
+      <div class="control">
+        <label class="control-heading" for="gamma-slider">
+          <span>Relative risk aversion, \(\gamma\)</span>
+          <output id="gamma-output" for="gamma-slider">2.0</output>
+        </label>
+        <input id="gamma-slider" type="range" min="0.5" max="5" step="0.1" value="2" />
+        <span class="control-scale" aria-hidden="true"><span>Flatter marginal utility</span><span>More curvature</span></span>
       </div>
     </div>
 
-    <div class="control-panel" aria-label="Interactive model controls">
-      <label class="control" for="epsilon-slider">
-        <span class="control-heading">
-          <span>Income shock, \(\varepsilon\)</span>
-          <output id="epsilon-output" for="epsilon-slider">3.0</output>
-        </span>
-        <input id="epsilon-slider" type="range" min="0" max="7.5" step="0.1" value="3" />
-        <span class="control-scale"><span>No uncertainty</span><span>Larger spread</span></span>
-      </label>
-
-      <label class="control" for="gamma-slider">
-        <span class="control-heading">
-          <span>Risk aversion, \(\gamma\)</span>
-          <output id="gamma-output" for="gamma-slider">2.0</output>
-        </span>
-        <input id="gamma-slider" type="range" min="0.5" max="5" step="0.1" value="2" />
-        <span class="control-scale"><span>Flatter marginal utility</span><span>More curvature</span></span>
-      </label>
-    </div>
-
-    <div class="insight-strip" aria-live="polite">
+    <div class="insight-strip">
       <div>
-        <span class="insight-label">Jensen gap</span>
+        <span class="insight-label">Jensen gap at fixed saving</span>
         <strong id="jensen-gap">—</strong>
       </div>
       <div>
@@ -278,10 +275,17 @@
         <strong id="precautionary-saving">—</strong>
       </div>
       <div>
-        <span class="insight-label">Current consumption change</span>
+        <span class="insight-label">Change in current consumption</span>
         <strong id="current-consumption-change">—</strong>
       </div>
     </div>
+
+    <ul class="chart-key" aria-label="Chart key">
+      <li><span class="key-swatch is-risk" aria-hidden="true"></span>Low and high future states</li>
+      <li><span class="key-swatch is-mean" aria-hidden="true"></span>Expected future consumption</li>
+      <li><span class="key-swatch is-current" aria-hidden="true"></span>Current consumption</li>
+      <li><span class="key-swatch is-ghost" aria-hidden="true"></span>Before saving adjusts</li>
+    </ul>
 
     <div class="chart-grid">
       <article class="chart-card">
@@ -289,10 +293,10 @@
           <span class="step-number">Step 1</span>
           <h3>Risk before saving adjusts</h3>
           <p>
-            Hold savings at its certainty level. The low and high consumption states spread around unchanged expected consumption. Convex marginal utility makes \(\mathbb{E}[u'(c_2)]\) rise above \(u'(\mathbb{E}[c_2])\).
+            Saving stays at its certainty level. The low and high states spread around unchanged expected consumption, and convex marginal utility pushes \(\mathbb{E}[u'(c_2^s)]\) above \(u'(\mathbb{E}[c_2^s])\). The Euler equation would then require a lower \(c_1\).
           </p>
         </div>
-        <div id="partial-chart" class="chart" role="img" aria-label="Marginal utility graph before saving adjusts"></div>
+        <div id="partial-chart" class="chart" role="img" aria-label="Marginal utility before saving adjusts"></div>
         <p class="chart-note" id="partial-chart-note"></p>
       </article>
 
@@ -301,23 +305,24 @@
           <span class="step-number">Step 2</span>
           <h3>Equilibrium after saving adjusts</h3>
           <p>
-            The household lowers \(c_1\) and raises \(A\). This shifts both \(c_2^L\) and \(c_2^H\) to the right until current marginal utility equals expected future marginal utility.
+            The household lowers \(c_1\) and raises \(A\). Both \(c_2^L\) and \(c_2^H\) shift to the right until current marginal utility equals expected future marginal utility.
           </p>
         </div>
-        <div id="equilibrium-chart" class="chart" role="img" aria-label="Marginal utility graph after precautionary saving adjusts"></div>
+        <div id="equilibrium-chart" class="chart" role="img" aria-label="Marginal utility after saving adjusts"></div>
         <p class="chart-note" id="equilibrium-chart-note"></p>
       </article>
     </div>
   </section>
 
-  <section class="comparison-section reveal delay-280" aria-labelledby="comparison-title">
+  <section class="content-section reveal delay-280" aria-labelledby="comparison-title">
     <h2 id="comparison-title" class="section-title">4. Certainty and Uncertainty Compared</h2>
-    <p class="comparison-introduction">
-      The table reports the certainty allocation and the fully adjusted uncertain equilibrium. Precautionary saving is the increase in \(A\) caused by the income risk.
+    <p class="section-introduction">
+      The table reports the certainty allocation and the fully adjusted equilibrium under uncertainty. Precautionary saving is the increase in \(A\) caused by the income risk.
     </p>
 
     <div class="table-wrap">
       <table class="comparison-table">
+        <caption class="visually-hidden">Certainty and uncertainty equilibria for the chosen ε and γ</caption>
         <thead>
           <tr>
             <th scope="col">Variable</th>
@@ -330,10 +335,9 @@
       </table>
     </div>
 
-    <div class="takeaway" id="takeaway" aria-live="polite"></div>
+    <div class="callout takeaway" id="takeaway" aria-live="polite"></div>
   </section>
 </section>
-
 
 
       <footer class="foot reveal delay-340">
