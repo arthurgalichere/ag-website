@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 18:01 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 18:12 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -305,7 +305,7 @@
 }
 
 .shares-table thead .component-head {
-  text-align: left;
+  text-align: center;
   vertical-align: bottom;
 }
 

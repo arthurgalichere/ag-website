@@ -250,15 +250,15 @@
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-      <figure class="chart-card" data-indicators="real_exports" data-per-capita="real_exports_pc" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_exports,real_imports" data-per-capita="real_exports_pc,real_imports_pc" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
-          <span class="chart-title">Real exports of goods and services</span>
+          <span class="chart-title">Real exports and imports of goods and services</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
         <div class="segmented-field chart-control" data-control="measure">
-          <span class="visually-hidden" id="real_exports-measure-label">Measure</span>
-          <div class="segmented" role="group" aria-labelledby="real_exports-measure-label">
+          <span class="visually-hidden" id="real_exports,real_imports-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_exports,real_imports-measure-label">
             <button type="button" data-value="total" aria-pressed="true">Total</button>
             <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
           </div>
@@ -274,31 +274,7 @@
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-      <figure class="chart-card" data-indicators="real_imports" data-per-capita="real_imports_pc" data-zero-line="false" data-digits="0">
-        <figcaption class="chart-header">
-          <span class="chart-title">Real imports of goods and services</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
-        </figcaption>
-        
-        <div class="segmented-field chart-control" data-control="measure">
-          <span class="visually-hidden" id="real_imports-measure-label">Measure</span>
-          <div class="segmented" role="group" aria-labelledby="real_imports-measure-label">
-            <button type="button" data-value="total" aria-pressed="true">Total</button>
-            <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
-          </div>
-        </div>
-        
-        
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-      </figure>
-      
-      <figure class="chart-card" data-indicators="real_gdp,real_pce,real_investment,real_government" data-per-capita="real_gdp_pc,real_pce_pc,real_investment_pc,real_government_pc" data-trends="off" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_gdp,real_pce,real_investment,real_government" data-per-capita="real_gdp_pc,real_pce_pc,real_investment_pc,real_government_pc" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
           <span class="chart-title">Composition of real GDP: output, consumption, investment and government spending</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
@@ -453,7 +429,7 @@
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        
+        <p class="chart-note">When a trend is selected, this chart shows the Congressional Budget Office’s noncyclical rate of unemployment (NROU) instead of a statistical trend. The NROU is CBO’s estimate of the unemployment rate consistent with stable inflation once cyclical forces have faded, so the gap between the two lines measures labour-market slack. It is a model-based estimate, revised by CBO over time; CBO’s projections beyond the latest observed quarter are not shown. HP and Christiano–Fitzgerald trends of the unemployment rate remain in the downloads.</p>
         <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
@@ -695,6 +671,7 @@
           <li><strong>HP:</strong> Hodrick–Prescott filter, λ = 1600 (quarterly). It is smooth and two-sided, so its latest values are revised as new data arrive.</li>
           <li><strong>Christiano–Fitzgerald:</strong> the series minus its business-cycle component, defined as fluctuations lasting 6–32 quarters. It still contains fluctuations shorter than the band, so it is less smooth than the HP trend; its latest values are also revised.</li>
         </ul>
+        <p><strong>Unemployment rate:</strong> instead of a statistical trend, the chart shows the Congressional Budget Office’s noncyclical rate of unemployment (NROU), the standard US estimate of the natural rate. Statistical filters applied to the unemployment rate tend to follow its large cyclical swings, whereas the unemployment gap relative to the NROU is the usual measure of labour-market slack (for example in Okun’s law, Phillips-curve and policy-rule analysis). HP and Christiano–Fitzgerald trends of the unemployment rate are still computed and included in the downloads.</p>
         <p>The Hamilton filter is not offered as a trend here: its fitted value is a forecast made two years earlier, so it repeats past shocks eight quarters later. Hamilton cycles are shown on the Real Business Cycles page, together with the HP and Christiano–Fitzgerald cycles.</p>
       </div>
     </details>

@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 18:01 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 18:12 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -160,12 +160,24 @@
     const trendable = !indexMode && card.dataset.trends !== 'off';
     const trendKeys = state.trend === 'none' ? [] : state.trend === 'comparison' ? ['hp', 'cf'] : [state.trend];
     const dataSeries = series.slice();
-    if (trendable) {
+    /* Some indicators replace the statistical trends by an external estimate
+       (unemployment: CBO's noncyclical rate, NROU). */
+    const override = single && first.override_trend;
+    if (trendable && override && trendKeys.length) {
+      series.push({
+        label: override.label,
+        color: token('--chart-2'),
+        dash: '6 4',
+        values: pick(first, override.field),
+        isTrend: true,
+      });
+    } else if (trendable) {
       indicators.forEach((item, i) => trendKeys.forEach(key => series.push({
         label: single ? TRENDS[key].label : `${item.short_title}, ${TRENDS[key].label}`,
         color: single ? token(TRENDS[key].color) : dataSeries[i].color,
         dash: TRENDS[key].dash,
-        weight: single ? 1 : 0.8,
+        weight: single ? 1 : 0.85,
+        opacity: single ? 1 : 0.6,
         values: pick(item, TRENDS[key].field),
         isTrend: true,
       })));
@@ -176,7 +188,8 @@
     const start = dates[0];
     const end = dates[dates.length - 1];
     const label = monthly ? D.monthLabel : D.quarterLabel;
-    const trendText = trendable && state.trend !== 'none' ? ` · ${TREND_NAMES[state.trend]}` : '';
+    const trendText = trendable && state.trend !== 'none'
+      ? ` · ${override ? 'NROU' : TREND_NAMES[state.trend]}` : '';
     let units = first.units;
     if (quarterlyBasis) units = 'Percent per quarter (annual rate ÷ 4)';
     if (indexMode) units = 'Index, 2017 average = 100';
@@ -206,13 +219,14 @@
     const legendItems = single
       ? series.map(item => swatch(item.color, item.dash, item.label))
       : dataSeries.map(item => swatch(item.color, null, item.label))
-        .concat(trendable ? trendKeys.map(key => swatch(token('--muted'), TRENDS[key].dash, `${TRENDS[key].label} (same colour as its series)`)) : []);
+        .concat(trendable ? trendKeys.map(key => swatch(token('--muted'), TRENDS[key].dash, `${TRENDS[key].label} (lighter, same colour as its series)`)) : []);
     parts.legend.innerHTML = legendItems.join('')
       + (anyEstimate ? '<li><span class="legend-estimate" aria-hidden="true"></span>Estimated value</li>' : '');
     parts.legend.hidden = false;
     parts.readout.textContent = 'Hover over the chart, or focus it and use the arrow keys, to read values.';
 
-    const sources = Array.from(new Set(indicators.map(item => item.source)));
+    const sources = Array.from(new Set(indicators.map(item => item.source)
+      .concat(override && trendKeys.length ? [override.source] : [])));
     const updated = indicators.map(item => item.source_last_updated).filter(Boolean).sort().pop();
     const hasEstimates = indicators.some(item => (item.estimates || []).length);
     parts.source.innerHTML = `Source: ${S.escapeHTML(sources.join('; '))}.`
@@ -279,6 +293,7 @@
       const dates = bySeries.get(record.series_id);
       if (!dates.has(record.date)) dates.set(record.date, { ...record, used: new Set() });
       dates.get(record.date).used.add(item.short_title.replace(/ per capita$/, ''));
+      dates.get(record.date).series_title = record.series_title;
     }));
     if (!bySeries.size) {
       target.innerHTML = '<p>No values are currently estimated: every period shown was published by the source.</p>';
@@ -287,12 +302,14 @@
     target.innerHTML = Array.from(bySeries.entries()).sort(([a], [b]) => a.localeCompare(b)).map(([id, dates]) => {
       const records = Array.from(dates.values()).sort((a, b) => a.date.localeCompare(b.date));
       const used = Array.from(new Set(records.flatMap(r => Array.from(r.used))));
+      /* Ribbon name: the indicator using the series, or the source title when several do. */
+      const name = used.length === 1 ? used[0] : (records[0].series_title || id);
       const rows = records.map(r => `
         <tr><td>${S.escapeHTML(r.date.slice(0, 7))}</td><td>${S.escapeHTML(D.formatNumber(r.value, 2))}</td>
         <td>${S.escapeHTML(r.reason)}</td><td>${S.escapeHTML(r.method)}</td></tr>`).join('');
       return `<details class="ribbon">
         <summary>
-          <span class="ribbon-title">${S.escapeHTML(id)} <span class="ribbon-meta">· ${records.length} estimated ${records.length === 1 ? 'value' : 'values'} · used in ${S.escapeHTML(used.join(', '))}</span></span>
+          <span class="ribbon-title">${S.escapeHTML(name)} (${S.escapeHTML(id)}) <span class="ribbon-meta">· ${records.length} estimated ${records.length === 1 ? 'value' : 'values'}${used.length > 1 ? ` · used in ${S.escapeHTML(used.join(', '))}` : ''}</span></span>
           <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
         </summary>
         <div class="ribbon-content"><div class="table-scroll"><table class="data-table estimates-table">
