@@ -1,3 +1,4 @@
+/* Last edited: 2026-10-31 01:32 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.

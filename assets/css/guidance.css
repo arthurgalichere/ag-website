@@ -1,9 +1,10 @@
+/* Last edited: 2026-10-31 02:23 UTC (Claude, website chat) */
 /* =========================================================
    Dissertation guidance notes (/teaching/guidance/*.html).
    Shared by all notes through _layouts/guidance.html.
-   Toolbar, title, download link and update note come from
-   site.css; this file styles the converted LaTeX content and
-   the previous/next navigation.
+   Toolbar, title, download link, update note and navigation come from
+   site.css (including the previous/next cards); this file
+   styles the converted LaTeX content.
    ========================================================= */
 
 /* =========================================================
@@ -303,84 +304,6 @@
 }
 
 /* =========================================================
-   Previous/next navigation and update date
-   ========================================================= */
-
-.guidance-navigation {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line-strong);
-}
-
-.guidance-navigation.is-single {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.guidance-nav-link {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 0.85rem;
-  min-width: 0;
-  padding: 1rem 1.1rem;
-  color: var(--ink);
-  background: var(--paper-soft);
-  border: 1px solid var(--line-strong);
-  border-radius: 5px;
-  text-decoration: none;
-  transition: color var(--transition), background-color var(--transition),
-              border-color var(--transition), box-shadow var(--transition),
-              transform var(--transition);
-}
-
-.guidance-nav-link.is-next {
-  grid-template-columns: minmax(0, 1fr) auto;
-  text-align: right;
-}
-
-.guidance-nav-link:hover {
-  color: var(--accent-strong);
-  background: var(--accent-soft);
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  box-shadow: 0 7px 18px rgba(28, 28, 30, 0.06);
-  transform: translateY(-1px);
-}
-
-.guidance-nav-link i {
-  color: var(--accent);
-  font-size: 0.78rem;
-}
-
-.guidance-nav-copy {
-  min-width: 0;
-}
-
-.guidance-nav-direction {
-  display: block;
-  margin-bottom: 0.2rem;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-
-.guidance-nav-title {
-  display: block;
-  color: var(--accent-strong);
-  font-family: var(--display);
-  font-size: 0.94rem;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-
-/* =========================================================
    Responsive behaviour
    ========================================================= */
 
@@ -402,19 +325,10 @@
     font-size: 1.2rem;
   }
 
-  .guidance-navigation,
-  .guidance-navigation.is-single {
-    grid-template-columns: 1fr;
-  }
-
-  .guidance-nav-link.is-next {
-    text-align: left;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .guidance-content a,
-  .guidance-nav-link {
+  .guidance-content a {
     transition: none;
   }
 }

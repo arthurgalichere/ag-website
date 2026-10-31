@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Main Economic Indicators</title>
-  <meta name="description" content="Key US macroeconomic indicators — output, prices, spending, the labour market, productivity, interest rates and corporate debt — with optional HP, Hamilton and Christiano–Fitzgerald trends." />
+  <meta name="description" content="Key US macroeconomic indicators — national accounts, consumption, investment, prices, the labour market, productivity, interest rates and corporate debt — with optional HP and Christiano–Fitzgerald trends." />
 
   
 
@@ -87,16 +87,23 @@
   data-data-url="/assets/data/economics/{country}/main-indicators.json"
   data-site-base="/"
 >
-  <a href="/economics.html" class="back-link reveal delay-40">
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics.html" class="back-link">
     <i class="fas fa-arrow-left" aria-hidden="true"></i>
     Back to Economics
   </a>
+  <a class="toolbar-next-link" href="/economics/business-cycles.html">Next: Real Business Cycles <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+</div>
 
   <header class="reveal delay-80">
     <p class="eyebrow">Economics · Data dashboard</p>
     <h1 class="page-title">Main Economic Indicators</h1>
     <p class="lead">
-      Key measures of the US economy: output, prices, spending, the labour market, productivity and pay, interest rates and corporate debt. Each chart shows the full history available. For series measured in levels, a trend can be added to compare the data with their long-run path. Shaded bands mark recessions.
+      Key measures of the US economy: the national accounts and their components, consumption, investment, prices, the labour market, productivity and pay, interest rates and corporate debt. Each chart shows the full history available. A trend can be added to compare each series with its long-run path.
+    </p>
+    <p class="callout is-quiet dashboard-note">
+      <i class="fas fa-circle-info" aria-hidden="true"></i>
+      <span>Shaded bands on every chart mark US recessions, from the NBER-based quarterly recession indicator (USRECQ). Hollow circles mark values estimated where the source published none; see <a class="text-link" href="#missing-title">Missing data and estimates</a>.</span>
     </p>
   </header>
 
@@ -117,7 +124,6 @@
       <div class="segmented" role="group" aria-labelledby="trend-label">
         <button type="button" data-value="none" aria-pressed="true">No trend</button>
         <button type="button" data-value="hp" aria-pressed="false">HP</button>
-        <button type="button" data-value="hamilton" aria-pressed="false">Hamilton</button>
         <button type="button" data-value="cf" aria-pressed="false">Christiano–Fitzgerald</button>
         <button type="button" data-value="comparison" aria-pressed="false">Trend comparison</button>
       </div>
@@ -142,127 +148,261 @@
   <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
 
   
-  <section class="content-section reveal delay-160" aria-labelledby="output-title">
-    <h2 id="output-title" class="section-title">Output</h2>
+  <section class="content-section reveal delay-160" aria-labelledby="national-accounts-title">
+    <h2 id="national-accounts-title" class="section-title">National accounts: GDP and its expenditure components</h2>
+    <p class="section-introduction">Real GDP and its components in chained 2017 dollars, at seasonally adjusted annual rates. Use the switch on each chart for the per-capita measure (divided by the BEA mid-period population).</p>
     <div class="chart-stack">
       
-      <figure class="chart-card" data-indicators="real_gdp" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_gdp" data-per-capita="real_gdp_pc" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
           <span class="chart-title">Real GDP</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-      </figure>
-      
-      <figure class="chart-card" data-indicators="real_gdp_pc" data-zero-line="false" data-digits="0">
-        <figcaption class="chart-header">
-          <span class="chart-title">Real GDP per capita</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
-        </figcaption>
+        <div class="segmented-field chart-control" data-control="measure">
+          <span class="visually-hidden" id="real_gdp-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_gdp-measure-label">
+            <button type="button" data-value="total" aria-pressed="true">Total</button>
+            <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
+          </div>
+        </div>
+        
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-    </div>
-  </section>
-  
-  <section class="content-section reveal delay-160" aria-labelledby="prices-title">
-    <h2 id="prices-title" class="section-title">Prices</h2>
-    <div class="chart-stack">
-      
-      <figure class="chart-card" data-indicators="inflation_gdp_deflator" data-zero-line="true" data-digits="2">
-        <figcaption class="chart-header">
-          <span class="chart-title">Inflation (GDP deflator)</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
-        </figcaption>
-        
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-      </figure>
-      
-    </div>
-  </section>
-  
-  <section class="content-section reveal delay-160" aria-labelledby="spending-title">
-    <h2 id="spending-title" class="section-title">Consumption and investment</h2>
-    <div class="chart-stack">
-      
-      <figure class="chart-card" data-indicators="real_pce" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_pce" data-per-capita="real_pce_pc" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
           <span class="chart-title">Real personal consumption expenditures</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-      </figure>
-      
-      <figure class="chart-card" data-indicators="real_pce_nondurable" data-zero-line="false" data-digits="0">
-        <figcaption class="chart-header">
-          <span class="chart-title">Real consumption: nondurable goods</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
-        </figcaption>
+        <div class="segmented-field chart-control" data-control="measure">
+          <span class="visually-hidden" id="real_pce-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_pce-measure-label">
+            <button type="button" data-value="total" aria-pressed="true">Total</button>
+            <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
+          </div>
+        </div>
+        
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-      <figure class="chart-card" data-indicators="real_pce_durable" data-zero-line="false" data-digits="0">
-        <figcaption class="chart-header">
-          <span class="chart-title">Real consumption: durable goods</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
-        </figcaption>
-        
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-      </figure>
-      
-      <figure class="chart-card" data-indicators="real_investment" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_investment" data-per-capita="real_investment_pc" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
           <span class="chart-title">Real gross private domestic investment</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        <div class="segmented-field chart-control" data-control="measure">
+          <span class="visually-hidden" id="real_investment-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_investment-measure-label">
+            <button type="button" data-value="total" aria-pressed="true">Total</button>
+            <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
+          </div>
+        </div>
+        
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="real_government" data-per-capita="real_government_pc" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <span class="chart-title">Real government consumption expenditures and gross investment</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        <div class="segmented-field chart-control" data-control="measure">
+          <span class="visually-hidden" id="real_government-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_government-measure-label">
+            <button type="button" data-value="total" aria-pressed="true">Total</button>
+            <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
+          </div>
+        </div>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="real_exports" data-per-capita="real_exports_pc" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <span class="chart-title">Real exports of goods and services</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        <div class="segmented-field chart-control" data-control="measure">
+          <span class="visually-hidden" id="real_exports-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_exports-measure-label">
+            <button type="button" data-value="total" aria-pressed="true">Total</button>
+            <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
+          </div>
+        </div>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="real_imports" data-per-capita="real_imports_pc" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <span class="chart-title">Real imports of goods and services</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        <div class="segmented-field chart-control" data-control="measure">
+          <span class="visually-hidden" id="real_imports-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_imports-measure-label">
+            <button type="button" data-value="total" aria-pressed="true">Total</button>
+            <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
+          </div>
+        </div>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
     </div>
+    
+    <h3 class="subsection-title">Shares of GDP</h3>
+    <div class="shares" data-role="shares"><p class="loading-message">Loading…</p></div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="consumption-title">
+    <h2 id="consumption-title" class="section-title">Consumption</h2>
+    <p class="section-introduction">Total consumption compared with its goods components, each rebased to its 2017 average = 100 so that their paths can be compared despite their different sizes. Spending on durable goods (cars, furniture, appliances) is much more cyclical than spending on nondurables (food, clothing, energy), because purchases of long-lasting goods can be postponed.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="real_pce,real_pce_nondurable" data-mode="index" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <span class="chart-title">Consumption and nondurable goods</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="real_pce,real_pce_durable" data-mode="index" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <span class="chart-title">Consumption and durable goods</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="investment-title">
+    <h2 id="investment-title" class="section-title">Investment</h2>
+    <p class="section-introduction">Total private investment compared with its two fixed-investment components, rebased to 2017 = 100. Nonresidential investment covers business structures, equipment and intellectual property; residential investment is mainly housing, which often turns down before recessions. Total investment also includes the change in inventories, which explains part of its volatility.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="real_investment,real_nonres_investment" data-mode="index" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <span class="chart-title">Investment and nonresidential fixed investment</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="real_investment,real_res_investment" data-mode="index" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <span class="chart-title">Investment and residential fixed investment</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="prices-title">
+    <h2 id="prices-title" class="section-title">Prices</h2>
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="inflation_gdp_deflator,inflation_cpi" data-zero-line="true" data-digits="2">
+        <figcaption class="chart-header">
+          <span class="chart-title">Inflation: GDP deflator and consumer prices</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+    </div>
+    
   </section>
   
   <section class="content-section reveal delay-160" aria-labelledby="labour-title">
     <h2 id="labour-title" class="section-title">Labour market</h2>
+    
     <div class="chart-stack">
       
       <figure class="chart-card" data-indicators="unemployment_rate" data-zero-line="false" data-digits="1">
@@ -271,10 +411,26 @@
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="participation_rate" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <span class="chart-title">Labour force participation rate</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
@@ -285,10 +441,11 @@
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
@@ -299,19 +456,22 @@
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
     </div>
+    
   </section>
   
   <section class="content-section reveal delay-160" aria-labelledby="productivity-title">
     <h2 id="productivity-title" class="section-title">Productivity and pay</h2>
+    
     <div class="chart-stack">
       
       <figure class="chart-card" data-indicators="labour_productivity" data-zero-line="false" data-digits="2">
@@ -320,10 +480,11 @@
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
@@ -334,44 +495,49 @@
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
     </div>
+    
   </section>
   
   <section class="content-section reveal delay-160" aria-labelledby="rates-title">
     <h2 id="rates-title" class="section-title">Interest rates</h2>
+    
     <div class="chart-stack">
       
-      <figure class="chart-card" data-indicators="tbill_3m,prime_rate" data-zero-line="true" data-digits="2">
+      <figure class="chart-card" data-indicators="tbill_3m" data-zero-line="true" data-digits="2">
         <figcaption class="chart-header">
-          <span class="chart-title">Nominal interest rates</span>
+          <span class="chart-title">3-month Treasury bill rate</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
+        
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-      <figure class="chart-card" data-indicators="real_rate_tbill,real_rate_prime" data-zero-line="true" data-digits="2">
+      <figure class="chart-card" data-indicators="real_rate_tbill" data-zero-line="true" data-digits="2">
         <figcaption class="chart-header">
-          <span class="chart-title">Ex-post real interest rates</span>
+          <span class="chart-title">Ex-post real 3-month Treasury bill rate</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
         <div class="segmented-field chart-control" data-control="rate-basis">
-          <span class="segmented-label" id="rates-basis-label">Rate basis</span>
-          <div class="segmented" role="group" aria-labelledby="rates-basis-label">
+          <span class="visually-hidden" id="real_rate_tbill-basis-label">Rate basis</span>
+          <div class="segmented" role="group" aria-labelledby="real_rate_tbill-basis-label">
             <button type="button" data-value="annual" aria-pressed="true">Annual (percentage points)</button>
             <button type="button" data-value="quarterly" aria-pressed="false">Quarterly</button>
           </div>
@@ -380,16 +546,18 @@
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
     </div>
+    
   </section>
   
   <section class="content-section reveal delay-160" aria-labelledby="debt-title">
     <h2 id="debt-title" class="section-title">Corporate debt</h2>
+    
     <div class="chart-stack">
       
       <figure class="chart-card" data-indicators="real_debt_nfc" data-zero-line="false" data-digits="0">
@@ -398,15 +566,17 @@
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown for series measured in levels only.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are shown on charts with a single series.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
     </div>
+    
   </section>
   
 
@@ -419,13 +589,25 @@
 
     <details class="ribbon">
       <summary>
-        <span class="ribbon-title">Series and frequencies</span>
+        <span class="ribbon-title">Series, units and frequencies</span>
         <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
       </summary>
       <div class="ribbon-content">
-        <p>Each chart shows the full history published by the original agency, at its own frequency: national accounts, hours, productivity and compensation are quarterly; the unemployment rate, population and interest rates are monthly. Real series are in chained 2017 dollars or are indexes (2017 = 100), as published.</p>
-        <p>Chained-dollar components, such as durable and nondurable consumption, are not additive: they do not sum exactly to total real consumption.</p>
-        <p>Hours, productivity and real hourly compensation cover the nonfarm business sector, as published by the Bureau of Labor Statistics. Real hourly compensation is deflated by consumer prices. Population is the civilian noninstitutional population aged 16 and over, not the total population.</p>
+        <p>Each chart shows the full history published by the original agency, at its own frequency: national accounts, hours, productivity and compensation are quarterly; the unemployment rate, participation rate, population and the Treasury bill rate are monthly. National-accounts series are at seasonally adjusted annual rates.</p>
+        <p>Per-capita measures divide each real aggregate by the BEA mid-period population (all ages, B230RC0Q173SBEA) and are in dollars per person.</p>
+        <p>Real nondurable and durable consumption are the nominal series (PCND, PCDG) divided by their own PCE price indexes (2017 = 100). This gives the full history from 1947; the chained-dollar series published on FRED start only in 2007. The two are very close, as chained dollars are the nominal value divided by the chain-type price index. Chained-dollar components are not additive: they do not sum exactly to total real consumption or GDP.</p>
+        <p>Hours, productivity and real hourly compensation cover the nonfarm business sector, as published by the Bureau of Labor Statistics. Real hourly compensation is deflated by consumer prices. The participation rate is the labour force as a percentage of the civilian noninstitutional population aged 16 and over.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Shares of GDP</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Nominal shares divide each current-dollar component by current-dollar GDP. They add up to 100 (imports with a negative sign) and are the usual way to describe the composition of GDP.</p>
+        <p>Real ratios divide each chained 2017-dollar component by chained 2017-dollar GDP. A nominal share equals the real ratio times a relative price, P<sub>C</sub>C / (P<sub>Y</sub>Y) = (P<sub>C</sub>/P<sub>Y</sub>)(C/Y), so the two differ whenever relative prices move — most notably for investment, whose relative price has fallen for decades. Chained components are not additive, so real ratios do not sum to 100 and are most reliable close to the 2017 reference year.</p>
       </div>
     </details>
 
@@ -435,9 +617,9 @@
         <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
       </summary>
       <div class="ribbon-content">
-        <p>Inflation is the annualised quarter-on-quarter change in the GDP price deflator, 400 × [ln(P<sub>t</sub>) − ln(P<sub>t−1</sub>)], in percent.</p>
+        <p>Inflation is the annualised quarter-on-quarter change, 400 × [ln(P<sub>t</sub>) − ln(P<sub>t−1</sub>)], in percent. For the consumer price index (CPI, all urban consumers), the monthly index is first averaged over each complete quarter. The GDP deflator covers all goods and services produced in the US; the CPI covers goods and services bought by urban households, including imports.</p>
+        <p>The ex-post real Treasury bill rate is the quarterly average of the monthly nominal rate minus GDP-deflator inflation realised over the following quarter, both at annual rates and in percentage points. It measures the real return actually earned, not the rate expected when the bill was bought.</p>
         <p>The real rate chart can be shown at an annual rate (default) or per quarter. The quarterly rate is the annual rate divided by four: the nominal rate earned over one quarter minus the quarterly log change in the GDP deflator, 100 × [ln(P<sub>t+1</sub>) − ln(P<sub>t</sub>)]. It is the unit used when comparing data with quarterly models.</p>
-        <p>Ex-post real interest rates are the quarterly average of the monthly nominal rate (quarters with all three months only) minus inflation realised over the following quarter, both at annual rates and in percentage points. They measure the real return actually earned, not the rate expected when the loan or bill was taken out. The Treasury bill rate is close to a risk-free rate; the prime rate is a bank lending rate set administratively.</p>
       </div>
     </details>
 
@@ -447,7 +629,7 @@
         <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
       </summary>
       <div class="ribbon-content">
-        <p>Debt securities and loans of nonfinancial corporate businesses (Federal Reserve Financial Accounts), divided by the GDP price deflator to express it in 2017 prices. This is the author’s construction, not an official real series.</p>
+        <p>Debt securities and loans of nonfinancial corporate businesses (Federal Reserve Financial Accounts), divided by the GDP price deflator to express it in 2017 prices. This is the author’s construction, not an official real series. Before 1951 Q4 the source gives year-end values only; the other quarters are interpolated (see Missing data and estimates).</p>
       </div>
     </details>
 
@@ -457,13 +639,12 @@
         <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
       </summary>
       <div class="ribbon-content">
-        <p>Trends are estimated on 100 × the natural logarithm of each level series and converted back to the series’ own units. They are statistical estimates, not observed data, and are only shown for series measured in levels.</p>
+        <p>Trends are statistical estimates, not observed data. For series measured in levels they are estimated on 100 × the natural logarithm and converted back to the series’ own units; for rates (inflation, unemployment, participation, interest rates) they are estimated on the rate itself.</p>
         <ul>
-          <li><strong>HP:</strong> Hodrick–Prescott filter, λ = 1600. Smooth and two-sided: its latest values are revised as new data arrive.</li>
-          <li><strong>Hamilton:</strong> the value predicted from the four quarters known two years earlier (h = 8, p = 4). It uses only past data, is not smooth, and starts 11 quarters into the sample.</li>
-          <li><strong>Christiano–Fitzgerald:</strong> the series minus its 6–32 quarter business-cycle component. It still contains fluctuations shorter than six quarters, so it is less smooth than the HP trend; its latest values are also revised.</li>
+          <li><strong>HP:</strong> Hodrick–Prescott filter, λ = 1600 for quarterly series and 14400 for monthly series. It is smooth and two-sided, so its latest values are revised as new data arrive.</li>
+          <li><strong>Christiano–Fitzgerald:</strong> the series minus its business-cycle component, defined as fluctuations lasting 6–32 quarters (18–96 months). It still contains fluctuations shorter than the band, so it is less smooth than the HP trend; its latest values are also revised.</li>
         </ul>
-        <p>The matching cyclical components are shown on the Real Business Cycles page.</p>
+        <p>The Hamilton filter is not offered as a trend here: its fitted value is a forecast made two years earlier, so it repeats past shocks eight quarters later. Hamilton cycles are shown on the Real Business Cycles page, together with the HP and Christiano–Fitzgerald cycles.</p>
       </div>
     </details>
 
@@ -482,14 +663,24 @@
   <section class="content-section reveal delay-260" aria-labelledby="missing-title">
     <h2 id="missing-title" class="section-title">Missing data and estimates</h2>
     <div class="prose">
-      <p>Occasionally a source does not publish a value for a period — for example, the October 2025 unemployment rate was not collected because of the federal government shutdown. The economy did not stop in that month, and gaps break time-series and econometric analysis, so such values are estimated here and flagged rather than left blank.</p>
-      <p><strong>Method.</strong> An isolated gap of up to three consecutive periods is filled by linear interpolation between the published values on either side. For series measured in levels the interpolation is in logs, so growth is constant across the gap. Longer gaps are not filled automatically. Estimated values are marked with a hollow circle on the charts. Estimates in an input, such as the GDP deflator, also flag the periods of the measures built from it: inflation, real interest rates and real debt.</p>
+      <p>Occasionally a source does not publish a value for a period — for example, the October 2025 household survey was not collected because of the federal government shutdown. The economy did not stop in that month, and gaps break time-series and econometric analysis, so such values are estimated here and flagged rather than left blank.</p>
+      <p><strong>Method.</strong> An isolated gap of up to three consecutive periods is filled by linear interpolation between the published values on either side; for series measured in levels the interpolation is in logs, so growth is constant across the gap. Longer gaps are not filled automatically. Estimates in an input also flag the measures built from it (for example, the GDP deflator enters inflation, the real interest rate and real debt).</p>
       <p><strong>In the downloads.</strong> The raw CSV keeps exactly what the source published, including the gap. The clean CSV and MATLAB files contain the estimate, with an <code>estimated</code> column (1 = estimated) so that it can be excluded or treated differently in your own analysis.</p>
     </div>
     <div class="estimates-list" data-role="estimates"><p class="loading-message">Loading…</p></div>
   </section>
 
   <p class="update-note" data-role="update-note" hidden></p>
+
+  <nav class="page-navigation is-single reveal delay-260" aria-label="Dashboard navigation">
+  <a href="/economics/business-cycles.html" class="page-nav-link is-next">
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Next dashboard</span>
+      <span class="page-nav-title">Real Business Cycles</span>
+    </span>
+    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+  </a>
+</nav>
 
   <p class="page-note reveal delay-280">
     <strong>Errors and reuse.</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>. Data are from the agencies named under each chart via FRED, Federal Reserve Bank of St. Louis. When reusing these figures, please cite the original data providers and this website (Arthur Galichère, <em>Main Economic Indicators</em>).

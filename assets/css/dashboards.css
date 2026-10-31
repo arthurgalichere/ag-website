@@ -1,3 +1,4 @@
+/* Last edited: 2026-10-31 02:40 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -249,26 +250,26 @@
   overflow-x: auto;
 }
 
-.estimates-table {
+.data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.84rem;
   line-height: 1.5;
 }
 
-.estimates-table th,
-.estimates-table td {
+.data-table th,
+.data-table td {
   padding: 0.55rem 0.7rem;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
 }
 
-.estimates-table td:nth-child(-n + 3) {
+.estimates-table td:nth-child(-n + 2) {
   white-space: nowrap;
 }
 
-.estimates-table th {
+.data-table thead th {
   color: var(--accent-strong);
   background: var(--paper-soft);
   font-family: var(--mono);
@@ -276,6 +277,43 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.dashboard-note {
+  margin-top: 1.25rem;
+}
+
+.chart-missing {
+  font-style: italic;
+}
+
+.shares-table td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.shares-table thead th {
+  text-align: center;
+}
+
+.shares-table tbody th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.table-note {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.ribbon-meta {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.85rem;
 }
 
 /* Responsive and reduced motion --------------------------- */

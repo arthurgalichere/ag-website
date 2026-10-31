@@ -1,3 +1,4 @@
+/* Last edited: 2026-10-31 01:32 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
