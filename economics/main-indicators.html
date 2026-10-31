@@ -169,6 +169,7 @@
         </div>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -191,6 +192,7 @@
             <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
           </div>
         </div>
+        
         
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -217,6 +219,7 @@
         </div>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -239,6 +242,7 @@
             <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
           </div>
         </div>
+        
         
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -265,6 +269,7 @@
         </div>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -287,6 +292,7 @@
             <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
           </div>
         </div>
+        
         
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -327,6 +333,7 @@
         </div>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -365,6 +372,7 @@
         </div>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -395,10 +403,28 @@
         </figcaption>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-note">Index built from Fernald’s quarterly growth rates of capital input, 2017 = 100. Capital services grow smoothly, because the capital stock changes slowly relative to its size; they slow after recessions, when investment falls. Like TFP, the series ends one quarter before the national accounts. See “Capital” under Definitions and methods for how it is measured.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="ky_private_nonres,ky_private" data-trends="off" data-zero-line="false" data-digits="2">
+        <figcaption class="chart-header">
+          <span class="chart-title">Capital–output ratio (annual, BEA)</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-note">A different capital measure from the chart above, shown to give a sense of scale: the current-cost value of BEA’s year-end net stock of fixed assets divided by nominal GDP of the same year. Both are at current prices, the usual way to measure this ratio. “All private fixed assets” adds residential housing (owner-occupied and rented) to business structures, equipment and intellectual property; government capital and consumer durables are excluded. The ratio is per year of GDP: in a quarterly model the capital–output ratio is four times larger.</p>
         <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
@@ -413,12 +439,21 @@
     
     <div class="chart-stack">
       
-      <figure class="chart-card" data-indicators="inflation_gdp_deflator,inflation_cpi" data-zero-line="true" data-digits="2">
+      <figure class="chart-card" data-indicators="inflation_gdp_deflator,inflation_cpi" data-quarterly-units="Percent per quarter, 100 × Δln P (annual rate ÷ 4)" data-zero-line="true" data-digits="2">
         <figcaption class="chart-header">
           <span class="chart-title">Inflation: GDP deflator and consumer prices</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
+        
+        <div class="segmented-field chart-control" data-control="rate-basis">
+          <span class="visually-hidden" id="inflation_gdp_deflator,inflation_cpi-basis-label">Rate basis</span>
+          <div class="segmented" role="group" aria-labelledby="inflation_gdp_deflator,inflation_cpi-basis-label">
+            <button type="button" data-value="annual" aria-pressed="true">Annual (percentage points)</button>
+            <button type="button" data-value="quarterly" aria-pressed="false">Quarterly</button>
+          </div>
+        </div>
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -445,6 +480,7 @@
         </figcaption>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -459,6 +495,7 @@
           <span class="chart-title">Labour force participation rate</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
+        
         
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -477,6 +514,7 @@
         </figcaption>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -493,6 +531,7 @@
         </figcaption>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -507,6 +546,7 @@
           <span class="chart-title">Civilian population aged 16 and over</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
+        
         
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -534,6 +574,7 @@
         </figcaption>
         
         
+        
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
@@ -543,11 +584,22 @@
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-      <figure class="chart-card" data-indicators="tfp,tfp_util" data-zero-line="false" data-digits="1">
+      <figure class="chart-card" data-indicators="tfp" data-zero-line="false" data-digits="1">
         <figcaption class="chart-header">
-          <span class="chart-title">Total factor productivity (business sector): measured and utilization-adjusted</span>
+          <span class="chart-title">Total factor productivity (business sector)</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
+        
+        
+        <div class="segmented-field chart-control" data-control="variant">
+          <span class="visually-hidden" id="tfp-variant-label">Series</span>
+          <div class="segmented" role="group" aria-labelledby="tfp-variant-label">
+            <button type="button" data-value="measured" data-set="tfp" aria-pressed="true">Measured</button>
+            <button type="button" data-value="adjusted" data-set="tfp_util" aria-pressed="false">Utilization-adjusted</button>
+            <button type="button" data-value="comparison" data-set="tfp,tfp_util" aria-pressed="false">Comparison</button>
+            
+          </div>
+        </div>
         
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -568,12 +620,21 @@
     
     <div class="chart-stack">
       
-      <figure class="chart-card" data-indicators="fedfunds,tbill_3m" data-zero-line="true" data-digits="2">
+      <figure class="chart-card" data-indicators="fedfunds,tbill_3m" data-quarterly-units="Percent per quarter (annual rate ÷ 4)" data-zero-line="true" data-digits="2">
         <figcaption class="chart-header">
           <span class="chart-title">Nominal interest rates: federal funds rate and 3-month Treasury bill</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
+        
+        
+        <div class="segmented-field chart-control" data-control="rate-basis">
+          <span class="visually-hidden" id="fedfunds,tbill_3m-basis-label">Rate basis</span>
+          <div class="segmented" role="group" aria-labelledby="fedfunds,tbill_3m-basis-label">
+            <button type="button" data-value="annual" aria-pressed="true">Annual (percentage points)</button>
+            <button type="button" data-value="quarterly" aria-pressed="false">Quarterly</button>
+          </div>
+        </div>
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -584,11 +645,12 @@
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-      <figure class="chart-card" data-indicators="real_rate_fedfunds,real_rate_tbill" data-zero-line="true" data-digits="2">
+      <figure class="chart-card" data-indicators="real_rate_fedfunds,real_rate_tbill" data-quarterly-units="Percentage points per quarter (annual rate ÷ 4)" data-zero-line="true" data-digits="2">
         <figcaption class="chart-header">
           <span class="chart-title">Ex-post real interest rates: federal funds rate and 3-month Treasury bill</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
+        
         
         
         <div class="segmented-field chart-control" data-control="rate-basis">
@@ -622,6 +684,7 @@
           <span class="chart-title">Real debt of nonfinancial corporations</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
+        
         
         
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -693,7 +756,8 @@
         <p>The two measures cover different baskets. The GDP deflator is the price of everything produced in the US — consumption, investment, government purchases and exports, but not imports — so it matches the output measure, real GDP. This is why it is the usual inflation measure when estimating macroeconomic models, which are often closed-economy (for example Smets and Wouters, 2007). The CPI is the price of a fixed basket of goods and services bought by urban households, including imported goods; it is the measure most people experience and the basis of many indexation rules.</p>
         <p>The federal funds rate is the effective rate, a volume-weighted measure of the overnight rates at which banks lend reserve balances to each other without collateral; the Federal Reserve sets a target for it, so it is the main indicator of the monetary policy stance. It is published from July 1954. The 3-month Treasury bill rate is the secondary-market yield on short-term government debt.</p>
         <p>Each ex-post real rate is the quarterly average of the monthly nominal rate minus GDP-deflator inflation realised over the following quarter, both at annual rates and in percentage points. It measures the real return actually earned, not the rate expected when the loan was made or the bill was bought.</p>
-        <p>The real rates chart can be shown at an annual rate (default) or per quarter. The quarterly rate is the annual rate divided by four: the nominal rate earned over one quarter minus the quarterly log change in the GDP deflator, 100 × [ln(P<sub>t+1</sub>) − ln(P<sub>t</sub>)]. It is the unit used when comparing data with quarterly models.</p>
+        <p><strong>Annual or quarterly rates.</strong> The inflation and interest-rate charts can be shown at an annual rate (the default) or per quarter. Annual rates are the reporting convention: interest rates are quoted per year, and quarterly inflation is annualised, 400 × [ln(P<sub>t</sub>) − ln(P<sub>t−1</sub>)], so that it can be compared with them. The quarterly rate is the annual rate divided by four: inflation becomes 100 × [ln(P<sub>t</sub>) − ln(P<sub>t−1</sub>)], the nominal rate becomes the interest earned over one quarter, and the real rate the nominal quarterly rate minus quarterly inflation over the following quarter.</p>
+        <p><strong>Which to use in a quarterly model.</strong> When a DSGE model is estimated or calibrated on quarterly data, its period is one quarter, so every rate must be measured per quarter: inflation as 100 × Δln P<sub>t</sub> and the policy rate as the federal funds rate divided by four, as in Smets and Wouters (2007). Mixing units is a common error: if the interest rate is quarterly but inflation is annualised (or the reverse), the estimated policy response to inflation is off by a factor of four; and steady-state values (for example the discount factor implied by the average real rate) and shock standard deviations are only meaningful at the model’s frequency. Dividing by four is the convention used with log-linearised models; the exact quarterly equivalent of an annual rate i is (1 + i)<sup>1/4</sup> − 1, which differs little at usual rates.</p>
       </div>
     </details>
 
@@ -707,6 +771,34 @@
         <p><strong>Coverage.</strong> Business sector, as in Fernald’s TFP: equipment (information-processing and other), software, research and development, artistic originals, nonresidential structures, residential capital owned by businesses (rented housing), inventories and land. General government, nonprofit institutions and owner-occupied housing are outside the business sector.</p>
         <p><strong>Levels.</strong> Fernald publishes growth rates only (400 × change in the natural logarithm). The index cumulates them exactly, K<sub>t</sub> = K<sub>t−1</sub> × exp(g<sub>t</sub> / 400), with its 2017 average = 100. There is therefore no level in dollars, and ratios such as capital to output are not available from this series.</p>
         <p><strong>Why capital services.</strong> BEA’s fixed-asset accounts, the official measure of the US capital stock in constant prices, are annual, year-end values; there is no official quarterly real capital stock. Every capital measure, including BEA’s, is built from past investment and assumed depreciation patterns. Fernald’s series applies these at the level of individual asset types and aggregates them by user cost, so it does not impose a single aggregate law of motion, K<sub>t+1</sub> = (1 − δ)K<sub>t</sub> + I<sub>t</sub>, on the data. This matters when the data are used to evaluate models whose own capital-accumulation equation (with or without time to build or adjustment costs) is the object of study.</p>
+        <p><strong>Capital–output ratio.</strong> Because Fernald’s series is an index, the capital–output chart uses a different measure: the current-cost value of BEA’s year-end net stock of fixed assets divided by nominal GDP (annual, BEA via FRED). Ratios of current-dollar values are the usual measure, for the reasons given under Shares and growth rates (see also Gomme and Rupert, 2007).</p>
+        <h3 class="subsection-title">Alternative: a quarterly capital stock</h3>
+        <p>For readers who need a capital stock in constant dollars, a quarterly series is provided for download and compared with Fernald’s capital input below. It is a construction, not official data, and is not used elsewhere on this page.</p>
+        <ul>
+          <li><strong>Benchmark.</strong> BEA’s real year-end net stock of private nonresidential fixed assets, in chained 2017 dollars: the chain-type quantity index for the net stock times its 2017 current-cost value, divided by 100 (BEA Fixed Assets tables 1.1 and 1.2, via the BEA API).</li>
+          <li><strong>Quarters.</strong> Within each year y, the end-of-quarter stock follows K<sub>q</sub> = (1 − δ<sub>y</sub>) K<sub>q−1</sub> + I<sub>q</sub>, where I<sub>q</sub> is real private nonresidential fixed investment in the quarter (the annual rate divided by four) and δ<sub>y</sub> is the one quarterly depreciation rate for which the stock at the end of the fourth quarter equals BEA’s year-end stock. The annual path is therefore exactly BEA’s, and the movements within the year come from actual investment. After BEA’s latest year, the last rate is kept and the quarters are flagged as extrapolated.</li>
+          <li><strong>Related approach.</strong> Gomme and Rupert (2007) also build quarterly stocks from quarterly investment and the law of motion, using BEA’s annual depreciation rates; they start from BEA’s 1929 stock and do not force the series back to BEA’s later year-end values.</li>
+          <li><strong>Limits.</strong> Within each year, the construction imposes the simple law of motion with one depreciation rate and no time to build. It should therefore not be used to test a model’s own capital-accumulation equation. Its coverage also differs from Fernald’s: it excludes inventories, land and business-owned housing.</li>
+        </ul>
+        <figure class="chart-card" data-indicators="capital_services,capital_stock_quarterly" data-trends="off" data-zero-line="false" data-digits="1">
+          <figcaption class="chart-header">
+            <span class="chart-title">Capital: Fernald’s capital input and the quarterly capital stock</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </figcaption>
+          <p class="loading-message" data-role="chart-status">Loading chart…</p>
+          <div class="chart-frame" data-role="chart-frame" hidden></div>
+          <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+          <p class="chart-note">Both indexed to their 2017 average = 100. Capital services usually grow faster than the stock, because the mix of capital has shifted towards short-lived assets (equipment, software), whose services per dollar of stock are larger.</p>
+          <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
+          <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+          <p class="chart-source" data-role="chart-source"></p>
+        </figure>
+        <p class="download-row">
+          <a class="button-link" data-download="capital_stock_csv" href="#" download hidden>
+            <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly capital stock (CSV)
+          </a>
+        </p>
+        <p>The file gives, for each quarter, the end-of-quarter stock in billions of chained 2017 dollars, investment, the quarterly depreciation rate, BEA’s year-end value (fourth quarters) and the extrapolation flag.</p>
       </div>
     </details>
 
@@ -771,6 +863,7 @@
           <li>Basu, S., J. G. Fernald and M. S. Kimball (2006). “Are Technology Improvements Contractionary?” <em>American Economic Review</em> 96(5): 1418–1448.</li>
           <li>Bureau of Economic Analysis (2023). <em>NIPA Handbook: Concepts and Methods of the U.S. National Income and Product Accounts</em>, chapter 4, “Estimating Methods” (updated December 2023). <a class="text-link" href="https://www.bea.gov/resources/methodologies/nipa-handbook/pdf/chapter-04.pdf" rel="noopener">bea.gov</a></li>
           <li>Fernald, J. G. (2014). “A Quarterly, Utilization-Adjusted Series on Total Factor Productivity.” Federal Reserve Bank of San Francisco Working Paper 2012-19 (updated March 2014). Data: <a class="text-link" href="https://www.frbsf.org/research-and-insights/data-and-indicators/total-factor-productivity-tfp/" rel="noopener">frbsf.org</a></li>
+          <li>Gomme, P. and P. Rupert (2007). “Theory, Measurement and Calibration of Macroeconomic Models.” <em>Journal of Monetary Economics</em> 54(2): 460–497.</li>
           <li>Landefeld, J. S., B. R. Moulton and C. M. Vojtech (2003). “Chained-Dollar Indexes: Issues, Tips on Their Use, and Upcoming Changes.” <em>Survey of Current Business</em>, November 2003. <a class="text-link" href="https://apps.bea.gov/scb/pdf/2003/11November/1103%20Chain-dollar.pdf" rel="noopener">bea.gov</a></li>
           <li>Smets, F. and R. Wouters (2007). “Shocks and Frictions in US Business Cycles: A Bayesian DSGE Approach.” <em>American Economic Review</em> 97(3): 586–606.</li>
           <li>Whelan, K. (2002). “A Guide to U.S. Chain Aggregated NIPA Data.” <em>Review of Income and Wealth</em> 48(2): 217–233. <a class="text-link" href="https://ideas.repec.org/a/bla/revinw/v48y2002i2p217-233.html" rel="noopener">RePEc</a></li>

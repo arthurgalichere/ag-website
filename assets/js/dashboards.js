@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 18:12 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 20:25 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -36,6 +36,11 @@ window.AGDashboards = (() => {
     return `${names[month - 1]} ${year}`;
   }
 
+  /* '1972-01-01' -> '1972' (annual data) */
+  function yearLabel(isoDate) {
+    return isoDate.slice(0, 4);
+  }
+
   function formatNumber(value, digits = 2) {
     if (value == null || !Number.isFinite(value)) return '–';
     return value.toLocaleString('en-GB', {
@@ -51,6 +56,15 @@ window.AGDashboards = (() => {
     const fraction = raw / power;
     const nice = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 2.5 ? 2.5 : fraction <= 5 ? 5 : 10;
     return nice * power;
+  }
+
+  /* Decimals needed to show every tick exactly (0.25 -> 2, 0.5 -> 1, 5 -> 0). */
+  function stepDecimals(step) {
+    for (let d = 0; d < 5; d += 1) {
+      const scaled = step * 10 ** d;
+      if (Math.abs(scaled - Math.round(scaled)) < 1e-9) return d;
+    }
+    return 4;
   }
 
   function ticks(min, max, step) {
@@ -126,7 +140,7 @@ window.AGDashboards = (() => {
       dates: ['1947-01-01', ...],
       series: [{ key, label, values: [number|null], color, dash }],
       recessions: [{ start, end_exclusive }],
-      period: 0.25 (quarterly) or 1/12 (monthly), in years,
+      period: 1 (annual), 0.25 (quarterly) or 1/12 (monthly), in years,
       digits: 2,
       zeroLine: true,
       readout: element for the text readout (aria-live),
@@ -137,7 +151,7 @@ window.AGDashboards = (() => {
     const state = { options, index: null };
     const xs = options.dates.map(decimalYear);
     const period = options.period || 0.25;
-    const labelDate = period < 0.2 ? monthLabel : quarterLabel;
+    const labelDate = period >= 1 ? yearLabel : period < 0.2 ? monthLabel : quarterLabel;
 
     frame.textContent = '';
     frame.setAttribute('tabindex', '0');
@@ -203,7 +217,7 @@ window.AGDashboards = (() => {
           stroke: isZero ? zero : grid, 'stroke-width': isZero ? 1.2 : 1,
         }, axis);
         const text = svg('text', { x: margin.left - 6, y: y(value) + 3.5, 'text-anchor': 'end' }, axis);
-        text.textContent = formatNumber(value, yStep < 0.1 ? 2 : yStep < 1 ? 1 : 0);
+        text.textContent = formatNumber(value, stepDecimals(yStep));
       });
 
       /* Year ticks on the x axis. */
@@ -323,5 +337,5 @@ window.AGDashboards = (() => {
     };
   }
 
-  return { decimalYear, quarterLabel, monthLabel, formatNumber, siteUrl, segmented, lineChart };
+  return { decimalYear, quarterLabel, monthLabel, yearLabel, formatNumber, siteUrl, segmented, lineChart };
 })();

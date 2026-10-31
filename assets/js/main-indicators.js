@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 19:59 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 20:25 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -6,7 +6,10 @@
    indicators in data-indicators and may also carry:
      data-per-capita  per-capita indicator ids (switch on the card)
      data-mode=index  rebase each series to 2017 = 100
-     data-rate-basis  annual / quarterly switch (real rates)
+     data-rate-basis  annual / quarterly switch (interest and inflation
+                      rates); data-quarterly-units names the quarterly unit
+     data-control=variant  switch between indicator sets (e.g. TFP measured,
+                      utilization-adjusted, comparison)
      data-trends=off  no trends on this chart
      data-benchmark   the first indicator is the aggregate (GDP,
                       consumption, investment): site blue, thicker line
@@ -41,7 +44,7 @@
     updateNote: body.querySelector('[data-role="update-note"]'),
     pageStatus: body.querySelector('[data-role="page-status"]'),
   };
-  const cards = Array.from(body.querySelectorAll('[data-indicators]'));
+  const cards = Array.from(body.querySelectorAll('figure.chart-card[data-indicators]'));
   const state = {
     country: 'US', trend: 'none', payload: null,
     charts: new Map(), visible: new Set(), basis: new Map(), perCapita: new Map(),
@@ -66,6 +69,17 @@
         state.basis.set(card, value);
         if (state.visible.has(card)) renderCard(card);
       }).select('annual', false);
+    }
+    const variant = card.querySelector('[data-control="variant"]');
+    if (variant) {
+      const control = D.segmented(variant, value => {
+        const button = variant.querySelector(`[data-value="${value}"]`);
+        card.dataset.indicators = button.dataset.set;
+        if (state.visible.has(card)) renderCard(card);
+      });
+      const first = variant.querySelector('button');
+      card.dataset.indicators = first.dataset.set;
+      control.select(first.dataset.value, false);
     }
     const measure = card.querySelector('[data-control="measure"]');
     if (measure) {
@@ -195,13 +209,14 @@
     parts.note.hidden = trendable || state.trend === 'none';
 
     const monthly = indicators.every(item => item.frequency === 'Monthly');
+    const annual = indicators.every(item => item.frequency === 'Annual');
     const start = dates[0];
     const end = dates[dates.length - 1];
-    const label = monthly ? D.monthLabel : D.quarterLabel;
+    const label = annual ? D.yearLabel : monthly ? D.monthLabel : D.quarterLabel;
     const trendText = trendable && state.trend !== 'none'
       ? ` · ${override ? 'NROU' : TREND_NAMES[state.trend]}` : '';
     let units = first.units;
-    if (quarterlyBasis) units = 'Percent per quarter (annual rate ÷ 4)';
+    if (quarterlyBasis) units = card.dataset.quarterlyUnits || 'Percent per quarter (annual rate ÷ 4)';
     if (indexMode) units = 'Index, 2017 average = 100';
     parts.subtitle.textContent = `${units}${single ? ` · ${first.frequency.toLowerCase()}` : ''}${trendText} · ${label(start)}–${label(end)}`;
 
@@ -212,7 +227,7 @@
     state.charts.set(card, D.lineChart(parts.frame, {
       dates,
       series,
-      period: monthly ? 1 / 12 : 0.25,
+      period: annual ? 1 : monthly ? 1 / 12 : 0.25,
       recessions: state.payload.recessions ? state.payload.recessions.intervals : [],
       zeroLine: card.dataset.zeroLine === 'true' ? true : 'auto',
       digits: Number(card.dataset.digits || 2),
@@ -365,7 +380,7 @@
   function updateDownloads() {
     const links = state.payload.downloads;
     if (!links) { el.downloads.hidden = true; return; }
-    el.downloads.querySelectorAll('[data-download]').forEach(link => {
+    body.querySelectorAll('[data-download]').forEach(link => {
       const path = links[link.dataset.download];
       link.hidden = !path;
       if (path) link.href = D.siteUrl(body.dataset.siteBase, path);
