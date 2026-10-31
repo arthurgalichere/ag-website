@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 18:12 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 18:40 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -8,6 +8,8 @@
      data-mode=index  rebase each series to 2017 = 100
      data-rate-basis  annual / quarterly switch (real rates)
      data-trends=off  no trends on this chart
+   Sections may carry shares and growth tables (data-table = gdp,
+   consumption or investment).
    One page-level switch adds an HP or Christiano–Fitzgerald
    trend to every single-series chart.
    Uses AGDashboards (dashboards.js) and AGSite (site.js).
@@ -246,9 +248,10 @@
     }, { rootMargin: '300px 0px' })
     : null;
 
-  /* Shares of GDP and growth rates: nominal and real columns, three periods. */
-  function table(rows, caption, unitLabel, decimals) {
-    const p = state.payload.gdp_shares.periods;
+  /* Shares and growth tables (GDP, consumption, investment): nominal and
+     real columns, three periods. */
+  function table(rows, periods, caption, unitLabel, decimals) {
+    const p = periods;
     const fmt = v => (v == null ? '–' : D.formatNumber(v, decimals));
     const head = `<tr><th scope="col" rowspan="2" class="component-head">Component<br><span class="unit-label">${S.escapeHTML(unitLabel)}</span></th>
         <th scope="colgroup" colspan="3">Nominal (current dollars)</th>
@@ -257,7 +260,7 @@
         <th scope="col"><abbr title="${S.escapeHTML(p.recent_range || '')}">${S.escapeHTML(p.recent)}</abbr></th>
         <th scope="col"><abbr title="${S.escapeHTML(p.full_range || '')}">${S.escapeHTML(p.full)}</abbr></th>`).join('')}</tr>`;
     const body = rows.map(row => `
-      <tr>
+      <tr${row.is_sum ? ' class="is-sum"' : ''}>
         <th scope="row">${S.escapeHTML(row.component)}</th>
         <td>${fmt(row.nominal_latest)}</td><td>${fmt(row.nominal_recent)}</td><td>${fmt(row.nominal_full)}</td>
         <td>${fmt(row.real_latest)}</td><td>${fmt(row.real_recent)}</td><td>${fmt(row.real_full)}</td>
@@ -267,20 +270,51 @@
       <thead>${head}</thead><tbody>${body}</tbody></table></div>`;
   }
 
+  const GROWTH_NOTE = 'Annualised quarter-on-quarter growth, 400 × [ln(X<sub>t</sub>) − ln(X<sub>t−1</sub>)]: the latest-quarter column is that quarter’s growth at an annual rate; the period columns are averages of quarterly growth rates. Real growth uses chained 2017-dollar series, whose growth rates are those of BEA’s quantity indexes and are not affected by non-additivity; nominal growth also includes price changes.';
+
+  /* Table settings by data-table key. GDP tables come from gdp_shares;
+     consumption and investment tables from component_tables. */
+  const TABLES = {
+    gdp: {
+      data: payload => payload.gdp_shares,
+      share: ['Shares of GDP by expenditure component, percent', '(% of GDP)'],
+      growth: ['Growth of GDP and its expenditure components, percent per year', '(% per year)'],
+      shareNote: (t, p) => `Imports enter GDP with a negative sign. ${S.escapeHTML(t.notes.nominal)} ${S.escapeHTML(t.notes.real)} “Last 10 years” is ${S.escapeHTML(p.recent_range)}; ${S.escapeHTML(p.full)} is ${S.escapeHTML(p.full_range)}. Period columns are averages of quarterly shares.`,
+      growthNote: () => GROWTH_NOTE,
+    },
+    consumption: {
+      data: payload => payload.component_tables && payload.component_tables.consumption,
+      share: ['Shares of consumption by component, percent', '(% of consumption)'],
+      growth: ['Growth of consumption and its components, percent per year', '(% per year)'],
+      shareNote: (t, p) => `Nominal: current-dollar component / current-dollar consumption. These shares add up to 100 and measure each component’s relative importance (BEA, 2023). Real: chained 2017-dollar component / chained 2017-dollar consumption. Chained components are not additive — see the “Sum of components” row — and their ratios are meaningful only close to 2017: further away they are distorted by relative-price changes, notably the long fall in the relative price of durable goods (Landefeld, Moulton and Vojtech, 2003; Whelan, 2002). “Last 10 years” is ${S.escapeHTML(p.recent_range)}; ${S.escapeHTML(p.full)} is ${S.escapeHTML(p.full_range)}. Period columns are averages of quarterly shares.`,
+      growthNote: () => GROWTH_NOTE,
+    },
+    investment: {
+      data: payload => payload.component_tables && payload.component_tables.investment,
+      share: ['Shares of investment by component, percent', '(% of investment)'],
+      growth: ['Growth of investment and its components, percent per year', '(% per year)'],
+      shareNote: (t, p) => `Nominal: current-dollar component / current-dollar gross private domestic investment. These shares add up to 100 and measure each component’s relative importance (BEA, 2023). Real: chained 2017-dollar component / chained 2017-dollar investment. Chained components are not additive — see the “Sum of components” row — and their ratios are meaningful only close to 2017: further away they are distorted by relative-price changes (Landefeld, Moulton and Vojtech, 2003; Whelan, 2002). The change in private inventories is small on average but can be large, and negative, in individual quarters. “Last 10 years” is ${S.escapeHTML(p.recent_range)}; ${S.escapeHTML(p.full)} is ${S.escapeHTML(p.full_range)}. Period columns are averages of quarterly shares.`,
+      growthNote: () => `${GROWTH_NOTE} The change in private inventories has no growth rate, because it changes sign.`,
+    },
+  };
+
   function renderShares() {
-    const shares = state.payload.gdp_shares;
-    if (!shares) return;
-    const p = shares.periods;
-    const sharesTarget = body.querySelector('[data-role="shares"]');
-    if (sharesTarget) {
-      sharesTarget.innerHTML = table(shares.rows, 'Shares of GDP by expenditure component, percent', '(% of GDP)', 1)
-        + `<p class="table-note">Imports enter GDP with a negative sign. ${S.escapeHTML(shares.notes.nominal)} ${S.escapeHTML(shares.notes.real)} “Last 10 years” is ${S.escapeHTML(p.recent_range)}; ${S.escapeHTML(p.full)} is ${S.escapeHTML(p.full_range)}. Period columns are averages of quarterly shares.</p>`;
-    }
-    const growthTarget = body.querySelector('[data-role="growth"]');
-    if (growthTarget && shares.growth_rows) {
-      growthTarget.innerHTML = table(shares.growth_rows, 'Growth of GDP and its expenditure components, percent per year', '(% per year)', 1)
-        + `<p class="table-note">Annualised quarter-on-quarter growth, 400 × [ln(X<sub>t</sub>) − ln(X<sub>t−1</sub>)]: the latest-quarter column is that quarter’s growth at an annual rate; the period columns are averages of quarterly growth rates. Real growth uses chained 2017-dollar series; nominal growth also includes price changes.</p>`;
-    }
+    body.querySelectorAll('[data-role="shares"], [data-role="growth"]').forEach(target => {
+      const settings = TABLES[target.dataset.table || 'gdp'];
+      const data = settings && settings.data(state.payload);
+      if (!data) {
+        target.innerHTML = '<p class="empty-message">This table will appear after the next data update.</p>';
+        return;
+      }
+      const p = data.periods;
+      if (target.dataset.role === 'shares') {
+        target.innerHTML = table(data.rows, p, settings.share[0], settings.share[1], 1)
+          + `<p class="table-note">${settings.shareNote(data, p)}</p>`;
+      } else if (data.growth_rows) {
+        target.innerHTML = table(data.growth_rows, p, settings.growth[0], settings.growth[1], 1)
+          + `<p class="table-note">${settings.growthNote(data, p)}</p>`;
+      }
+    });
   }
 
   /* Bottom of the page: one ribbon per source series with estimated values. */

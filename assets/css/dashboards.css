@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 18:12 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 18:40 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -331,6 +331,17 @@
   text-align: left;
   font-weight: 600;
   color: var(--ink-soft);
+}
+
+.shares-table tbody tr.is-sum th,
+.shares-table tbody tr.is-sum td {
+  border-top: 2px solid var(--line-strong);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.reference-list li {
+  margin-bottom: 0.45rem;
 }
 
 .table-note {
