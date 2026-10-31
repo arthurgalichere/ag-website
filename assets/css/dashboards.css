@@ -10,6 +10,7 @@
   --chart-1: #3b5a75;            /* site accent */
   --chart-2: #b0602a;
   --chart-3: #3d7a57;
+  --chart-4: #7a4f8c;
   --chart-ink: var(--ink-soft);
   --chart-grid: rgba(28, 28, 30, 0.08);
   --chart-zero: rgba(28, 28, 30, 0.42);
@@ -211,6 +212,70 @@
   border-top: 1px solid var(--line);
   font-size: 0.78rem;
   line-height: 1.55;
+}
+
+
+/* Stack of chart cards inside a section. */
+.chart-stack {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.chart-control {
+  margin-bottom: 0.9rem;
+}
+
+.chart-hint {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.legend-estimate {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: var(--sheet);
+  border: 2px solid var(--chart-1);
+  border-radius: 50%;
+}
+
+.estimates-list {
+  margin-top: 1.25rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.estimates-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.estimates-table th,
+.estimates-table td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.estimates-table td:nth-child(-n + 3) {
+  white-space: nowrap;
+}
+
+.estimates-table th {
+  color: var(--accent-strong);
+  background: var(--paper-soft);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 /* Responsive and reduced motion --------------------------- */

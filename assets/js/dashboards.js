@@ -28,6 +28,13 @@ window.AGDashboards = (() => {
     return `${year} Q${Math.floor((month - 1) / 3) + 1}`;
   }
 
+  /* '1972-04-01' -> 'Apr 1972' */
+  function monthLabel(isoDate) {
+    const [year, month] = isoDate.split('-').map(Number);
+    const names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${names[month - 1]} ${year}`;
+  }
+
   function formatNumber(value, digits = 2) {
     if (value == null || !Number.isFinite(value)) return '–';
     return value.toLocaleString('en-GB', {
@@ -118,7 +125,7 @@ window.AGDashboards = (() => {
       dates: ['1947-01-01', ...],
       series: [{ key, label, values: [number|null], color, dash }],
       recessions: [{ start, end_exclusive }],
-      yLabel: 'Percent',
+      period: 0.25 (quarterly) or 1/12 (monthly), in years,
       digits: 2,
       zeroLine: true,
       readout: element for the text readout (aria-live),
@@ -128,6 +135,8 @@ window.AGDashboards = (() => {
   function lineChart(frame, options) {
     const state = { options, index: null };
     const xs = options.dates.map(decimalYear);
+    const period = options.period || 0.25;
+    const labelDate = period < 0.2 ? monthLabel : quarterLabel;
 
     frame.textContent = '';
     frame.setAttribute('tabindex', '0');
@@ -141,7 +150,9 @@ window.AGDashboards = (() => {
       const width = Math.max(280, frame.clientWidth);
       const height = Math.round(Math.min(440, Math.max(260, width * 0.48)));
       const compact = width < 560;
-      const margin = { top: 14, right: compact ? 10 : 18, bottom: 30, left: compact ? 38 : 48 };
+      const maxAbs = Math.max(...options.series.flatMap(item => item.values.filter(Number.isFinite).map(Math.abs)));
+      const labelChars = formatNumber(maxAbs, 0).length;
+      const margin = { top: 14, right: compact ? 10 : 18, bottom: 30, left: Math.max(compact ? 38 : 48, 14 + labelChars * (compact ? 6.2 : 7)) };
       const plotW = width - margin.left - margin.right;
       const plotH = height - margin.top - margin.bottom;
 
@@ -153,7 +164,7 @@ window.AGDashboards = (() => {
       const visible = options.series.flatMap(item => item.values.filter(Number.isFinite));
       let yMin = Math.min(...visible);
       let yMax = Math.max(...visible);
-      if (options.zeroLine) {
+      if (options.zeroLine === true) {
         yMin = Math.min(yMin, 0);
         yMax = Math.max(yMax, 0);
       }
@@ -162,7 +173,7 @@ window.AGDashboards = (() => {
       yMax = Math.ceil(yMax / yStep) * yStep;
 
       const xMin = xs[0];
-      const xMax = xs[xs.length - 1] + 0.25;
+      const xMax = xs[xs.length - 1] + period;
       const x = value => margin.left + ((value - xMin) / (xMax - xMin)) * plotW;
       const y = value => margin.top + ((yMax - value) / (yMax - yMin)) * plotH;
 
@@ -185,13 +196,13 @@ window.AGDashboards = (() => {
       /* Horizontal grid and y labels. */
       const axis = svg('g', { class: 'chart-axis', 'font-size': compact ? 10 : 11, fill: ink }, root);
       ticks(yMin, yMax, yStep).forEach(value => {
-        const isZero = value === 0 && options.zeroLine;
+        const isZero = value === 0 && Boolean(options.zeroLine);
         svg('line', {
           x1: margin.left, x2: margin.left + plotW, y1: y(value), y2: y(value),
           stroke: isZero ? zero : grid, 'stroke-width': isZero ? 1.2 : 1,
         }, axis);
         const text = svg('text', { x: margin.left - 6, y: y(value) + 3.5, 'text-anchor': 'end' }, axis);
-        text.textContent = formatNumber(value, yStep < 1 ? 1 : 0);
+        text.textContent = formatNumber(value, yStep < 0.1 ? 2 : yStep < 1 ? 1 : 0);
       });
 
       /* Year ticks on the x axis. */
@@ -215,13 +226,21 @@ window.AGDashboards = (() => {
         let pen = false;
         item.values.forEach((value, i) => {
           if (!Number.isFinite(value)) { pen = false; return; }
-          path += `${pen ? 'L' : 'M'}${x(xs[i] + 0.125).toFixed(1)},${y(value).toFixed(1)}`;
+          path += `${pen ? 'L' : 'M'}${x(xs[i] + period / 2).toFixed(1)},${y(value).toFixed(1)}`;
           pen = true;
         });
         svg('path', {
           d: path, stroke: item.color, 'stroke-width': compact ? 1.5 : 1.8,
           'stroke-dasharray': item.dash || 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round',
         }, lines);
+        /* Hollow markers for values estimated by the author (item.marks: indices). */
+        (item.marks || []).forEach(i => {
+          if (!Number.isFinite(item.values[i])) return;
+          svg('circle', {
+            class: 'chart-estimate', cx: x(xs[i] + period / 2), cy: y(item.values[i]), r: compact ? 3.5 : 4.2,
+            fill: '#ffffff', stroke: item.color, 'stroke-width': 1.8,
+          }, lines);
+        });
       });
 
       /* Hover marker. */
@@ -241,7 +260,7 @@ window.AGDashboards = (() => {
       }
       state.index = Math.max(0, Math.min(xs.length - 1, index));
       const { x, y } = state.geometry;
-      const px = x(xs[state.index] + 0.125);
+      const px = x(xs[state.index] + period / 2);
       state.marker.group.setAttribute('visibility', 'visible');
       state.marker.line.setAttribute('x1', px);
       state.marker.line.setAttribute('x2', px);
@@ -257,8 +276,8 @@ window.AGDashboards = (() => {
         }
       });
       if (options.readout && announce !== null) {
-        const parts = options.series.map(item => `${item.label}: ${formatNumber(item.values[state.index], options.digits ?? 2)}`);
-        options.readout.textContent = `${quarterLabel(options.dates[state.index])} · ${parts.join(' · ')}`;
+        const parts = options.series.map(item => `${item.label}: ${formatNumber(item.values[state.index], options.digits ?? 2)}${(item.marks || []).includes(state.index) ? ' (estimated)' : ''}`);
+        options.readout.textContent = `${labelDate(options.dates[state.index])} · ${parts.join(' · ')}`;
       }
     }
 
@@ -302,5 +321,5 @@ window.AGDashboards = (() => {
     };
   }
 
-  return { decimalYear, quarterLabel, formatNumber, siteUrl, segmented, lineChart };
+  return { decimalYear, quarterLabel, monthLabel, formatNumber, siteUrl, segmented, lineChart };
 })();
