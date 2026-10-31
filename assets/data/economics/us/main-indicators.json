@@ -1,1 +1,2326 @@
-
+{
+  "schema_version": 1,
+  "dashboard": "main-indicators",
+  "country": {
+    "code": "US",
+    "name": "United States"
+  },
+  "generated_at_utc": "2026-10-31T00:05:48+00:00",
+  "recessions": {
+    "series_id": "USRECQ",
+    "definition": "NBER-based quarterly recession indicator",
+    "intervals": [
+      {
+        "start": "1949-01-01",
+        "end_exclusive": "1950-01-01"
+      },
+      {
+        "start": "1953-07-01",
+        "end_exclusive": "1954-07-01"
+      },
+      {
+        "start": "1957-10-01",
+        "end_exclusive": "1958-07-01"
+      },
+      {
+        "start": "1960-07-01",
+        "end_exclusive": "1961-04-01"
+      },
+      {
+        "start": "1970-01-01",
+        "end_exclusive": "1971-01-01"
+      },
+      {
+        "start": "1974-01-01",
+        "end_exclusive": "1975-04-01"
+      },
+      {
+        "start": "1980-04-01",
+        "end_exclusive": "1980-10-01"
+      },
+      {
+        "start": "1981-10-01",
+        "end_exclusive": "1983-01-01"
+      },
+      {
+        "start": "1990-10-01",
+        "end_exclusive": "1991-04-01"
+      },
+      {
+        "start": "2001-04-01",
+        "end_exclusive": "2002-01-01"
+      },
+      {
+        "start": "2008-01-01",
+        "end_exclusive": "2009-07-01"
+      },
+      {
+        "start": "2020-01-01",
+        "end_exclusive": "2020-07-01"
+      }
+    ]
+  },
+  "indicators": {
+    "real_gdp": {
+      "id": "real_gdp",
+      "provider_series_id": "GDPC1",
+      "title": "Real Gross Domestic Product",
+      "short_title": "Real GDP",
+      "units": "Billions of Chained 2017 Dollars",
+      "frequency": "Quarterly",
+      "source": "U.S. Bureau of Economic Analysis via FRED",
+      "seasonal_adjustment": "Seasonally Adjusted Annual Rate",
+      "source_last_updated": "2026-10-29 08:03:15-05",
+      "sample": {
+        "start": "1947-01-01",
+        "end": "2026-07-01",
+        "observations": 319
+      },
+      "trend_methods": {
+        "hp": "HP filter (lambda = 1600) on 100 x log level, shown in levels",
+        "hamilton": "Hamilton regression (h = 8, p = 4) on 100 x log level: value predicted from data 8 quarters earlier, shown in levels",
+        "cf": "Christiano-Fitzgerald band-pass (6-32 quarters) on 100 x log level: series minus cycle, shown in levels"
+      },
+      "observations": [
+        {
+          "date": "1947-01-01",
+          "real_gdp": 2182.681,
+          "hp_trend_level": 2128.1363083997876,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2164.834874426307
+        },
+        {
+          "date": "1947-04-01",
+          "real_gdp": 2176.892,
+          "hp_trend_level": 2150.621039269855,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2174.2404659613517
+        },
+        {
+          "date": "1947-07-01",
+          "real_gdp": 2172.432,
+          "hp_trend_level": 2173.377707775835,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2178.8484891367484
+        },
+        {
+          "date": "1947-10-01",
+          "real_gdp": 2206.452,
+          "hp_trend_level": 2196.4613238256647,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2207.845352706334
+        },
+        {
+          "date": "1948-01-01",
+          "real_gdp": 2239.682,
+          "hp_trend_level": 2219.928534530523,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2224.0034574960464
+        },
+        {
+          "date": "1948-04-01",
+          "real_gdp": 2276.69,
+          "hp_trend_level": 2243.844652264899,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2245.08836258972
+        },
+        {
+          "date": "1948-07-01",
+          "real_gdp": 2289.77,
+          "hp_trend_level": 2268.290226244103,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2259.981944138535
+        },
+        {
+          "date": "1948-10-01",
+          "real_gdp": 2292.364,
+          "hp_trend_level": 2293.369999626738,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2289.532861568451
+        },
+        {
+          "date": "1949-01-01",
+          "real_gdp": 2260.807,
+          "hp_trend_level": 2319.2068700509567,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2302.1840883473837
+        },
+        {
+          "date": "1949-04-01",
+          "real_gdp": 2253.128,
+          "hp_trend_level": 2345.928511999939,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2337.525188362159
+        },
+        {
+          "date": "1949-07-01",
+          "real_gdp": 2276.424,
+          "hp_trend_level": 2373.630565205474,
+          "hamilton_trend_level": null,
+          "cf_trend_level": 2384.8253466922865
+        },
+        {
+          "date": "1949-10-01",
+          "real_gdp": 2257.352,
+          "hp_trend_level": 2402.352509151941,
+          "hamilton_trend_level": 2418.4401199263416,
+          "cf_trend_level": 2358.3448002409696
+        },
+        {
+          "date": "1950-01-01",
+          "real_gdp": 2346.104,
+          "hp_trend_level": 2432.0720511882982,
+          "hamilton_trend_level": 2446.8875354967868,
+          "cf_trend_level": 2419.052498754904
+        },
+        {
+          "date": "1950-04-01",
+          "real_gdp": 2417.682,
+          "hp_trend_level": 2462.6697463771106,
+          "hamilton_trend_level": 2476.99993475781,
+          "cf_trend_level": 2448.3907397371568
+        },
+        {
+          "date": "1950-07-01",
+          "real_gdp": 2511.127,
+          "hp_trend_level": 2493.9636581060513,
+          "hamilton_trend_level": 2492.9270951728377,
+          "cf_trend_level": 2499.3612536128476
+        },
+        {
+          "date": "1950-10-01",
+          "real_gdp": 2559.214,
+          "hp_trend_level": 2525.733015650497,
+          "hamilton_trend_level": 2500.231181751122,
+          "cf_trend_level": 2513.75475658197
+        },
+        {
+          "date": "1951-01-01",
+          "real_gdp": 2593.967,
+          "hp_trend_level": 2557.7563187099945,
+          "hamilton_trend_level": 2477.201590713554,
+          "cf_trend_level": 2528.085533399392
+        },
+        {
+          "date": "1951-04-01",
+          "real_gdp": 2638.898,
+          "hp_trend_level": 2589.821902433733,
+          "hamilton_trend_level": 2475.2522377760197,
+          "cf_trend_level": 2566.4213601094148
+        },
+        {
+          "date": "1951-07-01",
+          "real_gdp": 2693.259,
+          "hp_trend_level": 2621.7305845374185,
+          "hamilton_trend_level": 2501.2299237513225,
+          "cf_trend_level": 2627.495239043672
+        },
+        {
+          "date": "1951-10-01",
+          "real_gdp": 2699.156,
+          "hp_trend_level": 2653.304932911345,
+          "hamilton_trend_level": 2473.5302413368818,
+          "cf_trend_level": 2650.900233517784
+        },
+        {
+          "date": "1952-01-01",
+          "real_gdp": 2727.954,
+          "hp_trend_level": 2684.4049604716392,
+          "hamilton_trend_level": 2558.743349563737,
+          "cf_trend_level": 2697.6439658987174
+        },
+        {
+          "date": "1952-04-01",
+          "real_gdp": 2733.8,
+          "hp_trend_level": 2714.9143749081168,
+          "hamilton_trend_level": 2627.55229215687,
+          "cf_trend_level": 2711.7864265234853
+        },
+        {
+          "date": "1952-07-01",
+          "real_gdp": 2753.517,
+          "hp_trend_level": 2744.7406700151764,
+          "hamilton_trend_level": 2701.4264446727475,
+          "cf_trend_level": 2723.6965196437845
+        },
+        {
+          "date": "1952-10-01",
+          "real_gdp": 2843.941,
+          "hp_trend_level": 2773.8009700508296,
+          "hamilton_trend_level": 2758.044713730948,
+          "cf_trend_level": 2793.891653305506
+        },
+        {
+          "date": "1953-01-01",
+          "real_gdp": 2896.811,
+          "hp_trend_level": 2802.016315809622,
+          "hamilton_trend_level": 2799.91445222569,
+          "cf_trend_level": 2830.5083696276342
+        },
+        {
+          "date": "1953-04-01",
+          "real_gdp": 2919.206,
+          "hp_trend_level": 2829.350663164269,
+          "hamilton_trend_level": 2860.725257829861,
+          "cf_trend_level": 2858.871529467644
+        },
+        {
+          "date": "1953-07-01",
+          "real_gdp": 2902.785,
+          "hp_trend_level": 2855.8279677314185,
+          "hamilton_trend_level": 2919.3281932599557,
+          "cf_trend_level": 2879.1559469720573
+        },
+        {
+          "date": "1953-10-01",
+          "real_gdp": 2858.845,
+          "hp_trend_level": 2881.5313038286686,
+          "hamilton_trend_level": 2926.2568692264654,
+          "cf_trend_level": 2893.102265612209
+        },
+        {
+          "date": "1954-01-01",
+          "real_gdp": 2845.192,
+          "hp_trend_level": 2906.5780212931018,
+          "hamilton_trend_level": 2961.4341200215617,
+          "cf_trend_level": 2936.350718486984
+        },
+        {
+          "date": "1954-04-01",
+          "real_gdp": 2848.305,
+          "hp_trend_level": 2931.0763896549315,
+          "hamilton_trend_level": 2977.379308023793,
+          "cf_trend_level": 2971.0705251376553
+        },
+        {
+          "date": "1954-07-01",
+          "real_gdp": 2880.482,
+          "hp_trend_level": 2955.099910140129,
+          "hamilton_trend_level": 2995.8141999288196,
+          "cf_trend_level": 2996.2087825627905
+        },
+        {
+          "date": "1954-10-01",
+          "real_gdp": 2936.852,
+          "hp_trend_level": 2978.671947618537,
+          "hamilton_trend_level": 3088.6405997201487,
+          "cf_trend_level": 3011.3496259700464
+        },
+        {
+          "date": "1955-01-01",
+          "real_gdp": 3020.746,
+          "hp_trend_level": 3001.7692941630166,
+          "hamilton_trend_level": 3132.308973638722,
+          "cf_trend_level": 3040.070336809974
+        },
+        {
+          "date": "1955-04-01",
+          "real_gdp": 3069.91,
+          "hp_trend_level": 3024.3419307070576,
+          "hamilton_trend_level": 3148.9488843228723,
+          "cf_trend_level": 3044.8149537011986
+        },
+        {
+          "date": "1955-07-01",
+          "real_gdp": 3111.379,
+          "hp_trend_level": 3046.351002338766,
+          "hamilton_trend_level": 3150.056334006499,
+          "cf_trend_level": 3069.4180821596674
+        },
+        {
+          "date": "1955-10-01",
+          "real_gdp": 3130.068,
+          "hp_trend_level": 3067.7859121316455,
+          "hamilton_trend_level": 3119.8475807252917,
+          "cf_trend_level": 3097.888593729043
+        },
+        {
+          "date": "1956-01-01",
+          "real_gdp": 3117.922,
+          "hp_trend_level": 3088.6772624206424,
+          "hamilton_trend_level": 3116.3093432851733,
+          "cf_trend_level": 3105.9944715377997
+        },
+        {
+          "date": "1956-04-01",
+          "real_gdp": 3143.694,
+          "hp_trend_level": 3109.096217562086,
+          "hamilton_trend_level": 3119.23674114924,
+          "cf_trend_level": 3142.261379189208
+        },
+        {
+          "date": "1956-07-01",
+          "real_gdp": 3140.874,
+          "hp_trend_level": 3129.134818078366,
+          "hamilton_trend_level": 3140.912156859425,
+          "cf_trend_level": 3130.265188250502
+        },
+        {
+          "date": "1956-10-01",
+          "real_gdp": 3192.57,
+          "hp_trend_level": 3148.9096854619033,
+          "hamilton_trend_level": 3189.555642246059,
+          "cf_trend_level": 3159.2346872824924
+        },
+        {
+          "date": "1957-01-01",
+          "real_gdp": 3213.011,
+          "hp_trend_level": 3168.548096077382,
+          "hamilton_trend_level": 3264.8235618771223,
+          "cf_trend_level": 3162.6599714810177
+        },
+        {
+          "date": "1957-04-01",
+          "real_gdp": 3205.97,
+          "hp_trend_level": 3188.208109015479,
+          "hamilton_trend_level": 3309.678276334511,
+          "cf_trend_level": 3162.916209085785
+        },
+        {
+          "date": "1957-07-01",
+          "real_gdp": 3237.386,
+          "hp_trend_level": 3208.0797205799586,
+          "hamilton_trend_level": 3354.4502049800813,
+          "cf_trend_level": 3229.878504160918
+        },
+        {
+          "date": "1957-10-01",
+          "real_gdp": 3203.894,
+          "hp_trend_level": 3228.3688912518646,
+          "hamilton_trend_level": 3386.582719441672,
+          "cf_trend_level": 3246.9812258403326
+        },
+        {
+          "date": "1958-01-01",
+          "real_gdp": 3120.724,
+          "hp_trend_level": 3249.3052797052806,
+          "hamilton_trend_level": 3382.6230884888732,
+          "cf_trend_level": 3202.0683048526994
+        },
+        {
+          "date": "1958-04-01",
+          "real_gdp": 3141.224,
+          "hp_trend_level": 3271.109048283174,
+          "hamilton_trend_level": 3417.449832916258,
+          "cf_trend_level": 3231.5598588880416
+        },
+        {
+          "date": "1958-07-01",
+          "real_gdp": 3213.884,
+          "hp_trend_level": 3293.923401939527,
+          "hamilton_trend_level": 3417.629486429775,
+          "cf_trend_level": 3278.456985387674
+        },
+        {
+          "date": "1958-10-01",
+          "real_gdp": 3289.032,
+          "hp_trend_level": 3317.811913867191,
+          "hamilton_trend_level": 3463.7276431406135,
+          "cf_trend_level": 3303.949694130348
+        },
+        {
+          "date": "1959-01-01",
+          "real_gdp": 3352.129,
+          "hp_trend_level": 3342.789051648421,
+          "hamilton_trend_level": 3485.4745624865222,
+          "cf_trend_level": 3315.2214849823754
+        },
+        {
+          "date": "1959-04-01",
+          "real_gdp": 3427.667,
+          "hp_trend_level": 3368.8517995796024,
+          "hamilton_trend_level": 3473.248305796254,
+          "cf_trend_level": 3354.1308196905156
+        },
+        {
+          "date": "1959-07-01",
+          "real_gdp": 3430.057,
+          "hp_trend_level": 3396.00334315767,
+          "hamilton_trend_level": 3515.4476481690067,
+          "cf_trend_level": 3342.9798168786892
+        },
+        {
+          "date": "1959-10-01",
+          "real_gdp": 3439.832,
+          "hp_trend_level": 3424.28433656627,
+          "hamilton_trend_level": 3485.4539052679374,
+          "cf_trend_level": 3356.9400849130025
+        },
+        {
+          "date": "1960-01-01",
+          "real_gdp": 3517.181,
+          "hp_trend_level": 3453.7586405259076,
+          "hamilton_trend_level": 3403.8158591448455,
+          "cf_trend_level": 3449.1427936171362
+        },
+        {
+          "date": "1960-04-01",
+          "real_gdp": 3498.246,
+          "hp_trend_level": 3484.5025115899484,
+          "hamilton_trend_level": 3439.939523767189,
+          "cf_trend_level": 3456.2917264637526
+        },
+        {
+          "date": "1960-07-01",
+          "real_gdp": 3515.385,
+          "hp_trend_level": 3516.6352754936865,
+          "hamilton_trend_level": 3506.2274959648416,
+          "cf_trend_level": 3506.418692758616
+        },
+        {
+          "date": "1960-10-01",
+          "real_gdp": 3470.278,
+          "hp_trend_level": 3550.2898302742933,
+          "hamilton_trend_level": 3551.653571306126,
+          "cf_trend_level": 3495.6473364614544
+        },
+        {
+          "date": "1961-01-01",
+          "real_gdp": 3493.703,
+          "hp_trend_level": 3585.603895590439,
+          "hamilton_trend_level": 3606.7741738449727,
+          "cf_trend_level": 3543.484489107992
+        },
+        {
+          "date": "1961-04-01",
+          "real_gdp": 3553.021,
+          "hp_trend_level": 3622.6696888766446,
+          "hamilton_trend_level": 3687.602289629548,
+          "cf_trend_level": 3606.107172503387
+        },
+        {
+          "date": "1961-07-01",
+          "real_gdp": 3621.252,
+          "hp_trend_level": 3661.5244704058196,
+          "hamilton_trend_level": 3698.1991926148944,
+          "cf_trend_level": 3653.404848697744
+        },
+        {
+          "date": "1961-10-01",
+          "real_gdp": 3692.289,
+          "hp_trend_level": 3702.1627437714415,
+          "hamilton_trend_level": 3718.2742198890182,
+          "cf_trend_level": 3690.753440565608
+        },
+        {
+          "date": "1962-01-01",
+          "real_gdp": 3758.147,
+          "hp_trend_level": 3744.553284403016,
+          "hamilton_trend_level": 3810.2528356422426,
+          "cf_trend_level": 3730.652315698094
+        },
+        {
+          "date": "1962-04-01",
+          "real_gdp": 3792.149,
+          "hp_trend_level": 3788.657314080135,
+          "hamilton_trend_level": 3785.338085140002,
+          "cf_trend_level": 3762.6973432843993
+        },
+        {
+          "date": "1962-07-01",
+          "real_gdp": 3838.776,
+          "hp_trend_level": 3834.4429179735757,
+          "hamilton_trend_level": 3801.3939686194703,
+          "cf_trend_level": 3831.4965857327593
+        },
+        {
+          "date": "1962-10-01",
+          "real_gdp": 3851.421,
+          "hp_trend_level": 3881.8787137986355,
+          "hamilton_trend_level": 3775.4405986915567,
+          "cf_trend_level": 3875.403048434843
+        },
+        {
+          "date": "1963-01-01",
+          "real_gdp": 3893.482,
+          "hp_trend_level": 3930.934232491646,
+          "hamilton_trend_level": 3796.6470507129584,
+          "cf_trend_level": 3938.399632116833
+        },
+        {
+          "date": "1963-04-01",
+          "real_gdp": 3937.183,
+          "hp_trend_level": 3981.557422748444,
+          "hamilton_trend_level": 3858.919212651601,
+          "cf_trend_level": 3982.6921804859217
+        },
+        {
+          "date": "1963-07-01",
+          "real_gdp": 4023.755,
+          "hp_trend_level": 4033.6688412397734,
+          "hamilton_trend_level": 3907.696286494833,
+          "cf_trend_level": 4055.3720289877742
+        },
+        {
+          "date": "1963-10-01",
+          "real_gdp": 4050.147,
+          "hp_trend_level": 4087.155553966709,
+          "hamilton_trend_level": 3972.53257614041,
+          "cf_trend_level": 4067.4692319413666
+        },
+        {
+          "date": "1964-01-01",
+          "real_gdp": 4135.553,
+          "hp_trend_level": 4141.891463679092,
+          "hamilton_trend_level": 4040.3447011664507,
+          "cf_trend_level": 4151.07695541823
+        },
+        {
+          "date": "1964-04-01",
+          "real_gdp": 4180.592,
+          "hp_trend_level": 4197.719010079082,
+          "hamilton_trend_level": 4079.9540488006446,
+          "cf_trend_level": 4207.103804983348
+        },
+        {
+          "date": "1964-07-01",
+          "real_gdp": 4245.918,
+          "hp_trend_level": 4254.467229169319,
+          "hamilton_trend_level": 4135.346362792051,
+          "cf_trend_level": 4286.660970075684
+        },
+        {
+          "date": "1964-10-01",
+          "real_gdp": 4259.046,
+          "hp_trend_level": 4311.944146199406,
+          "hamilton_trend_level": 4157.433453342849,
+          "cf_trend_level": 4304.094107923547
+        },
+        {
+          "date": "1965-01-01",
+          "real_gdp": 4362.111,
+          "hp_trend_level": 4369.941330412859,
+          "hamilton_trend_level": 4202.3928934209125,
+          "cf_trend_level": 4396.030639854495
+        },
+        {
+          "date": "1965-04-01",
+          "real_gdp": 4417.225,
+          "hp_trend_level": 4428.204629093566,
+          "hamilton_trend_level": 4251.418376224699,
+          "cf_trend_level": 4424.59306138104
+        },
+        {
+          "date": "1965-07-01",
+          "real_gdp": 4515.427,
+          "hp_trend_level": 4486.461298205203,
+          "hamilton_trend_level": 4331.752690316362,
+          "cf_trend_level": 4488.244206062184
+        },
+        {
+          "date": "1965-10-01",
+          "real_gdp": 4619.458,
+          "hp_trend_level": 4544.417650949705,
+          "hamilton_trend_level": 4357.412886614287,
+          "cf_trend_level": 4558.106090109993
+        },
+        {
+          "date": "1966-01-01",
+          "real_gdp": 4731.888,
+          "hp_trend_level": 4601.784368910123,
+          "hamilton_trend_level": 4442.8363249135655,
+          "cf_trend_level": 4645.269380043226
+        },
+        {
+          "date": "1966-04-01",
+          "real_gdp": 4748.046,
+          "hp_trend_level": 4658.306895309879,
+          "hamilton_trend_level": 4498.305196719466,
+          "cf_trend_level": 4654.744170306883
+        },
+        {
+          "date": "1966-07-01",
+          "real_gdp": 4788.254,
+          "hp_trend_level": 4713.802632452762,
+          "hamilton_trend_level": 4558.682318154875,
+          "cf_trend_level": 4708.565447743221
+        },
+        {
+          "date": "1966-10-01",
+          "real_gdp": 4827.537,
+          "hp_trend_level": 4768.139970540236,
+          "hamilton_trend_level": 4583.742173368787,
+          "cf_trend_level": 4779.179591931265
+        },
+        {
+          "date": "1967-01-01",
+          "real_gdp": 4870.299,
+          "hp_trend_level": 4821.2315812870465,
+          "hamilton_trend_level": 4688.810564272747,
+          "cf_trend_level": 4859.807322682331
+        },
+        {
+          "date": "1967-04-01",
+          "real_gdp": 4873.287,
+          "hp_trend_level": 4873.027226711844,
+          "hamilton_trend_level": 4748.014174914179,
+          "cf_trend_level": 4891.634905551886
+        },
+        {
+          "date": "1967-07-01",
+          "real_gdp": 4919.392,
+          "hp_trend_level": 4923.508956597882,
+          "hamilton_trend_level": 4834.697812339486,
+          "cf_trend_level": 4946.389433552048
+        },
+        {
+          "date": "1967-10-01",
+          "real_gdp": 4956.477,
+          "hp_trend_level": 4972.661438099884,
+          "hamilton_trend_level": 4947.942408387539,
+          "cf_trend_level": 4971.655297162023
+        },
+        {
+          "date": "1968-01-01",
+          "real_gdp": 5057.553,
+          "hp_trend_level": 5020.469161699431,
+          "hamilton_trend_level": 5054.3653138953405,
+          "cf_trend_level": 5050.545825196881
+        },
+        {
+          "date": "1968-04-01",
+          "real_gdp": 5142.033,
+          "hp_trend_level": 5066.908629063013,
+          "hamilton_trend_level": 5078.257468509773,
+          "cf_trend_level": 5114.671022219776
+        },
+        {
+          "date": "1968-07-01",
+          "real_gdp": 5181.859,
+          "hp_trend_level": 5111.981808255528,
+          "hamilton_trend_level": 5134.017990854112,
+          "cf_trend_level": 5143.286474029446
+        },
+        {
+          "date": "1968-10-01",
+          "real_gdp": 5202.212,
+          "hp_trend_level": 5155.74085803604,
+          "hamilton_trend_level": 5194.214301073211,
+          "cf_trend_level": 5160.862835597252
+        },
+        {
+          "date": "1969-01-01",
+          "real_gdp": 5283.597,
+          "hp_trend_level": 5198.286314087514,
+          "hamilton_trend_level": 5233.533522939945,
+          "cf_trend_level": 5244.44957927634
+        },
+        {
+          "date": "1969-04-01",
+          "real_gdp": 5299.625,
+          "hp_trend_level": 5239.753588049003,
+          "hamilton_trend_level": 5240.0748003330145,
+          "cf_trend_level": 5270.219546503859
+        },
+        {
+          "date": "1969-07-01",
+          "real_gdp": 5334.6,
+          "hp_trend_level": 5280.337942829342,
+          "hamilton_trend_level": 5290.996992975138,
+          "cf_trend_level": 5327.960885843071
+        },
+        {
+          "date": "1969-10-01",
+          "real_gdp": 5308.556,
+          "hp_trend_level": 5320.279876367557,
+          "hamilton_trend_level": 5332.710453300284,
+          "cf_trend_level": 5341.045125636657
+        },
+        {
+          "date": "1970-01-01",
+          "real_gdp": 5300.652,
+          "hp_trend_level": 5359.862399661243,
+          "hamilton_trend_level": 5424.715853363711,
+          "cf_trend_level": 5381.615267680756
+        },
+        {
+          "date": "1970-04-01",
+          "real_gdp": 5308.164,
+          "hp_trend_level": 5399.370104665546,
+          "hamilton_trend_level": 5506.027339808765,
+          "cf_trend_level": 5431.096557380167
+        },
+        {
+          "date": "1970-07-01",
+          "real_gdp": 5357.077,
+          "hp_trend_level": 5439.0585111675555,
+          "hamilton_trend_level": 5540.075181092495,
+          "cf_trend_level": 5500.728898334849
+        },
+        {
+          "date": "1970-10-01",
+          "real_gdp": 5299.672,
+          "hp_trend_level": 5479.13241321491,
+          "hamilton_trend_level": 5575.560908600254,
+          "cf_trend_level": 5435.305821011922
+        },
+        {
+          "date": "1971-01-01",
+          "real_gdp": 5443.619,
+          "hp_trend_level": 5519.750239739369,
+          "hamilton_trend_level": 5669.703621857455,
+          "cf_trend_level": 5561.120395151289
+        },
+        {
+          "date": "1971-04-01",
+          "real_gdp": 5473.059,
+          "hp_trend_level": 5560.959317927763,
+          "hamilton_trend_level": 5686.4921145291355,
+          "cf_trend_level": 5569.981434478942
+        },
+        {
+          "date": "1971-07-01",
+          "real_gdp": 5518.072,
+          "hp_trend_level": 5602.759664109204,
+          "hamilton_trend_level": 5718.847740273886,
+          "cf_trend_level": 5601.470535621129
+        },
+        {
+          "date": "1971-10-01",
+          "real_gdp": 5531.032,
+          "hp_trend_level": 5645.0949758451525,
+          "hamilton_trend_level": 5709.124514631118,
+          "cf_trend_level": 5598.519580574393
+        },
+        {
+          "date": "1972-01-01",
+          "real_gdp": 5632.649,
+          "hp_trend_level": 5687.852987347115,
+          "hamilton_trend_level": 5705.443076961396,
+          "cf_trend_level": 5667.147908522419
+        },
+        {
+          "date": "1972-04-01",
+          "real_gdp": 5760.47,
+          "hp_trend_level": 5730.844800284539,
+          "hamilton_trend_level": 5722.9251137271995,
+          "cf_trend_level": 5734.67238275821
+        },
+        {
+          "date": "1972-07-01",
+          "real_gdp": 5814.854,
+          "hp_trend_level": 5773.840524560461,
+          "hamilton_trend_level": 5763.797536929202,
+          "cf_trend_level": 5710.691339562138
+        },
+        {
+          "date": "1972-10-01",
+          "real_gdp": 5912.22,
+          "hp_trend_level": 5816.62212829873,
+          "hamilton_trend_level": 5702.18918458263,
+          "cf_trend_level": 5732.430771763875
+        },
+        {
+          "date": "1973-01-01",
+          "real_gdp": 6058.544,
+          "hp_trend_level": 5858.991206385448,
+          "hamilton_trend_level": 5844.37655402181,
+          "cf_trend_level": 5824.551945712566
+        },
+        {
+          "date": "1973-04-01",
+          "real_gdp": 6124.506,
+          "hp_trend_level": 5900.804044917652,
+          "hamilton_trend_level": 5875.3298591319035,
+          "cf_trend_level": 5870.975492921154
+        },
+        {
+          "date": "1973-07-01",
+          "real_gdp": 6092.301,
+          "hp_trend_level": 5942.037728806947,
+          "hamilton_trend_level": 5893.975988212296,
+          "cf_trend_level": 5851.304268954481
+        },
+        {
+          "date": "1973-10-01",
+          "real_gdp": 6150.131,
+          "hp_trend_level": 5982.808432927815,
+          "hamilton_trend_level": 5935.1116135702105,
+          "cf_trend_level": 5939.295218724821
+        },
+        {
+          "date": "1974-01-01",
+          "real_gdp": 6097.258,
+          "hp_trend_level": 6023.330061309849,
+          "hamilton_trend_level": 6035.851047717308,
+          "cf_trend_level": 5940.263700723156
+        },
+        {
+          "date": "1974-04-01",
+          "real_gdp": 6111.751,
+          "hp_trend_level": 6063.927206861521,
+          "hamilton_trend_level": 6159.590962251621,
+          "cf_trend_level": 6029.643954363894
+        },
+        {
+          "date": "1974-07-01",
+          "real_gdp": 6053.978,
+          "hp_trend_level": 6104.979925299022,
+          "hamilton_trend_level": 6197.908684836427,
+          "cf_trend_level": 6067.3403215417975
+        },
+        {
+          "date": "1974-10-01",
+          "real_gdp": 6030.464,
+          "hp_trend_level": 6146.90877869365,
+          "hamilton_trend_level": 6303.306748658136,
+          "cf_trend_level": 6141.168555605273
+        },
+        {
+          "date": "1975-01-01",
+          "real_gdp": 5957.035,
+          "hp_trend_level": 6190.113459220641,
+          "hamilton_trend_level": 6462.331729036465,
+          "cf_trend_level": 6138.22691845717
+        },
+        {
+          "date": "1975-04-01",
+          "real_gdp": 5999.61,
+          "hp_trend_level": 6234.930526737869,
+          "hamilton_trend_level": 6520.303449331654,
+          "cf_trend_level": 6207.565575873608
+        },
+        {
+          "date": "1975-07-01",
+          "real_gdp": 6102.326,
+          "hp_trend_level": 6281.555964511934,
+          "hamilton_trend_level": 6499.0340892749355,
+          "cf_trend_level": 6291.412244551391
+        },
+        {
+          "date": "1975-10-01",
+          "real_gdp": 6184.53,
+          "hp_trend_level": 6330.039904373832,
+          "hamilton_trend_level": 6587.773660863206,
+          "cf_trend_level": 6327.85061839466
+        },
+        {
+          "date": "1976-01-01",
+          "real_gdp": 6323.649,
+          "hp_trend_level": 6380.319086567568,
+          "hamilton_trend_level": 6549.380367728723,
+          "cf_trend_level": 6426.777982836842
+        },
+        {
+          "date": "1976-04-01",
+          "real_gdp": 6370.025,
+          "hp_trend_level": 6432.235119671666,
+          "hamilton_trend_level": 6556.987412718103,
+          "cf_trend_level": 6455.95275344816
+        },
+        {
+          "date": "1976-07-01",
+          "real_gdp": 6404.895,
+          "hp_trend_level": 6485.588458722109,
+          "hamilton_trend_level": 6516.546342278883,
+          "cf_trend_level": 6496.572898249575
+        },
+        {
+          "date": "1976-10-01",
+          "real_gdp": 6451.177,
+          "hp_trend_level": 6540.1331836434265,
+          "hamilton_trend_level": 6485.809624462735,
+          "cf_trend_level": 6553.61087432136
+        },
+        {
+          "date": "1977-01-01",
+          "real_gdp": 6527.703,
+          "hp_trend_level": 6595.563307086389,
+          "hamilton_trend_level": 6423.580411763209,
+          "cf_trend_level": 6627.37016512285
+        },
+        {
+          "date": "1977-04-01",
+          "real_gdp": 6654.466,
+          "hp_trend_level": 6651.505261721423,
+          "hamilton_trend_level": 6458.884190706937,
+          "cf_trend_level": 6731.400237722123
+        },
+        {
+          "date": "1977-07-01",
+          "real_gdp": 6774.457,
+          "hp_trend_level": 6707.529195937696,
+          "hamilton_trend_level": 6552.791965390963,
+          "cf_trend_level": 6814.448632463907
+        },
+        {
+          "date": "1977-10-01",
+          "real_gdp": 6774.592,
+          "hp_trend_level": 6763.192585410081,
+          "hamilton_trend_level": 6602.963855062632,
+          "cf_trend_level": 6774.35384247615
+        },
+        {
+          "date": "1978-01-01",
+          "real_gdp": 6796.26,
+          "hp_trend_level": 6818.080817487567,
+          "hamilton_trend_level": 6732.943868729161,
+          "cf_trend_level": 6758.325236769347
+        },
+        {
+          "date": "1978-04-01",
+          "real_gdp": 7058.92,
+          "hp_trend_level": 6871.77384279587,
+          "hamilton_trend_level": 6785.375968840161,
+          "cf_trend_level": 6979.61365590903
+        },
+        {
+          "date": "1978-07-01",
+          "real_gdp": 7129.915,
+          "hp_trend_level": 6923.825896959494,
+          "hamilton_trend_level": 6826.386332387082,
+          "cf_trend_level": 7004.853585194193
+        },
+        {
+          "date": "1978-10-01",
+          "real_gdp": 7225.75,
+          "hp_trend_level": 6973.896946229274,
+          "hamilton_trend_level": 6897.932954242721,
+          "cf_trend_level": 7053.419953781286
+        },
+        {
+          "date": "1979-01-01",
+          "real_gdp": 7238.727,
+          "hp_trend_level": 7021.768670581994,
+          "hamilton_trend_level": 6976.13993032406,
+          "cf_trend_level": 7034.89314685372
+        },
+        {
+          "date": "1979-04-01",
+          "real_gdp": 7246.454,
+          "hp_trend_level": 7067.376770553766,
+          "hamilton_trend_level": 7096.3194404939095,
+          "cf_trend_level": 7041.904192178834
+        },
+        {
+          "date": "1979-07-01",
+          "real_gdp": 7300.281,
+          "hp_trend_level": 7110.793971590682,
+          "hamilton_trend_level": 7206.562429755387,
+          "cf_trend_level": 7131.457426326014
+        },
+        {
+          "date": "1979-10-01",
+          "real_gdp": 7318.535,
+          "hp_trend_level": 7152.209898736485,
+          "hamilton_trend_level": 7207.673874313316,
+          "cf_trend_level": 7215.0084350981515
+        },
+        {
+          "date": "1980-01-01",
+          "real_gdp": 7341.557,
+          "hp_trend_level": 7191.939605533063,
+          "hamilton_trend_level": 7251.483349788493,
+          "cf_trend_level": 7308.548230467856
+        },
+        {
+          "date": "1980-04-01",
+          "real_gdp": 7190.289,
+          "hp_trend_level": 7230.411190038354,
+          "hamilton_trend_level": 7528.719072466792,
+          "cf_trend_level": 7205.691897431551
+        },
+        {
+          "date": "1980-07-01",
+          "real_gdp": 7181.743,
+          "hp_trend_level": 7268.156880734146,
+          "hamilton_trend_level": 7572.7526493931055,
+          "cf_trend_level": 7206.832016253135
+        },
+        {
+          "date": "1980-10-01",
+          "real_gdp": 7315.677,
+          "hp_trend_level": 7305.6953803781535,
+          "hamilton_trend_level": 7647.717025059782,
+          "cf_trend_level": 7315.40503015452
+        },
+        {
+          "date": "1981-01-01",
+          "real_gdp": 7459.022,
+          "hp_trend_level": 7343.50150980933,
+          "hamilton_trend_level": 7710.798111201841,
+          "cf_trend_level": 7418.303435291429
+        },
+        {
+          "date": "1981-04-01",
+          "real_gdp": 7403.745,
+          "hp_trend_level": 7382.066290977203,
+          "hamilton_trend_level": 7728.308953119293,
+          "cf_trend_level": 7339.998202757209
+        },
+        {
+          "date": "1981-07-01",
+          "real_gdp": 7492.405,
+          "hp_trend_level": 7421.963522737011,
+          "hamilton_trend_level": 7800.6785929680345,
+          "cf_trend_level": 7446.57235610627
+        },
+        {
+          "date": "1981-10-01",
+          "real_gdp": 7410.768,
+          "hp_trend_level": 7463.793361808566,
+          "hamilton_trend_level": 7816.199077161511,
+          "cf_trend_level": 7433.0007864175595
+        },
+        {
+          "date": "1982-01-01",
+          "real_gdp": 7295.631,
+          "hp_trend_level": 7508.214557231379,
+          "hamilton_trend_level": 7835.405443132113,
+          "cf_trend_level": 7417.449242586239
+        },
+        {
+          "date": "1982-04-01",
+          "real_gdp": 7328.912,
+          "hp_trend_level": 7555.869372367697,
+          "hamilton_trend_level": 7700.240405827407,
+          "cf_trend_level": 7552.811793492014
+        },
+        {
+          "date": "1982-07-01",
+          "real_gdp": 7300.896,
+          "hp_trend_level": 7607.282318854954,
+          "hamilton_trend_level": 7707.415884181327,
+          "cf_trend_level": 7589.928341000367
+        },
+        {
+          "date": "1982-10-01",
+          "real_gdp": 7303.817,
+          "hp_trend_level": 7662.849611061695,
+          "hamilton_trend_level": 7850.498022968094,
+          "cf_trend_level": 7600.105959936075
+        },
+        {
+          "date": "1983-01-01",
+          "real_gdp": 7400.066,
+          "hp_trend_level": 7722.784869410522,
+          "hamilton_trend_level": 7941.2072258976195,
+          "cf_trend_level": 7647.019612513085
+        },
+        {
+          "date": "1983-04-01",
+          "real_gdp": 7568.456,
+          "hp_trend_level": 7787.079413964459,
+          "hamilton_trend_level": 7866.94377976003,
+          "cf_trend_level": 7725.23658837521
+        },
+        {
+          "date": "1983-07-01",
+          "real_gdp": 7719.746,
+          "hp_trend_level": 7855.5189657354495,
+          "hamilton_trend_level": 7979.352441807918,
+          "cf_trend_level": 7769.775807442747
+        },
+        {
+          "date": "1983-10-01",
+          "real_gdp": 7880.794,
+          "hp_trend_level": 7927.744040677465,
+          "hamilton_trend_level": 7930.438305640783,
+          "cf_trend_level": 7833.4149479271555
+        },
+        {
+          "date": "1984-01-01",
+          "real_gdp": 8034.847,
+          "hp_trend_level": 8003.2970403614845,
+          "hamilton_trend_level": 7809.377895134745,
+          "cf_trend_level": 7915.058980005614
+        },
+        {
+          "date": "1984-04-01",
+          "real_gdp": 8173.67,
+          "hp_trend_level": 8081.674125723946,
+          "hamilton_trend_level": 7875.534472697907,
+          "cf_trend_level": 8011.806216780998
+        },
+        {
+          "date": "1984-07-01",
+          "real_gdp": 8252.465,
+          "hp_trend_level": 8162.37208807815,
+          "hamilton_trend_level": 7833.771588367293,
+          "cf_trend_level": 8076.856525643471
+        },
+        {
+          "date": "1984-10-01",
+          "real_gdp": 8320.199,
+          "hp_trend_level": 8244.925636362703,
+          "hamilton_trend_level": 7810.611686548398,
+          "cf_trend_level": 8150.094969573759
+        },
+        {
+          "date": "1985-01-01",
+          "real_gdp": 8400.82,
+          "hp_trend_level": 8328.9071858119,
+          "hamilton_trend_level": 7911.716690890753,
+          "cf_trend_level": 8244.941145343104
+        },
+        {
+          "date": "1985-04-01",
+          "real_gdp": 8474.787,
+          "hp_trend_level": 8413.918843355706,
+          "hamilton_trend_level": 8057.484604115836,
+          "cf_trend_level": 8333.88696325031
+        },
+        {
+          "date": "1985-07-01",
+          "real_gdp": 8604.22,
+          "hp_trend_level": 8499.591560971381,
+          "hamilton_trend_level": 8182.0773612311605,
+          "cf_trend_level": 8475.016113524576
+        },
+        {
+          "date": "1985-10-01",
+          "real_gdp": 8668.188,
+          "hp_trend_level": 8585.57957763498,
+          "hamilton_trend_level": 8335.36375175802,
+          "cf_trend_level": 8553.274884098666
+        },
+        {
+          "date": "1986-01-01",
+          "real_gdp": 8749.127,
+          "hp_trend_level": 8671.589385993464,
+          "hamilton_trend_level": 8499.6211440513,
+          "cf_trend_level": 8658.154483432685
+        },
+        {
+          "date": "1986-04-01",
+          "real_gdp": 8788.524,
+          "hp_trend_level": 8757.368403098446,
+          "hamilton_trend_level": 8645.280156465245,
+          "cf_trend_level": 8737.499733226825
+        },
+        {
+          "date": "1986-07-01",
+          "real_gdp": 8872.601,
+          "hp_trend_level": 8842.70384785141,
+          "hamilton_trend_level": 8738.086672415782,
+          "cf_trend_level": 8873.697843810158
+        },
+        {
+          "date": "1986-10-01",
+          "real_gdp": 8920.193,
+          "hp_trend_level": 8927.395352963567,
+          "hamilton_trend_level": 8824.449419051463,
+          "cf_trend_level": 8973.12020140639
+        },
+        {
+          "date": "1987-01-01",
+          "real_gdp": 8986.367,
+          "hp_trend_level": 9011.255041965847,
+          "hamilton_trend_level": 8923.625191287672,
+          "cf_trend_level": 9075.407083694421
+        },
+        {
+          "date": "1987-04-01",
+          "real_gdp": 9083.256,
+          "hp_trend_level": 9094.084800227778,
+          "hamilton_trend_level": 9001.841696210571,
+          "cf_trend_level": 9184.793775677343
+        },
+        {
+          "date": "1987-07-01",
+          "real_gdp": 9162.024,
+          "hp_trend_level": 9175.665027775889,
+          "hamilton_trend_level": 9129.919098030507,
+          "cf_trend_level": 9255.912066835617
+        },
+        {
+          "date": "1987-10-01",
+          "real_gdp": 9319.332,
+          "hp_trend_level": 9255.763292504029,
+          "hamilton_trend_level": 9194.613833258076,
+          "cf_trend_level": 9398.510130019724
+        },
+        {
+          "date": "1988-01-01",
+          "real_gdp": 9367.502,
+          "hp_trend_level": 9334.132622180667,
+          "hamilton_trend_level": 9276.129505451287,
+          "cf_trend_level": 9433.971836566829
+        },
+        {
+          "date": "1988-04-01",
+          "real_gdp": 9490.594,
+          "hp_trend_level": 9410.560537005556,
+          "hamilton_trend_level": 9333.562205992192,
+          "cf_trend_level": 9549.81534586841
+        },
+        {
+          "date": "1988-07-01",
+          "real_gdp": 9546.206,
+          "hp_trend_level": 9484.851677667499,
+          "hamilton_trend_level": 9420.512555815396,
+          "cf_trend_level": 9596.41675237086
+        },
+        {
+          "date": "1988-10-01",
+          "real_gdp": 9673.405,
+          "hp_trend_level": 9556.85829660985,
+          "hamilton_trend_level": 9475.40669928372,
+          "cf_trend_level": 9706.417462004229
+        },
+        {
+          "date": "1989-01-01",
+          "real_gdp": 9771.725,
+          "hp_trend_level": 9626.47034808019,
+          "hamilton_trend_level": 9538.727323946561,
+          "cf_trend_level": 9777.677876201908
+        },
+        {
+          "date": "1989-04-01",
+          "real_gdp": 9846.293,
+          "hp_trend_level": 9693.651516381327,
+          "hamilton_trend_level": 9642.176220659258,
+          "cf_trend_level": 9821.589611527334
+        },
+        {
+          "date": "1989-07-01",
+          "real_gdp": 9919.228,
+          "hp_trend_level": 9758.459290861383,
+          "hamilton_trend_level": 9716.229282382252,
+          "cf_trend_level": 9869.033884421076
+        },
+        {
+          "date": "1989-10-01",
+          "real_gdp": 9938.767,
+          "hp_trend_level": 9821.051882816444,
+          "hamilton_trend_level": 9868.807729248108,
+          "cf_trend_level": 9875.02257191037
+        },
+        {
+          "date": "1990-01-01",
+          "real_gdp": 10047.386,
+          "hp_trend_level": 9881.695397629002,
+          "hamilton_trend_level": 9919.683575996392,
+          "cf_trend_level": 9984.623098859738
+        },
+        {
+          "date": "1990-04-01",
+          "real_gdp": 10083.855,
+          "hp_trend_level": 9940.738939707931,
+          "hamilton_trend_level": 10041.83128282544,
+          "cf_trend_level": 10040.386622313026
+        },
+        {
+          "date": "1990-07-01",
+          "real_gdp": 10090.569,
+          "hp_trend_level": 9998.645682679513,
+          "hamilton_trend_level": 10118.51928230551,
+          "cf_trend_level": 10086.541814326853
+        },
+        {
+          "date": "1990-10-01",
+          "real_gdp": 9998.704,
+          "hp_trend_level": 10055.980636628912,
+          "hamilton_trend_level": 10238.693076634763,
+          "cf_trend_level": 10050.906270936195
+        },
+        {
+          "date": "1991-01-01",
+          "real_gdp": 9951.916,
+          "hp_trend_level": 10113.380264809624,
+          "hamilton_trend_level": 10346.977959900052,
+          "cf_trend_level": 10063.97623028536
+        },
+        {
+          "date": "1991-04-01",
+          "real_gdp": 10029.51,
+          "hp_trend_level": 10171.459490953392,
+          "hamilton_trend_level": 10415.213683747508,
+          "cf_trend_level": 10184.532843133049
+        },
+        {
+          "date": "1991-07-01",
+          "real_gdp": 10080.195,
+          "hp_trend_level": 10230.744505100995,
+          "hamilton_trend_level": 10502.32997554266,
+          "cf_trend_level": 10237.486675703538
+        },
+        {
+          "date": "1991-10-01",
+          "real_gdp": 10115.329,
+          "hp_trend_level": 10291.683422579508,
+          "hamilton_trend_level": 10533.515388835489,
+          "cf_trend_level": 10227.016620126906
+        },
+        {
+          "date": "1992-01-01",
+          "real_gdp": 10236.435,
+          "hp_trend_level": 10354.639284100303,
+          "hamilton_trend_level": 10648.09001729368,
+          "cf_trend_level": 10271.340682760065
+        },
+        {
+          "date": "1992-04-01",
+          "real_gdp": 10347.429,
+          "hp_trend_level": 10419.871820247767,
+          "hamilton_trend_level": 10689.499587820026,
+          "cf_trend_level": 10304.776815416093
+        },
+        {
+          "date": "1992-07-01",
+          "real_gdp": 10449.673,
+          "hp_trend_level": 10487.572573439575,
+          "hamilton_trend_level": 10691.254022801888,
+          "cf_trend_level": 10358.655713933156
+        },
+        {
+          "date": "1992-10-01",
+          "real_gdp": 10558.648,
+          "hp_trend_level": 10557.892662105987,
+          "hamilton_trend_level": 10626.463256205092,
+          "cf_trend_level": 10458.84172918023
+        },
+        {
+          "date": "1993-01-01",
+          "real_gdp": 10576.275,
+          "hp_trend_level": 10630.963910497232,
+          "hamilton_trend_level": 10597.427341472183,
+          "cf_trend_level": 10494.642277209166
+        },
+        {
+          "date": "1993-04-01",
+          "real_gdp": 10637.847,
+          "hp_trend_level": 10706.923025402984,
+          "hamilton_trend_level": 10681.881469233325,
+          "cf_trend_level": 10573.518005108046
+        },
+        {
+          "date": "1993-07-01",
+          "real_gdp": 10688.606,
+          "hp_trend_level": 10785.876649297501,
+          "hamilton_trend_level": 10705.175423099336,
+          "cf_trend_level": 10620.195163859806
+        },
+        {
+          "date": "1993-10-01",
+          "real_gdp": 10833.987,
+          "hp_trend_level": 10867.891411938,
+          "hamilton_trend_level": 10719.079567421099,
+          "cf_trend_level": 10736.8382818147
+        },
+        {
+          "date": "1994-01-01",
+          "real_gdp": 10939.116,
+          "hp_trend_level": 10952.974718835534,
+          "hamilton_trend_level": 10846.123342292118,
+          "cf_trend_level": 10804.816304324971
+        },
+        {
+          "date": "1994-04-01",
+          "real_gdp": 11087.361,
+          "hp_trend_level": 11041.113306573308,
+          "hamilton_trend_level": 10950.987783928089,
+          "cf_trend_level": 10928.381382502313
+        },
+        {
+          "date": "1994-07-01",
+          "real_gdp": 11152.176,
+          "hp_trend_level": 11132.28520693236,
+          "hamilton_trend_level": 11039.791482970328,
+          "cf_trend_level": 10997.810860216168
+        },
+        {
+          "date": "1994-10-01",
+          "real_gdp": 11279.932,
+          "hp_trend_level": 11226.497450618876,
+          "hamilton_trend_level": 11156.43816099834,
+          "cf_trend_level": 11159.522923260854
+        },
+        {
+          "date": "1995-01-01",
+          "real_gdp": 11319.951,
+          "hp_trend_level": 11323.770228836553,
+          "hamilton_trend_level": 11184.261144441425,
+          "cf_trend_level": 11255.52636462171
+        },
+        {
+          "date": "1995-04-01",
+          "real_gdp": 11353.721,
+          "hp_trend_level": 11424.158529352873,
+          "hamilton_trend_level": 11258.716681964153,
+          "cf_trend_level": 11352.271103959827
+        },
+        {
+          "date": "1995-07-01",
+          "real_gdp": 11450.31,
+          "hp_trend_level": 11527.716983324823,
+          "hamilton_trend_level": 11325.95759054521,
+          "cf_trend_level": 11506.350146257702
+        },
+        {
+          "date": "1995-10-01",
+          "real_gdp": 11528.067,
+          "hp_trend_level": 11634.457279266095,
+          "hamilton_trend_level": 11460.00170568809,
+          "cf_trend_level": 11627.398714587793
+        },
+        {
+          "date": "1996-01-01",
+          "real_gdp": 11614.418,
+          "hp_trend_level": 11744.342021478576,
+          "hamilton_trend_level": 11558.810834729886,
+          "cf_trend_level": 11739.074244455815
+        },
+        {
+          "date": "1996-04-01",
+          "real_gdp": 11808.14,
+          "hp_trend_level": 11857.264117664448,
+          "hamilton_trend_level": 11693.6827588062,
+          "cf_trend_level": 11942.915716612946
+        },
+        {
+          "date": "1996-07-01",
+          "real_gdp": 11914.063,
+          "hp_trend_level": 11973.028733018999,
+          "hamilton_trend_level": 11770.747131430671,
+          "cf_trend_level": 12047.856037246574
+        },
+        {
+          "date": "1996-10-01",
+          "real_gdp": 12037.775,
+          "hp_trend_level": 12091.40148089074,
+          "hamilton_trend_level": 11902.20222327026,
+          "cf_trend_level": 12168.875734074405
+        },
+        {
+          "date": "1997-01-01",
+          "real_gdp": 12115.472,
+          "hp_trend_level": 12212.100308249743,
+          "hamilton_trend_level": 11960.373681134952,
+          "cf_trend_level": 12247.114961381674
+        },
+        {
+          "date": "1997-04-01",
+          "real_gdp": 12317.221,
+          "hp_trend_level": 12334.7968215658,
+          "hamilton_trend_level": 11996.842861340709,
+          "cf_trend_level": 12454.206560654686
+        },
+        {
+          "date": "1997-07-01",
+          "real_gdp": 12471.01,
+          "hp_trend_level": 12459.086734296772,
+          "hamilton_trend_level": 12112.739036984032,
+          "cf_trend_level": 12610.58854897187
+        },
+        {
+          "date": "1997-10-01",
+          "real_gdp": 12577.495,
+          "hp_trend_level": 12584.53747504507,
+          "hamilton_trend_level": 12185.63020234992,
+          "cf_trend_level": 12710.198002503412
+        },
+        {
+          "date": "1998-01-01",
+          "real_gdp": 12703.742,
+          "hp_trend_level": 12710.706067248326,
+          "hamilton_trend_level": 12263.16575889621,
+          "cf_trend_level": 12818.0469848111
+        },
+        {
+          "date": "1998-04-01",
+          "real_gdp": 12821.339,
+          "hp_trend_level": 12837.1270028584,
+          "hamilton_trend_level": 12457.008640971819,
+          "cf_trend_level": 12907.965551410809
+        },
+        {
+          "date": "1998-07-01",
+          "real_gdp": 12982.752,
+          "hp_trend_level": 12963.311944648027,
+          "hamilton_trend_level": 12554.104705649468,
+          "cf_trend_level": 13037.429583882387
+        },
+        {
+          "date": "1998-10-01",
+          "real_gdp": 13191.67,
+          "hp_trend_level": 13088.743931820023,
+          "hamilton_trend_level": 12671.152174528293,
+          "cf_trend_level": 13211.86684121137
+        },
+        {
+          "date": "1999-01-01",
+          "real_gdp": 13315.597,
+          "hp_trend_level": 13212.89963734941,
+          "hamilton_trend_level": 12773.512383091063,
+          "cf_trend_level": 13295.659279986861
+        },
+        {
+          "date": "1999-04-01",
+          "real_gdp": 13426.748,
+          "hp_trend_level": 13335.303151376631,
+          "hamilton_trend_level": 12974.998013124408,
+          "cf_trend_level": 13356.042364193925
+        },
+        {
+          "date": "1999-07-01",
+          "real_gdp": 13604.771,
+          "hp_trend_level": 13455.528777539375,
+          "hamilton_trend_level": 13127.691507116182,
+          "cf_trend_level": 13469.810815053648
+        },
+        {
+          "date": "1999-10-01",
+          "real_gdp": 13827.98,
+          "hp_trend_level": 13573.196872858287,
+          "hamilton_trend_level": 13221.944107246236,
+          "cf_trend_level": 13620.49566293303
+        },
+        {
+          "date": "2000-01-01",
+          "real_gdp": 13878.147,
+          "hp_trend_level": 13688.012928004071,
+          "hamilton_trend_level": 13370.560062246166,
+          "cf_trend_level": 13608.288971909446
+        },
+        {
+          "date": "2000-04-01",
+          "real_gdp": 14130.908,
+          "hp_trend_level": 13799.837397013474,
+          "hamilton_trend_level": 13500.757535637089,
+          "cf_trend_level": 13821.339302790979
+        },
+        {
+          "date": "2000-07-01",
+          "real_gdp": 14145.312,
+          "hp_trend_level": 13908.650841173523,
+          "hamilton_trend_level": 13660.715018397455,
+          "cf_trend_level": 13842.824175169579
+        },
+        {
+          "date": "2000-10-01",
+          "real_gdp": 14229.765,
+          "hp_trend_level": 14014.645540734104,
+          "hamilton_trend_level": 13866.76767269641,
+          "cf_trend_level": 13977.530002955551
+        },
+        {
+          "date": "2001-01-01",
+          "real_gdp": 14183.12,
+          "hp_trend_level": 14118.172782137974,
+          "hamilton_trend_level": 13984.388262333248,
+          "cf_trend_level": 14015.22218181491
+        },
+        {
+          "date": "2001-04-01",
+          "real_gdp": 14271.694,
+          "hp_trend_level": 14219.733177462502,
+          "hamilton_trend_level": 14104.642325226152,
+          "cf_trend_level": 14195.09673490496
+        },
+        {
+          "date": "2001-07-01",
+          "real_gdp": 14214.516,
+          "hp_trend_level": 14319.885534705683,
+          "hamilton_trend_level": 14304.675910182952,
+          "cf_trend_level": 14215.566998505852
+        },
+        {
+          "date": "2001-10-01",
+          "real_gdp": 14253.574,
+          "hp_trend_level": 14419.239146740221,
+          "hamilton_trend_level": 14522.411557543694,
+          "cf_trend_level": 14306.978554119316
+        },
+        {
+          "date": "2002-01-01",
+          "real_gdp": 14372.785,
+          "hp_trend_level": 14518.354349489882,
+          "hamilton_trend_level": 14567.049182428895,
+          "cf_trend_level": 14460.580115495926
+        },
+        {
+          "date": "2002-04-01",
+          "real_gdp": 14460.848,
+          "hp_trend_level": 14617.701914818466,
+          "hamilton_trend_level": 14829.300149994398,
+          "cf_trend_level": 14580.808894635884
+        },
+        {
+          "date": "2002-07-01",
+          "real_gdp": 14519.633,
+          "hp_trend_level": 14717.6730554575,
+          "hamilton_trend_level": 14871.229949705048,
+          "cf_trend_level": 14680.543864982827
+        },
+        {
+          "date": "2002-10-01",
+          "real_gdp": 14537.58,
+          "hp_trend_level": 14818.569812502921,
+          "hamilton_trend_level": 14946.872303928221,
+          "cf_trend_level": 14742.535526066738
+        },
+        {
+          "date": "2003-01-01",
+          "real_gdp": 14614.141,
+          "hp_trend_level": 14920.576104038499,
+          "hamilton_trend_level": 14953.425824337155,
+          "cf_trend_level": 14847.61699795717
+        },
+        {
+          "date": "2003-04-01",
+          "real_gdp": 14743.567,
+          "hp_trend_level": 15023.701013793581,
+          "hamilton_trend_level": 15039.349788065549,
+          "cf_trend_level": 14970.81776519327
+        },
+        {
+          "date": "2003-07-01",
+          "real_gdp": 14988.782,
+          "hp_trend_level": 15127.757489025795,
+          "hamilton_trend_level": 15000.019568801517,
+          "cf_trend_level": 15173.825678940442
+        },
+        {
+          "date": "2003-10-01",
+          "real_gdp": 15162.76,
+          "hp_trend_level": 15232.373899835375,
+          "hamilton_trend_level": 15025.999641117989,
+          "cf_trend_level": 15287.056721250146
+        },
+        {
+          "date": "2004-01-01",
+          "real_gdp": 15248.68,
+          "hp_trend_level": 15337.079709067366,
+          "hamilton_trend_level": 15158.655814742157,
+          "cf_trend_level": 15323.773138060964
+        },
+        {
+          "date": "2004-04-01",
+          "real_gdp": 15366.85,
+          "hp_trend_level": 15441.347232534727,
+          "hamilton_trend_level": 15216.426193045656,
+          "cf_trend_level": 15422.121031300807
+        },
+        {
+          "date": "2004-07-01",
+          "real_gdp": 15512.619,
+          "hp_trend_level": 15544.578552814255,
+          "hamilton_trend_level": 15266.799076494102,
+          "cf_trend_level": 15569.803982041003
+        },
+        {
+          "date": "2004-10-01",
+          "real_gdp": 15670.88,
+          "hp_trend_level": 15646.113165371213,
+          "hamilton_trend_level": 15301.38336822036,
+          "cf_trend_level": 15727.671591212234
+        },
+        {
+          "date": "2005-01-01",
+          "real_gdp": 15844.727,
+          "hp_trend_level": 15745.25433974327,
+          "hamilton_trend_level": 15388.926633035742,
+          "cf_trend_level": 15878.94414771789
+        },
+        {
+          "date": "2005-04-01",
+          "real_gdp": 15922.782,
+          "hp_trend_level": 15841.305397489537,
+          "hamilton_trend_level": 15516.976564199342,
+          "cf_trend_level": 15912.855810458936
+        },
+        {
+          "date": "2005-07-01",
+          "real_gdp": 16047.587,
+          "hp_trend_level": 15933.618337194412,
+          "hamilton_trend_level": 15736.613885274845,
+          "cf_trend_level": 15991.528343410222
+        },
+        {
+          "date": "2005-10-01",
+          "real_gdp": 16136.734,
+          "hp_trend_level": 16021.585354872579,
+          "hamilton_trend_level": 15890.06591546555,
+          "cf_trend_level": 16052.58834065767
+        },
+        {
+          "date": "2006-01-01",
+          "real_gdp": 16353.835,
+          "hp_trend_level": 16104.66187397787,
+          "hamilton_trend_level": 15972.687620601775,
+          "cf_trend_level": 16262.742607768165
+        },
+        {
+          "date": "2006-04-01",
+          "real_gdp": 16396.151,
+          "hp_trend_level": 16182.370302318754,
+          "hamilton_trend_level": 16123.744841794789,
+          "cf_trend_level": 16307.548639937904
+        },
+        {
+          "date": "2006-07-01",
+          "real_gdp": 16420.738,
+          "hp_trend_level": 16254.386503788428,
+          "hamilton_trend_level": 16286.335030221986,
+          "cf_trend_level": 16325.77934380791
+        },
+        {
+          "date": "2006-10-01",
+          "real_gdp": 16561.866,
+          "hp_trend_level": 16320.521744218155,
+          "hamilton_trend_level": 16436.107481065268,
+          "cf_trend_level": 16443.353405582853
+        },
+        {
+          "date": "2007-01-01",
+          "real_gdp": 16611.69,
+          "hp_trend_level": 16380.696053429634,
+          "hamilton_trend_level": 16605.333384185597,
+          "cf_trend_level": 16457.663697223008
+        },
+        {
+          "date": "2007-04-01",
+          "real_gdp": 16713.314,
+          "hp_trend_level": 16434.98668206126,
+          "hamilton_trend_level": 16689.1736683453,
+          "cf_trend_level": 16517.187181827718
+        },
+        {
+          "date": "2007-07-01",
+          "real_gdp": 16809.587,
+          "hp_trend_level": 16483.623498893805,
+          "hamilton_trend_level": 16826.709515135542,
+          "cf_trend_level": 16568.4840771119
+        },
+        {
+          "date": "2007-10-01",
+          "real_gdp": 16915.191,
+          "hp_trend_level": 16527.019288707834,
+          "hamilton_trend_level": 16935.871772237486,
+          "cf_trend_level": 16633.0928773615
+        },
+        {
+          "date": "2008-01-01",
+          "real_gdp": 16843.003,
+          "hp_trend_level": 16565.79975447983,
+          "hamilton_trend_level": 17143.22395020055,
+          "cf_trend_level": 16550.167222689168
+        },
+        {
+          "date": "2008-04-01",
+          "real_gdp": 16943.291,
+          "hp_trend_level": 16600.841985279687,
+          "hamilton_trend_level": 17188.913290506684,
+          "cf_trend_level": 16701.390225595365
+        },
+        {
+          "date": "2008-07-01",
+          "real_gdp": 16854.295,
+          "hp_trend_level": 16633.20625790582,
+          "hamilton_trend_level": 17216.93158940508,
+          "cf_trend_level": 16757.877524412466
+        },
+        {
+          "date": "2008-10-01",
+          "real_gdp": 16485.35,
+          "hp_trend_level": 16664.175661845922,
+          "hamilton_trend_level": 17394.886886436125,
+          "cf_trend_level": 16607.659716350267
+        },
+        {
+          "date": "2009-01-01",
+          "real_gdp": 16298.262,
+          "hp_trend_level": 16695.181392457343,
+          "hamilton_trend_level": 17438.395196390804,
+          "cf_trend_level": 16640.449782764405
+        },
+        {
+          "date": "2009-04-01",
+          "real_gdp": 16269.145,
+          "hp_trend_level": 16727.552656639433,
+          "hamilton_trend_level": 17527.428136313803,
+          "cf_trend_level": 16744.700871461264
+        },
+        {
+          "date": "2009-07-01",
+          "real_gdp": 16326.281,
+          "hp_trend_level": 16762.37709165821,
+          "hamilton_trend_level": 17639.06467368749,
+          "cf_trend_level": 16789.125127340903
+        },
+        {
+          "date": "2009-10-01",
+          "real_gdp": 16502.754,
+          "hp_trend_level": 16800.460370954468,
+          "hamilton_trend_level": 17735.990034241735,
+          "cf_trend_level": 16824.180523091403
+        },
+        {
+          "date": "2010-01-01",
+          "real_gdp": 16582.71,
+          "hp_trend_level": 16842.33948132471,
+          "hamilton_trend_level": 17677.546251748838,
+          "cf_trend_level": 16715.814267290923
+        },
+        {
+          "date": "2010-04-01",
+          "real_gdp": 16743.162,
+          "hp_trend_level": 16888.37017203609,
+          "hamilton_trend_level": 17793.73606373475,
+          "cf_trend_level": 16741.512820374952
+        },
+        {
+          "date": "2010-07-01",
+          "real_gdp": 16872.266,
+          "hp_trend_level": 16938.750212440253,
+          "hamilton_trend_level": 17729.854938651133,
+          "cf_trend_level": 16832.781936426694
+        },
+        {
+          "date": "2010-10-01",
+          "real_gdp": 16960.864,
+          "hp_trend_level": 16993.590887516693,
+          "hamilton_trend_level": 17367.99386693873,
+          "cf_trend_level": 16951.143067941284
+        },
+        {
+          "date": "2011-01-01",
+          "real_gdp": 16920.632,
+          "hp_trend_level": 17052.96599463477,
+          "hamilton_trend_level": 17248.125955116702,
+          "cf_trend_level": 16938.043066376806
+        },
+        {
+          "date": "2011-04-01",
+          "real_gdp": 17035.114,
+          "hp_trend_level": 17116.932756259408,
+          "hamilton_trend_level": 17236.42939233075,
+          "cf_trend_level": 17028.06172445669
+        },
+        {
+          "date": "2011-07-01",
+          "real_gdp": 17031.313,
+          "hp_trend_level": 17185.4685799768,
+          "hamilton_trend_level": 17220.983430722474,
+          "cf_trend_level": 16957.23427616987
+        },
+        {
+          "date": "2011-10-01",
+          "real_gdp": 17222.583,
+          "hp_trend_level": 17258.501721081622,
+          "hamilton_trend_level": 17341.52499091226,
+          "cf_trend_level": 17087.923862281703
+        },
+        {
+          "date": "2012-01-01",
+          "real_gdp": 17367.01,
+          "hp_trend_level": 17335.864282055078,
+          "hamilton_trend_level": 17392.142929921996,
+          "cf_trend_level": 17220.93634496222
+        },
+        {
+          "date": "2012-04-01",
+          "real_gdp": 17444.525,
+          "hp_trend_level": 17417.36506707252,
+          "hamilton_trend_level": 17539.286510352747,
+          "cf_trend_level": 17334.376755610774
+        },
+        {
+          "date": "2012-07-01",
+          "real_gdp": 17469.65,
+          "hp_trend_level": 17502.830968885275,
+          "hamilton_trend_level": 17683.40677095392,
+          "cf_trend_level": 17403.357025165296
+        },
+        {
+          "date": "2012-10-01",
+          "real_gdp": 17489.852,
+          "hp_trend_level": 17592.104351014324,
+          "hamilton_trend_level": 17765.296886243952,
+          "cf_trend_level": 17440.298923379927
+        },
+        {
+          "date": "2013-01-01",
+          "real_gdp": 17662.4,
+          "hp_trend_level": 17685.004852817197,
+          "hamilton_trend_level": 17750.015502026796,
+          "cf_trend_level": 17604.834486679545
+        },
+        {
+          "date": "2013-04-01",
+          "real_gdp": 17709.671,
+          "hp_trend_level": 17781.28472396289,
+          "hamilton_trend_level": 17885.361856101972,
+          "cf_trend_level": 17653.055877710565
+        },
+        {
+          "date": "2013-07-01",
+          "real_gdp": 17860.45,
+          "hp_trend_level": 17880.677442093136,
+          "hamilton_trend_level": 17894.839904340115,
+          "cf_trend_level": 17837.654548555958
+        },
+        {
+          "date": "2013-10-01",
+          "real_gdp": 18016.147,
+          "hp_trend_level": 17982.86581119051,
+          "hamilton_trend_level": 18059.11143320729,
+          "cf_trend_level": 18046.53513700428
+        },
+        {
+          "date": "2014-01-01",
+          "real_gdp": 17953.974,
+          "hp_trend_level": 18087.512972113924,
+          "hamilton_trend_level": 18205.343138121,
+          "cf_trend_level": 18012.509127871854
+        },
+        {
+          "date": "2014-04-01",
+          "real_gdp": 18185.911,
+          "hp_trend_level": 18194.29541376856,
+          "hamilton_trend_level": 18254.477364168684,
+          "cf_trend_level": 18217.81848464079
+        },
+        {
+          "date": "2014-07-01",
+          "real_gdp": 18406.941,
+          "hp_trend_level": 18302.797219233424,
+          "hamilton_trend_level": 18307.643922248593,
+          "cf_trend_level": 18371.52033403492
+        },
+        {
+          "date": "2014-10-01",
+          "real_gdp": 18500.031,
+          "hp_trend_level": 18412.587116311435,
+          "hamilton_trend_level": 18353.243216204744,
+          "cf_trend_level": 18410.047691532585
+        },
+        {
+          "date": "2015-01-01",
+          "real_gdp": 18666.621,
+          "hp_trend_level": 18523.288980036024,
+          "hamilton_trend_level": 18529.816926263167,
+          "cf_trend_level": 18579.35016135596
+        },
+        {
+          "date": "2015-04-01",
+          "real_gdp": 18782.243,
+          "hp_trend_level": 18634.572641009403,
+          "hamilton_trend_level": 18564.593397851284,
+          "cf_trend_level": 18753.181343499236
+        },
+        {
+          "date": "2015-07-01",
+          "real_gdp": 18857.418,
+          "hp_trend_level": 18746.19018498919,
+          "hamilton_trend_level": 18696.977574514247,
+          "cf_trend_level": 18896.27774610372
+        },
+        {
+          "date": "2015-10-01",
+          "real_gdp": 18892.206,
+          "hp_trend_level": 18857.980748630736,
+          "hamilton_trend_level": 18867.492954143996,
+          "cf_trend_level": 18964.077634409
+        },
+        {
+          "date": "2016-01-01",
+          "real_gdp": 19001.69,
+          "hp_trend_level": 18969.84980220016,
+          "hamilton_trend_level": 18798.962497199936,
+          "cf_trend_level": 19070.986230904495
+        },
+        {
+          "date": "2016-04-01",
+          "real_gdp": 19062.709,
+          "hp_trend_level": 19081.722281292805,
+          "hamilton_trend_level": 19047.228692348624,
+          "cf_trend_level": 19132.09988136489
+        },
+        {
+          "date": "2016-07-01",
+          "real_gdp": 19197.938,
+          "hp_trend_level": 19193.54158572734,
+          "hamilton_trend_level": 19274.451210256877,
+          "cf_trend_level": 19303.060982327665
+        },
+        {
+          "date": "2016-10-01",
+          "real_gdp": 19304.352,
+          "hp_trend_level": 19305.237903594698,
+          "hamilton_trend_level": 19315.89772007231,
+          "cf_trend_level": 19464.6922863038
+        },
+        {
+          "date": "2017-01-01",
+          "real_gdp": 19398.343,
+          "hp_trend_level": 19416.7427444411,
+          "hamilton_trend_level": 19505.25989439388,
+          "cf_trend_level": 19575.721872327907
+        },
+        {
+          "date": "2017-04-01",
+          "real_gdp": 19506.949,
+          "hp_trend_level": 19527.985670000908,
+          "hamilton_trend_level": 19645.488825733337,
+          "cf_trend_level": 19618.9075172563
+        },
+        {
+          "date": "2017-07-01",
+          "real_gdp": 19660.766,
+          "hp_trend_level": 19638.883213324698,
+          "hamilton_trend_level": 19718.441397418464,
+          "cf_trend_level": 19645.26994755337
+        },
+        {
+          "date": "2017-10-01",
+          "real_gdp": 19882.352,
+          "hp_trend_level": 19749.336961024776,
+          "hamilton_trend_level": 19776.59446629694,
+          "cf_trend_level": 19754.32772403745
+        },
+        {
+          "date": "2018-01-01",
+          "real_gdp": 20044.077,
+          "hp_trend_level": 19859.260400592506,
+          "hamilton_trend_level": 19898.50730838019,
+          "cf_trend_level": 19887.633913096626
+        },
+        {
+          "date": "2018-04-01",
+          "real_gdp": 20150.476,
+          "hp_trend_level": 19968.649202543966,
+          "hamilton_trend_level": 19961.915123481947,
+          "cf_trend_level": 20042.50900439199
+        },
+        {
+          "date": "2018-07-01",
+          "real_gdp": 20276.154,
+          "hp_trend_level": 20077.615534191173,
+          "hamilton_trend_level": 20085.36404828827,
+          "cf_trend_level": 20206.67058677129
+        },
+        {
+          "date": "2018-10-01",
+          "real_gdp": 20304.874,
+          "hp_trend_level": 20186.388693086305,
+          "hamilton_trend_level": 20195.536019123112,
+          "cf_trend_level": 20175.99906861202
+        },
+        {
+          "date": "2019-01-01",
+          "real_gdp": 20431.641,
+          "hp_trend_level": 20295.3280029384,
+          "hamilton_trend_level": 20281.184894671045,
+          "cf_trend_level": 20149.79329479621
+        },
+        {
+          "date": "2019-04-01",
+          "real_gdp": 20602.275,
+          "hp_trend_level": 20404.875314068995,
+          "hamilton_trend_level": 20400.135512956043,
+          "cf_trend_level": 20193.225284194767
+        },
+        {
+          "date": "2019-07-01",
+          "real_gdp": 20843.322,
+          "hp_trend_level": 20515.567879968276,
+          "hamilton_trend_level": 20554.239852111492,
+          "cf_trend_level": 20484.854028282898
+        },
+        {
+          "date": "2019-10-01",
+          "real_gdp": 20985.448,
+          "hp_trend_level": 20628.078711502014,
+          "hamilton_trend_level": 20764.234793305262,
+          "cf_trend_level": 20922.25544758473
+        },
+        {
+          "date": "2020-01-01",
+          "real_gdp": 20709.212,
+          "hp_trend_level": 20743.301072272494,
+          "hamilton_trend_level": 20913.48536304618,
+          "cf_trend_level": 21076.660949925736
+        },
+        {
+          "date": "2020-04-01",
+          "real_gdp": 19077.992,
+          "hp_trend_level": 20862.37235602649,
+          "hamilton_trend_level": 21022.657931966707,
+          "cf_trend_level": 19732.30652019956
+        },
+        {
+          "date": "2020-07-01",
+          "real_gdp": 20558.879,
+          "hp_trend_level": 20986.435230655385,
+          "hamilton_trend_level": 21173.257873220617,
+          "cf_trend_level": 21319.95826449728
+        },
+        {
+          "date": "2020-10-01",
+          "real_gdp": 20791.917,
+          "hp_trend_level": 21115.481062100494,
+          "hamilton_trend_level": 21220.938452458395,
+          "cf_trend_level": 21303.53595943064
+        },
+        {
+          "date": "2021-01-01",
+          "real_gdp": 21106.619,
+          "hp_trend_level": 21249.2292018306,
+          "hamilton_trend_level": 21354.41127879773,
+          "cf_trend_level": 21210.337463584714
+        },
+        {
+          "date": "2021-04-01",
+          "real_gdp": 21474.077,
+          "hp_trend_level": 21387.18667987476,
+          "hamilton_trend_level": 21530.661646367786,
+          "cf_trend_level": 21232.015402944635
+        },
+        {
+          "date": "2021-07-01",
+          "real_gdp": 21641.672,
+          "hp_trend_level": 21528.757823448603,
+          "hamilton_trend_level": 21741.233039384886,
+          "cf_trend_level": 21264.45099523743
+        },
+        {
+          "date": "2021-10-01",
+          "real_gdp": 22001.64,
+          "hp_trend_level": 21673.38634408741,
+          "hamilton_trend_level": 21873.71687318933,
+          "cf_trend_level": 21690.22551993119
+        },
+        {
+          "date": "2022-01-01",
+          "real_gdp": 21945.682,
+          "hp_trend_level": 21820.572256905674,
+          "hamilton_trend_level": 21630.08734239393,
+          "cf_trend_level": 21791.054245609055
+        },
+        {
+          "date": "2022-04-01",
+          "real_gdp": 21976.292,
+          "hp_trend_level": 21970.00812970124,
+          "hamilton_trend_level": 20163.818808929864,
+          "cf_trend_level": 21933.36534512223
+        },
+        {
+          "date": "2022-07-01",
+          "real_gdp": 22124.384,
+          "hp_trend_level": 22121.456832851993,
+          "hamilton_trend_level": 21743.359649815644,
+          "cf_trend_level": 22100.939613172657
+        },
+        {
+          "date": "2022-10-01",
+          "real_gdp": 22272.546,
+          "hp_trend_level": 22274.678343207248,
+          "hamilton_trend_level": 21868.214327875095,
+          "cf_trend_level": 22214.796732740575
+        },
+        {
+          "date": "2023-01-01",
+          "real_gdp": 22456.938,
+          "hp_trend_level": 22429.427504394716,
+          "hamilton_trend_level": 21670.573561734393,
+          "cf_trend_level": 22374.491201347235
+        },
+        {
+          "date": "2023-04-01",
+          "real_gdp": 22577.556,
+          "hp_trend_level": 22585.450678230023,
+          "hamilton_trend_level": 22325.946709744934,
+          "cf_trend_level": 22506.256494078916
+        },
+        {
+          "date": "2023-07-01",
+          "real_gdp": 22828.796,
+          "hp_trend_level": 22742.504316824015,
+          "hamilton_trend_level": 22488.326987149198,
+          "cf_trend_level": 22780.520033285706
+        },
+        {
+          "date": "2023-10-01",
+          "real_gdp": 23033.25,
+          "hp_trend_level": 22900.332882629467,
+          "hamilton_trend_level": 22861.952514143057,
+          "cf_trend_level": 22985.395277254196
+        },
+        {
+          "date": "2024-01-01",
+          "real_gdp": 23115.975,
+          "hp_trend_level": 23058.72819101469,
+          "hamilton_trend_level": 22856.222198375155,
+          "cf_trend_level": 23041.66789842214
+        },
+        {
+          "date": "2024-04-01",
+          "real_gdp": 23320.074,
+          "hp_trend_level": 23217.56024045877,
+          "hamilton_trend_level": 22907.74296069099,
+          "cf_trend_level": 23222.654923388556
+        },
+        {
+          "date": "2024-07-01",
+          "real_gdp": 23501.76,
+          "hp_trend_level": 23376.731718984473,
+          "hamilton_trend_level": 23128.487355615776,
+          "cf_trend_level": 23417.967885773025
+        },
+        {
+          "date": "2024-10-01",
+          "real_gdp": 23641.759,
+          "hp_trend_level": 23536.20755185119,
+          "hamilton_trend_level": 23240.317455884033,
+          "cf_trend_level": 23609.958992276097
+        },
+        {
+          "date": "2025-01-01",
+          "real_gdp": 23650.213,
+          "hp_trend_level": 23696.030840658885,
+          "hamilton_trend_level": 23398.898426526466,
+          "cf_trend_level": 23677.759818564544
+        },
+        {
+          "date": "2025-04-01",
+          "real_gdp": 23884.563,
+          "hp_trend_level": 23856.312714074033,
+          "hamilton_trend_level": 23521.94663849715,
+          "cf_trend_level": 23947.10353639182
+        },
+        {
+          "date": "2025-07-01",
+          "real_gdp": 24112.966,
+          "hp_trend_level": 24017.13836487817,
+          "hamilton_trend_level": 23769.86720260189,
+          "cf_trend_level": 24182.71290012043
+        },
+        {
+          "date": "2025-10-01",
+          "real_gdp": 24125.479,
+          "hp_trend_level": 24178.613230881627,
+          "hamilton_trend_level": 23975.355192365103,
+          "cf_trend_level": 24198.392110581495
+        },
+        {
+          "date": "2026-01-01",
+          "real_gdp": 24274.383,
+          "hp_trend_level": 24340.90619129963,
+          "hamilton_trend_level": 24049.39343589441,
+          "cf_trend_level": 24370.787062360683
+        },
+        {
+          "date": "2026-04-01",
+          "real_gdp": 24408.011,
+          "hp_trend_level": 24504.15695097772,
+          "hamilton_trend_level": 24278.931174496705,
+          "cf_trend_level": 24543.23765236335
+        },
+        {
+          "date": "2026-07-01",
+          "real_gdp": 24611.077,
+          "hp_trend_level": 24668.466698322653,
+          "hamilton_trend_level": 24473.69605531618,
+          "cf_trend_level": 24771.03941878586
+        }
+      ]
+    }
+  },
+  "downloads": {
+    "raw_csv": "downloads/economics/us/us-main-indicators-raw.csv",
+    "clean_csv": "downloads/economics/us/us-main-indicators-clean.csv",
+    "clean_mat": "downloads/economics/us/us-main-indicators-clean.mat"
+  }
+}
