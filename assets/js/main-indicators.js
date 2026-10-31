@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 02:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 18:01 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -7,6 +7,7 @@
      data-per-capita  per-capita indicator ids (switch on the card)
      data-mode=index  rebase each series to 2017 = 100
      data-rate-basis  annual / quarterly switch (real rates)
+     data-trends=off  no trends on this chart
    One page-level switch adds an HP or Christiano–Fitzgerald
    trend to every single-series chart.
    Uses AGDashboards (dashboards.js) and AGSite (site.js).
@@ -25,12 +26,9 @@
     cf: { field: 'cf_trend', label: 'Christiano–Fitzgerald trend', color: '--chart-3', dash: '1.5 3.5' },
   };
   const TREND_NAMES = { none: 'no trend', hp: 'HP trend', cf: 'Christiano–Fitzgerald trend', comparison: 'trend comparison' };
-  /* Colours and dashes for cards that show several series. */
-  const MULTI = [
-    { color: '--chart-1', dash: null },
-    { color: '--chart-2', dash: '6 4' },
-    { color: '--chart-3', dash: '1.5 3.5' },
-  ];
+  /* Several series of equal importance: equal-weight colours, solid lines;
+     the site accent (--chart-1) is kept for single-series charts. */
+  const MULTI = ['--series-1', '--series-2', '--series-3', '--series-4'];
 
   const el = {
     downloads: body.querySelector('[data-role="downloads"]'),
@@ -148,24 +146,29 @@
       const raw = pick(item, 'value');
       return {
         label: item.short_title,
-        color: token(single ? '--chart-1' : MULTI[i % MULTI.length].color),
-        dash: single ? null : MULTI[i % MULTI.length].dash,
+        color: token(single ? '--chart-1' : MULTI[i % MULTI.length]),
+        dash: null,
         values: indexMode ? rebase(dates, raw) : raw,
         marks: flags.map((flag, j) => (flag ? j : -1)).filter(j => j >= 0),
       };
     });
     const anyEstimate = series.some(item => item.marks.length);
 
-    /* Trends apply to charts with one series, in their own units. */
-    const trendable = single && !indexMode;
-    if (trendable && state.trend !== 'none') {
-      const keys = state.trend === 'comparison' ? ['hp', 'cf'] : [state.trend];
-      keys.forEach(key => series.push({
-        label: TRENDS[key].label,
-        color: token(TRENDS[key].color),
+    /* Trends, in each series' own units. One series: trends in their own
+       colours. Several series: each trend in its series' colour, dashed (HP)
+       or dotted (CF), and slightly thinner. */
+    const trendable = !indexMode && card.dataset.trends !== 'off';
+    const trendKeys = state.trend === 'none' ? [] : state.trend === 'comparison' ? ['hp', 'cf'] : [state.trend];
+    const dataSeries = series.slice();
+    if (trendable) {
+      indicators.forEach((item, i) => trendKeys.forEach(key => series.push({
+        label: single ? TRENDS[key].label : `${item.short_title}, ${TRENDS[key].label}`,
+        color: single ? token(TRENDS[key].color) : dataSeries[i].color,
         dash: TRENDS[key].dash,
-        values: pick(first, TRENDS[key].field),
-      }));
+        weight: single ? 1 : 0.8,
+        values: pick(item, TRENDS[key].field),
+        isTrend: true,
+      })));
     }
     parts.note.hidden = trendable || state.trend === 'none';
 
@@ -194,10 +197,17 @@
       label: `${card.querySelector('.chart-title').textContent}, ${state.payload.country.name}, ${label(start)} to ${label(end)}, with recessions shaded`,
     }));
 
-    parts.legend.innerHTML = series.map(item => `
+    const swatch = (color, dash, text) => `
       <li><svg class="legend-swatch" viewBox="0 0 28 10" aria-hidden="true" focusable="false">
-        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="2.2"
-          stroke-dasharray="${item.dash || 'none'}" stroke-linecap="round"/></svg>${S.escapeHTML(item.label)}</li>`).join('')
+        <line x1="1" y1="5" x2="27" y2="5" stroke="${color}" stroke-width="2.2"
+          stroke-dasharray="${dash || 'none'}" stroke-linecap="round"/></svg>${S.escapeHTML(text)}</li>`;
+    /* With several series, trends share their series' colour: the key shows
+       each series once, then one grey entry per trend style. */
+    const legendItems = single
+      ? series.map(item => swatch(item.color, item.dash, item.label))
+      : dataSeries.map(item => swatch(item.color, null, item.label))
+        .concat(trendable ? trendKeys.map(key => swatch(token('--muted'), TRENDS[key].dash, `${TRENDS[key].label} (same colour as its series)`)) : []);
+    parts.legend.innerHTML = legendItems.join('')
       + (anyEstimate ? '<li><span class="legend-estimate" aria-hidden="true"></span>Estimated value</li>' : '');
     parts.legend.hidden = false;
     parts.readout.textContent = 'Hover over the chart, or focus it and use the arrow keys, to read values.';
@@ -222,30 +232,41 @@
     }, { rootMargin: '300px 0px' })
     : null;
 
-  /* Expenditure shares of GDP: nominal and real chained ratios. */
-  function renderShares() {
-    const target = body.querySelector('[data-role="shares"]');
-    const shares = state.payload.gdp_shares;
-    if (!target || !shares) return;
-    const p = shares.periods;
-    const fmt = v => (v == null ? '–' : D.formatNumber(v, 1));
-    const rows = shares.rows.map(row => `
+  /* Shares of GDP and growth rates: nominal and real columns, three periods. */
+  function table(rows, caption, unitLabel, decimals) {
+    const p = state.payload.gdp_shares.periods;
+    const fmt = v => (v == null ? '–' : D.formatNumber(v, decimals));
+    const head = `<tr><th scope="col" rowspan="2" class="component-head">Component<br><span class="unit-label">${S.escapeHTML(unitLabel)}</span></th>
+        <th scope="colgroup" colspan="3">Nominal (current dollars)</th>
+        <th scope="colgroup" colspan="3">Real (chained 2017 dollars)</th></tr>
+      <tr>${['nominal', 'real'].map(() => `<th scope="col">${S.escapeHTML(p.latest)}</th>
+        <th scope="col"><abbr title="${S.escapeHTML(p.recent_range || '')}">${S.escapeHTML(p.recent)}</abbr></th>
+        <th scope="col"><abbr title="${S.escapeHTML(p.full_range || '')}">${S.escapeHTML(p.full)}</abbr></th>`).join('')}</tr>`;
+    const body = rows.map(row => `
       <tr>
         <th scope="row">${S.escapeHTML(row.component)}</th>
         <td>${fmt(row.nominal_latest)}</td><td>${fmt(row.nominal_recent)}</td><td>${fmt(row.nominal_full)}</td>
         <td>${fmt(row.real_latest)}</td><td>${fmt(row.real_recent)}</td><td>${fmt(row.real_full)}</td>
       </tr>`).join('');
-    target.innerHTML = `<div class="table-scroll"><table class="data-table shares-table">
-      <caption class="visually-hidden">Shares of GDP by expenditure component, percent</caption>
-      <thead>
-        <tr><th scope="col" rowspan="2">Component, % of GDP</th>
-          <th scope="colgroup" colspan="3">Nominal (current dollars)</th>
-          <th scope="colgroup" colspan="3">Real (chained 2017 dollars)</th></tr>
-        <tr><th scope="col">${S.escapeHTML(p.latest)}</th><th scope="col">${S.escapeHTML(p.recent)}</th><th scope="col">${S.escapeHTML(p.full)}</th>
-          <th scope="col">${S.escapeHTML(p.latest)}</th><th scope="col">${S.escapeHTML(p.recent)}</th><th scope="col">${S.escapeHTML(p.full)}</th></tr>
-      </thead>
-      <tbody>${rows}</tbody></table></div>
-      <p class="table-note">Imports are shown as a share of GDP and enter GDP with a negative sign. ${S.escapeHTML(shares.notes.nominal)} ${S.escapeHTML(shares.notes.real)} Period averages are averages of quarterly shares.</p>`;
+    return `<div class="table-scroll"><table class="data-table shares-table">
+      <caption class="visually-hidden">${S.escapeHTML(caption)}</caption>
+      <thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+  }
+
+  function renderShares() {
+    const shares = state.payload.gdp_shares;
+    if (!shares) return;
+    const p = shares.periods;
+    const sharesTarget = body.querySelector('[data-role="shares"]');
+    if (sharesTarget) {
+      sharesTarget.innerHTML = table(shares.rows, 'Shares of GDP by expenditure component, percent', '(% of GDP)', 1)
+        + `<p class="table-note">Imports enter GDP with a negative sign. ${S.escapeHTML(shares.notes.nominal)} ${S.escapeHTML(shares.notes.real)} “Last 10 years” is ${S.escapeHTML(p.recent_range)}; ${S.escapeHTML(p.full)} is ${S.escapeHTML(p.full_range)}. Period columns are averages of quarterly shares.</p>`;
+    }
+    const growthTarget = body.querySelector('[data-role="growth"]');
+    if (growthTarget && shares.growth_rows) {
+      growthTarget.innerHTML = table(shares.growth_rows, 'Growth of GDP and its expenditure components, percent per year', '(% per year)', 1)
+        + `<p class="table-note">Annualised quarter-on-quarter growth, 400 × [ln(X<sub>t</sub>) − ln(X<sub>t−1</sub>)]: the latest-quarter column is that quarter’s growth at an annual rate; the period columns are averages of quarterly growth rates. Real growth uses chained 2017-dollar series; nominal growth also includes price changes.</p>`;
+    }
   }
 
   /* Bottom of the page: one ribbon per source series with estimated values. */

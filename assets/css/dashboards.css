@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 02:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 18:01 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -12,6 +12,13 @@
   --chart-2: #b0602a;
   --chart-3: #3d7a57;
   --chart-4: #7a4f8c;
+  /* Several series of equal importance on one chart: none uses the site
+     accent, which is kept for single-series charts (Okabe-Ito palette,
+     distinguishable with common colour-vision deficiencies). */
+  --series-1: #d55e00;
+  --series-2: #009e73;
+  --series-3: #cc79a7;
+  --series-4: #0072b2;
   --chart-ink: var(--ink-soft);
   --chart-grid: rgba(28, 28, 30, 0.08);
   --chart-zero: rgba(28, 28, 30, 0.42);
@@ -288,13 +295,36 @@
 }
 
 .shares-table td {
-  text-align: right;
+  text-align: center;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .shares-table thead th {
   text-align: center;
+}
+
+.shares-table thead .component-head {
+  text-align: left;
+  vertical-align: bottom;
+}
+
+.unit-label {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.shares-table abbr {
+  text-decoration: none;
+  cursor: help;
+}
+
+.chart-note {
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 
 .shares-table tbody th {

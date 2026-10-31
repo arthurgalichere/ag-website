@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 01:32 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 18:01 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -230,8 +230,9 @@ window.AGDashboards = (() => {
           path += `${pen ? 'L' : 'M'}${x(xs[i] + period / 2).toFixed(1)},${y(value).toFixed(1)}`;
           pen = true;
         });
+        const width = (compact ? 1.5 : 1.8) * (item.weight || 1);
         svg('path', {
-          d: path, stroke: item.color, 'stroke-width': compact ? 1.5 : 1.8,
+          d: path, stroke: item.color, 'stroke-width': width,
           'stroke-dasharray': item.dash || 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round',
         }, lines);
         /* Hollow markers for values estimated by the author (item.marks: indices). */
