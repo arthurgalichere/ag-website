@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 18:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 22:43 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -247,6 +247,38 @@
   background: var(--sheet);
   border: 2px solid var(--chart-1);
   border-radius: 50%;
+}
+
+/* Bulleted callout (the note under the page controls). */
+.callout-list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.callout-list li::marker {
+  color: var(--accent);
+}
+
+/* Previous/next link to a dashboard that is not yet published. */
+.toolbar-next-link.is-inactive,
+.page-nav-link.is-inactive {
+  color: var(--muted);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.page-nav-link.is-inactive:hover {
+  color: var(--muted);
+  background: var(--paper-soft);
+  border-color: var(--line-strong);
+  box-shadow: none;
+  transform: none;
+}
+
+.page-nav-link.is-inactive i {
+  color: var(--muted);
 }
 
 .estimates-list {

@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 20:25 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 22:43 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -302,7 +302,7 @@
       data: payload => payload.gdp_shares,
       share: ['Shares of GDP by expenditure component, percent', '(% of GDP)'],
       growth: ['Growth of GDP and its expenditure components, percent per year', '(% per year)'],
-      shareNote: (t, p) => `Imports enter GDP with a negative sign. ${S.escapeHTML(t.notes.nominal)} ${S.escapeHTML(t.notes.real)} “Last 10 years” is ${S.escapeHTML(p.recent_range)}; ${S.escapeHTML(p.full)} is ${S.escapeHTML(p.full_range)}. Period columns are averages of quarterly shares.`,
+      shareNote: (t, p) => `Imports enter GDP with a negative sign. The “Sum of components” row is consumption + investment + government + exports − imports (net exports are not added twice). ${S.escapeHTML(t.notes.nominal)} ${S.escapeHTML(t.notes.real)} “Last 10 years” is ${S.escapeHTML(p.recent_range)}; ${S.escapeHTML(p.full)} is ${S.escapeHTML(p.full_range)}. Period columns are averages of quarterly shares.`,
       growthNote: () => GROWTH_NOTE,
     },
     consumption: {

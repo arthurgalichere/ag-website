@@ -1,3 +1,4 @@
+/* Last edited: 2026-10-31 22:43 UTC (Claude, economics chat) */
 /* =========================================================
    Economics family: /economics.html and future pages under
    /economics/. Tiles, icons, callouts and the copyright note
@@ -36,6 +37,13 @@
   line-height: 1.2;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+/* A published resource: the tile is a link. */
+.tile.is-available .status-badge {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .is-next .status-badge {
