@@ -257,15 +257,15 @@
         <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
       </figure>
       
-      <figure class="chart-card" data-indicators="real_exports,real_imports" data-per-capita="real_exports_pc,real_imports_pc" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_exports,real_imports,real_net_exports" data-per-capita="real_exports_pc,real_imports_pc,real_net_exports_pc" data-zero-line="true" data-digits="0">
         <figcaption class="chart-header">
-          <span class="chart-title">Real exports and imports of goods and services</span>
+          <span class="chart-title">Trade balance: exports, imports and net exports</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </figcaption>
         
         <div class="segmented-field chart-control" data-control="measure">
-          <span class="visually-hidden" id="real_exports,real_imports-measure-label">Measure</span>
-          <div class="segmented" role="group" aria-labelledby="real_exports,real_imports-measure-label">
+          <span class="visually-hidden" id="real_exports,real_imports,real_net_exports-measure-label">Measure</span>
+          <div class="segmented" role="group" aria-labelledby="real_exports,real_imports,real_net_exports-measure-label">
             <button type="button" data-value="total" aria-pressed="true">Total</button>
             <button type="button" data-value="per-capita" aria-pressed="false">Per capita</button>
           </div>
@@ -278,7 +278,7 @@
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
-        
+        <p class="chart-note">Real net exports are real exports minus real imports, as defined by BEA (published on FRED from 1970; computed here from 1947 and identical where both exist). They are a difference of chained-dollar series, not a chained index of their own.</p>
         <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
       </figure>
       
@@ -776,7 +776,7 @@
         <p><strong>Why capital services.</strong> BEA’s fixed-asset accounts, the official measure of the US capital stock in constant prices, are annual, year-end values; there is no official quarterly real capital stock. Every capital measure, including BEA’s, is built from past investment and assumed depreciation patterns. Fernald’s series applies these at the level of individual asset types and aggregates them by user cost, so it does not impose a single aggregate law of motion, K<sub>t+1</sub> = (1 − δ)K<sub>t</sub> + I<sub>t</sub>, on the data. This matters when the data are used to evaluate models whose own capital-accumulation equation (with or without time to build or adjustment costs) is the object of study.</p>
         <p><strong>Capital–output ratio.</strong> Because Fernald’s series is an index, the capital–output chart uses a different measure: the current-cost value of BEA’s year-end net stock of fixed assets divided by nominal GDP (annual, BEA via FRED). Ratios of current-dollar values are the usual measure, for the reasons given under Shares and growth rates (see also Gomme and Rupert, 2007).</p>
         <h3 class="subsection-title">Alternative: a quarterly capital stock</h3>
-        <p>For readers who need a capital stock in constant dollars, a quarterly series is provided for download and compared with Fernald’s capital input below. It is a construction, not official data, and is not used elsewhere on this page. It covers private nonresidential fixed assets and is built by asset type, as BEA builds its own stocks.</p>
+        <p>For readers who need a capital stock in constant dollars, a quarterly series is provided for download and compared with Fernald’s capital input below. It is a construction, not official data, and is not used elsewhere on this page. It covers private nonresidential fixed assets, is built by asset type, as BEA builds its own stocks, and starts in 1950 (from BEA’s end-1949 stocks), the first year shown on this page.</p>
         <ul>
           <li><strong>Benchmarks.</strong> BEA’s real year-end net stocks of private equipment, structures and intellectual property products, in chained 2017 dollars: each type’s chain-type quantity index for the net stock times its 2017 current-cost value, divided by 100 (BEA Fixed Assets tables 1.1 and 1.2, lines 5–7, via the BEA API).</li>
           <li><strong>Quarters, by type.</strong> Within each year y, the end-of-quarter stock of each type follows K<sub>q</sub> = (1 − δ<sub>y</sub>) K<sub>q−1</sub> + I<sub>q</sub>, where I<sub>q</sub> is real investment in that type during the quarter (the annual rate divided by four, in chained 2017 dollars) and δ<sub>y</sub> is the one quarterly depreciation rate for which the stock at the end of the fourth quarter equals BEA’s year-end stock of that type. Each type’s annual path is therefore exactly BEA’s; the movements within the year come from actual investment; and δ<sub>y</sub> is the implied depreciation rate of that type, published in the download.</li>
