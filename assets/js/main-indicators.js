@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 18:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-10-31 19:59 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -8,6 +8,8 @@
      data-mode=index  rebase each series to 2017 = 100
      data-rate-basis  annual / quarterly switch (real rates)
      data-trends=off  no trends on this chart
+     data-benchmark   the first indicator is the aggregate (GDP,
+                      consumption, investment): site blue, thicker line
    Sections may carry shares and growth tables (data-table = gdp,
    consumption or investment).
    One page-level switch adds an HP or Christiano–Fitzgerald
@@ -31,6 +33,8 @@
   /* Several series of equal importance: equal-weight colours, solid lines;
      the site accent (--chart-1) is kept for single-series charts. */
   const MULTI = ['--series-1', '--series-2', '--series-3', '--series-4'];
+  /* Composition charts: the aggregate is drawn in the site blue, thicker. */
+  const BENCHMARK_WEIGHT = 1.5;
 
   const el = {
     downloads: body.querySelector('[data-role="downloads"]'),
@@ -142,13 +146,17 @@
     };
     const single = indicators.length === 1;
     const first = indicators[0];
+    const benchmark = !single && card.dataset.benchmark === 'true';
 
     const series = indicators.map((item, i) => {
       const flags = pickRaw(item, 'estimated');
       const raw = pick(item, 'value');
+      const isBenchmark = benchmark && i === 0;
+      const colour = single || isBenchmark ? '--chart-1' : MULTI[(benchmark ? i - 1 : i) % MULTI.length];
       return {
         label: item.short_title,
-        color: token(single ? '--chart-1' : MULTI[i % MULTI.length]),
+        color: token(colour),
+        weight: isBenchmark ? BENCHMARK_WEIGHT : 1,
         dash: null,
         values: indexMode ? rebase(dates, raw) : raw,
         marks: flags.map((flag, j) => (flag ? j : -1)).filter(j => j >= 0),
@@ -178,7 +186,7 @@
         label: single ? TRENDS[key].label : `${item.short_title}, ${TRENDS[key].label}`,
         color: single ? token(TRENDS[key].color) : dataSeries[i].color,
         dash: TRENDS[key].dash,
-        weight: single ? 1 : 0.85,
+        weight: (single ? 1 : 0.85) * (dataSeries[i].weight || 1),
         opacity: single ? 1 : 0.6,
         values: pick(item, TRENDS[key].field),
         isTrend: true,
@@ -212,15 +220,15 @@
       label: `${card.querySelector('.chart-title').textContent}, ${state.payload.country.name}, ${label(start)} to ${label(end)}, with recessions shaded`,
     }));
 
-    const swatch = (color, dash, text) => `
+    const swatch = (color, dash, text, weight = 1) => `
       <li><svg class="legend-swatch" viewBox="0 0 28 10" aria-hidden="true" focusable="false">
-        <line x1="1" y1="5" x2="27" y2="5" stroke="${color}" stroke-width="2.2"
+        <line x1="1" y1="5" x2="27" y2="5" stroke="${color}" stroke-width="${2.2 * weight}"
           stroke-dasharray="${dash || 'none'}" stroke-linecap="round"/></svg>${S.escapeHTML(text)}</li>`;
     /* With several series, trends share their series' colour: the key shows
        each series once, then one grey entry per trend style. */
     const legendItems = single
       ? series.map(item => swatch(item.color, item.dash, item.label))
-      : dataSeries.map(item => swatch(item.color, null, item.label))
+      : dataSeries.map(item => swatch(item.color, null, item.label, item.weight))
         .concat(trendable ? trendKeys.map(key => swatch(token('--muted'), TRENDS[key].dash, `${TRENDS[key].label} (lighter, same colour as its series)`)) : []);
     parts.legend.innerHTML = legendItems.join('')
       + (anyEstimate ? '<li><span class="legend-estimate" aria-hidden="true"></span>Estimated value</li>' : '');

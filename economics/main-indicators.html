@@ -99,7 +99,7 @@
     <p class="eyebrow">Economics · Data dashboard</p>
     <h1 class="page-title">Main Economic Indicators</h1>
     <p class="lead">
-      Key measures of the US economy: the national accounts, the composition of consumption and investment, prices, the labour market, productivity, interest rates and corporate debt. Each chart shows the full history available. A trend can be added to compare each series with its long-run path.
+      Key measures of the US economy: the national accounts, the composition of consumption and investment, capital, prices, the labour market, productivity, interest rates and corporate debt. Each chart shows the full history available. A trend can be added to compare each series with its long-run path.
     </p>
   </header>
 
@@ -274,7 +274,7 @@
         <p class="chart-source" data-role="chart-source"></p>
       </figure>
       
-      <figure class="chart-card" data-indicators="real_gdp,real_pce,real_investment,real_government" data-per-capita="real_gdp_pc,real_pce_pc,real_investment_pc,real_government_pc" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_gdp,real_pce,real_investment,real_government" data-per-capita="real_gdp_pc,real_pce_pc,real_investment_pc,real_government_pc" data-benchmark="true" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
           <span class="chart-title">Composition of real GDP: output, consumption, investment and government spending</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
@@ -312,7 +312,7 @@
     <p class="section-introduction">Real personal consumption expenditures and their three components — durable goods (cars, furniture, appliances), nondurable goods (food, clothing, energy) and services (housing, health care, transport, financial and other services). Spending on durable goods is much more cyclical than the rest, because purchases of long-lasting goods can be postponed.</p>
     <div class="chart-stack">
       
-      <figure class="chart-card" data-indicators="real_pce,real_pce_durable,real_pce_nondurable,real_pce_services" data-per-capita="real_pce_pc,real_pce_durable_pc,real_pce_nondurable_pc,real_pce_services_pc" data-zero-line="false" data-digits="0">
+      <figure class="chart-card" data-indicators="real_pce,real_pce_durable,real_pce_nondurable,real_pce_services" data-per-capita="real_pce_pc,real_pce_durable_pc,real_pce_nondurable_pc,real_pce_services_pc" data-benchmark="true" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
           <span class="chart-title">Composition of real consumption: durable goods, nondurable goods and services</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
@@ -350,7 +350,7 @@
     <p class="section-introduction">Real gross private domestic investment and its three components. Nonresidential fixed investment covers business structures, equipment and intellectual property products; residential fixed investment is mainly housing, which often turns down before recessions; the change in private inventories is small on average but swings sharply over the cycle and accounts for a large part of the volatility of total investment.</p>
     <div class="chart-stack">
       
-      <figure class="chart-card" data-indicators="real_investment,real_nonres_investment,real_res_investment,real_inventories" data-per-capita="real_investment_pc,real_nonres_investment_pc,real_res_investment_pc,real_inventories_pc" data-zero-line="true" data-digits="0">
+      <figure class="chart-card" data-indicators="real_investment,real_nonres_investment,real_res_investment,real_inventories" data-per-capita="real_investment_pc,real_nonres_investment_pc,real_res_investment_pc,real_inventories_pc" data-benchmark="true" data-zero-line="true" data-digits="0">
         <figcaption class="chart-header">
           <span class="chart-title">Composition of real investment: nonresidential, residential and inventory investment</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
@@ -380,6 +380,31 @@
     <div class="shares" data-role="shares" data-table="investment"><p class="loading-message">Loading…</p></div>
     <h3 class="subsection-title">Growth rates</h3>
     <div class="shares" data-role="growth" data-table="investment"><p class="loading-message">Loading…</p></div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="capital-title">
+    <h2 id="capital-title" class="section-title">Capital</h2>
+    <p class="section-introduction">The capital input of the US business sector: the flow of services from equipment, software, research and development, artistic originals, structures, business-owned housing, inventories and land, as measured by John Fernald for his quarterly TFP series. It is an index (2017 = 100), not a value in dollars.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="capital_services" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <span class="chart-title">Capital input (capital services), business sector</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </figcaption>
+        
+        
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-note">Index built from Fernald’s quarterly growth rates of capital input, 2017 = 100. Capital services grow smoothly, because the capital stock changes slowly relative to its size; they slow after recessions, when investment falls. Like TFP, the series ends one quarter before the national accounts. See “Capital” under Definitions and methods for how it is measured.</p>
+        <p class="chart-hint" data-role="trend-note" hidden>Trends are not shown on this chart.</p>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+    </div>
     
   </section>
   
@@ -669,6 +694,19 @@
         <p>The federal funds rate is the effective rate, a volume-weighted measure of the overnight rates at which banks lend reserve balances to each other without collateral; the Federal Reserve sets a target for it, so it is the main indicator of the monetary policy stance. It is published from July 1954. The 3-month Treasury bill rate is the secondary-market yield on short-term government debt.</p>
         <p>Each ex-post real rate is the quarterly average of the monthly nominal rate minus GDP-deflator inflation realised over the following quarter, both at annual rates and in percentage points. It measures the real return actually earned, not the rate expected when the loan was made or the bill was bought.</p>
         <p>The real rates chart can be shown at an annual rate (default) or per quarter. The quarterly rate is the annual rate divided by four: the nominal rate earned over one quarter minus the quarterly log change in the GDP deflator, 100 × [ln(P<sub>t+1</sub>) − ln(P<sub>t</sub>)]. It is the unit used when comparing data with quarterly models.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Capital</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p><strong>Measure.</strong> The capital series is the capital input of the US business sector from John Fernald’s quarterly TFP data (Fernald, 2014): the same capital measure that enters his TFP calculation. Fernald builds perpetual-inventory stocks for each type of asset from disaggregated quarterly national-accounts investment, then aggregates their growth rates with weights based on each asset’s estimated user cost (rental price). This measures the flow of productive services from capital, the input to production, rather than the market value of the stock.</p>
+        <p><strong>Coverage.</strong> Business sector, as in Fernald’s TFP: equipment (information-processing and other), software, research and development, artistic originals, nonresidential structures, residential capital owned by businesses (rented housing), inventories and land. General government, nonprofit institutions and owner-occupied housing are outside the business sector.</p>
+        <p><strong>Levels.</strong> Fernald publishes growth rates only (400 × change in the natural logarithm). The index cumulates them exactly, K<sub>t</sub> = K<sub>t−1</sub> × exp(g<sub>t</sub> / 400), with its 2017 average = 100. There is therefore no level in dollars, and ratios such as capital to output are not available from this series.</p>
+        <p><strong>Why capital services.</strong> BEA’s fixed-asset accounts, the official measure of the US capital stock in constant prices, are annual, year-end values; there is no official quarterly real capital stock. Every capital measure, including BEA’s, is built from past investment and assumed depreciation patterns. Fernald’s series applies these at the level of individual asset types and aggregates them by user cost, so it does not impose a single aggregate law of motion, K<sub>t+1</sub> = (1 − δ)K<sub>t</sub> + I<sub>t</sub>, on the data. This matters when the data are used to evaluate models whose own capital-accumulation equation (with or without time to build or adjustment costs) is the object of study.</p>
       </div>
     </details>
 
