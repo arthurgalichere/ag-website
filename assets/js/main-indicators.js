@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 22:43 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-02 22:40 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -12,7 +12,7 @@
                       utilization-adjusted, comparison)
      data-trends=off  no trends on this chart
      data-benchmark   the first indicator is the aggregate (GDP,
-                      consumption, investment): site blue, thicker line
+                      consumption, investment): red, dashed
    Sections may carry shares and growth tables (data-table = gdp,
    consumption or investment).
    One page-level switch adds an HP or Christiano–Fitzgerald
@@ -33,11 +33,15 @@
     cf: { field: 'cf_trend', label: 'Christiano–Fitzgerald trend', color: '--chart-3', dash: '1.5 3.5' },
   };
   const TREND_NAMES = { none: 'no trend', hp: 'HP trend', cf: 'Christiano–Fitzgerald trend', comparison: 'trend comparison' };
-  /* Several series of equal importance: equal-weight colours, solid lines;
-     the site accent (--chart-1) is kept for single-series charts. */
+  /* Several series of equal importance: equal-weight colours (none in the
+     site blue, kept for single-series charts). With a red benchmark, the
+     components use equal-weight colours other than orange-red. */
   const MULTI = ['--series-1', '--series-2', '--series-3', '--series-4'];
+  const COMPONENTS = ['--series-4', '--series-2', '--series-3', '--series-1'];
   /* Composition charts: the aggregate is drawn in the site blue, thicker. */
-  const BENCHMARK_WEIGHT = 1.5;
+  /* The benchmark of a composition chart (GDP, consumption, investment):
+     red and dashed, same thickness as the other lines. */
+  const BENCHMARK_DASH = '9 4';
 
   const el = {
     downloads: body.querySelector('[data-role="downloads"]'),
@@ -166,12 +170,12 @@
       const flags = pickRaw(item, 'estimated');
       const raw = pick(item, 'value');
       const isBenchmark = benchmark && i === 0;
-      const colour = single || isBenchmark ? '--chart-1' : MULTI[(benchmark ? i - 1 : i) % MULTI.length];
+      const colour = single ? '--chart-1' : isBenchmark ? '--chart-benchmark'
+        : benchmark ? COMPONENTS[(i - 1) % COMPONENTS.length] : MULTI[i % MULTI.length];
       return {
         label: item.short_title,
         color: token(colour),
-        weight: isBenchmark ? BENCHMARK_WEIGHT : 1,
-        dash: null,
+        dash: isBenchmark ? BENCHMARK_DASH : null,
         values: indexMode ? rebase(dates, raw) : raw,
         marks: flags.map((flag, j) => (flag ? j : -1)).filter(j => j >= 0),
       };
@@ -200,7 +204,7 @@
         label: single ? TRENDS[key].label : `${item.short_title}, ${TRENDS[key].label}`,
         color: single ? token(TRENDS[key].color) : dataSeries[i].color,
         dash: TRENDS[key].dash,
-        weight: (single ? 1 : 0.85) * (dataSeries[i].weight || 1),
+        weight: single ? 1 : 0.85,
         opacity: single ? 1 : 0.6,
         values: pick(item, TRENDS[key].field),
         isTrend: true,
@@ -243,7 +247,7 @@
        each series once, then one grey entry per trend style. */
     const legendItems = single
       ? series.map(item => swatch(item.color, item.dash, item.label))
-      : dataSeries.map(item => swatch(item.color, null, item.label, item.weight))
+      : dataSeries.map(item => swatch(item.color, item.dash, item.label))
         .concat(trendable ? trendKeys.map(key => swatch(token('--muted'), TRENDS[key].dash, `${TRENDS[key].label} (lighter, same colour as its series)`)) : []);
     parts.legend.innerHTML = legendItems.join('')
       + (anyEstimate ? '<li><span class="legend-estimate" aria-hidden="true"></span>Estimated value</li>' : '');

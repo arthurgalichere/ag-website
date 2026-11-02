@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 18:26 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-02 22:40 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -19,6 +19,10 @@
   --series-2: #009e73;
   --series-3: #cc79a7;
   --series-4: #0072b2;
+  /* Benchmark series on charts with several series (red, dashed), and its
+     muted version when it is only context (light grey). */
+  --chart-benchmark: #c62828;
+  --chart-benchmark-muted: #b9bec4;
   --chart-ink: var(--ink-soft);
   --chart-grid: rgba(28, 28, 30, 0.08);
   --chart-zero: rgba(28, 28, 30, 0.42);
@@ -140,11 +144,35 @@
   border-radius: var(--radius);
 }
 
+/* Title and subtitle on the left; the chart's switches flush right on the
+   same line, or flush right below the title when it is too long. */
 .chart-header {
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.chart-heading {
+  display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 0.25rem;
-  margin-bottom: 1rem;
+  min-width: 0;
+}
+
+.chart-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.chart-controls .chart-control {
+  margin-bottom: 0;
 }
 
 .chart-title {
@@ -279,6 +307,56 @@
 
 .page-nav-link.is-inactive i {
   color: var(--muted);
+}
+
+/* Table title (or introduction) with its measure switch flush right. */
+.table-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.6rem 1.25rem;
+}
+
+.table-heading > :first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* The dashed rule of the subsection title spans the whole row. */
+.table-heading:has(> .subsection-title) {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--line-strong);
+}
+
+.table-heading > .subsection-title {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.table-heading .table-control {
+  margin-left: auto;
+  margin-bottom: 0.75rem;
+}
+
+.table-switches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.table-switches .table-control {
+  margin-left: 0;
+}
+
+@media (max-width: 680px) {
+  .table-heading .table-control {
+    margin-left: 0;
+  }
 }
 
 /* Business-cycle tables (Real Business Cycles page). */
@@ -440,7 +518,27 @@
 
 /* Responsive and reduced motion --------------------------- */
 
+/* Information band under the page controls: icon larger and centred. */
+.callout.dashboard-note {
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.callout.dashboard-note > i {
+  color: var(--accent);
+  font-size: 1.35rem;
+}
+
 @media (max-width: 680px) {
+  .chart-header {
+    flex-direction: column;
+  }
+
+  .chart-controls {
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
   .dashboard-controls {
     flex-direction: column;
     align-items: stretch;

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 18:26 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-02 22:40 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -8,8 +8,10 @@
    Cards carry data-vars (variable keys), data-against (the
    benchmark key; none for output itself) and data-extra (an
    unfiltered series added to the chart, e.g. the unemployment
-   gap). Page switches: filter (HP, Hamilton, Christiano–
-   Fitzgerald, comparison) and measure (total, per capita).
+   gap). Page switch: filter (HP, Hamilton, Christiano–Fitzgerald,
+   comparison). Card switches: measure (total, per capita) and
+   variant (sets of variables). Tables have their own measure
+   switch per group (data-group).
    Tables: data-table = a section key, "summary", "cross" or
    "matrix". Uses AGDashboards (dashboards.js) and AGSite.
    ========================================================= */
@@ -26,8 +28,16 @@
     hamilton: { label: 'Hamilton', long: 'Hamilton filter (h = 8, p = 4)', dash: '6 4' },
     cf: { label: 'Christiano–Fitzgerald', long: 'Christiano–Fitzgerald filter (6–32 quarters)', dash: '1.5 3.5' },
   };
-  const MULTI = ['--series-1', '--series-2', '--series-3', '--series-4'];
-  const BENCHMARK_WEIGHT = 1.5;
+  /* One variable: the site blue. Several variables of equal importance:
+     equal-weight colours (none in the site blue). The benchmark (output, or
+     the aggregate of a component) is red and dashed, or light grey when it
+     is only context (data-muted). Filter comparison: equal-weight colours. */
+  const MULTI = ['--series-4', '--series-2', '--series-3', '--series-1'];
+  const FILTER_COLOURS = ['--series-1', '--series-2', '--series-3'];
+  /* Annualised rates: divided by 4 on the quarterly basis (inflation
+     400 x dln P becomes 100 x dln P; interest rates per quarter). */
+  const RATE_KEYS = new Set(['infl', 'infl_cpi', 'ff', 'tb', 'rff', 'rtb']);
+  const BENCHMARK_DASH = '9 4';
   /* Short labels for the correlation matrix. */
   const SYMBOLS = {
     y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', nx: 'NX/Y', k: 'K', h: 'H', w: 'w', yh: 'Y/H',
@@ -42,7 +52,10 @@
     filterHint: body.querySelector('[data-role="filter-hint"]'),
   };
   const cards = Array.from(body.querySelectorAll('figure.chart-card[data-vars]'));
-  const state = { country: 'US', filter: 'hp', measure: 'total', payload: null, charts: new Map(), visible: new Set() };
+  const state = {
+    country: 'US', filter: 'hp', payload: null, charts: new Map(), visible: new Set(),
+    measure: new Map(), tableMeasure: new Map(), basis: new Map(), tableBasis: new Map(),
+  };
   const cache = new Map();
 
   D.segmented(body.querySelector('[data-control="country"]'), value => { state.country = value; load(); });
@@ -50,9 +63,51 @@
     state.filter = value;
     refresh();
   });
-  const measureControl = D.segmented(body.querySelector('[data-control="measure"]'), value => {
-    state.measure = value;
-    refresh();
+  cards.forEach(card => {
+    const variant = card.querySelector('[data-control="variant"]');
+    if (variant) {
+      const control = D.segmented(variant, value => {
+        const button = variant.querySelector(`[data-value="${value}"]`);
+        card.dataset.vars = button.dataset.set;
+        card.dataset.muted = button.dataset.muted === 'true' ? 'true' : 'false';
+        if (state.visible.has(card)) renderCard(card);
+      });
+      const first = variant.querySelector('button');
+      card.dataset.vars = first.dataset.set;
+      control.select(first.dataset.value, false);
+    }
+    const basis = card.querySelector('[data-control="rate-basis"]');
+    if (basis) {
+      state.basis.set(card, 'annual');
+      D.segmented(basis, value => {
+        state.basis.set(card, value);
+        if (state.visible.has(card)) renderCard(card);
+      }).select('annual', false);
+    }
+    const measure = card.querySelector('[data-control="measure"]');
+    if (measure) {
+      state.measure.set(card, 'total');
+      D.segmented(measure, value => {
+        state.measure.set(card, value);
+        if (state.visible.has(card)) renderCard(card);
+      }).select('total', false);
+    }
+  });
+  body.querySelectorAll('[data-control="table-basis"]').forEach(control => {
+    const group = control.dataset.group;
+    state.tableBasis.set(group, 'annual');
+    D.segmented(control, value => {
+      state.tableBasis.set(group, value);
+      renderTables();
+    }).select('annual', false);
+  });
+  body.querySelectorAll('[data-control="table-measure"]').forEach(control => {
+    const group = control.dataset.group;
+    state.tableMeasure.set(group, 'total');
+    D.segmented(control, value => {
+      state.tableMeasure.set(group, value);
+      renderTables();
+    }).select('total', false);
   });
 
   function token(name) {
@@ -70,18 +125,18 @@
   }
 
   /* Per-capita version of a variable when it exists and is selected. */
-  function seriesKey(key) {
+  function seriesKey(key, measure) {
     const pc = `${key}_pc`;
-    return state.measure === 'pc' && state.payload.cycles.hp[pc] ? pc : key;
+    return measure === 'pc' && state.payload.cycles.hp[pc] ? pc : key;
   }
 
-  function label(key) {
+  function label(key, measure) {
     const v = state.payload.variables[key];
-    return v.label + (state.measure === 'pc' && v.per_capita ? ' per capita' : '');
+    return v.label + (measure === 'pc' && v.per_capita ? ' per capita' : '');
   }
 
-  function values(filter, key) {
-    return state.payload.cycles[filter][seriesKey(key)] || [];
+  function values(filter, key, measure) {
+    return state.payload.cycles[filter][seriesKey(key, measure)] || [];
   }
 
   function tableFilter() {
@@ -97,42 +152,55 @@
   function renderCard(card) {
     const role = name => card.querySelector(`[data-role="${name}"]`);
     const payload = state.payload;
-    const vars = card.dataset.vars.split(',').map(s => s.trim());
+    const measure = state.measure.get(card) || 'total';
+    const vars = card.dataset.vars.split(',').map(x => x.trim());
     const against = card.dataset.against || '';
     const extra = card.dataset.extra || '';
+    const muted = card.dataset.muted === 'true';
     const comparison = state.filter === 'comparison';
+    const lab = key => label(key, measure);
+    const quarterly = state.basis.get(card) === 'quarterly';
+    const vals = (filter, key) => {
+      const v = values(filter, key, measure);
+      return quarterly && RATE_KEYS.has(key) ? v.map(x => (x == null ? null : x / 4)) : v;
+    };
     const series = [];
 
     if (comparison) {
       /* One variable under the three filters (the first of the card). */
       const key = vars[0];
       Object.entries(FILTERS).forEach(([name, f], i) => series.push({
-        label: `${label(key)}, ${f.label}`,
-        color: token(MULTI[i]),
+        label: `${lab(key)}, ${f.label}`,
+        color: token(FILTER_COLOURS[i]),
         dash: f.dash,
-        values: values(name, key),
+        values: vals(name, key),
       }));
     } else {
       if (against) {
-        series.push({ label: label(against), color: token('--chart-1'), weight: BENCHMARK_WEIGHT, values: values(state.filter, against) });
+        series.push({
+          label: lab(against),
+          color: token(muted ? '--chart-benchmark-muted' : '--chart-benchmark'),
+          dash: BENCHMARK_DASH,
+          values: vals(state.filter, against),
+        });
       }
       vars.forEach((key, i) => series.push({
-        label: label(key),
-        color: token(!against && vars.length === 1 ? '--chart-1' : MULTI[i % MULTI.length]),
-        weight: !against && vars.length === 1 ? BENCHMARK_WEIGHT : 1,
-        values: values(state.filter, key),
+        label: lab(key),
+        color: token(vars.length === 1 ? '--chart-1' : MULTI[i % MULTI.length]),
+        values: vals(state.filter, key),
       }));
       if (extra) {
-        series.push({ label: label(extra), color: token('--series-2'), dash: '6 4', values: values('hp', extra) });
+        series.push({ label: lab(extra), color: token('--series-2'), dash: '1.5 3.5', values: values('hp', extra, measure) });
       }
     }
 
     const keys = comparison ? [vars[0]] : [against, ...vars, extra].filter(Boolean);
-    const units = Array.from(new Set(keys.map(key => payload.variables[key].units)));
+    const unitOf = key => (quarterly && RATE_KEYS.has(key) ? 'Percentage points per quarter (annual rate ÷ 4)' : payload.variables[key].units);
+    const units = Array.from(new Set(keys.map(unitOf)));
     /* One unit, or the variables grouped by unit. */
     const unitText = units.length === 1
       ? units[0]
-      : units.map(unit => `${unit} (${keys.filter(key => payload.variables[key].units === unit).map(key => label(key)).join(', ')})`).join('; ');
+      : units.map(unit => `${unit} (${keys.filter(key => unitOf(key) === unit).map(lab).join(', ')})`).join('; ');
     const dates = payload.dates;
     const filterText = comparison ? 'filter comparison' : FILTERS[state.filter].long;
     role('chart-subtitle').textContent = `${unitText} · ${filterText} · ${D.quarterLabel(dates[0])}–${D.quarterLabel(dates[dates.length - 1])}`;
@@ -154,7 +222,7 @@
 
     const swatch = item => `
       <li><svg class="legend-swatch" viewBox="0 0 28 10" aria-hidden="true" focusable="false">
-        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="${2.2 * (item.weight || 1)}"
+        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="2.2"
           stroke-dasharray="${item.dash || 'none'}" stroke-linecap="round"/></svg>${S.escapeHTML(item.label)}</li>`;
     role('chart-legend').innerHTML = series.map(swatch).join('');
     role('chart-legend').hidden = false;
@@ -162,7 +230,7 @@
 
     const sources = Array.from(new Set(keys.map(key => {
       const v = payload.variables[key];
-      return state.measure === 'pc' && v.source_pc ? v.source_pc : v.source;
+      return measure === 'pc' && v.source_pc ? v.source_pc : v.source;
     }).filter(Boolean)));
     role('chart-source').textContent = `Source: ${sources.join('; ')}. Cycles: author’s calculations.`;
   }
@@ -170,10 +238,16 @@
   /* Tables ------------------------------------------------- */
 
   const fmt = (v, d = 2) => (v == null ? '–' : D.formatNumber(v, d));
+  let tableMeasureNow = 'total';
+  let tableQuarterly = false;
+  /* Standard deviations of annualised rates scale with the basis;
+     correlations and autocorrelations do not. */
+  const scaled = (key, v) => (v != null && tableQuarterly && RATE_KEYS.has(key) ? v / 4 : v);
+  const tlabel = key => label(key, tableMeasureNow);
   const unitMark = key => (state.payload.variables[key].units === 'Percentage points' ? ' <span class="unit-mark" title="Standard deviation in percentage points">†</span>' : '');
 
   function statsTable(rows, aggregate) {
-    const aggLabel = aggregate ? label(aggregate).toLowerCase() : '';
+    const aggLabel = aggregate ? tlabel(aggregate).toLowerCase() : '';
     const head = `<tr><th scope="col" class="component-head">Variable</th>
       <th scope="col">Standard deviation</th>
       <th scope="col">Relative standard deviation<br><span class="unit-label">(to output)</span></th>
@@ -182,8 +256,8 @@
       <th scope="col">Correlation with output</th>
       ${aggregate ? `<th scope="col">Correlation with ${S.escapeHTML(aggLabel)}</th>` : ''}</tr>`;
     const bodyRows = rows.map(row => `<tr>
-      <th scope="row">${S.escapeHTML(label(row.key))}${unitMark(row.key)}</th>
-      <td>${fmt(row.sd)}</td><td>${fmt(row.rel_sd)}</td>
+      <th scope="row">${S.escapeHTML(tlabel(row.key))}${unitMark(row.key)}</th>
+      <td>${fmt(scaled(row.key, row.sd))}</td><td>${fmt(scaled(row.key, row.rel_sd))}</td>
       ${aggregate ? `<td>${fmt(row.rel_sd_agg)}</td>` : ''}
       <td>${fmt(row.ar1)}</td><td>${fmt(row.corr_y)}</td>
       ${aggregate ? `<td>${fmt(row.corr_agg)}</td>` : ''}</tr>`).join('');
@@ -204,7 +278,7 @@
       <th scope="col" rowspan="2">Peak<br><span class="unit-label">(quarters)</span></th></tr>
       <tr>${lags.map(k => `<th scope="col">k = ${k > 0 ? '+' : ''}${k}</th>`).join('')}</tr>`;
     const bodyRows = rows.map(row => `<tr>
-      <th scope="row">${S.escapeHTML(label(row.key))}</th>
+      <th scope="row">${S.escapeHTML(tlabel(row.key))}</th>
       ${row.values.map((v, i) => `<td${lags[i] === row.peak_lag ? ' class="is-peak"' : ''}>${fmt(v)}</td>`).join('')}
       <td class="peak-lag">${lagText(row.peak_lag)}</td></tr>`).join('');
     return `<div class="table-scroll"><table class="data-table shares-table bc-table cross-table">
@@ -221,9 +295,9 @@
       const colour = v >= 0 ? pos : neg;
       return `<td style="background: color-mix(in srgb, ${colour} ${Math.round(alpha * 100)}%, transparent)">${fmt(v)}</td>`;
     };
-    const head = `<tr><th scope="col"></th>${keys.map(key => `<th scope="col"><abbr title="${S.escapeHTML(label(key))}">${S.escapeHTML(SYMBOLS[key] || key)}</abbr></th>`).join('')}</tr>`;
-    const bodyRows = keys.map((key, r) => `<tr><th scope="row"><abbr title="${S.escapeHTML(label(key))}">${S.escapeHTML(SYMBOLS[key] || key)}</abbr></th>${matrix[r].map(cell).join('')}</tr>`).join('');
-    const legend = keys.map(key => `${S.escapeHTML(SYMBOLS[key] || key)}: ${S.escapeHTML(label(key))}`).join(' · ');
+    const head = `<tr><th scope="col"></th>${keys.map(key => `<th scope="col"><abbr title="${S.escapeHTML(tlabel(key))}">${S.escapeHTML(SYMBOLS[key] || key)}</abbr></th>`).join('')}</tr>`;
+    const bodyRows = keys.map((key, r) => `<tr><th scope="row"><abbr title="${S.escapeHTML(tlabel(key))}">${S.escapeHTML(SYMBOLS[key] || key)}</abbr></th>${matrix[r].map(cell).join('')}</tr>`).join('');
+    const legend = keys.map(key => `${S.escapeHTML(SYMBOLS[key] || key)}: ${S.escapeHTML(tlabel(key))}`).join(' · ');
     return `<div class="table-scroll"><table class="data-table matrix-table">
       <caption class="visually-hidden">Contemporaneous correlation matrix of cyclical components</caption>
       <thead>${head}</thead><tbody>${bodyRows}</tbody></table></div>
@@ -233,11 +307,13 @@
   function renderTables() {
     const payload = state.payload;
     if (!payload) return;
-    const tables = payload.tables[state.measure][tableFilter()];
     const note = state.filter === 'comparison'
       ? '<p class="table-note">Filter comparison selected: the tables show the HP filter.</p>' : '';
     body.querySelectorAll('[data-table]').forEach(target => {
       const which = target.dataset.table;
+      tableMeasureNow = state.tableMeasure.get(target.dataset.group) || 'total';
+      tableQuarterly = state.tableBasis.get(target.dataset.group) === 'quarterly';
+      const tables = payload.tables[tableMeasureNow][tableFilter()];
       let html = '';
       if (which === 'summary') html = statsTable(tables.summary, null);
       else if (which === 'cross') html = crossTable(tables.cross, payload.methods.lags);
@@ -248,7 +324,7 @@
       }
       const sample = `${D.quarterLabel(payload.sample.start)}–${D.quarterLabel(payload.sample.end)}`;
       target.innerHTML = html + note
-        + (which === 'matrix' || which === 'cross' ? '' : `<p class="table-note">${S.escapeHTML(FILTERS[tableFilter()].long)}, ${S.escapeHTML(sample)} (each statistic uses the quarters both series cover). Standard deviations are in percent of trend, or in percentage points for variables marked †.</p>`);
+        + (which === 'matrix' || which === 'cross' ? '' : `<p class="table-note">${S.escapeHTML(FILTERS[tableFilter()].long)}, ${S.escapeHTML(sample)} (each statistic uses the quarters both series cover). Standard deviations are in percent of trend, or in percentage points for variables marked †${tableQuarterly ? '; inflation and interest rates per quarter (annual rate ÷ 4)' : ''}.</p>`);
     });
   }
 
@@ -301,6 +377,5 @@
   }
 
   filterControl.select('hp', false);
-  measureControl.select('total', false);
   load();
 })();

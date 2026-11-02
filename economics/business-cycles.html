@@ -125,14 +125,6 @@
       <p class="segmented-hint" data-role="filter-hint" hidden>Filter comparison: each chart shows its first variable under the three filters; the tables show the HP filter.</p>
     </div>
 
-    <div class="segmented-field" data-control="measure">
-      <span class="segmented-label" id="measure-label">Measure</span>
-      <div class="segmented" role="group" aria-labelledby="measure-label">
-        <button type="button" data-value="total" aria-pressed="true">Total</button>
-        <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
-      </div>
-    </div>
-
     <div class="dashboard-downloads" data-role="downloads" hidden>
       <span class="segmented-label">Download cycles</span>
       <div class="download-row">
@@ -149,8 +141,8 @@
   <div class="callout is-quiet dashboard-note">
     <i class="fas fa-circle-info" aria-hidden="true"></i>
     <ul class="callout-list">
-      <li>Each chart compares the cyclical component of a variable with that of output (thicker blue line), or, for the components of consumption and investment, with their total.</li>
       <li>Shaded bands mark US recessions, from the NBER-based quarterly recession indicator (USRECQ).</li>
+      <li>The series are prepared as on the Main Economic Indicators page: monthly data averaged to quarters, real and per-capita measures built from official sources, and the few values the sources did not publish estimated and flagged; see <a class="text-link" href="#missing-title">Missing data and estimates</a> below.</li>
     </ul>
   </div>
 
@@ -164,8 +156,23 @@
       
       <figure class="chart-card" data-vars="y" data-against="">
         <figcaption class="chart-header">
-          <span class="chart-title">Output (real GDP)</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Output (real GDP)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="y-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="y-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -177,8 +184,23 @@
       
       <figure class="chart-card" data-vars="c" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Consumption and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Consumption and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="c-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="c-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -190,8 +212,23 @@
       
       <figure class="chart-card" data-vars="i" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Investment and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Investment and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="i-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="i-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -203,8 +240,23 @@
       
       <figure class="chart-card" data-vars="g" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Government spending and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Government spending and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="g-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="g-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -216,8 +268,23 @@
       
       <figure class="chart-card" data-vars="x" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Exports and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Exports and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="x-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="x-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -229,8 +296,23 @@
       
       <figure class="chart-card" data-vars="m" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Imports and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Imports and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="m-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="m-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -242,8 +324,11 @@
       
       <figure class="chart-card" data-vars="nx" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Net exports (% of GDP) and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Net exports (% of GDP) and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -255,8 +340,17 @@
       
     </div>
     
-    <h3 class="subsection-title">Business-cycle statistics: output and its components</h3>
-    <div class="shares" data-table="national"><p class="loading-message">Loading…</p></div>
+    <div class="table-heading">
+      <h3 class="subsection-title">Business-cycle statistics: output and its components</h3>
+      <div class="segmented-field chart-control table-control" data-control="table-measure" data-group="national">
+      <span class="visually-hidden" id="national-table-measure-label">Measure for the table</span>
+      <div class="segmented" role="group" aria-labelledby="national-table-measure-label">
+        <button type="button" data-value="total" aria-pressed="true">Total</button>
+        <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+      </div>
+    </div>
+    </div>
+    <div class="shares" data-table="national" data-group="national"><p class="loading-message">Loading…</p></div>
     
   </section>
   
@@ -267,8 +361,23 @@
       
       <figure class="chart-card" data-vars="c_dur" data-against="c">
         <figcaption class="chart-header">
-          <span class="chart-title">Durable goods and consumption</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Durable goods and consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="c_dur-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="c_dur-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -280,8 +389,23 @@
       
       <figure class="chart-card" data-vars="c_nondur" data-against="c">
         <figcaption class="chart-header">
-          <span class="chart-title">Nondurable goods and consumption</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Nondurable goods and consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="c_nondur-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="c_nondur-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -293,8 +417,23 @@
       
       <figure class="chart-card" data-vars="c_serv" data-against="c">
         <figcaption class="chart-header">
-          <span class="chart-title">Services and consumption</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Services and consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="c_serv-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="c_serv-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -306,8 +445,17 @@
       
     </div>
     
-    <h3 class="subsection-title">Business-cycle statistics: consumption and its components</h3>
-    <div class="shares" data-table="consumption" data-aggregate="c"><p class="loading-message">Loading…</p></div>
+    <div class="table-heading">
+      <h3 class="subsection-title">Business-cycle statistics: consumption and its components</h3>
+      <div class="segmented-field chart-control table-control" data-control="table-measure" data-group="consumption">
+      <span class="visually-hidden" id="consumption-table-measure-label">Measure for the table</span>
+      <div class="segmented" role="group" aria-labelledby="consumption-table-measure-label">
+        <button type="button" data-value="total" aria-pressed="true">Total</button>
+        <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+      </div>
+    </div>
+    </div>
+    <div class="shares" data-table="consumption" data-group="consumption" data-aggregate="c"><p class="loading-message">Loading…</p></div>
     
   </section>
   
@@ -318,8 +466,23 @@
       
       <figure class="chart-card" data-vars="i_nonres" data-against="i">
         <figcaption class="chart-header">
-          <span class="chart-title">Nonresidential fixed investment and investment</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Nonresidential fixed investment and investment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="i_nonres-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="i_nonres-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -331,8 +494,23 @@
       
       <figure class="chart-card" data-vars="i_res" data-against="i">
         <figcaption class="chart-header">
-          <span class="chart-title">Residential fixed investment and investment</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Residential fixed investment and investment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="i_res-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="i_res-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -344,8 +522,17 @@
       
     </div>
     
-    <h3 class="subsection-title">Business-cycle statistics: investment and its components</h3>
-    <div class="shares" data-table="investment" data-aggregate="i"><p class="loading-message">Loading…</p></div>
+    <div class="table-heading">
+      <h3 class="subsection-title">Business-cycle statistics: investment and its components</h3>
+      <div class="segmented-field chart-control table-control" data-control="table-measure" data-group="investment">
+      <span class="visually-hidden" id="investment-table-measure-label">Measure for the table</span>
+      <div class="segmented" role="group" aria-labelledby="investment-table-measure-label">
+        <button type="button" data-value="total" aria-pressed="true">Total</button>
+        <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+      </div>
+    </div>
+    </div>
+    <div class="shares" data-table="investment" data-group="investment" data-aggregate="i"><p class="loading-message">Loading…</p></div>
     
   </section>
   
@@ -356,8 +543,23 @@
       
       <figure class="chart-card" data-vars="k" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Capital services and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Capital services and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="k-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="k-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -378,8 +580,23 @@
       
       <figure class="chart-card" data-vars="infl,infl_cpi" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Inflation and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Inflation and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            <div class="segmented-field chart-control" data-control="rate-basis">
+              <span class="visually-hidden" id="infl,infl_cpi-basis-label">Rate basis</span>
+              <div class="segmented" role="group" aria-labelledby="infl,infl_cpi-basis-label">
+                <button type="button" data-value="annual" aria-pressed="true">Annual (percentage points)</button>
+                <button type="button" data-value="quarterly" aria-pressed="false">Quarterly</button>
+              </div>
+            </div>
+            
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -400,21 +617,27 @@
       
       <figure class="chart-card" data-vars="u" data-against="y" data-extra="u_gap">
         <figcaption class="chart-header">
-          <span class="chart-title">Unemployment rate and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Unemployment rate and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
-        <p class="chart-note">The dashed line is the unemployment gap, the unemployment rate minus the Congressional Budget Office’s noncyclical rate (NROU). It does not depend on the filter. The tables report both the filtered unemployment rate and the gap.</p>
+        <p class="chart-note">The dotted line is the unemployment gap, the unemployment rate minus the Congressional Budget Office’s noncyclical rate (NROU). It does not depend on the filter. The tables report both the filtered unemployment rate and the gap.</p>
       </figure>
       
       <figure class="chart-card" data-vars="lfpr" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Labour force participation rate and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Labour force participation rate and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -426,8 +649,23 @@
       
       <figure class="chart-card" data-vars="h" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Hours worked and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Hours worked and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            
+            <div class="segmented-field chart-control" data-control="measure">
+              <span class="visually-hidden" id="h-measure-label">Measure</span>
+              <div class="segmented" role="group" aria-labelledby="h-measure-label">
+                <button type="button" data-value="total" aria-pressed="true">Total</button>
+                <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+              </div>
+            </div>
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -439,8 +677,11 @@
       
       <figure class="chart-card" data-vars="w" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Real hourly compensation and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Real hourly compensation and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -461,8 +702,11 @@
       
       <figure class="chart-card" data-vars="yh" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Labour productivity and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Labour productivity and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -472,17 +716,34 @@
         
       </figure>
       
-      <figure class="chart-card" data-vars="tfp,tfp_util" data-against="y">
+      <figure class="chart-card" data-vars="tfp" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Total factor productivity and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Total factor productivity and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            <div class="segmented-field chart-control" data-control="variant">
+              <span class="visually-hidden" id="tfp-variant-label">Series</span>
+              <div class="segmented" role="group" aria-labelledby="tfp-variant-label">
+                <button type="button" data-value="measured" data-set="tfp" aria-pressed="true">Measured</button>
+                <button type="button" data-value="adjusted" data-set="tfp_util" aria-pressed="false">Utilization-adjusted</button>
+                <button type="button" data-value="comparison" data-set="tfp,tfp_util" data-muted="true" aria-pressed="false">Comparison</button>
+                
+              </div>
+            </div>
+            
+            
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
-        <p class="chart-note">Measured TFP rises and falls with how intensively capital and labour are used; the utilization-adjusted series removes that effect (Fernald, 2014; Basu, Fernald and Kimball, 2006).</p>
+        <p class="chart-note">Measured TFP rises and falls with how intensively capital and labour are used; the utilization-adjusted series removes that effect (Fernald, 2014; Basu, Fernald and Kimball, 2006). In the comparison, output is shown in light grey for reference.</p>
       </figure>
       
     </div>
@@ -496,8 +757,23 @@
       
       <figure class="chart-card" data-vars="ff,tb" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Nominal interest rates and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Nominal interest rates and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            <div class="segmented-field chart-control" data-control="rate-basis">
+              <span class="visually-hidden" id="ff,tb-basis-label">Rate basis</span>
+              <div class="segmented" role="group" aria-labelledby="ff,tb-basis-label">
+                <button type="button" data-value="annual" aria-pressed="true">Annual (percentage points)</button>
+                <button type="button" data-value="quarterly" aria-pressed="false">Quarterly</button>
+              </div>
+            </div>
+            
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -509,8 +785,23 @@
       
       <figure class="chart-card" data-vars="rff,rtb" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Ex-post real interest rates and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Ex-post real interest rates and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+            
+            
+            <div class="segmented-field chart-control" data-control="rate-basis">
+              <span class="visually-hidden" id="rff,rtb-basis-label">Rate basis</span>
+              <div class="segmented" role="group" aria-labelledby="rff,rtb-basis-label">
+                <button type="button" data-value="annual" aria-pressed="true">Annual (percentage points)</button>
+                <button type="button" data-value="quarterly" aria-pressed="false">Quarterly</button>
+              </div>
+            </div>
+            
+            
+          </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -531,8 +822,11 @@
       
       <figure class="chart-card" data-vars="debt" data-against="y">
         <figcaption class="chart-header">
-          <span class="chart-title">Real corporate debt and output</span>
-          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          <div class="chart-heading">
+            <span class="chart-title">Real corporate debt and output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
@@ -549,20 +843,46 @@
 
   <section class="content-section reveal delay-180" aria-labelledby="summary-title">
     <h2 id="summary-title" class="section-title">Summary statistics</h2>
-    <p class="section-introduction">The main business-cycle statistics for all variables (without the components of consumption and investment), then their leads and lags relative to output, and their correlations with one another. All follow the filter and measure selected above.</p>
+    <div class="table-heading">
+      <p class="section-introduction">The main business-cycle statistics for all variables (without the components of consumption and investment), then their leads and lags relative to output, and their correlations with one another. All follow the filter selected above; the switches on the right set the measure for the three tables and the basis of inflation and interest rates in the first one.</p>
+      <div class="table-switches">
+      <div class="segmented-field chart-control table-control" data-control="table-basis" data-group="summary">
+      <span class="visually-hidden" id="summary-table-basis-label">Rate basis for the table</span>
+      <div class="segmented" role="group" aria-labelledby="summary-table-basis-label">
+        <button type="button" data-value="annual" aria-pressed="true">Annual (percentage points)</button>
+        <button type="button" data-value="quarterly" aria-pressed="false">Quarterly</button>
+      </div>
+    </div>
+      <div class="segmented-field chart-control table-control" data-control="table-measure" data-group="summary">
+      <span class="visually-hidden" id="summary-table-measure-label">Measure for the table</span>
+      <div class="segmented" role="group" aria-labelledby="summary-table-measure-label">
+        <button type="button" data-value="total" aria-pressed="true">Total</button>
+        <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+      </div>
+    </div>
+      </div>
+    </div>
     <h3 class="subsection-title">Volatility and co-movement</h3>
-    <div class="shares" data-table="summary"><p class="loading-message">Loading…</p></div>
+    <div class="shares" data-table="summary" data-group="summary"><p class="loading-message">Loading…</p></div>
     <h3 class="subsection-title">Leads and lags: cross-correlations with output</h3>
     <p class="section-introduction">Correlation between each variable k quarters ahead, x(t + k), and output today, y(t). A peak at negative k means the variable tends to move before output (it leads); at positive k, after output (it lags). The peak is the largest correlation in absolute value, highlighted in each row.</p>
-    <div class="shares" data-table="cross"><p class="loading-message">Loading…</p></div>
+    <div class="shares" data-table="cross" data-group="summary"><p class="loading-message">Loading…</p></div>
     <h3 class="subsection-title">Correlation matrix</h3>
     <p class="section-introduction">Contemporaneous correlations between the cyclical components of all variables. Blue cells are positive, orange cells negative; darker cells are stronger correlations.</p>
-    <div class="shares" data-table="matrix"><p class="loading-message">Loading…</p></div>
+    <div class="shares" data-table="matrix" data-group="summary"><p class="loading-message">Loading…</p></div>
   </section>
 
   <noscript>
     <p class="render-error">The charts and tables on this page need JavaScript.</p>
   </noscript>
+
+  <section class="content-section reveal delay-200" aria-labelledby="missing-title">
+    <h2 id="missing-title" class="section-title">Missing data and estimates</h2>
+    <div class="prose">
+      <p>The cycles on this page are computed from the series published on the <a class="text-link" href="/economics/main-indicators.html">Main Economic Indicators</a> page, after the same preparation: monthly series are averaged over complete quarters; real components of consumption and investment are built in chained 2017 dollars with BEA’s formula before 2007; per-capita measures divide by BEA’s population (hours by the population aged 16 and over).</p>
+      <p>When a source did not publish a value for a period (for example, the October 2025 household survey, not collected during the federal government shutdown), the value is estimated by interpolation between the published values on either side and flagged. Such estimates are rare and short, so their effect on cycles and statistics is negligible. The list of estimated values, with the method and reason for each, is in <a class="text-link" href="/economics/main-indicators.html#missing-title">Missing data and estimates</a> on the Main Economic Indicators page.</p>
+    </div>
+  </section>
 
   <section class="content-section reveal delay-220" aria-labelledby="methods-title">
     <h2 id="methods-title" class="section-title">Definitions and methods</h2>
@@ -621,6 +941,7 @@
           <li><strong>Correlation with output:</strong> the contemporaneous correlation of the two cycles. It measures co-movement: positive for procyclical variables, negative for countercyclical ones, close to zero for acyclical ones.</li>
           <li><strong>Cross-correlations:</strong> corr(x<sub>t+k</sub>, y<sub>t</sub>) for k = −4, …, +4 quarters, as in Kydland and Prescott (1990) and Stock and Watson (1999). The peak is the k with the largest correlation in absolute value.</li>
         </ul>
+        <p><strong>Annual or quarterly rates.</strong> Inflation and interest rates are annualised by default. The quarterly basis divides their cycles by four (inflation becomes 100 × Δln P, interest rates the rate earned over one quarter), the units of a quarterly model such as Smets and Wouters (2007). This changes their standard deviations and relative standard deviations by the same factor, but not their autocorrelations, correlations or leads and lags. See the Main Economic Indicators page for which basis to use in estimation.</p>
         <p>Each statistic uses all quarters from 1950 Q1 for which both series exist (for example, the federal funds rate starts in 1954 Q3 and Fernald’s data end one quarter earlier than the national accounts). The 2020–21 pandemic quarters are included; they are large and raise the standard deviations of most variables.</p>
       </div>
     </details>
@@ -667,6 +988,7 @@
           <li>Hamilton, J. D. (2018). “Why You Should Never Use the Hodrick-Prescott Filter.” <em>Review of Economics and Statistics</em> 100(5): 831–843.</li>
           <li>Hodrick, R. J. and E. C. Prescott (1997). “Postwar U.S. Business Cycles: An Empirical Investigation.” <em>Journal of Money, Credit and Banking</em> 29(1): 1–16.</li>
           <li>Kydland, F. E. and E. C. Prescott (1990). “Business Cycles: Real Facts and a Monetary Myth.” Federal Reserve Bank of Minneapolis <em>Quarterly Review</em> 14(2): 3–18.</li>
+          <li>Smets, F. and R. Wouters (2007). “Shocks and Frictions in US Business Cycles: A Bayesian DSGE Approach.” <em>American Economic Review</em> 97(3): 586–606.</li>
           <li>Stock, J. H. and M. W. Watson (1999). “Business Cycle Fluctuations in US Macroeconomic Time Series.” In J. B. Taylor and M. Woodford (eds.), <em>Handbook of Macroeconomics</em>, vol. 1A, Elsevier, 3–64.</li>
         </ul>
       </div>
