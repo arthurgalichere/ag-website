@@ -1,3 +1,4 @@
+/* Last edited: 2026-11-02 17:15 UTC (Claude, website chat) */
 body {
   background:
     radial-gradient(circle 840px at 50% -16%, #ffffff 0%, transparent 52%),
@@ -111,10 +112,17 @@ body {
 
 .about-container { padding: 0 2.5rem 3rem; }
 
+/* On desktop the text uses the same column as "In a few words",
+   leaving an empty band on the right (as under the portrait). */
 .about-wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr);
+  column-gap: 3rem;
   padding-top: 2.5rem;
   border-top: 1px solid var(--line-strong);
 }
+
+.about-text { grid-column: 1; }
 
 .about-text {
   display: grid;
@@ -169,6 +177,7 @@ body {
   }
 
   .about-container { padding: 0 1.5rem 2.5rem; }
+  .about-wrapper { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 680px) {

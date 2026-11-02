@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 02:23 UTC (Claude, website chat) */
+/* Last edited: 2026-11-02 17:15 UTC (Claude, website chat) */
 /* =========================================================
    site.css — the single source of the site-wide design.
 
@@ -276,6 +276,11 @@ summary:focus-visible {
   font-size: 1rem;
   line-height: 1.75;
   text-align: justify;
+}
+
+/* A lead written in Markdown can hold several paragraphs. */
+.lead > p + p {
+  margin-top: 0.9rem;
 }
 
 /* A block directly after the lead paragraph (cards, notes, callouts). */
