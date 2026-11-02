@@ -1,3 +1,4 @@
+/* Last edited: 2026-11-02 17:50 UTC (Claude, website chat) */
 (() => {
   'use strict';
 
@@ -44,12 +45,12 @@
     const metadata = [];
     if (journal) metadata.push(journal);
     if (date) metadata.push(date);
-    if (coauthors) metadata.push(`With ${coauthors}`);
     if (status) metadata.push(status);
 
     return `
       <article class="paper-item">
         <h3 class="paper-title">${titleHTML}</h3>
+        ${coauthors ? `<p class="paper-coauthors">With ${escapeHTML(coauthors)}</p>` : ''}
         ${metadata.length ? `<p class="paper-meta">${metadata.map(value => escapeHTML(value)).join(' · ')}</p>` : ''}
         ${abstract ? `<p class="paper-abstract">${escapeHTML(abstract, true)}</p>` : ''}
       </article>

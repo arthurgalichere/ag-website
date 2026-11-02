@@ -1,3 +1,4 @@
+/* Last edited: 2026-11-02 17:50 UTC (Claude, website chat) */
 /* =========================================================
    Research page only (/research.html).
    Sections, headings, year subsections and messages come
@@ -64,10 +65,16 @@
   font-weight: 425;
 }
 
+/* Coauthors use the same style as conference places. */
+.paper-coauthors,
 .presentation-institution {
   color: var(--accent);
   font-size: 0.96rem;
   font-weight: 500;
+}
+
+.paper-coauthors {
+  margin-bottom: 0.35rem;
 }
 
 .presentation-details {
