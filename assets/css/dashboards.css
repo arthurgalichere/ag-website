@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 22:43 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-02 18:26 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -279,6 +279,55 @@
 
 .page-nav-link.is-inactive i {
   color: var(--muted);
+}
+
+/* Business-cycle tables (Real Business Cycles page). */
+.bc-table thead th {
+  vertical-align: bottom;
+}
+
+.cross-table td.is-peak {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  font-weight: 700;
+}
+
+.cross-table td.peak-lag {
+  white-space: nowrap;
+  color: var(--ink-soft);
+}
+
+.unit-mark {
+  color: var(--muted);
+  font-weight: 400;
+  cursor: help;
+}
+
+.matrix-table {
+  border-collapse: collapse;
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.matrix-table th,
+.matrix-table td {
+  padding: 0.3rem 0.35rem;
+  border: 1px solid var(--line);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.matrix-table thead th,
+.matrix-table tbody th {
+  color: var(--accent-strong);
+  background: var(--paper-soft);
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+.matrix-table abbr {
+  text-decoration: none;
+  cursor: help;
 }
 
 .estimates-list {
