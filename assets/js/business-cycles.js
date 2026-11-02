@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 22:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-02 23:54 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -37,11 +37,13 @@
   /* Annualised rates: divided by 4 on the quarterly basis (inflation
      400 x dln P becomes 100 x dln P; interest rates per quarter). */
   const RATE_KEYS = new Set(['infl', 'infl_cpi', 'ff', 'tb', 'rff', 'rtb']);
+  /* Correlation matrix: variables shown by default (the reader adds others). */
+  const MATRIX_DEFAULT = ['y', 'c', 'i', 'h', 'w', 'yh', 'tfp', 'u', 'infl', 'ff'];
   const BENCHMARK_DASH = '9 4';
   /* Short labels for the correlation matrix. */
   const SYMBOLS = {
     y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', nx: 'NX/Y', k: 'K', h: 'H', w: 'w', yh: 'Y/H',
-    tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: 'u − u*', lfpr: 'LFPR', infl: 'π', infl_cpi: 'π CPI',
+    tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: '(u − u*)/u*', lfpr: 'LFPR', infl: 'π', infl_cpi: 'π CPI',
     ff: 'FF', tb: 'TB', rff: 'r FF', rtb: 'r TB', debt: 'Debt',
   };
 
@@ -55,6 +57,7 @@
   const state = {
     country: 'US', filter: 'hp', payload: null, charts: new Map(), visible: new Set(),
     measure: new Map(), tableMeasure: new Map(), basis: new Map(), tableBasis: new Map(),
+    matrixKeys: new Set(MATRIX_DEFAULT),
   };
   const cache = new Map();
 
@@ -130,9 +133,12 @@
     return measure === 'pc' && state.payload.cycles.hp[pc] ? pc : key;
   }
 
+  /* Output is labelled "Real GDP" on this page. */
+  const LABELS = { y: 'Real GDP' };
+
   function label(key, measure) {
     const v = state.payload.variables[key];
-    return v.label + (measure === 'pc' && v.per_capita ? ' per capita' : '');
+    return (LABELS[key] || v.label) + (measure === 'pc' && v.per_capita ? ' per capita' : '');
   }
 
   function values(filter, key, measure) {
@@ -176,14 +182,6 @@
         values: vals(name, key),
       }));
     } else {
-      if (against) {
-        series.push({
-          label: lab(against),
-          color: token(muted ? '--chart-benchmark-muted' : '--chart-benchmark'),
-          dash: BENCHMARK_DASH,
-          values: vals(state.filter, against),
-        });
-      }
       vars.forEach((key, i) => series.push({
         label: lab(key),
         color: token(vars.length === 1 ? '--chart-1' : MULTI[i % MULTI.length]),
@@ -192,9 +190,18 @@
       if (extra) {
         series.push({ label: lab(extra), color: token('--series-2'), dash: '1.5 3.5', values: values('hp', extra, measure) });
       }
+      /* The benchmark comes last in the legend. */
+      if (against) {
+        series.push({
+          label: lab(against),
+          color: token(muted ? '--chart-benchmark-muted' : '--chart-benchmark'),
+          dash: BENCHMARK_DASH,
+          values: vals(state.filter, against),
+        });
+      }
     }
 
-    const keys = comparison ? [vars[0]] : [against, ...vars, extra].filter(Boolean);
+    const keys = comparison ? [vars[0]] : [...vars, extra, against].filter(Boolean);
     const unitOf = key => (quarterly && RATE_KEYS.has(key) ? 'Percentage points per quarter (annual rate ÷ 4)' : payload.variables[key].units);
     const units = Array.from(new Set(keys.map(unitOf)));
     /* One unit, or the variables grouped by unit. */
@@ -286,7 +293,41 @@
       <thead>${head}</thead><tbody>${bodyRows}</tbody></table></div>`;
   }
 
-  function matrixTable(keys, matrix) {
+  /* Toggle buttons above the matrix: one per variable, then select all / none. */
+  function renderPicker() {
+    const target = body.querySelector('[data-role="matrix-picker"]');
+    if (!target || !state.payload) return;
+    const keys = state.payload.summary_keys;
+    target.innerHTML = keys.map(key => `<button type="button" class="picker-chip" data-key="${key}" aria-pressed="${state.matrixKeys.has(key)}" title="${S.escapeHTML(label(key, 'total'))}">${S.escapeHTML(SYMBOLS[key] || key)}</button>`).join('')
+      + '<span class="picker-actions"><button type="button" class="picker-action" data-action="all">Select all</button>'
+      + '<button type="button" class="picker-action" data-action="none">Select none</button>'
+      + '<button type="button" class="picker-action" data-action="default">Default</button></span>';
+  }
+
+  function onPicker(event) {
+    const button = event.target.closest('button');
+    if (!button) return;
+    const keys = state.payload.summary_keys;
+    if (button.dataset.key) {
+      const key = button.dataset.key;
+      if (state.matrixKeys.has(key)) state.matrixKeys.delete(key); else state.matrixKeys.add(key);
+    } else if (button.dataset.action === 'all') {
+      state.matrixKeys = new Set(keys);
+    } else if (button.dataset.action === 'none') {
+      state.matrixKeys = new Set();
+    } else if (button.dataset.action === 'default') {
+      state.matrixKeys = new Set(MATRIX_DEFAULT);
+    }
+    renderPicker();
+    renderTables();
+  }
+
+  function matrixTable(allKeys, fullMatrix) {
+    /* Keep the selected variables, in the order of the summary table. */
+    const index = allKeys.map((key, i) => [key, i]).filter(([key]) => state.matrixKeys.has(key));
+    if (!index.length) return '<p class="empty-message">Select at least one variable above.</p>';
+    const keys = index.map(([key]) => key);
+    const matrix = index.map(([, r]) => index.map(([, c]) => fullMatrix[r][c]));
     const pos = token('--chart-1');
     const neg = token('--series-1');
     const cell = v => {
@@ -359,6 +400,7 @@
       state.payload = await fetchCountry(state.country);
       el.pageStatus.hidden = true;
       updateDownloads();
+      renderPicker();
       renderTables();
       state.visible.clear();
       cards.forEach(card => {
@@ -376,6 +418,8 @@
     }
   }
 
+  const picker = body.querySelector('[data-role="matrix-picker"]');
+  if (picker) picker.addEventListener('click', onPicker);
   filterControl.select('hp', false);
   load();
 })();

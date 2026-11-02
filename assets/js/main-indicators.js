@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 22:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-02 23:28 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -180,6 +180,8 @@
         marks: flags.map((flag, j) => (flag ? j : -1)).filter(j => j >= 0),
       };
     });
+    /* Composition charts: the benchmark (the aggregate) comes last in the legend. */
+    if (benchmark) series.push(series.shift());
     const anyEstimate = series.some(item => item.marks.length);
 
     /* Trends, in each series' own units. One series: trends in their own
@@ -202,7 +204,7 @@
     } else if (trendable) {
       indicators.forEach((item, i) => trendKeys.forEach(key => series.push({
         label: single ? TRENDS[key].label : `${item.short_title}, ${TRENDS[key].label}`,
-        color: single ? token(TRENDS[key].color) : dataSeries[i].color,
+        color: single ? token(TRENDS[key].color) : dataSeries.find(d => d.label === item.short_title).color,
         dash: TRENDS[key].dash,
         weight: single ? 1 : 0.85,
         opacity: single ? 1 : 0.6,
