@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-26",
+  "last_updated": "2026-11-02",
   "sections": [
     {
       "title": "Employment",
@@ -686,6 +686,16 @@
       "date": "",
       "coauthors": "",
       "abstract": "This paper studies monetary policy in a New Keynesian model with asset price bubbles. It shows that monetary policy targeting asset prices can partially deflate an asset price bubble and affects the way the bubble is financed.",
+      "url": "",
+      "status": ""
+    },
+    {
+      "title": "Corporate Leverage, Market Concentration, and Monetary Policy\nTransmission",
+      "category": "Work in Progress",
+      "journal": "",
+      "date": "",
+      "coauthors": "Vasileios Karaferis, Tatiana Kirsanova and Stephanos Papadamou",
+      "abstract": "This paper studies how corporate leverage and product-market concentration shape the transmission of monetary policy. We build a New Keynesian model with search frictions in the labour market, a small number of firms competing in prices within each sector, and a borrowing constraint on working capital. Because the cost of servicing existing debt enters wage bargaining, changes in interest rates affect wages and hiring directly. This debt channel can reverse how firms adjust employment after a financial shock, and it amplifies the employment response to monetary policy when debt reprices quickly and workers have strong bargaining power. Product-market concentration matters even more: with fewer firms per sector, the Phillips curve flattens and monetary policy shifts adjustment away from inflation and towards employment.",
       "url": "",
       "status": ""
     }
