@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-03 00:04 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-03 01:02 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -38,13 +38,13 @@
      400 x dln P becomes 100 x dln P; interest rates per quarter). */
   const RATE_KEYS = new Set(['infl', 'infl_cpi', 'ff', 'tb', 'rff', 'rtb']);
   /* Correlation matrix: variables shown by default (the reader adds others). */
-  const MATRIX_DEFAULT = ['y', 'c', 'i', 'h', 'w', 'yh', 'tfp', 'u', 'infl', 'ff'];
+  const MATRIX_DEFAULT = ['y', 'c', 'i', 'h', 'w', 'yh', 'tfp', 'u_gap', 'infl', 'rff'];
   const BENCHMARK_DASH = '9 4';
   /* Short labels for the correlation matrix. */
   const SYMBOLS = {
-    y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', nx: 'NX/Y', k: 'K', h: 'H', w: 'w', yh: 'Y/H',
-    tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: 'ln(u/u*)', lfpr: 'LFPR', infl: 'π', infl_cpi: 'π CPI',
-    ff: 'FF', tb: 'TB', rff: 'r FF', rtb: 'r TB', debt: 'Debt',
+    y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', k: 'K', h: 'h', w: 'w', yh: 'Y/h',
+    tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: 'û*', lfpr: 'PR', infl: 'π', infl_cpi: 'π CPI',
+    ff: 'FF', tb: 'TB', rff: 'RFF', rtb: 'RTB', debt: 'Debt',
   };
 
   const el = {
@@ -163,6 +163,7 @@
     const against = card.dataset.against || '';
     const extra = card.dataset.extra || '';
     const muted = card.dataset.muted === 'true';
+    const extraFirst = card.dataset.extraFirst === 'true';
     const comparison = state.filter === 'comparison';
     const lab = key => label(key, measure);
     const quarterly = state.basis.get(card) === 'quarterly';
@@ -182,12 +183,17 @@
         values: vals(name, key),
       }));
     } else {
+      /* extra-first cards (unemployment): the unfiltered series leads, in
+         the site blue; the filtered series follows in green. */
+      if (extra && extraFirst) {
+        series.push({ label: lab(extra), color: token('--chart-1'), values: values('hp', extra, measure) });
+      }
       vars.forEach((key, i) => series.push({
         label: lab(key),
-        color: token(vars.length === 1 ? '--chart-1' : MULTI[i % MULTI.length]),
+        color: token(extraFirst ? '--series-2' : vars.length === 1 ? '--chart-1' : MULTI[i % MULTI.length]),
         values: vals(state.filter, key),
       }));
-      if (extra) {
+      if (extra && !extraFirst) {
         series.push({ label: lab(extra), color: token('--series-2'), dash: '1.5 3.5', values: values('hp', extra, measure) });
       }
       /* The benchmark comes last in the legend. */
@@ -201,7 +207,7 @@
       }
     }
 
-    const keys = comparison ? [vars[0]] : [...vars, extra, against].filter(Boolean);
+    const keys = comparison ? [vars[0]] : (extraFirst ? [extra, ...vars, against] : [...vars, extra, against]).filter(Boolean);
     const unitOf = key => (quarterly && RATE_KEYS.has(key) ? 'Percentage points per quarter (annual rate ÷ 4)' : payload.variables[key].units);
     const units = Array.from(new Set(keys.map(unitOf)));
     /* One unit, or the variables grouped by unit. */
@@ -256,11 +262,11 @@
   function statsTable(rows, aggregate) {
     const aggLabel = aggregate ? tlabel(aggregate).toLowerCase() : '';
     const head = `<tr><th scope="col" class="component-head">Variable</th>
-      <th scope="col">Standard deviation</th>
+      <th scope="col">Standard<br>deviation</th>
       <th scope="col">Relative standard deviation<br><span class="unit-label">(to output)</span></th>
       ${aggregate ? `<th scope="col">Relative standard deviation<br><span class="unit-label">(to ${S.escapeHTML(aggLabel)})</span></th>` : ''}
-      <th scope="col">First-order autocorrelation</th>
-      <th scope="col">Correlation with output</th>
+      <th scope="col">First-order<br>autocorrelation</th>
+      <th scope="col">Correlation<br>with output</th>
       ${aggregate ? `<th scope="col">Correlation with ${S.escapeHTML(aggLabel)}</th>` : ''}</tr>`;
     const bodyRows = rows.map(row => `<tr>
       <th scope="row">${S.escapeHTML(tlabel(row.key))}${unitMark(row.key)}</th>

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 17:15 UTC (Claude, website chat) */
+/* Last edited: 2026-11-03 01:10 UTC (Claude, website chat) */
 /* =========================================================
    site.css — the single source of the site-wide design.
 
@@ -444,6 +444,26 @@ summary:focus-visible {
 
 /* 5b. Text blocks, panels and callouts ==================== */
 
+/* Site-wide rule: running text is always justified, with automatic
+   hyphenation (the page language is en-GB) to avoid wide gaps.
+   Page-family CSS should not override this for paragraphs. */
+.lead,
+.section-introduction,
+.prose,
+.prose li,
+.panel p,
+.panel li,
+.callout,
+.callout > :not(i),
+.ribbon-content p,
+.ribbon-content li,
+.action-description,
+.tile,
+.tile-description {
+  text-align: justify;
+  hyphens: auto;
+}
+
 /* Running text: paragraphs and lists with consistent rhythm. */
 .prose {
   color: var(--ink-soft);
@@ -461,7 +481,6 @@ summary:focus-visible {
   display: grid;
   gap: 0.45rem;
   padding-left: 1.4rem;
-  text-align: left;
 }
 
 .prose li::marker {

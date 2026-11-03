@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 17:50 UTC (Claude, website chat) */
+/* Last edited: 2026-11-03 01:12 UTC (Claude, website chat) */
 /* =========================================================
    Research page only (/research.html).
    Sections, headings, year subsections and messages come
@@ -75,6 +75,8 @@
 
 .paper-coauthors {
   margin-bottom: 0.35rem;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .presentation-details {
