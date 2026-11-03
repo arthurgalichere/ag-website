@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 23:54 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-03 00:04 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -43,7 +43,7 @@
   /* Short labels for the correlation matrix. */
   const SYMBOLS = {
     y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', nx: 'NX/Y', k: 'K', h: 'H', w: 'w', yh: 'Y/H',
-    tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: '(u − u*)/u*', lfpr: 'LFPR', infl: 'π', infl_cpi: 'π CPI',
+    tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: 'ln(u/u*)', lfpr: 'LFPR', infl: 'π', infl_cpi: 'π CPI',
     ff: 'FF', tb: 'TB', rff: 'r FF', rtb: 'r TB', debt: 'Debt',
   };
 

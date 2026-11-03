@@ -628,7 +628,7 @@
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
-        <p class="chart-note">The solid line is the cyclical component of the unemployment rate, filtered in logs: its percent deviation from the trend estimated by the selected filter (a value of 10 means unemployment is about 10 percent above its trend, for example 5.5 rather than 5 percent). The dotted line is the unemployment gap, 100 × (u − u*)/u*: the distance of unemployment from the Congressional Budget Office’s noncyclical rate (NROU), in percent of that rate; it does not depend on the filter. Both rise when output falls. See “Unemployment” under Definitions and methods.</p>
+        <p class="chart-note">The solid line is the cyclical component of the unemployment rate, filtered in logs: its percent deviation from the trend estimated by the selected filter (a value of 10 means unemployment is about 10 percent above its trend, for example 5.5 rather than 5 percent). The dotted line is the unemployment gap, 100 × ln(u/u*): the percent deviation of unemployment from the Congressional Budget Office’s noncyclical rate (NROU), the same measure as the solid line with the NROU in place of a statistical trend; it does not depend on the filter. Both rise when output falls. See “Unemployment” under Definitions and methods.</p>
       </figure>
       
       <figure class="chart-card" data-vars="lfpr" data-against="y">
@@ -922,7 +922,7 @@
         <p><strong>Shimer (2005)</strong> measures unemployment, vacancies and their ratio (labour-market tightness) as log deviations from a very smooth HP trend (λ = 10<sup>5</sup>) in quarterly US data from 1951. The standard deviation of unemployment is about 0.19 (19 percent of trend), roughly ten times that of labour productivity, and the vacancy–unemployment ratio is about twenty times as volatile as productivity. The standard search-and-matching model (Mortensen and Pissarides, 1994), calibrated in the usual way, generates only a small fraction of these fluctuations from productivity shocks: the “unemployment volatility puzzle”.</p>
         <p><strong>Hagedorn and Manovskii (2008)</strong> use the standard quarterly smoothing parameter, λ = 1600, which assigns more of the slow movement in unemployment to the trend; the standard deviation of log unemployment is then about 0.125 (12.5 percent). They argue that when the value of non-market activity and workers’ bargaining power are calibrated to the cost of posting vacancies and to the cyclicality of wages, the model is consistent with the data. Whether that calibration is plausible remains debated.</p>
         <p>The HP cycle on this page uses λ = 1600, as for every other variable, so it is comparable to Hagedorn and Manovskii; the Hamilton and Christiano–Fitzgerald filters are checks. The sample is longer than in both papers and includes the Great Recession and the 2020 pandemic, when unemployment rose very sharply, which raises the standard deviations.</p>
-        <p>The unemployment gap, 100 × (u − u*)/u*, measures the distance from the Congressional Budget Office’s noncyclical rate (NROU) on the same relative scale, without a statistical filter.</p>
+        <p><strong>Unemployment gap.</strong> The gap is 100 × (ln u − ln u*), where u* is the Congressional Budget Office’s noncyclical rate of unemployment (NROU). It is the same transformation as the cycle, with the NROU in place of a statistical trend, so the two lines are in the same units and can be compared directly; it does not depend on a filter. For small gaps it is close to the relative gap, 100 × (u − u*)/u*; the two differ for large gaps, as for any log deviation (for example, unemployment twice the natural rate gives about 69 rather than 100). The Phillips-curve and monetary-policy literature usually states the gap in percentage points, u − u* (Galí, 2011; Crump, Eusepi, Giannoni and Şahin, 2019); the log version used here expresses the same gap relative to the natural rate, as the labour-market literature does for the cycle.</p>
       </div>
     </details>
 
@@ -954,7 +954,7 @@
         <ul>
           <li><strong>Per capita:</strong> output, its components and capital services are divided by the BEA mid-period population; hours by the civilian noninstitutional population aged 16 and over. Rates, ratios, wages, productivity, TFP and debt are the same under both measures.</li>
           <li><strong>Net exports:</strong> real net exports as a percentage of real GDP, since net exports can be negative.</li>
-          <li><strong>Unemployment gap:</strong> 100 × (u − u*)/u*, where u* is the Congressional Budget Office’s noncyclical rate of unemployment (NROU): the distance of the unemployment rate from that rate, in percent of it. It is already a deviation, so it is not filtered and is the same under every filter.</li>
+          <li><strong>Unemployment gap:</strong> 100 × ln(u/u*), where u* is the Congressional Budget Office’s noncyclical rate of unemployment (NROU): the percent deviation of the unemployment rate from that rate. It is already a deviation, so it is not filtered and is the same under every filter.</li>
           <li><strong>Capital and TFP:</strong> John Fernald’s capital input and TFP series for the business sector (Fernald, 2014).</li>
           <li><strong>Real interest rates:</strong> ex-post rates: the nominal rate minus GDP-deflator inflation over the following quarter.</li>
         </ul>
@@ -982,7 +982,9 @@
           <li>Basu, S., J. G. Fernald and M. S. Kimball (2006). “Are Technology Improvements Contractionary?” <em>American Economic Review</em> 96(5): 1418–1448.</li>
           <li>Christiano, L. J. and T. J. Fitzgerald (2003). “The Band Pass Filter.” <em>International Economic Review</em> 44(2): 435–465.</li>
           <li>Cooley, T. F. and E. C. Prescott (1995). “Economic Growth and Business Cycles.” In T. F. Cooley (ed.), <em>Frontiers of Business Cycle Research</em>, Princeton University Press, 1–38.</li>
+          <li>Crump, R. K., S. Eusepi, M. Giannoni and A. Şahin (2019). “A Unified Approach to Measuring u*.” <em>Brookings Papers on Economic Activity</em> 50(1) (Spring 2019).</li>
           <li>Fernald, J. G. (2014). “A Quarterly, Utilization-Adjusted Series on Total Factor Productivity.” Federal Reserve Bank of San Francisco Working Paper 2012-19 (updated March 2014).</li>
+          <li>Galí, J. (2011). “The Return of the Wage Phillips Curve.” <em>Journal of the European Economic Association</em> 9(3): 436–461.</li>
           <li>Hagedorn, M. and I. Manovskii (2008). “The Cyclical Behavior of Equilibrium Unemployment and Vacancies Revisited.” <em>American Economic Review</em> 98(4): 1692–1706.</li>
           <li>Hamilton, J. D. (2018). “Why You Should Never Use the Hodrick-Prescott Filter.” <em>Review of Economics and Statistics</em> 100(5): 831–843.</li>
           <li>Hodrick, R. J. and E. C. Prescott (1997). “Postwar U.S. Business Cycles: An Empirical Investigation.” <em>Journal of Money, Credit and Banking</em> 29(1): 1–16.</li>
