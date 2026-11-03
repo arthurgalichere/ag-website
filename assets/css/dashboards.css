@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-03 12:20 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-03 14:33 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -682,7 +682,7 @@
   display: block;
   width: 100%;
   height: auto;
-  max-height: 5rem;
+  max-height: 6rem;
   overflow: visible;
 }
 .concept-glyph path,
@@ -726,6 +726,7 @@
 .key-output { border-top: 2px dashed var(--chart-benchmark); }
 .key-variable { margin-left: 0.9rem; }
 .concept-item { min-width: 0; }
+.cycle-concepts[aria-label="Volatility"] .concept-row { width: 100%; max-width: 46rem; margin: 0 auto; }
 .concept-item figcaption { text-align: center; }
 .lead { hyphens: auto; }
 @media (max-width: 720px) {

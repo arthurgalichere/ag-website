@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-03 01:02 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-03 14:39 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -428,4 +428,27 @@
   if (picker) picker.addEventListener('click', onPicker);
   filterControl.select('hp', false);
   load();
+
+  /* A link to a ribbon (e.g. #missing-data) opens it before scrolling. */
+  /* Charts render as they come into view and lengthen the page, so jump
+     (no smooth scroll) and re-align a few times until the layout settles. */
+  const settleOn = (target, tries) => {
+    target.scrollIntoView({ block: 'start', behavior: 'instant' });
+    if (tries > 0) setTimeout(() => settleOn(target, tries - 1), 150);
+  };
+  const openRibbon = id => {
+    const target = id && document.getElementById(id);
+    if (target && target.tagName === 'DETAILS') target.open = true;
+  };
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    const id = link && link.getAttribute('href').slice(1);
+    const target = id && document.getElementById(id);
+    if (!target || target.tagName !== 'DETAILS') return;
+    event.preventDefault();
+    target.open = true;
+    settleOn(target, 12);
+    history.replaceState(null, '', `#${id}`);
+  });
+  openRibbon(window.location.hash.slice(1));
 })();
