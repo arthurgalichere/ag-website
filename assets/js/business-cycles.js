@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-03 14:39 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -96,6 +96,14 @@
       }).select('total', false);
     }
   });
+  const krToggle = body.querySelector('[data-control="king-rebelo"]');
+  if (krToggle) {
+    krToggle.addEventListener('click', () => {
+      showKR = !showKR;
+      krToggle.setAttribute('aria-pressed', String(showKR));
+      renderTables();
+    });
+  }
   body.querySelectorAll('[data-control="table-basis"]').forEach(control => {
     const group = control.dataset.group;
     state.tableBasis.set(group, 'annual');
@@ -202,6 +210,7 @@
           label: lab(against),
           color: token(muted ? '--chart-benchmark-muted' : '--chart-benchmark'),
           dash: BENCHMARK_DASH,
+          under: true,
           values: vals(state.filter, against),
         });
       }
@@ -259,7 +268,17 @@
   const tlabel = key => label(key, tableMeasureNow);
   const unitMark = key => (state.payload.variables[key].units === 'Percentage points' ? ' <span class="unit-mark" title="Standard deviation in percentage points">†</span>' : '');
 
-  function statsTable(rows, aggregate) {
+  /* King and Rebelo (1999, Table 1): US 1947Q1-1996Q4, HP filter, per capita.
+     [standard deviation, relative standard deviation, autocorrelation, correlation with output] */
+  const KING_REBELO = {
+    y: [1.81, 1.00, 0.84, 1.00], c: [1.35, 0.74, 0.80, 0.88], i: [5.30, 2.93, 0.87, 0.80],
+    h: [1.79, 0.99, 0.88, 0.88], yh: [1.02, 0.56, 0.74, 0.55], w: [0.68, 0.38, 0.66, 0.12],
+    rtb: [0.30, 0.16, 0.60, -0.35], tfp: [0.98, 0.54, 0.74, 0.78],
+  };
+  const KR_NOTE = 'King and Rebelo (1999, Table 1): United States, 1947 Q1–1996 Q4, HP filter (λ = 1600), per capita, in logs except the real interest rate, as published. Their hours (N) are total hours per capita, their real interest rate is an expected (ex-ante) Treasury-bill rate built from forecast inflation, and their productivity (A) is the Solow residual; compare with the HP filter and the per-capita measure';
+  let showKR = false;
+
+  function statsTable(rows, aggregate, withKR = false) {
     const aggLabel = aggregate ? tlabel(aggregate).toLowerCase() : '';
     const head = `<tr><th scope="col" class="component-head">Variable</th>
       <th scope="col">Standard<br>deviation</th>
@@ -273,7 +292,8 @@
       <td>${fmt(scaled(row.key, row.sd))}</td><td>${fmt(scaled(row.key, row.rel_sd))}</td>
       ${aggregate ? `<td>${fmt(row.rel_sd_agg)}</td>` : ''}
       <td>${fmt(row.ar1)}</td><td>${fmt(row.corr_y)}</td>
-      ${aggregate ? `<td>${fmt(row.corr_agg)}</td>` : ''}</tr>`).join('');
+      ${aggregate ? `<td>${fmt(row.corr_agg)}</td>` : ''}</tr>${withKR && KING_REBELO[row.key] ? `<tr class="kr-row">
+      <th scope="row">King and Rebelo (1999)</th>${KING_REBELO[row.key].map(v => `<td>${fmt(v)}</td>`).join('')}</tr>` : ''}`).join('');
     return `<div class="table-scroll"><table class="data-table shares-table bc-table">
       <caption class="visually-hidden">Business-cycle statistics</caption>
       <thead>${head}</thead><tbody>${bodyRows}</tbody></table></div>`;
@@ -362,7 +382,7 @@
       tableQuarterly = state.tableBasis.get(target.dataset.group) === 'quarterly';
       const tables = payload.tables[tableMeasureNow][tableFilter()];
       let html = '';
-      if (which === 'summary') html = statsTable(tables.summary, null);
+      if (which === 'summary') html = statsTable(tables.summary, null, showKR) + (showKR ? `<p class="table-note">${S.escapeHTML(KR_NOTE)}.</p>` : '');
       else if (which === 'cross') html = crossTable(tables.cross, payload.methods.lags);
       else if (which === 'matrix') html = matrixTable(payload.summary_keys, tables.matrix);
       else if (tables.sections[which]) {

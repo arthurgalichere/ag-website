@@ -1,4 +1,4 @@
-/* Last edited: 2026-10-31 20:25 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -236,7 +236,9 @@ window.AGDashboards = (() => {
 
       /* Series: missing values break the line instead of being joined. */
       const lines = svg('g', { class: 'chart-lines', fill: 'none' }, root);
-      options.series.forEach(item => {
+      /* Series flagged "under" (benchmarks) are drawn first, below the others,
+         while keeping their place in the legend and tooltip. */
+      [...options.series].sort((a, b) => (b.under ? 1 : 0) - (a.under ? 1 : 0)).forEach(item => {
         let path = '';
         let pen = false;
         item.values.forEach((value, i) => {

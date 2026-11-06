@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-03 14:33 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -21,7 +21,7 @@
   --series-4: #0072b2;
   /* Benchmark series on charts with several series (red, dashed), and its
      muted version when it is only context (light grey). */
-  --chart-benchmark: #f44336;
+  --chart-benchmark: #e07000;
   --chart-benchmark-muted: #b9bec4;
   --chart-ink: var(--ink-soft);
   --chart-grid: rgba(28, 28, 30, 0.08);
@@ -406,6 +406,7 @@
 }
 
 .picker-chip,
+.kr-toggle,
 .picker-action {
   padding: 0.3rem 0.6rem;
   color: var(--ink-soft);
@@ -419,12 +420,14 @@
 }
 
 .picker-chip:hover,
+.kr-toggle:hover,
 .picker-action:hover {
   color: var(--accent-strong);
   background: var(--accent-soft);
 }
 
-.picker-chip[aria-pressed="true"] {
+.picker-chip[aria-pressed="true"],
+.kr-toggle[aria-pressed="true"] {
   color: var(--on-accent);
   background: var(--accent);
   border-color: var(--accent);
@@ -743,3 +746,19 @@
   }
   .concept-item figcaption { margin-top: 0; text-align: left; }
 }
+
+/* King and Rebelo (1999) comparison rows in the summary table. */
+.table-toggle-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 0.5rem;
+}
+.bc-table tr.kr-row th,
+.bc-table tr.kr-row td {
+  color: var(--ink-soft);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.85em;
+  padding-top: 0.15rem;
+}
+.bc-table tr.kr-row th { padding-left: 1.25rem; }

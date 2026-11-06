@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-02 23:28 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -176,6 +176,7 @@
         label: item.short_title,
         color: token(colour),
         dash: isBenchmark ? BENCHMARK_DASH : null,
+        under: isBenchmark,
         values: indexMode ? rebase(dates, raw) : raw,
         marks: flags.map((flag, j) => (flag ? j : -1)).filter(j => j >= 0),
       };
