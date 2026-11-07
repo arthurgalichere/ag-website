@@ -98,7 +98,7 @@
   <header class="reveal delay-80">
     <p class="eyebrow">Economics · Model</p>
     <h1 class="page-title">Extracting Technology Shocks</h1>
-    <p class="lead">A Real Business Cycle model needs two numbers to describe technology: how long a deviation from its long-run path lasts (persistence, ρ) and how large the surprises are (the standard deviation of the shock, σ). This page measures them step by step from US data, following King and Rebelo (1999, section 4.1).</p>
+    <p class="lead">A Real Business Cycle model needs two numbers to describe technology: how long a deviation from its long-run path lasts (persistence, \(\rho\)) and how large the surprises are (the standard deviation of the shock, \(\sigma\)). This page measures them step by step from US data, following King and Rebelo (1999, section 4.1).</p>
   </header>
 
   <div class="dashboard-controls reveal delay-120">
@@ -122,7 +122,7 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step1-title">
     <h2 id="step1-title" class="section-title"><span class="step-number">Step 1</span> Start from measured productivity</h2>
-    <p class="section-introduction">Total factor productivity (TFP) is the part of output growth that is not explained by the growth of capital and labour, each weighted by its share of income: the Solow (1957) residual. John Fernald publishes it each quarter for the US business sector as a growth rate, g<sub>t</sub>, in percent at an annual rate (400 times the change in the logarithm). Adding up these growth rates gives the level of TFP, shown here as an index equal to 100 on average in 2017.</p>
+    <p class="section-introduction">Total factor productivity (TFP) is the part of output growth that is not explained by the growth of capital and labour, each weighted by its share of income: the Solow (1957) residual. John Fernald publishes it each quarter for the US business sector as a growth rate, \(g_t\), in percent at an annual rate (400 times the change in the logarithm). Adding up these growth rates gives the level of TFP, shown here as an index equal to 100 on average in 2017.</p>
     <p class="section-introduction">TFP rises over time, but not at a steady pace: it grows quickly in some periods and stalls or falls in others.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="1">
@@ -142,8 +142,12 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step2-title">
     <h2 id="step2-title" class="section-title"><span class="step-number">Step 2</span> Take logarithms and fit a linear trend</h2>
-    <p class="section-introduction">The logarithm of TFP is the sum of past growth rates: a<sub>t</sub> = a<sub>t−1</sub> + g<sub>t</sub>/400. Working in logarithms turns proportional changes into differences, and a constant growth rate into a straight line; the chart shows 100 × ln TFP, so a change of 1 is a change of about 1 percent.</p>
-    <p class="section-introduction">A straight line is fitted by ordinary least squares, a<sub>t</sub> = c + γ t + u<sub>t</sub>. The slope γ is trend growth per quarter (4γ per year). The line uses the full history of the series, from 1947.</p>
+    <p class="section-introduction">The logarithm of TFP is the sum of past growth rates,</p>
+    <div class="math-display">\[ a_t = a_{t-1} + \frac{g_t}{400}, \]</div>
+    <p class="section-introduction">starting from \(a_0 = 0\). Working in logarithms turns proportional changes into differences, and a constant growth rate into a straight line; the chart shows \(100 \times a_t\), so a change of 1 is a change of about 1 percent.</p>
+    <p class="section-introduction">A straight line is fitted by ordinary least squares,</p>
+    <div class="math-display">\[ a_t = c + \gamma\, t + u_t . \]</div>
+    <p class="section-introduction">The slope \(\gamma\) is trend growth per quarter (\(4\gamma\) per year). The line uses the full history of the series, from 1947.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="2">
       <figcaption class="chart-header">
@@ -162,7 +166,9 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step3-title">
     <h2 id="step3-title" class="section-title"><span class="step-number">Step 3</span> Keep the deviation from trend</h2>
-    <p class="section-introduction">The stochastic component, u<sub>t</sub> = a<sub>t</sub> − (c + γ t), is how far technology is above (u<sub>t</sub> &gt; 0) or below (u<sub>t</sub> &lt; 0) its trend, in percent. It wanders slowly: once technology is above trend, it tends to stay above trend for many quarters.</p>
+    <p class="section-introduction">The stochastic component,</p>
+    <div class="math-display">\[ u_t = a_t - (c + \gamma\, t), \]</div>
+    <p class="section-introduction">is how far technology is above (\(u_t &gt; 0\)) or below (\(u_t &lt; 0\)) its trend, in percent. It wanders slowly: once technology is above trend, it tends to stay above trend for many quarters.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="3">
       <figcaption class="chart-header">
@@ -181,8 +187,10 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step4-title">
     <h2 id="step4-title" class="section-title"><span class="step-number">Step 4</span> Measure persistence</h2>
-    <p class="section-introduction">Persistence is measured by regressing u<sub>t</sub> on its value one quarter earlier, without a constant: u<sub>t</sub> = ρ u<sub>t−1</sub> + ε<sub>t</sub>. Each point in the chart is one quarter, with last quarter’s deviation on the horizontal axis and this quarter’s on the vertical axis; the line through the origin has slope ρ = Σ u<sub>t−1</sub>u<sub>t</sub> / Σ u<sub>t−1</sub><sup>2</sup>.</p>
-    <p class="section-introduction">A slope close to 1 means that a deviation from trend dies out slowly. After k quarters, a fraction ρ<sup>k</sup> of it remains, so half of it is gone after ln 0.5 / ln ρ quarters.</p>
+    <p class="section-introduction">Persistence is measured by regressing \(u_t\) on its value one quarter earlier, without a constant:</p>
+    <div class="math-display">\[ u_t = \rho\, u_{t-1} + \varepsilon_t, \qquad \hat{\rho} = \frac{\sum_t u_{t-1}\, u_t}{\sum_t u_{t-1}^2} . \]</div>
+    <p class="section-introduction">Each point in the chart is one quarter, with last quarter’s deviation on the horizontal axis and this quarter’s on the vertical axis; the line through the origin has slope \(\hat{\rho}\).</p>
+    <p class="section-introduction">A slope close to 1 means that a deviation from trend dies out slowly. After \(k\) quarters, a fraction \(\rho^k\) of it remains, so half of it is gone after \(\ln 0.5 / \ln \rho\) quarters.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="4">
       <figcaption class="chart-header">
@@ -201,7 +209,9 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step5-title">
     <h2 id="step5-title" class="section-title"><span class="step-number">Step 5</span> Recover the technology shocks</h2>
-    <p class="section-introduction">The technology shock is the part of this quarter’s deviation that could not be predicted from last quarter’s: ε<sub>t</sub> = u<sub>t</sub> − ρ u<sub>t−1</sub>, the vertical distance between each point in step 4 and the line. Its standard deviation, σ, measures the typical size of a shock.</p>
+    <p class="section-introduction">The technology shock is the part of this quarter’s deviation that could not be predicted from last quarter’s,</p>
+    <div class="math-display">\[ \varepsilon_t = u_t - \hat{\rho}\, u_{t-1}, \]</div>
+    <p class="section-introduction">the vertical distance between each point in step 4 and the line. Its standard deviation, \(\sigma\), measures the typical size of a shock.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="5">
       <figcaption class="chart-header">
@@ -220,7 +230,9 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step6-title">
     <h2 id="step6-title" class="section-title"><span class="step-number">Step 6</span> Feed the model</h2>
-    <p class="section-introduction">The model’s technology follows the same process, log A<sub>t+1</sub> = ρ log A<sub>t</sub> + ε<sub>t+1</sub>, with ρ from step 4 and shocks of standard deviation σ from step 5. Simulating the model with the measured shocks ε<sub>t</sub> gives model paths for output, consumption, investment and hours that can be compared with the data. King and Rebelo (1999), with data for 1947–1996, find ρ = 0.979 and σ = 0.72 percent.</p>
+    <p class="section-introduction">The model’s technology follows the same process,</p>
+    <div class="math-display">\[ \ln A_{t+1} = \rho \ln A_t + \varepsilon_{t+1}, \qquad \varepsilon_{t+1} \sim (0, \sigma^2), \]</div>
+    <p class="section-introduction">with \(\rho\) from step 4 and \(\sigma\) from step 5. Simulating the model with the measured shocks \(\varepsilon_t\) gives model paths for output, consumption, investment and hours that can be compared with the data. King and Rebelo (1999), with data for 1947–1996, find \(\rho = 0.979\) and \(\sigma = 0.72\) percent.</p>
     <div class="shares" data-role="shock-table"></div>
     <p class="table-note" data-role="model-process"></p>
   </section>
@@ -242,7 +254,9 @@
         <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
       </summary>
       <div class="ribbon-content">
-        <p>The steps above treat technology as Hicks-neutral: it multiplies the whole production function, Y = A K<sup>α</sup> N<sup>1−α</sup>, as in King and Rebelo, so A is TFP itself. If technology instead multiplies labour (Harrod-neutral or labour-augmenting, Y = K<sup>α</sup>(ZN)<sup>1−α</sup>), then A = Z<sup>1−α</sup>, and the growth of Z is the growth of TFP divided by labour’s share of income, 1 − α. The page does this quarter by quarter with Fernald’s capital share α, then applies steps 2 to 5: the shocks are about one and a half times larger and as persistent. The two versions describe the same data; the one to use is the one that matches where technology enters the model’s production function.</p>
+        <p>The steps above treat technology as Hicks-neutral: it multiplies the whole production function, \(Y = A K^{\alpha} N^{1-\alpha}\), as in King and Rebelo, so \(A\) is TFP itself. If technology instead multiplies labour (Harrod-neutral or labour-augmenting, \(Y = K^{\alpha}(ZN)^{1-\alpha}\)), then \(A = Z^{1-\alpha}\), and</p>
+        <div class="math-display">\[ \Delta \ln Z_t = \frac{\Delta \ln A_t}{1-\alpha_t} , \]</div>
+        <p>the growth of TFP divided by labour’s share of income. The page does this quarter by quarter with Fernald’s capital share \(\alpha_t\), then applies steps 2 to 5: the shocks are about one and a half times larger and as persistent. The two versions describe the same data; the one to use is the one that matches where technology enters the model’s production function.</p>
       </div>
     </details>
     <details class="ribbon">
@@ -311,6 +325,8 @@
   </main>
 
   <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
   
   
   <script src="/assets/js/tfp-shocks.js" defer></script>

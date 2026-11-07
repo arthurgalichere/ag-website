@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-06 23:58 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-07 00:41 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -38,7 +38,7 @@
      400 x dln P becomes 100 x dln P; interest rates per quarter). */
   const RATE_KEYS = new Set(['infl', 'infl_cpi', 'ff', 'tb', 'rff', 'rtb']);
   /* Correlation matrix: variables shown by default (the reader adds others). */
-  const MATRIX_DEFAULT = ['y', 'c', 'i', 'h', 'w', 'yh', 'tfp', 'u_gap', 'infl', 'rff'];
+  const MATRIX_DEFAULT = ['y', 'c', 'i', 'k', 'h', 'w', 'yh', 'tfp', 'u_gap', 'infl', 'rff'];
   const BENCHMARK_DASH = '9 4';
   /* Short labels for the correlation matrix. */
   const SYMBOLS = {

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-07 00:30 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-07 00:44 UTC (Claude, economics chat) */
 /* =========================================================
    tfp-shocks.js: /economics/tfp-shocks.html
    The extraction of technology shocks step by step (King and
@@ -156,9 +156,12 @@
     scatter('4', s.deviation, t.rho);
     timeChart('5', [{ label: 'Technology shock, ε(t)', color: blue, values: t.shock }], 'Percent', true);
     table();
-    el.process.textContent = `${t.label}, ${block.label.toLowerCase()}: log A(t+1) = ${fmt(t.rho, 3)} × log A(t) + ε(t+1), `
-      + `with σ = ${fmt(t.sigma, 2)} percent; trend growth ${fmt(t.trend_growth_annual, 2)} percent a year. `
+    el.process.innerHTML = `${S.escapeHTML(t.label)}, ${S.escapeHTML(block.label.toLowerCase())}: `
+      + `\\(\\ln A_{t+1} = ${fmt(t.rho, 3)} \\ln A_t + \\varepsilon_{t+1}\\), with \\(\\sigma = ${fmt(t.sigma, 2)}\\) percent; `
+      + `trend growth ${fmt(t.trend_growth_annual, 2)} percent a year. `
       + `Estimated ${D.quarterLabel(t.estimation[0])}–${D.quarterLabel(t.estimation[1])}; charts from ${D.quarterLabel(state.payload.dates[0])}.`;
+    /* Typeset the formula (MathJax may still be loading: its start-up pass then does it). */
+    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([el.process]).catch(() => {});
   }
 
   async function load() {

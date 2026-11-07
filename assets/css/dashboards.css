@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-07 00:30 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-07 00:44 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -466,6 +466,19 @@
   font-weight: 600;
 }
 
+/* Centre every cell, headers included (overrides the data-table alignment). */
+.data-table.matrix-table th,
+.data-table.matrix-table td {
+  text-align: center;
+  vertical-align: middle;
+}
+/* Symbols keep their case (h, w, π, û*): no capitals in the matrix header. */
+.data-table.matrix-table thead th {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: inherit;
+}
+
 .matrix-table abbr {
   text-decoration: none;
   cursor: help;
@@ -788,4 +801,12 @@
 .chart-axis-text {
   font-size: 11px;
   fill: var(--chart-ink, #3a3a3c);
+}
+
+/* Displayed equations (MathJax, pages with math: true). */
+.math-display {
+  margin: 0.2rem 0 0.9rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: center;
 }
