@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-06 23:58 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -751,6 +751,8 @@
 .table-toggle-row {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 0.6rem;
   margin: 0 0 0.5rem;
 }
 .bc-table tr.kr-row th,
@@ -762,3 +764,17 @@
   padding-top: 0.15rem;
 }
 .bc-table tr.kr-row th { padding-left: 1.25rem; }
+
+/* RBC model: current selection in the table of technology processes. */
+.shock-table tr.is-current th,
+.shock-table tr.is-current td { background: var(--chart-recession, rgba(59, 90, 117, 0.08)); }
+.chart-card .dashboard-downloads { margin-top: 1rem; }
+.kr-toggle[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.kr-hint {
+  order: -1;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}

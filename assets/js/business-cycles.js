@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-06 23:58 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -99,6 +99,7 @@
   const krToggle = body.querySelector('[data-control="king-rebelo"]');
   if (krToggle) {
     krToggle.addEventListener('click', () => {
+      if (krToggle.getAttribute('aria-disabled') === 'true') return;
       showKR = !showKR;
       krToggle.setAttribute('aria-pressed', String(showKR));
       renderTables();
@@ -371,9 +372,23 @@
       <p class="table-note">${legend}.</p>`;
   }
 
+  /* King and Rebelo report per-capita statistics: the comparison is only
+     offered with the per-capita measure. */
+  function updateKRToggle() {
+    if (!krToggle) return;
+    const perCapita = state.tableMeasure.get('summary') === 'pc';
+    if (!perCapita) showKR = false;
+    krToggle.setAttribute('aria-disabled', String(!perCapita));
+    krToggle.setAttribute('aria-pressed', String(showKR));
+    krToggle.title = perCapita
+      ? 'Show King and Rebelo (1999, Table 1) under the matching rows'
+      : 'King and Rebelo (1999) report per-capita statistics: select Per capita to compare';
+  }
+
   function renderTables() {
     const payload = state.payload;
     if (!payload) return;
+    updateKRToggle();
     const note = state.filter === 'comparison'
       ? '<p class="table-note">Filter comparison selected: the tables show the HP filter.</p>' : '';
     body.querySelectorAll('[data-table]').forEach(target => {

@@ -113,6 +113,13 @@
             <span class="chart-subtitle" data-role="chart-subtitle"></span>
           </div>
           <div class="chart-controls">
+            <div class="segmented-field chart-control" data-control="form">
+              <span class="visually-hidden" id="tfp-form-label">Form of technical progress</span>
+              <div class="segmented" role="group" aria-labelledby="tfp-form-label">
+                <button type="button" data-value="hicks" aria-pressed="true">Hicks-neutral</button>
+                <button type="button" data-value="harrod" aria-pressed="false">Harrod-neutral</button>
+              </div>
+            </div>
             <div class="segmented-field chart-control" data-control="tfp">
               <span class="visually-hidden" id="tfp-variant-label">Productivity measure</span>
               <div class="segmented" role="group" aria-labelledby="tfp-variant-label">
@@ -128,8 +135,19 @@
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
-        <p class="chart-note" data-role="shock-stats"></p>
-        <p class="chart-note">The logarithm of total factor productivity is split into a linear trend and a stochastic component, which follows a first-order autoregressive process; the technology shock is the innovation of that process (Prescott, 1986; King and Rebelo, 1999). Both are estimated over the full history of each series.</p>
+        <div class="shares" data-role="shock-table"></div>
+        <p class="chart-note">The logarithm of technology is split into a linear trend and a stochastic component, which follows a first-order autoregressive process; the technology shock is the innovation of that process (Prescott, 1986; King and Rebelo, 1999). Both are estimated over the full history of each series. Hicks-neutral technology multiplies the whole production function, Y = A F(K, N), and is total factor productivity itself, as in King and Rebelo. Harrod-neutral (labour-augmenting) technology multiplies labour, Y = F(K, ZN); with a Cobb–Douglas production function its growth is TFP growth divided by labour’s share of income, 1 − α, using Fernald’s capital share α for each quarter, so its shocks are larger by about one half and equally persistent.</p>
+        <div class="dashboard-downloads" data-role="downloads" hidden>
+          <span class="segmented-label">Download technology shocks</span>
+          <div class="download-row">
+            <a class="button-link" data-download="shocks_csv" href="#" download>
+              <i class="fas fa-file-csv" aria-hidden="true"></i> CSV
+            </a>
+            <a class="button-link" data-download="shocks_mat" href="#" download>
+              <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+            </a>
+          </div>
+        </div>
       </figure>
     </div>
   </section>
@@ -164,7 +182,7 @@
 </nav>
 
   <p class="page-note reveal delay-280">
-    <strong>© Arthur Galichère. Errors and reuse.</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>. Total factor productivity is from John Fernald at the Federal Reserve Bank of San Francisco. The model, estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website (Arthur Galichère, <em>RBC Model Simulation and Forecasting</em>).
+    <strong>© Arthur Galichère. Errors and reuse.</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>. Total factor productivity and capital’s share of income are from John Fernald at the Federal Reserve Bank of San Francisco. The model, estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website (Arthur Galichère, <em>RBC Model Simulation and Forecasting</em>).
   </p>
 </section>
 
