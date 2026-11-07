@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-06 23:58 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-07 00:30 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -777,4 +777,15 @@
   order: -1;
   color: var(--ink-soft);
   font-size: 0.8rem;
+}
+
+/* Extracting Technology Shocks: step labels and scatter axis text. */
+.step-number {
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: var(--chart-benchmark);
+}
+.chart-axis-text {
+  font-size: 11px;
+  fill: var(--chart-ink, #3a3a3c);
 }
