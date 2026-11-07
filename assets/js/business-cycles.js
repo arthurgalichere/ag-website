@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-07 00:41 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-07 01:51 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -46,6 +46,25 @@
     tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: 'û*', lfpr: 'PR', infl: 'π', infl_cpi: 'π CPI',
     ff: 'FF', tb: 'TB', rff: 'RFF', rtb: 'RTB', debt: 'Debt',
   };
+
+  /* The same symbols in TeX, typeset by MathJax (math: true on the page). */
+  const TEX = {
+    y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', k: 'K', h: 'h', w: 'w', yh: 'Y/h',
+    tfp: '\\mathrm{TFP}', tfp_util: '\\mathrm{TFP}^{u}', u: 'u', u_gap: '\\hat{u}^{*}', lfpr: '\\mathrm{PR}',
+    infl: '\\pi', infl_cpi: '\\pi^{\\mathrm{CPI}}', ff: '\\mathrm{FF}', tb: '\\mathrm{TB}',
+    rff: '\\mathrm{RFF}', rtb: '\\mathrm{RTB}', debt: '\\mathrm{Debt}',
+  };
+  const math = key => (TEX[key] ? `\\(${TEX[key]}\\)` : S.escapeHTML(SYMBOLS[key] || key));
+  /* Typeset new content once MathJax has started; clear old content first. */
+  function untypeset(element) {
+    const MJ = window.MathJax;
+    if (MJ && MJ.typesetClear) MJ.typesetClear([element]);
+  }
+  function typeset(element) {
+    const MJ = window.MathJax;
+    if (!MJ || !MJ.startup || !MJ.startup.promise) return;
+    MJ.startup.promise.then(() => MJ.typesetPromise([element])).catch(() => {});
+  }
 
   const el = {
     downloads: body.querySelector('[data-role="downloads"]'),
@@ -308,9 +327,9 @@
 
   function crossTable(rows, lags) {
     const head = `<tr><th scope="col" rowspan="2" class="component-head">Variable x</th>
-      <th scope="colgroup" colspan="${lags.length}">Correlation of x(t + k) with output y(t)</th>
+      <th scope="colgroup" colspan="${lags.length}">Correlation of \\(x_{t+k}\\) with output \\(y_t\\)</th>
       <th scope="col" rowspan="2">Peak<br><span class="unit-label">(quarters)</span></th></tr>
-      <tr>${lags.map(k => `<th scope="col">k = ${k > 0 ? '+' : ''}${k}</th>`).join('')}</tr>`;
+      <tr>${lags.map(k => `<th scope="col">\\(k = ${k > 0 ? '+' : ''}${k}\\)</th>`).join('')}</tr>`;
     const bodyRows = rows.map(row => `<tr>
       <th scope="row">${S.escapeHTML(tlabel(row.key))}</th>
       ${row.values.map((v, i) => `<td${lags[i] === row.peak_lag ? ' class="is-peak"' : ''}>${fmt(v)}</td>`).join('')}
@@ -325,10 +344,12 @@
     const target = body.querySelector('[data-role="matrix-picker"]');
     if (!target || !state.payload) return;
     const keys = state.payload.summary_keys;
-    target.innerHTML = keys.map(key => `<button type="button" class="picker-chip" data-key="${key}" aria-pressed="${state.matrixKeys.has(key)}" title="${S.escapeHTML(label(key, 'total'))}">${S.escapeHTML(SYMBOLS[key] || key)}</button>`).join('')
+    untypeset(target);
+    target.innerHTML = keys.map(key => `<button type="button" class="picker-chip" data-key="${key}" aria-pressed="${state.matrixKeys.has(key)}" title="${S.escapeHTML(label(key, 'total'))}">${math(key)}</button>`).join('')
       + '<span class="picker-actions"><button type="button" class="picker-action" data-action="all">Select all</button>'
       + '<button type="button" class="picker-action" data-action="none">Select none</button>'
       + '<button type="button" class="picker-action" data-action="default">Default</button></span>';
+    typeset(target);
   }
 
   function onPicker(event) {
@@ -349,6 +370,33 @@
     renderTables();
   }
 
+  /* Leads-and-lags matrix: in each cell the peak correlation of x(t+k)
+     (row) with z(t) (column) over k = -4..4, and that k below it. */
+  function leadLagTable(allKeys, fullMatrix) {
+    const index = allKeys.map((key, i) => [key, i]).filter(([key]) => state.matrixKeys.has(key));
+    if (!index.length) return '<p class="empty-message">Select at least one variable above.</p>';
+    if (!fullMatrix) return '<p class="empty-message">Not available yet: the matrix appears after the next data update.</p>';
+    const keys = index.map(([key]) => key);
+    const pos = token('--chart-1');
+    const neg = token('--series-1');
+    const kText = k => (k === 0 ? '0' : `${k > 0 ? '+' : '−'}${Math.abs(k)}`);
+    const cell = item => {
+      if (!item) return '<td>–</td>';
+      const [v, k] = item;
+      const alpha = Math.min(1, Math.abs(v)) * 0.55;
+      const colour = v >= 0 ? pos : neg;
+      const lag = k === 0 ? 'together' : k < 0 ? `row leads by ${-k}` : `row lags by ${k}`;
+      return `<td style="background: color-mix(in srgb, ${colour} ${Math.round(alpha * 100)}%, transparent)" title="${lag}">`
+        + `<span class="ll-value">${fmt(v)}</span><span class="ll-lag"><i>k</i> = ${kText(k)}</span></td>`;
+    };
+    const head = `<tr><th scope="col"></th>${keys.map(key => `<th scope="col"><abbr title="${S.escapeHTML(tlabel(key))}">${math(key)}</abbr></th>`).join('')}</tr>`;
+    const bodyRows = index.map(([key, r]) => `<tr><th scope="row"><abbr title="${S.escapeHTML(tlabel(key))}">${math(key)}</abbr></th>${index.map(([, c]) => cell(fullMatrix[r][c])).join('')}</tr>`).join('');
+    return `<div class="table-scroll"><table class="data-table matrix-table leadlag-table">
+      <caption class="visually-hidden">Peak cross-correlations between the cyclical components, with the lead or lag at which they occur</caption>
+      <thead>${head}</thead><tbody>${bodyRows}</tbody></table></div>
+      <p class="table-note">Rows: \\(x_{t+k}\\); columns: \\(z_t\\). Negative \\(k\\): the row variable leads; positive \\(k\\): it lags.</p>`;
+  }
+
   function matrixTable(allKeys, fullMatrix) {
     /* Keep the selected variables, in the order of the summary table. */
     const index = allKeys.map((key, i) => [key, i]).filter(([key]) => state.matrixKeys.has(key));
@@ -363,9 +411,9 @@
       const colour = v >= 0 ? pos : neg;
       return `<td style="background: color-mix(in srgb, ${colour} ${Math.round(alpha * 100)}%, transparent)">${fmt(v)}</td>`;
     };
-    const head = `<tr><th scope="col"></th>${keys.map(key => `<th scope="col"><abbr title="${S.escapeHTML(tlabel(key))}">${S.escapeHTML(SYMBOLS[key] || key)}</abbr></th>`).join('')}</tr>`;
-    const bodyRows = keys.map((key, r) => `<tr><th scope="row"><abbr title="${S.escapeHTML(tlabel(key))}">${S.escapeHTML(SYMBOLS[key] || key)}</abbr></th>${matrix[r].map(cell).join('')}</tr>`).join('');
-    const legend = keys.map(key => `${S.escapeHTML(SYMBOLS[key] || key)}: ${S.escapeHTML(tlabel(key))}`).join(' · ');
+    const head = `<tr><th scope="col"></th>${keys.map(key => `<th scope="col"><abbr title="${S.escapeHTML(tlabel(key))}">${math(key)}</abbr></th>`).join('')}</tr>`;
+    const bodyRows = keys.map((key, r) => `<tr><th scope="row"><abbr title="${S.escapeHTML(tlabel(key))}">${math(key)}</abbr></th>${matrix[r].map(cell).join('')}</tr>`).join('');
+    const legend = keys.map(key => `${math(key)}: ${S.escapeHTML(tlabel(key))}`).join(' · ');
     return `<div class="table-scroll"><table class="data-table matrix-table">
       <caption class="visually-hidden">Contemporaneous correlation matrix of cyclical components</caption>
       <thead>${head}</thead><tbody>${bodyRows}</tbody></table></div>
@@ -400,13 +448,16 @@
       if (which === 'summary') html = statsTable(tables.summary, null, showKR) + (showKR ? `<p class="table-note">${S.escapeHTML(KR_NOTE)}.</p>` : '');
       else if (which === 'cross') html = crossTable(tables.cross, payload.methods.lags);
       else if (which === 'matrix') html = matrixTable(payload.summary_keys, tables.matrix);
+      else if (which === 'leadlag') html = leadLagTable(payload.summary_keys, tables.leadlag);
       else if (tables.sections[which]) {
         const aggregate = target.dataset.aggregate || null;
         html = statsTable(tables.sections[which], aggregate);
       }
       const sample = `${D.quarterLabel(payload.sample.start)}–${D.quarterLabel(payload.sample.end)}`;
+      untypeset(target);
       target.innerHTML = html + note
-        + (which === 'matrix' || which === 'cross' ? '' : `<p class="table-note">${S.escapeHTML(FILTERS[tableFilter()].long)}, ${S.escapeHTML(sample)} (each statistic uses the quarters both series cover). Standard deviations are in percent of trend, or in percentage points for variables marked †${tableQuarterly ? '; inflation and interest rates per quarter (annual rate ÷ 4)' : ''}.</p>`);
+        + (['matrix', 'cross', 'leadlag'].includes(which) ? '' : `<p class="table-note">${S.escapeHTML(FILTERS[tableFilter()].long)}, ${S.escapeHTML(sample)} (each statistic uses the quarters both series cover). Standard deviations are in percent of trend, or in percentage points for variables marked †${tableQuarterly ? '; inflation and interest rates per quarter (annual rate ÷ 4)' : ''}.</p>`);
+      if (['matrix', 'cross', 'leadlag'].includes(which)) typeset(target);
     });
   }
 

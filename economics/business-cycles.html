@@ -901,12 +901,15 @@
     </div>
     <div class="shares" data-table="summary" data-group="summary"><p class="loading-message">Loading…</p></div>
     <h3 class="subsection-title">Leads and lags: cross-correlations with output</h3>
-    <p class="section-introduction">Correlation between each variable k quarters ahead, x(t + k), and output today, y(t). A peak at negative k means the variable tends to move before output (it leads); at positive k, after output (it lags). The peak is the largest correlation in absolute value, highlighted in each row.</p>
+    <p class="section-introduction">Correlation between each variable \(k\) quarters ahead, \(x_{t+k}\), and output today, \(y_t\). A peak at negative \(k\) means the variable tends to move before output (it leads); at positive \(k\), after output (it lags). The peak is the largest correlation in absolute value, highlighted in each row.</p>
     <div class="shares" data-table="cross" data-group="summary"><p class="loading-message">Loading…</p></div>
     <h3 class="subsection-title">Correlation matrix</h3>
-    <p class="section-introduction">Contemporaneous correlations between the cyclical components of the variables selected below. Blue cells are positive, orange cells negative; darker cells are stronger correlations.</p>
-    <div class="matrix-picker" data-role="matrix-picker" role="group" aria-label="Variables in the correlation matrix"></div>
+    <p class="section-introduction">Contemporaneous correlations between the cyclical components of the variables selected below (the selection also applies to the leads-and-lags matrix). Blue cells are positive, orange cells negative; darker cells are stronger correlations.</p>
+    <div class="matrix-picker" data-role="matrix-picker" role="group" aria-label="Variables in the correlation matrices"></div>
     <div class="shares" data-table="matrix" data-group="summary"><p class="loading-message">Loading…</p></div>
+    <h3 class="subsection-title">Leads and lags: cross-correlation matrix</h3>
+    <p class="section-introduction">For each pair of variables, the correlation between the row variable \(k\) quarters ahead, \(x_{t+k}\), and the column variable today, \(z_t\), for \(k = -4, \dots, +4\). Each cell shows the largest of these correlations in absolute value and, below it, the \(k\) at which it occurs: negative \(k\) means the row variable tends to move before the column variable (it leads), positive \(k\) after it (it lags), and \(k = 0\) together. The matrix mirrors itself: the cell for column and row swapped has the same correlation with the opposite \(k\). The output column repeats the peaks of the table above.</p>
+    <div class="shares" data-table="leadlag" data-group="summary"><p class="loading-message">Loading…</p></div>
   </section>
 
   <noscript>

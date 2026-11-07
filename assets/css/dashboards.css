@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-07 00:44 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-07 01:51 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -809,4 +809,19 @@
   overflow-x: auto;
   overflow-y: hidden;
   text-align: center;
+}
+
+/* Leads-and-lags matrix: peak correlation, with its k below. */
+.leadlag-table td {
+  line-height: 1.15;
+}
+.ll-value {
+  display: block;
+}
+.ll-lag {
+  display: block;
+  margin-top: 0.1rem;
+  color: var(--ink-soft);
+  font-size: 0.86em;
+  font-family: "Times New Roman", Times, serif;
 }
