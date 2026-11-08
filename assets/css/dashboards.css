@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 11:46 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 12:38 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -678,6 +678,10 @@
 }
 .dashboard-body .page-note li {
   margin-bottom: 0.3rem;
+}
+/* Keep short links ("let me know") on one line. */
+.dashboard-body .page-note a {
+  white-space: nowrap;
 }
 
 /* Real Business Cycles introduction: volatility and co-movement glyphs.
