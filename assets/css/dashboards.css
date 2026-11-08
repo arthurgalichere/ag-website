@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 11:13 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 11:46 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -652,7 +652,7 @@
 }
 
 /* Running text on dashboard pages is justified, like the site's prose.
-   The copyright note (.page-note) and the update line stay centred. */
+   The update line is centred; the copyright note is styled below. */
 .ribbon-content p,
 .ribbon-content li,
 .chart-note,
@@ -662,14 +662,22 @@
   hyphens: auto;
 }
 
-/* Data-update line and copyright note: centred; the note sits in a
-   narrower column so it reads as a compact block. */
+/* Data-update line: centred. Copyright note: full width, left-aligned,
+   justified; the copyright line, then a bullet each for errors and reuse. */
 .update-note { text-align: center; }
 .dashboard-body .page-note {
-  /* Side margins 37% smaller than a 42rem column: 100% - 0.63 x (100% - 42rem). */
-  max-width: calc(37% + 26.46rem);
-  margin-left: auto;
-  margin-right: auto;
+  text-align: justify;
+  hyphens: auto;
+}
+.dashboard-body .page-note p {
+  margin: 0 0 0.35rem;
+}
+.dashboard-body .page-note ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.dashboard-body .page-note li {
+  margin-bottom: 0.3rem;
 }
 
 /* Real Business Cycles introduction: volatility and co-movement glyphs.
