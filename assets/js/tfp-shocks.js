@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-07 00:44 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 01:08 UTC (Claude, economics chat) */
 /* =========================================================
    tfp-shocks.js: /economics/tfp-shocks.html
    The extraction of technology shocks step by step (King and
@@ -34,12 +34,35 @@
     return { block, series: block.series[state.measure] };
   }
 
+  const DASH_DOT = '8 4 0.1 4';   /* benchmark lines: dash-dot (round caps make the dot) */
+  /* Typeset new content once MathJax has started; clear old content first. */
+  function untypeset(element) {
+    const MJ = window.MathJax;
+    if (MJ && MJ.typesetClear) MJ.typesetClear([element]);
+  }
+  function typeset(element) {
+    const MJ = window.MathJax;
+    if (!MJ || !MJ.startup || !MJ.startup.promise) return;
+    MJ.startup.promise.then(() => MJ.typesetPromise([element])).catch(() => {});
+  }
+  /* Notation: A for Hicks-neutral technology (TFP), Z for Harrod-neutral;
+     superscript u for utilization-adjusted TFP. */
+  const techLetter = () => (state.form === 'harrod' ? 'Z' : 'A');
+  const shockTeX = () => {
+    const letter = techLetter();
+    return `\\varepsilon^{${state.measure === 'adjusted' ? `${letter}^u` : letter}}_t`;
+  };
+
+  /* item.html: a legend label that may hold maths (already safe HTML). */
   function legend(card, series) {
-    role(card, 'chart-legend').innerHTML = series.map(item => `
+    const target = role(card, 'chart-legend');
+    untypeset(target);
+    target.innerHTML = series.map(item => `
       <li><svg class="legend-swatch" viewBox="0 0 28 10" aria-hidden="true" focusable="false">
-        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="2.2"
-          stroke-dasharray="${item.dash || 'none'}" stroke-linecap="round"/></svg>${S.escapeHTML(item.label)}</li>`).join('');
-    role(card, 'chart-legend').hidden = false;
+        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="${2.2 * (item.weight || 1)}"
+          stroke-dasharray="${item.dash || 'none'}" stroke-linecap="round"/></svg>${item.html || S.escapeHTML(item.label)}</li>`).join('');
+    target.hidden = false;
+    typeset(target);
   }
 
   function timeChart(step, series, subtitle, zeroLine) {
@@ -97,7 +120,7 @@
         <line x1="${x(-lim)}" x2="${x(lim)}" y1="${y(0)}" y2="${y(0)}" stroke="var(--chart-zero, rgba(28,28,30,0.45))"/>
         <line x1="${x(0)}" x2="${x(0)}" y1="${y(-lim)}" y2="${y(lim)}" stroke="var(--chart-zero, rgba(28,28,30,0.45))"/>
         ${dots}
-        <line x1="${x(-lim)}" y1="${y(-rho * lim)}" x2="${x(lim)}" y2="${y(rho * lim)}" stroke="${line}" stroke-width="2.2" stroke-dasharray="9 4"/>
+        <line x1="${x(-lim)}" y1="${y(-rho * lim)}" x2="${x(lim)}" y2="${y(rho * lim)}" stroke="${line}" stroke-width="2.2" stroke-dasharray="${DASH_DOT}" stroke-linecap="round"/>
         <text x="${(m.left + width - m.right) / 2}" y="${height - 6}" text-anchor="middle" class="chart-axis-text">Last quarter, u(t − 1), percent</text>
         <text transform="translate(14 ${(m.top + height - m.bottom) / 2}) rotate(-90)" text-anchor="middle" class="chart-axis-text">This quarter, u(t), percent</text>
       </svg>`;
@@ -112,7 +135,7 @@
     role(card, 'chart-subtitle').textContent = `Percent · one point per quarter, ${D.quarterLabel(dates[1])}–${D.quarterLabel(dates[dates.length - 1])}`;
     legend(card, [
       { label: 'Quarters', color: blue },
-      { label: `Fitted line, slope ρ = ${fmt(rho, 3)} (full history)`, color: line, dash: '9 4' },
+      { label: 'Fitted line', html: `Fitted line, slope \\(\\hat{\\rho} = ${fmt(rho, 3)}\\) (full history)`, color: line, dash: DASH_DOT },
     ]);
     role(card, 'chart-readout').textContent = '';
   }
@@ -148,20 +171,31 @@
     const s = t.steps;
     const blue = token('--chart-1');
     timeChart('1', [{ label: t.label, color: blue, values: s.level_index }], 'Index, 2017 = 100', false);
+    const orange = token('--chart-benchmark');
+    const letter = techLetter();
+    const shock = shockTeX();
     timeChart('2', [
-      { label: `100 × ln ${t.label}`, color: blue, values: s.log_level },
-      { label: 'Linear trend', color: token('--chart-benchmark'), dash: '9 4', under: true, values: s.trend },
+      { label: `100 × ln ${t.label}`, color: blue, weight: 1.1, values: s.log_level },
+      { label: 'Linear trend', color: orange, dash: DASH_DOT, under: true, values: s.trend },
     ], '100 × natural logarithm', false);
-    timeChart('3', [{ label: 'Deviation from trend, u(t)', color: blue, values: s.deviation }], 'Percent', true);
+    timeChart('3', [{ label: 'Deviation from trend, u(t)', html: 'Deviation from trend, \\(u_t\\)', color: blue, values: s.deviation }], 'Percent', true);
     scatter('4', s.deviation, t.rho);
-    timeChart('5', [{ label: 'Technology shock, ε(t)', color: blue, values: t.shock }], 'Percent', true);
+    timeChart('5', [{ label: 'Technology shock', html: `Technology shock, \\(${shock}\\)`, color: blue, values: t.shock }], 'Percent', true);
     table();
-    el.process.innerHTML = `${S.escapeHTML(t.label)}, ${S.escapeHTML(block.label.toLowerCase())}: `
-      + `\\(\\ln A_{t+1} = ${fmt(t.rho, 3)} \\ln A_t + \\varepsilon_{t+1}\\), with \\(\\sigma = ${fmt(t.sigma, 2)}\\) percent; `
-      + `trend growth ${fmt(t.trend_growth_annual, 2)} percent a year. `
+    if (s.model) {
+      timeChart('6', [
+        { label: 'Model technology', html: `Model technology, \\(\\hat{${letter}}_t\\)`, color: blue, weight: 1.1, values: s.model },
+        { label: 'Deviation of log TFP from trend', html: 'Cyclical component of TFP, \\(u_t\\)', color: orange, dash: DASH_DOT, under: true, values: s.deviation },
+      ], 'Percent', true);
+    }
+    const shockNext = shock.replace(/_t$/, '_{t+1}');
+    untypeset(el.process);
+    el.process.innerHTML = `${S.escapeHTML(t.label)}, ${S.escapeHTML(block.label)}: `
+      + `\\(\\hat{${letter}}_{t+1} = ${fmt(t.rho, 3)}\\, \\hat{${letter}}_t + ${shockNext}\\), with \\(\\operatorname{sd}(\\varepsilon) = ${fmt(t.sigma, 2)}\\) percent; `
+      + `\\(\\hat{${letter}}_0 = ${shock.replace(/_t$/, '_0')}\\) in ${D.quarterLabel(t.first_shock || t.estimation[0])}. `
+      + `Trend growth ${fmt(t.trend_growth_annual, 2)} percent a year. `
       + `Estimated ${D.quarterLabel(t.estimation[0])}–${D.quarterLabel(t.estimation[1])}; charts from ${D.quarterLabel(state.payload.dates[0])}.`;
-    /* Typeset the formula (MathJax may still be loading: its start-up pass then does it). */
-    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([el.process]).catch(() => {});
+    typeset(el.process);
   }
 
   async function load() {

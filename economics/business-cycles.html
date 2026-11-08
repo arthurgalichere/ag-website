@@ -907,8 +907,20 @@
     <p class="section-introduction">Contemporaneous correlations between the cyclical components of the variables selected below (the selection also applies to the leads-and-lags matrix). Blue cells are positive, orange cells negative; darker cells are stronger correlations.</p>
     <div class="matrix-picker" data-role="matrix-picker" role="group" aria-label="Variables in the correlation matrices"></div>
     <div class="shares" data-table="matrix" data-group="summary"><p class="loading-message">Loading…</p></div>
-    <h3 class="subsection-title">Leads and lags: cross-correlation matrix</h3>
-    <p class="section-introduction">For each pair of variables, the correlation between the row variable \(k\) quarters ahead, \(x_{t+k}\), and the column variable today, \(z_t\), for \(k = -4, \dots, +4\). Each cell shows the largest of these correlations in absolute value and, below it, the \(k\) at which it occurs: negative \(k\) means the row variable tends to move before the column variable (it leads), positive \(k\) after it (it lags), and \(k = 0\) together. The matrix mirrors itself: the cell for column and row swapped has the same correlation with the opposite \(k\). The output column repeats the peaks of the table above.</p>
+    <div class="table-heading">
+      <h3 class="subsection-title">Leads and lags: cross-correlation matrix</h3>
+      <div class="table-switches">
+        <div class="segmented-field" data-control="leadlag-mode">
+          <span class="visually-hidden" id="leadlag-mode-label">Correlation shown in each cell</span>
+          <div class="segmented" role="group" aria-labelledby="leadlag-mode-label">
+            <button type="button" data-value="strongest" aria-pressed="true">Strongest</button>
+            <button type="button" data-value="highest" aria-pressed="false">Highest</button>
+            <button type="button" data-value="lowest" aria-pressed="false">Lowest</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="section-introduction">For each pair of variables, the correlation between the row variable \(k\) quarters ahead, \(x_{t+k}\), and the column variable today, \(z_t\), for \(k = -4, \dots, +4\). Each cell shows one of these nine correlations and, below it, the \(k\) at which it occurs: the strongest (largest in absolute value, positive or negative), the highest or the lowest, as chosen with the switch. For the \(k\) below each value: negative \(k\) means the row variable tends to move before the column variable (it leads), positive \(k\) after it (it lags), and \(k = 0\) together. The matrix mirrors itself: the cell for column and row swapped has the same correlation with the opposite \(k\). With “Strongest”, the output column repeats the peaks of the leads-and-lags table above.</p>
     <div class="shares" data-table="leadlag" data-group="summary"><p class="loading-message">Loading…</p></div>
   </section>
 

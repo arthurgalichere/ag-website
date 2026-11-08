@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-07 01:51 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 01:08 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -39,7 +39,7 @@
   const RATE_KEYS = new Set(['infl', 'infl_cpi', 'ff', 'tb', 'rff', 'rtb']);
   /* Correlation matrix: variables shown by default (the reader adds others). */
   const MATRIX_DEFAULT = ['y', 'c', 'i', 'k', 'h', 'w', 'yh', 'tfp', 'u_gap', 'infl', 'rff'];
-  const BENCHMARK_DASH = '9 4';
+  const BENCHMARK_DASH = '8 4 0.1 4';   /* dash-dot (round caps make the dot) */
   /* Short labels for the correlation matrix. */
   const SYMBOLS = {
     y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', k: 'K', h: 'h', w: 'w', yh: 'Y/h',
@@ -76,7 +76,7 @@
   const state = {
     country: 'US', filter: 'hp', payload: null, charts: new Map(), visible: new Set(),
     measure: new Map(), tableMeasure: new Map(), basis: new Map(), tableBasis: new Map(),
-    matrixKeys: new Set(MATRIX_DEFAULT),
+    matrixKeys: new Set(MATRIX_DEFAULT), leadlagMode: 'strongest',
   };
   const cache = new Map();
 
@@ -132,6 +132,13 @@
       renderTables();
     }).select('annual', false);
   });
+  const leadlagControl = body.querySelector('[data-control="leadlag-mode"]');
+  if (leadlagControl) {
+    D.segmented(leadlagControl, value => {
+      state.leadlagMode = value;
+      renderTables();
+    }).select('strongest', false);
+  }
   body.querySelectorAll('[data-control="table-measure"]').forEach(control => {
     const group = control.dataset.group;
     state.tableMeasure.set(group, 'total');
@@ -224,8 +231,11 @@
       if (extra && !extraFirst) {
         series.push({ label: lab(extra), color: token('--series-2'), dash: '1.5 3.5', values: values('hp', extra, measure) });
       }
-      /* The benchmark comes last in the legend. */
+      /* The benchmark comes last in the legend; the blue main series is
+         drawn slightly thicker against it. */
       if (against) {
+        const blue = token('--chart-1');
+        series.forEach(item => { if (item.color === blue) item.weight = 1.1; });
         series.push({
           label: lab(against),
           color: token(muted ? '--chart-benchmark-muted' : '--chart-benchmark'),
@@ -264,7 +274,7 @@
 
     const swatch = item => `
       <li><svg class="legend-swatch" viewBox="0 0 28 10" aria-hidden="true" focusable="false">
-        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="2.2"
+        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="${2.2 * (item.weight || 1)}"
           stroke-dasharray="${item.dash || 'none'}" stroke-linecap="round"/></svg>${S.escapeHTML(item.label)}</li>`;
     role('chart-legend').innerHTML = series.map(swatch).join('');
     role('chart-legend').hidden = false;
@@ -372,7 +382,11 @@
 
   /* Leads-and-lags matrix: in each cell the peak correlation of x(t+k)
      (row) with z(t) (column) over k = -4..4, and that k below it. */
-  function leadLagTable(allKeys, fullMatrix) {
+  function leadLagTable(allKeys, payloadMatrix) {
+    /* Older data files hold one matrix (the strongest correlations). */
+    const fullMatrix = Array.isArray(payloadMatrix)
+      ? (state.leadlagMode === 'strongest' ? payloadMatrix : null)
+      : (payloadMatrix ? payloadMatrix[state.leadlagMode] : null);
     const index = allKeys.map((key, i) => [key, i]).filter(([key]) => state.matrixKeys.has(key));
     if (!index.length) return '<p class="empty-message">Select at least one variable above.</p>';
     if (!fullMatrix) return '<p class="empty-message">Not available yet: the matrix appears after the next data update.</p>';

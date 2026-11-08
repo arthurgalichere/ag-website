@@ -188,7 +188,7 @@
   <section class="content-section reveal delay-160" aria-labelledby="step4-title">
     <h2 id="step4-title" class="section-title"><span class="step-number">Step 4</span> Measure persistence</h2>
     <p class="section-introduction">Persistence is measured by regressing \(u_t\) on its value one quarter earlier, without a constant:</p>
-    <div class="math-display">\[ u_t = \rho\, u_{t-1} + \varepsilon_t, \qquad \hat{\rho} = \frac{\sum_t u_{t-1}\, u_t}{\sum_t u_{t-1}^2} . \]</div>
+    <div class="math-display">\[ u_t = \rho\, u_{t-1} + \varepsilon^A_t, \qquad \hat{\rho} = \frac{\sum_t u_{t-1}\, u_t}{\sum_t u_{t-1}^2} . \]</div>
     <p class="section-introduction">Each point in the chart is one quarter, with last quarter’s deviation on the horizontal axis and this quarter’s on the vertical axis; the line through the origin has slope \(\hat{\rho}\).</p>
     <p class="section-introduction">A slope close to 1 means that a deviation from trend dies out slowly. After \(k\) quarters, a fraction \(\rho^k\) of it remains, so half of it is gone after \(\ln 0.5 / \ln \rho\) quarters.</p>
     <div class="chart-stack">
@@ -210,8 +210,8 @@
   <section class="content-section reveal delay-160" aria-labelledby="step5-title">
     <h2 id="step5-title" class="section-title"><span class="step-number">Step 5</span> Recover the technology shocks</h2>
     <p class="section-introduction">The technology shock is the part of this quarter’s deviation that could not be predicted from last quarter’s,</p>
-    <div class="math-display">\[ \varepsilon_t = u_t - \hat{\rho}\, u_{t-1}, \]</div>
-    <p class="section-introduction">the vertical distance between each point in step 4 and the line. Its standard deviation, \(\sigma\), measures the typical size of a shock.</p>
+    <div class="math-display">\[ \varepsilon^A_t = u_t - \hat{\rho}\, u_{t-1}, \]</div>
+    <p class="section-introduction">the vertical distance between each point in step 4 and the line. Its standard deviation, \(\sigma\), measures the typical size of a shock. The shocks are written \(\varepsilon^A_t\) for measured TFP and \(\varepsilon^{A^u}_t\) for utilization-adjusted TFP (\(\varepsilon^Z_t\) and \(\varepsilon^{Z^u}_t\) for Harrod-neutral technology \(Z\)).</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="5">
       <figcaption class="chart-header">
@@ -226,14 +226,32 @@
       <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
     </figure>
     </div>
+    <h3 class="subsection-title">Estimates</h3>
+    <p class="section-introduction">The table collects the numbers estimated in steps 2 to 5, for each version of technology; the row for the version selected at the top of the page is highlighted. Persistence \(\hat{\rho}\) comes from step 4, and the half-life, \(\ln 0.5 / \ln \hat{\rho}\), is the number of quarters after which half of a deviation from trend has gone. The standard deviation of the shock, \(\sigma\), comes from step 5. Trend growth is the slope of the line in step 2, \(4\gamma\), in percent a year. The share of quarters with falling technology counts the quarters in which the growth rate of step 1 is negative; in a model driven only by these shocks, every one of those quarters is a technological regress (King and Rebelo, 1999, section 5). All are estimated over the sample shown in the last column.</p>
+    <div class="shares" data-role="shock-table"></div>
   </section>
 
   <section class="content-section reveal delay-160" aria-labelledby="step6-title">
     <h2 id="step6-title" class="section-title"><span class="step-number">Step 6</span> Feed the model</h2>
-    <p class="section-introduction">The model’s technology follows the same process,</p>
-    <div class="math-display">\[ \ln A_{t+1} = \rho \ln A_t + \varepsilon_{t+1}, \qquad \varepsilon_{t+1} \sim (0, \sigma^2), \]</div>
-    <p class="section-introduction">with \(\rho\) from step 4 and \(\sigma\) from step 5. Simulating the model with the measured shocks \(\varepsilon_t\) gives model paths for output, consumption, investment and hours that can be compared with the data. King and Rebelo (1999), with data for 1947–1996, find \(\rho = 0.979\) and \(\sigma = 0.72\) percent.</p>
-    <div class="shares" data-role="shock-table"></div>
+    <p class="section-introduction">In the model, technology is written as its percent deviation from trend, \(\hat{A}_t\), and follows the process estimated in steps 4 and 5:</p>
+    <div class="math-display">\[ \hat{A}_{t+1} = \rho\, \hat{A}_t + \varepsilon^A_{t+1}, \qquad \operatorname{sd}(\varepsilon^A) = \sigma . \]</div>
+    <p class="section-introduction">Feeding the model the measured shocks gives its technology path. Starting from the first shock extracted, \(\hat{A}_0 = \varepsilon^A_0\) (the second quarter of 1947, since the first quarter has no previous one), each quarter applies the recursion:</p>
+    <div class="math-display">\[ \hat{A}_0 = \varepsilon^A_0, \qquad \hat{A}_t = \hat{\rho}\, \hat{A}_{t-1} + \varepsilon^A_t \quad (t \geq 1). \]</div>
+    <p class="section-introduction">The chart compares this path with the deviation of log TFP from its trend, \(u_t\), from step 3. The two follow the same recursion with the same shocks, so they differ only by where they start: the gap is the deviation of the first quarter, multiplied by \(\hat{\rho}\) each quarter, and it fades as time passes. Once it has faded, the model’s technology reproduces the cyclical component of TFP, which is what makes the measured shocks a valid input for simulating the model and comparing its output, consumption, investment and hours with the data. King and Rebelo (1999), with data for 1947–1996, find \(\rho = 0.979\) and \(\sigma = 0.72\) percent.</p>
+    <div class="chart-stack">
+    <figure class="chart-card" data-step="6">
+      <figcaption class="chart-header">
+        <div class="chart-heading">
+          <span class="chart-title">Model technology and the cyclical component of TFP</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </div>
+      </figcaption>
+      <p class="loading-message" data-role="chart-status">Loading chart…</p>
+      <div class="chart-frame" data-role="chart-frame" hidden></div>
+      <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+      <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+    </figure>
+    </div>
     <p class="table-note" data-role="model-process"></p>
   </section>
 

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 01:08 UTC (Claude, economics chat) */
 /* =========================================================
    main-indicators.js: /economics/main-indicators.html
    Loads the generated main-indicators JSON for the selected
@@ -41,7 +41,7 @@
   /* Composition charts: the aggregate is drawn in the site blue, thicker. */
   /* The benchmark of a composition chart (GDP, consumption, investment):
      red and dashed, same thickness as the other lines. */
-  const BENCHMARK_DASH = '9 4';
+  const BENCHMARK_DASH = '8 4 0.1 4';   /* dash-dot (round caps make the dot) */
 
   const el = {
     downloads: body.querySelector('[data-role="downloads"]'),
