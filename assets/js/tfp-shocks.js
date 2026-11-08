@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 02:35 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 10:40 UTC (Claude, economics chat) */
 /* =========================================================
    tfp-shocks.js: /economics/tfp-shocks.html
    The extraction of technology shocks step by step (King and
@@ -215,7 +215,7 @@
     untypeset(el.process);
     el.process.innerHTML = `${S.escapeHTML(t.label)}, ${S.escapeHTML(block.label)}: `
       + `\\(\\hat{${letter}}_{t+1} = ${fmt(t.rho, 3)}\\, \\hat{${letter}}_t + ${shockNext}\\), with \\(\\operatorname{sd}(\\varepsilon) = ${fmt(t.sigma, 2)}\\) percent; `
-      + `\\(\\hat{${letter}}_0 = ${shock.replace(/_t$/, '_0')}\\) in ${D.quarterLabel(t.first_shock || t.estimation[0])}. `
+      + `\\(\\hat{${letter}}_0 = c_0\\), its value in the data in ${D.quarterLabel(t.initial_quarter || t.estimation[0])}, with shocks from the next quarter. `
       + `Trend growth ${fmt(t.trend_growth_annual, 2)} percent a year. `
       + `Estimated ${D.quarterLabel(t.estimation[0])}–${D.quarterLabel(t.estimation[1])}; charts from ${D.quarterLabel(state.payload.dates[0])}.`;
     typeset(el.process);

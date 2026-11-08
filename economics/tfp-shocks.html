@@ -248,9 +248,9 @@
     <h2 id="step6-title" class="section-title"><span class="step-number">Step 6</span> Feed the model</h2>
     <p class="section-introduction">In the model, technology is written as its percent deviation from trend, \(\hat{A}_t\), and follows the process estimated in steps 4 and 5:</p>
     <div class="math-display">\[ \hat{A}_{t+1} = \rho\, \hat{A}_t + \varepsilon^A_{t+1}, \qquad \operatorname{sd}(\varepsilon^A) = \sigma . \]</div>
-    <p class="section-introduction">Feeding the model the measured shocks gives its technology path. Starting from the first shock extracted, \(\hat{A}_0 = \varepsilon^A_0\) (the second quarter of 1947, since the first quarter has no previous one), each quarter applies the recursion:</p>
-    <div class="math-display">\[ \hat{A}_0 = \varepsilon^A_0, \qquad \hat{A}_t = \hat{\rho}\, \hat{A}_{t-1} + \varepsilon^A_t \quad (t \geq 1). \]</div>
-    <p class="section-introduction">The first chart compares this path with the deviation of log TFP from its linear trend, \(c_t\), from step 3. The two follow the same recursion with the same shocks, so they differ only by where they start: the gap is the deviation of the first quarter, multiplied by \(\hat{\rho}\) each quarter, and it fades as time passes. Both still contain slow, long-lasting swings, because a linear trend leaves them in. King and Rebelo (1999), with data for 1947–1996, find \(\rho = 0.979\) and \(\sigma = 0.72\) percent.</p>
+    <p class="section-introduction">Feeding the model the measured shocks gives its technology path. The starting value is taken from the data: technology starts at its deviation from trend in the first quarter, \(\hat{A}_0 = c_0\) (the first quarter of 1947), and the shocks enter from the next quarter on. Equivalently, the quarter before is set so that \(\hat{\rho}\,\hat{A}_{-1} + \varepsilon^A_0 = c_0\):</p>
+    <div class="math-display">\[ \hat{A}_0 = c_0, \qquad \hat{A}_t = \hat{\rho}\, \hat{A}_{t-1} + \varepsilon^A_t \quad (t \geq 1). \]</div>
+    <p class="section-introduction">The first chart compares this path with the deviation of log TFP from its linear trend, \(c_t\), from step 3. The shocks were defined in step 5 as \(\varepsilon^A_t = c_t - \hat{\rho}\, c_{t-1}\), so with the same starting value the recursion rebuilds \(c_t\) exactly, quarter after quarter: the two lines coincide (the orange line lies exactly beneath the blue one), which checks that the shocks and the persistence have been extracted correctly. Starting instead from \(\hat{A}_0 = \varepsilon^A_0\), or from the steady state, would leave a gap equal to the initial deviation multiplied by \(\hat{\rho}\) each quarter, which with \(\hat{\rho}\) close to 1 takes many years to fade. Both lines still contain slow, long-lasting swings, because a linear trend leaves them in. King and Rebelo (1999), with data for 1947–1996, find \(\rho = 0.979\) and \(\sigma = 0.72\) percent.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="6">
       <figcaption class="chart-header">
@@ -268,7 +268,7 @@
     <p class="table-note" data-role="model-process"></p>
     <h3 class="subsection-title">Comparing the model with the data: the HP filter</h3>
     <p class="section-introduction">The slow swings are not a problem for the comparison, because King and Rebelo compare model and data only after filtering both in the same way. Their simulated business cycles (1999, section 4.3.1 and Figure 7) feed the model the shocks \(\varepsilon^A_t\) from step 5, and then, in the words of the figure’s note, “all variables are detrended using the Hodrick–Prescott filter”: output, consumption, investment and hours from the model and from the data, with \(\lambda = 1600\). Their model statistics (Table 3) are likewise computed on the HP cyclical components of the simulated series, so they can be set against the data statistics of the Real Business Cycles page. The shocks themselves do not change; only the final comparison uses the HP filter.</p>
-    <p class="section-introduction">The second chart applies this to technology itself. It shows the HP cyclical component of the model’s technology, \(\hat{A}_t\), and the HP cyclical component of log TFP in the data. The HP filter removes a linear trend completely, so filtering \(c_t\) or log TFP gives the same cycle; the two lines therefore coincide once the starting gap has faded. The same procedure, applied to the model’s output, consumption, investment and hours, produces the series that will be compared with the cycles of the data on this site.</p>
+    <p class="section-introduction">The second chart applies this to technology itself. It shows the HP cyclical component of the model’s technology, \(\hat{A}_t\), and the HP cyclical component of log TFP in the data. The HP filter removes a linear trend completely, so filtering \(c_t\) or log TFP gives the same cycle; since \(\hat{A}_t = c_t\), the two lines coincide. The same procedure, applied to the model’s output, consumption, investment and hours, produces the series that will be compared with the cycles of the data on this site.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="6b">
       <figcaption class="chart-header">
@@ -311,7 +311,7 @@
           <li><strong>Persistence must be the linear-trend estimate.</strong> The model’s \(\rho\) and the \(\hat{\rho}\) used to extract the shocks must be the same, from step 4. Re-estimating \(\rho\) on the HP cycle itself would break the equivalence and give a different, less persistent technology process.</li>
           <li><strong>The shortcut shocks are not true shocks.</strong> They are not unpredictable from one quarter to the next (they are serially correlated), and their standard deviation is not the model’s \(\sigma\). Use the shocks of step 5 for calibrating \(\sigma\), for computing model statistics, and for random simulations.</li>
           <li><strong>The model must be linear.</strong> The argument holds for a log-linear (first-order) solution. With a second-order or fully non-linear solution, filtering and simulating no longer commute.</li>
-          <li><strong>Starting point.</strong> The simulation should start from the steady state; the first quarters still carry the effect of where it starts, as in the first chart of step 6.</li>
+          <li><strong>Starting point.</strong> Technology should start from its value in the data, as in step 6; the model’s capital stock also needs a starting value, and the effect of that choice fades only over the first years of the simulation.</li>
         </ul>
         <div class="dashboard-downloads" data-role="downloads" hidden>
       <span class="segmented-label">Download HP-filtered technology shocks (all four versions)</span>
@@ -376,8 +376,10 @@
 
   <p class="page-note reveal delay-280">
     <strong>© Arthur Galichère.</strong><br>
-    <strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.<br>
-    <strong>Reuse:</strong> Total factor productivity and capital’s share of income are from John Fernald at the Federal Reserve Bank of San Francisco. The estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Extracting Technology Shocks</em></strong>.
+    <strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine.<br>
+    If you believe you have found a mistake, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.<br>
+    <strong>Reuse:</strong> Total factor productivity and capital’s share of income are from John Fernald at the Federal Reserve Bank of San Francisco. The estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website:<br>
+    <strong>Arthur Galichère, <em>Extracting Technology Shocks</em></strong>.
   </p>
 </section>
 
