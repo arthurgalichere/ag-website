@@ -122,7 +122,7 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step1-title">
     <h2 id="step1-title" class="section-title"><span class="step-number">Step 1</span> Start from measured productivity</h2>
-    <p class="section-introduction">Total factor productivity (TFP) is the part of output growth that is not explained by the growth of capital and labour, each weighted by its share of income: the Solow (1957) residual. John Fernald publishes it each quarter for the US business sector as a growth rate, \(g_t\), in percent at an annual rate (400 times the change in the logarithm). Adding up these growth rates gives the level of TFP, shown here as an index equal to 100 on average in 2017.</p>
+    <p class="section-introduction">Total factor productivity (TFP) is the part of output growth that is not explained by the growth of capital and labour, each weighted by its share of income: the Solow (1957) residual. John Fernald publishes it each quarter for the US business sector as a growth rate, \(g_{A,t}\), in percent at an annual rate (400 times the change in the logarithm). Adding up these growth rates gives the level of TFP, shown here as an index equal to 100 on average in 2017.</p>
     <p class="section-introduction">TFP rises over time, but not at a steady pace: it grows quickly in some periods and stalls or falls in others.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="1">
@@ -142,12 +142,14 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step2-title">
     <h2 id="step2-title" class="section-title"><span class="step-number">Step 2</span> Take logarithms and fit a linear trend</h2>
-    <p class="section-introduction">The logarithm of TFP is the sum of past growth rates,</p>
-    <div class="math-display">\[ a_t = a_{t-1} + \frac{g_t}{400}, \]</div>
-    <p class="section-introduction">starting from \(a_0 = 0\). Working in logarithms turns proportional changes into differences, and a constant growth rate into a straight line; the chart shows \(100 \times a_t\), so a change of 1 is a change of about 1 percent.</p>
+    <p class="section-introduction">TFP follows the law of motion</p>
+    <div class="math-display">\[ A_t = A_{t-1}\, e^{g_{A,t}/400} , \]</div>
+    <p class="section-introduction">since Fernald’s growth rates are 400 times the change in the logarithm. Taking logarithms, the logarithm of TFP is the sum of past growth rates,</p>
+    <div class="math-display">\[ \ln A_t = \ln A_{t-1} + \frac{g_{A,t}}{400} = \sum_{s=1}^{t} \frac{g_{A,s}}{400} , \]</div>
+    <p class="section-introduction">starting from \(\ln A_0 = 0\). Working in logarithms turns proportional changes into differences, and a constant growth rate into a straight line; the chart shows \(100 \times \ln A_t\), so a change of 1 is a change of about 1 percent.</p>
     <p class="section-introduction">A straight line is fitted by ordinary least squares,</p>
-    <div class="math-display">\[ a_t = c + \gamma\, t + u_t . \]</div>
-    <p class="section-introduction">The slope \(\gamma\) is trend growth per quarter (\(4\gamma\) per year). The line uses the full history of the series, from 1947.</p>
+    <div class="math-display">\[ \ln A_t = \alpha + \beta\, t + c_t , \]</div>
+    <p class="section-introduction">where \(\alpha\) is the constant, the slope \(\beta\) is trend growth per quarter (\(4\beta\) per year), and the error \(c_t\) is the cyclical component of TFP. The line uses the full history of the series, from 1947.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="2">
       <figcaption class="chart-header">
@@ -166,9 +168,9 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step3-title">
     <h2 id="step3-title" class="section-title"><span class="step-number">Step 3</span> Keep the deviation from trend</h2>
-    <p class="section-introduction">The stochastic component,</p>
-    <div class="math-display">\[ u_t = a_t - (c + \gamma\, t), \]</div>
-    <p class="section-introduction">is how far technology is above (\(u_t &gt; 0\)) or below (\(u_t &lt; 0\)) its trend, in percent. It wanders slowly: once technology is above trend, it tends to stay above trend for many quarters.</p>
+    <p class="section-introduction">The cyclical component, the error of the regression in step 2,</p>
+    <div class="math-display">\[ c_t = \ln A_t - (\alpha + \beta\, t), \]</div>
+    <p class="section-introduction">is how far technology is above (\(c_t &gt; 0\)) or below (\(c_t &lt; 0\)) its trend, in percent. It wanders slowly: once technology is above trend, it tends to stay above trend for many quarters.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="3">
       <figcaption class="chart-header">
@@ -187,15 +189,15 @@
 
   <section class="content-section reveal delay-160" aria-labelledby="step4-title">
     <h2 id="step4-title" class="section-title"><span class="step-number">Step 4</span> Measure persistence</h2>
-    <p class="section-introduction">Persistence is measured by regressing \(u_t\) on its value one quarter earlier, without a constant:</p>
-    <div class="math-display">\[ u_t = \rho\, u_{t-1} + \varepsilon^A_t, \qquad \hat{\rho} = \frac{\sum_t u_{t-1}\, u_t}{\sum_t u_{t-1}^2} . \]</div>
+    <p class="section-introduction">Persistence is measured by regressing \(c_t\) on its value one quarter earlier, without a constant:</p>
+    <div class="math-display">\[ c_t = \rho\, c_{t-1} + \varepsilon^A_t, \qquad \hat{\rho} = \frac{\sum_t c_{t-1}\, c_t}{\sum_t c_{t-1}^2} . \]</div>
     <p class="section-introduction">Each point in the chart is one quarter, with last quarter’s deviation on the horizontal axis and this quarter’s on the vertical axis; the line through the origin has slope \(\hat{\rho}\).</p>
     <p class="section-introduction">A slope close to 1 means that a deviation from trend dies out slowly. After \(k\) quarters, a fraction \(\rho^k\) of it remains, so half of it is gone after \(\ln 0.5 / \ln \rho\) quarters.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="4">
       <figcaption class="chart-header">
         <div class="chart-heading">
-          <span class="chart-title">This quarter’s deviation against last quarter’s</span>
+          <span class="chart-title">Persistence: deviation from trend, \(c_t\), against its previous value, \(c_{t-1}\)</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </div>
       </figcaption>
@@ -210,7 +212,7 @@
   <section class="content-section reveal delay-160" aria-labelledby="step5-title">
     <h2 id="step5-title" class="section-title"><span class="step-number">Step 5</span> Recover the technology shocks</h2>
     <p class="section-introduction">The technology shock is the part of this quarter’s deviation that could not be predicted from last quarter’s,</p>
-    <div class="math-display">\[ \varepsilon^A_t = u_t - \hat{\rho}\, u_{t-1}, \]</div>
+    <div class="math-display">\[ \varepsilon^A_t = c_t - \hat{\rho}\, c_{t-1}, \]</div>
     <p class="section-introduction">the vertical distance between each point in step 4 and the line. Its standard deviation, \(\sigma\), measures the typical size of a shock. The shocks are written \(\varepsilon^A_t\) for measured TFP and \(\varepsilon^{A^u}_t\) for utilization-adjusted TFP (\(\varepsilon^Z_t\) and \(\varepsilon^{Z^u}_t\) for Harrod-neutral technology \(Z\)).</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="5">
@@ -227,8 +229,19 @@
     </figure>
     </div>
     <h3 class="subsection-title">Estimates</h3>
-    <p class="section-introduction">The table collects the numbers estimated in steps 2 to 5, for each version of technology; the row for the version selected at the top of the page is highlighted. Persistence \(\hat{\rho}\) comes from step 4, and the half-life, \(\ln 0.5 / \ln \hat{\rho}\), is the number of quarters after which half of a deviation from trend has gone. The standard deviation of the shock, \(\sigma\), comes from step 5. Trend growth is the slope of the line in step 2, \(4\gamma\), in percent a year. The share of quarters with falling technology counts the quarters in which the growth rate of step 1 is negative; in a model driven only by these shocks, every one of those quarters is a technological regress (King and Rebelo, 1999, section 5). All are estimated over the sample shown in the last column.</p>
+    <p class="section-introduction">The table collects the numbers estimated in steps 2 to 5, for each version of technology; the row for the version selected at the top of the page is highlighted. Persistence \(\hat{\rho}\) comes from step 4, and the half-life, \(\ln 0.5 / \ln \hat{\rho}\), is the number of quarters after which half of a deviation from trend has gone. The standard deviation of the shock, \(\sigma\), comes from step 5. Trend growth is the slope of the line in step 2, \(4\beta\), in percent a year. The share of quarters with falling technology counts the quarters in which the growth rate of step 1 is negative; in a model driven only by these shocks, every one of those quarters is a technological regress (King and Rebelo, 1999, section 5). All are estimated over the sample shown in the last column.</p>
     <div class="shares" data-role="shock-table"></div>
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download technology shocks (all four versions)</span>
+      <div class="download-row">
+        <a class="button-link" data-download="shocks_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> CSV
+        </a>
+        <a class="button-link" data-download="shocks_mat" href="#" download>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
   </section>
 
   <section class="content-section reveal delay-160" aria-labelledby="step6-title">
@@ -237,12 +250,12 @@
     <div class="math-display">\[ \hat{A}_{t+1} = \rho\, \hat{A}_t + \varepsilon^A_{t+1}, \qquad \operatorname{sd}(\varepsilon^A) = \sigma . \]</div>
     <p class="section-introduction">Feeding the model the measured shocks gives its technology path. Starting from the first shock extracted, \(\hat{A}_0 = \varepsilon^A_0\) (the second quarter of 1947, since the first quarter has no previous one), each quarter applies the recursion:</p>
     <div class="math-display">\[ \hat{A}_0 = \varepsilon^A_0, \qquad \hat{A}_t = \hat{\rho}\, \hat{A}_{t-1} + \varepsilon^A_t \quad (t \geq 1). \]</div>
-    <p class="section-introduction">The chart compares this path with the deviation of log TFP from its trend, \(u_t\), from step 3. The two follow the same recursion with the same shocks, so they differ only by where they start: the gap is the deviation of the first quarter, multiplied by \(\hat{\rho}\) each quarter, and it fades as time passes. Once it has faded, the model’s technology reproduces the cyclical component of TFP, which is what makes the measured shocks a valid input for simulating the model and comparing its output, consumption, investment and hours with the data. King and Rebelo (1999), with data for 1947–1996, find \(\rho = 0.979\) and \(\sigma = 0.72\) percent.</p>
+    <p class="section-introduction">The first chart compares this path with the deviation of log TFP from its linear trend, \(c_t\), from step 3. The two follow the same recursion with the same shocks, so they differ only by where they start: the gap is the deviation of the first quarter, multiplied by \(\hat{\rho}\) each quarter, and it fades as time passes. Both still contain slow, long-lasting swings, because a linear trend leaves them in. King and Rebelo (1999), with data for 1947–1996, find \(\rho = 0.979\) and \(\sigma = 0.72\) percent.</p>
     <div class="chart-stack">
     <figure class="chart-card" data-step="6">
       <figcaption class="chart-header">
         <div class="chart-heading">
-          <span class="chart-title">Model technology and the cyclical component of TFP</span>
+          <span class="chart-title">Model technology and the deviation of log TFP from trend</span>
           <span class="chart-subtitle" data-role="chart-subtitle"></span>
         </div>
       </figcaption>
@@ -253,10 +266,66 @@
     </figure>
     </div>
     <p class="table-note" data-role="model-process"></p>
+    <h3 class="subsection-title">Comparing the model with the data: the HP filter</h3>
+    <p class="section-introduction">The slow swings are not a problem for the comparison, because King and Rebelo compare model and data only after filtering both in the same way. Their simulated business cycles (1999, section 4.3.1 and Figure 7) feed the model the shocks \(\varepsilon^A_t\) from step 5, and then, in the words of the figure’s note, “all variables are detrended using the Hodrick–Prescott filter”: output, consumption, investment and hours from the model and from the data, with \(\lambda = 1600\). Their model statistics (Table 3) are likewise computed on the HP cyclical components of the simulated series, so they can be set against the data statistics of the Real Business Cycles page. The shocks themselves do not change; only the final comparison uses the HP filter.</p>
+    <p class="section-introduction">The second chart applies this to technology itself. It shows the HP cyclical component of the model’s technology, \(\hat{A}_t\), and the HP cyclical component of log TFP in the data. The HP filter removes a linear trend completely, so filtering \(c_t\) or log TFP gives the same cycle; the two lines therefore coincide once the starting gap has faded. The same procedure, applied to the model’s output, consumption, investment and hours, produces the series that will be compared with the cycles of the data on this site.</p>
+    <div class="chart-stack">
+    <figure class="chart-card" data-step="6b">
+      <figcaption class="chart-header">
+        <div class="chart-heading">
+          <span class="chart-title">After the HP filter: model technology and TFP in the data</span>
+          <span class="chart-subtitle" data-role="chart-subtitle"></span>
+        </div>
+      </figcaption>
+      <p class="loading-message" data-role="chart-status">Loading chart…</p>
+      <div class="chart-frame" data-role="chart-frame" hidden></div>
+      <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+      <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+    </figure>
+    </div>
+    <p class="table-note" data-role="hp-compare"></p>
   </section>
 
   <section class="content-section reveal delay-220" aria-labelledby="notes-title">
     <h2 id="notes-title" class="section-title">Variants and background</h2>
+    <details class="ribbon" id="hp-filtered-shocks">
+      <summary>
+        <span class="ribbon-title">A shortcut: HP-filtered technology shocks</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p><strong>The shortcut.</strong> Instead of simulating the model with the shocks of step 5 and filtering its output afterwards, the shocks can be extracted from the HP cyclical component of log TFP, \(c^{HP}_t\), using the persistence \(\hat{\rho}\) estimated in step 4:</p>
+        <div class="math-display">\[ \tilde{\varepsilon}^A_t = c^{HP}_t - \hat{\rho}\, c^{HP}_{t-1} . \]</div>
+        <p>Fed into the model, these <em>HP-filtered technology shocks</em> produce series that are already HP cyclical components and can be compared directly with the cycles of the data, with no filtering of the model’s output.</p>
+        <p><strong>Why it works.</strong> Each step is a linear operation that does not depend on the date, and such operations can be applied in any order. Write \(H\) for the HP filter and \(L\) for the lag operator (\(L x_t = x_{t-1}\)):</p>
+        <ol class="method-steps">
+          <li>The HP filter removes a linear trend completely, so the HP cycle of log TFP equals the HP cycle of its deviation from the linear trend: \(c^{HP}_t = H \ln A_t = H c_t\).</li>
+          <li>The shocks of step 5 are \(\varepsilon^A_t = (1-\hat{\rho} L)\, c_t\). Changing the order of the two operations gives \(\tilde{\varepsilon}^A_t = (1-\hat{\rho} L)\, H c_t = H (1-\hat{\rho} L)\, c_t = H \varepsilon^A_t\): the shortcut shocks are the HP-filtered shocks of step 5.</li>
+          <li>The solution of a log-linear model is also linear: output is a weighted sum of current and past shocks, \(\hat{y}_t = G(L)\, \varepsilon^A_t\). Feeding it the filtered shocks gives \(G(L)\, H \varepsilon^A_t = H\, G(L)\, \varepsilon^A_t\), which is the HP cycle of the model’s output. The same holds for consumption, investment, hours and technology itself.</li>
+        </ol>
+        <p>Filtering at the start, on the shocks, or at the end, on the model’s output, therefore gives the same result: the shortcut is King and Rebelo’s procedure with the steps in a different order.</p>
+        <p data-role="shortcut-stats"></p>
+        <p><strong>Where it fails.</strong></p>
+        <ul class="callout-list">
+          <li><strong>At the ends of the sample.</strong> The HP filter treats the first and last few years differently from the middle: it is two-sided and, at the ends, has no future or past data to use. There the order of operations no longer cancels out, and the simulated series differ from King and Rebelo’s, most at the end of the sample, where each new quarter of data also revises the latest shocks. For the most recent quarters, and for anything forward-looking such as forecasts, simulate with the shocks of step 5 and filter afterwards.</li>
+          <li><strong>Persistence must be the linear-trend estimate.</strong> The model’s \(\rho\) and the \(\hat{\rho}\) used to extract the shocks must be the same, from step 4. Re-estimating \(\rho\) on the HP cycle itself would break the equivalence and give a different, less persistent technology process.</li>
+          <li><strong>The shortcut shocks are not true shocks.</strong> They are not unpredictable from one quarter to the next (they are serially correlated), and their standard deviation is not the model’s \(\sigma\). Use the shocks of step 5 for calibrating \(\sigma\), for computing model statistics, and for random simulations.</li>
+          <li><strong>The model must be linear.</strong> The argument holds for a log-linear (first-order) solution. With a second-order or fully non-linear solution, filtering and simulating no longer commute.</li>
+          <li><strong>Starting point.</strong> The simulation should start from the steady state; the first quarters still carry the effect of where it starts, as in the first chart of step 6.</li>
+        </ul>
+        <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download HP-filtered technology shocks (all four versions)</span>
+      <div class="download-row">
+        <a class="button-link" data-download="hp_shocks_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> CSV
+        </a>
+        <a class="button-link" data-download="hp_shocks_mat" href="#" download>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+      </div>
+    </details>
     <details class="ribbon">
       <summary>
         <span class="ribbon-title">Utilization-adjusted TFP</span>
@@ -306,7 +375,9 @@
   <p class="update-note" data-role="update-note" hidden></p>
 
   <p class="page-note reveal delay-280">
-    <strong>© Arthur Galichère. Errors and reuse.</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>. Total factor productivity and capital’s share of income are from John Fernald at the Federal Reserve Bank of San Francisco. The estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website (Arthur Galichère, <em>Extracting Technology Shocks</em>).
+    <strong>© Arthur Galichère.</strong><br>
+    <strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.<br>
+    <strong>Reuse:</strong> Total factor productivity and capital’s share of income are from John Fernald at the Federal Reserve Bank of San Francisco. The estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Extracting Technology Shocks</em></strong>.
   </p>
 </section>
 

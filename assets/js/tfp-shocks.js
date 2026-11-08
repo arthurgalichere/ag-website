@@ -1,10 +1,10 @@
-/* Last edited: 2026-11-08 01:08 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 02:35 UTC (Claude, economics chat) */
 /* =========================================================
    tfp-shocks.js: /economics/tfp-shocks.html
    The extraction of technology shocks step by step (King and
    Rebelo, 1999): TFP level, log TFP with its linear trend, the
-   deviation from trend, persistence (scatter of u(t) against
-   u(t-1) with slope rho), the shocks, and the estimated process.
+   deviation from trend, persistence (scatter of c(t) against
+   c(t-1) with slope rho), the shocks, and the estimated process.
    Reads the rbc-model JSON (technology[form].series[measure],
    with .steps). Page switches: productivity measure and form of
    technology. Uses AGDashboards (dashboards.js) and AGSite.
@@ -23,6 +23,8 @@
     updateNote: body.querySelector('[data-role="update-note"]'),
     table: body.querySelector('[data-role="shock-table"]'),
     process: body.querySelector('[data-role="model-process"]'),
+    hpCompare: body.querySelector('[data-role="hp-compare"]'),
+    shortcut: body.querySelector('[data-role="shortcut-stats"]'),
   };
   const cards = new Map(Array.from(body.querySelectorAll('[data-step]')).map(card => [card.dataset.step, card]));
   const token = name => getComputedStyle(body).getPropertyValue(name).trim() || '#3b5a75';
@@ -57,10 +59,13 @@
   function legend(card, series) {
     const target = role(card, 'chart-legend');
     untypeset(target);
+    /* item.marker === 'dot': a point, as in the scatter of step 4. */
+    const mark = item => (item.marker === 'dot'
+      ? `<circle cx="14" cy="5" r="3" fill="${item.color}" fill-opacity="0.75"/>`
+      : `<line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="${2.2 * (item.weight || 1)}"
+          stroke-dasharray="${item.dash || 'none'}" stroke-linecap="round"/>`);
     target.innerHTML = series.map(item => `
-      <li><svg class="legend-swatch" viewBox="0 0 28 10" aria-hidden="true" focusable="false">
-        <line x1="1" y1="5" x2="27" y2="5" stroke="${item.color}" stroke-width="${2.2 * (item.weight || 1)}"
-          stroke-dasharray="${item.dash || 'none'}" stroke-linecap="round"/></svg>${item.html || S.escapeHTML(item.label)}</li>`).join('');
+      <li><svg class="legend-swatch" viewBox="0 0 28 10" aria-hidden="true" focusable="false">${mark(item)}</svg>${item.html || S.escapeHTML(item.label)}</li>`).join('');
     target.hidden = false;
     typeset(target);
   }
@@ -84,7 +89,7 @@
     role(card, 'chart-readout').textContent = 'Hover over the chart, or focus it and use the arrow keys, to read values.';
   }
 
-  /* Step 4: scatter of u(t) against u(t-1), with the line of slope rho. */
+  /* Step 4: scatter of c(t) against c(t-1), with the line of slope rho. */
   function scatter(step, u, rho) {
     const card = cards.get(step);
     if (!card) return;
@@ -121,8 +126,8 @@
         <line x1="${x(0)}" x2="${x(0)}" y1="${y(-lim)}" y2="${y(lim)}" stroke="var(--chart-zero, rgba(28,28,30,0.45))"/>
         ${dots}
         <line x1="${x(-lim)}" y1="${y(-rho * lim)}" x2="${x(lim)}" y2="${y(rho * lim)}" stroke="${line}" stroke-width="2.2" stroke-dasharray="${DASH_DOT}" stroke-linecap="round"/>
-        <text x="${(m.left + width - m.right) / 2}" y="${height - 6}" text-anchor="middle" class="chart-axis-text">Last quarter, u(t − 1), percent</text>
-        <text transform="translate(14 ${(m.top + height - m.bottom) / 2}) rotate(-90)" text-anchor="middle" class="chart-axis-text">This quarter, u(t), percent</text>
+        <text x="${(m.left + width - m.right) / 2}" y="${height - 6}" text-anchor="middle" class="chart-axis-text">Last quarter, c(t − 1), percent</text>
+        <text transform="translate(14 ${(m.top + height - m.bottom) / 2}) rotate(-90)" text-anchor="middle" class="chart-axis-text">This quarter, c(t), percent</text>
       </svg>`;
     };
     draw();
@@ -134,7 +139,7 @@
     const dates = state.payload.dates;
     role(card, 'chart-subtitle').textContent = `Percent · one point per quarter, ${D.quarterLabel(dates[1])}–${D.quarterLabel(dates[dates.length - 1])}`;
     legend(card, [
-      { label: 'Quarters', color: blue },
+      { label: 'Quarters', html: 'One quarter, \\((c_{t-1}, c_t)\\)', color: blue, marker: 'dot' },
       { label: 'Fitted line', html: `Fitted line, slope \\(\\hat{\\rho} = ${fmt(rho, 3)}\\) (full history)`, color: line, dash: DASH_DOT },
     ]);
     role(card, 'chart-readout').textContent = '';
@@ -178,15 +183,33 @@
       { label: `100 × ln ${t.label}`, color: blue, weight: 1.1, values: s.log_level },
       { label: 'Linear trend', color: orange, dash: DASH_DOT, under: true, values: s.trend },
     ], '100 × natural logarithm', false);
-    timeChart('3', [{ label: 'Deviation from trend, u(t)', html: 'Deviation from trend, \\(u_t\\)', color: blue, values: s.deviation }], 'Percent', true);
+    timeChart('3', [{ label: 'Cyclical component, c(t)', html: 'Cyclical component (deviation from trend), \\(c_t\\)', color: blue, values: s.deviation }], 'Percent', true);
     scatter('4', s.deviation, t.rho);
     timeChart('5', [{ label: 'Technology shock', html: `Technology shock, \\(${shock}\\)`, color: blue, values: t.shock }], 'Percent', true);
     table();
     if (s.model) {
       timeChart('6', [
         { label: 'Model technology', html: `Model technology, \\(\\hat{${letter}}_t\\)`, color: blue, weight: 1.1, values: s.model },
-        { label: 'Deviation of log TFP from trend', html: 'Cyclical component of TFP, \\(u_t\\)', color: orange, dash: DASH_DOT, under: true, values: s.deviation },
+        { label: 'Deviation of log TFP from trend', html: 'Cyclical component of TFP (deviation from its linear trend), \\(c_t\\)', color: orange, dash: DASH_DOT, under: true, values: s.deviation },
       ], 'Percent', true);
+    }
+    if (s.model_hp && s.data_hp) {
+      timeChart('6b', [
+        { label: 'Model technology, HP cycle', html: `Model technology, HP cycle of \\(\\hat{${letter}}_t\\)`, color: blue, weight: 1.1, values: s.model_hp },
+        { label: 'TFP in the data, HP cycle', html: `${S.escapeHTML(t.label)} in the data, HP cycle`, color: orange, dash: DASH_DOT, under: true, values: s.data_hp },
+      ], 'Percent deviation from HP trend (λ = 1600)', true);
+      const c = t.hp_compare;
+      if (el.hpCompare && c) {
+        el.hpCompare.textContent = `From ${D.quarterLabel(state.payload.dates[0])}: correlation ${fmt(c.corr, 2)}; standard deviation ${fmt(c.sd_model, 2)} percent in the model and ${fmt(c.sd_data, 2)} percent in the data. King and Rebelo (1999, Tables 1 and 3) report 0.94 percent for the model’s Solow residual and 0.98 percent in the data, 1947–1996.`;
+      }
+    }
+    const sc = t.hp_shortcut;
+    if (el.shortcut && sc) {
+      untypeset(el.shortcut);
+      el.shortcut.innerHTML = `For ${S.escapeHTML(t.label)}, ${S.escapeHTML(block.label)}: the correlation between \\(\\tilde{\\varepsilon}_t\\) and the HP-filtered shocks of step 5 is ${fmt(sc.corr_interior, 3)} away from the ends of the sample, `
+        + `${fmt(sc.corr_first, 3)} over its first ${sc.edge_quarters} quarters and ${fmt(sc.corr_last, 3)} over its last ${sc.edge_quarters}. `
+        + `The shortcut shocks have a standard deviation of ${fmt(sc.sd, 2)} percent (against \\(\\sigma = ${fmt(t.sigma, 2)}\\) for the shocks of step 5) and a first-order autocorrelation of ${fmt(sc.ar1, 2)}.`;
+      typeset(el.shortcut);
     }
     const shockNext = shock.replace(/_t$/, '_{t+1}');
     untypeset(el.process);
@@ -196,6 +219,19 @@
       + `Trend growth ${fmt(t.trend_growth_annual, 2)} percent a year. `
       + `Estimated ${D.quarterLabel(t.estimation[0])}–${D.quarterLabel(t.estimation[1])}; charts from ${D.quarterLabel(state.payload.dates[0])}.`;
     typeset(el.process);
+  }
+
+  function updateDownloads() {
+    const links = state.payload.downloads;
+    if (!links) return;
+    body.querySelectorAll('[data-download]').forEach(link => {
+      const path = links[link.dataset.download];
+      link.hidden = !path;
+      if (path) link.href = D.siteUrl(body.dataset.siteBase, path);
+    });
+    body.querySelectorAll('[data-role="downloads"]').forEach(box => {
+      box.hidden = !Array.from(box.querySelectorAll('[data-download]')).some(link => !link.hidden);
+    });
   }
 
   async function load() {
@@ -210,6 +246,7 @@
       el.pageStatus.hidden = true;
       if (!payload.technology.harrod) body.querySelector('[data-control="form"]').hidden = true;
       render();
+      updateDownloads();
       if (payload.generated_at_utc) {
         el.updateNote.textContent = `Data updated on ${new Date(payload.generated_at_utc).toLocaleDateString('en-GB')}`;
         el.updateNote.hidden = false;

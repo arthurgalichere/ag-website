@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 01:08 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 02:09 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -824,4 +824,15 @@
   color: var(--ink-soft);
   font-size: 0.86em;
   font-family: "Times New Roman", Times, serif;
+}
+
+/* Numbered steps inside ribbons. */
+.method-steps {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.6rem;
+}
+.method-steps li {
+  margin-bottom: 0.55rem;
+  text-align: justify;
+  hyphens: auto;
 }
