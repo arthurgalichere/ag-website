@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 02:09 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 02:48 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -651,13 +651,13 @@
   }
 }
 
-/* Running text on dashboard pages is justified, like the site's prose. */
+/* Running text on dashboard pages is justified, like the site's prose.
+   The copyright note (.page-note) stays centred, as set in site.css. */
 .ribbon-content p,
 .ribbon-content li,
 .chart-note,
 .table-note,
 .dashboard-note li,
-.page-note,
 .update-note {
   text-align: justify;
   hyphens: auto;
