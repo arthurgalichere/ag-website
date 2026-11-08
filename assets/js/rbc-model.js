@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-06 23:58 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 11:21 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model.js: /economics/rbc-model.html
    Loads the generated rbc-model JSON for the selected country.
@@ -30,7 +30,8 @@
   function statsTable() {
     const tech = state.payload.technology;
     const rows = [];
-    Object.entries(tech).forEach(([form, block]) => {
+    /* Only the form selected above the chart (Hicks- or Harrod-neutral). */
+    Object.entries(tech).filter(([form]) => form === state.form).forEach(([form, block]) => {
       Object.entries(block.series).forEach(([key, t]) => {
         const current = form === state.form && (state.variant === 'comparison' || state.variant === key);
         rows.push(`<tr${current ? ' class="is-current"' : ''}>
@@ -68,8 +69,12 @@
     if (state.chart) state.chart.destroy();
     role('chart-status').hidden = true;
     role('chart-frame').hidden = false;
+    /* Same symmetric axis for measured and utilization-adjusted shocks:
+       at least -4 to +4, wider only if a series in this form goes beyond. */
+    const lim = Math.max(4, Math.ceil(Math.max(...Object.values(tech)
+      .flatMap(item => item.shock.filter(Number.isFinite).map(Math.abs)))));
     state.chart = D.lineChart(role('chart-frame'), {
-      dates, series, period: 0.25, zeroLine: true, digits: 2,
+      dates, series, period: 0.25, zeroLine: true, digits: 2, yRange: [-lim, lim],
       recessions: payload.recessions ? payload.recessions.intervals : [],
       readout: role('chart-readout'),
       label: `Technology shocks, ${block.label}, with recessions shaded`,

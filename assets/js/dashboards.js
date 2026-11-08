@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-06 23:08 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 11:21 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -182,6 +182,12 @@ window.AGDashboards = (() => {
       if (options.zeroLine === true) {
         yMin = Math.min(yMin, 0);
         yMax = Math.max(yMax, 0);
+      }
+      /* Optional fixed range (options.yRange = [min, max]), widened only if
+         the data go beyond it. */
+      if (Array.isArray(options.yRange)) {
+        yMin = Math.min(yMin, options.yRange[0]);
+        yMax = Math.max(yMax, options.yRange[1]);
       }
       const yStep = niceStep(yMax - yMin || 1, compact ? 5 : 7);
       yMin = Math.floor(yMin / yStep) * yStep;
