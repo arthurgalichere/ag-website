@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 11:00 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-08 11:13 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -666,8 +666,8 @@
    narrower column so it reads as a compact block. */
 .update-note { text-align: center; }
 .dashboard-body .page-note {
-  /* Side margins 30% smaller than a 42rem column: 100% - 0.7 x (100% - 42rem). */
-  max-width: calc(30% + 29.4rem);
+  /* Side margins 37% smaller than a 42rem column: 100% - 0.63 x (100% - 42rem). */
+  max-width: calc(37% + 26.46rem);
   margin-left: auto;
   margin-right: auto;
 }
