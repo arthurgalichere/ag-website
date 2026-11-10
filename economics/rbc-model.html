@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RBC Model Simulation and Forecasting</title>
-  <meta name="description" content="An interactive Real Business Cycle model of the US economy: technology shocks, equilibrium dynamics, impulse responses, simulations and model-based forecasts." />
+  <meta name="description" content="The basic Real Business Cycle model of the US economy, driven by measured technology shocks: simulations compared with the data, business-cycle statistics, calibration and methods." />
 
   
 
@@ -98,8 +98,35 @@
   <header class="reveal delay-80">
     <p class="eyebrow">Economics · Model</p>
     <h1 class="page-title">RBC Model Simulation and Forecasting</h1>
-    <p class="lead">This page is under construction.</p>
+    <p class="lead">The Real Business Cycle model explains fluctuations as the efficient response of households and firms to changes in technology. Households choose how much to consume, save and work; firms produce with capital and labour; and the only source of fluctuations is technology. This page solves the basic model of King and Rebelo (1999), feeds it with the technology shocks measured in the US data, and compares the business cycles the model generates since 1950 with those observed.</p>
   </header>
+
+  <div class="dashboard-controls reveal delay-120">
+    <div class="segmented-field" data-control="form">
+      <span class="segmented-label" id="form-label">Technical progress</span>
+      <div class="segmented" role="group" aria-labelledby="form-label">
+        <button type="button" data-value="hicks" aria-pressed="true">Hicks-neutral</button>
+        <button type="button" data-value="harrod" aria-pressed="false">Harrod-neutral</button>
+      </div>
+    </div>
+    <div class="segmented-field" data-control="tfp">
+      <span class="segmented-label" id="tfp-label">Productivity</span>
+      <div class="segmented" role="group" aria-labelledby="tfp-label">
+        <button type="button" data-value="measured" aria-pressed="true">Measured</button>
+        <button type="button" data-value="adjusted" aria-pressed="false">Utilization-adjusted</button>
+        <button type="button" data-value="comparison" aria-pressed="false">Comparison</button>
+      </div>
+    </div>
+    <div class="segmented-field" data-control="shocks">
+      <span class="segmented-label" id="shocks-label">Technology shocks</span>
+      <div class="segmented" role="group" aria-labelledby="shocks-label">
+        <button type="button" data-value="kr" aria-pressed="true">Linear trend</button>
+        <button type="button" data-value="hp" aria-pressed="false">HP-filtered</button>
+        <button type="button" data-value="comparison" aria-pressed="false">Comparison</button>
+      </div>
+    </div>
+    <p class="segmented-hint controls-hint">These settings apply to every chart and table. Linear trend: the shocks of King and Rebelo (1999), with the model’s series HP filtered afterwards. HP-filtered: the shortcut, with no filtering of the model’s series. One comparison at a time.</p>
+  </div>
 
   <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
 
@@ -111,23 +138,6 @@
           <div class="chart-heading">
             <span class="chart-title">Technology shocks</span>
             <span class="chart-subtitle" data-role="chart-subtitle"></span>
-          </div>
-          <div class="chart-controls">
-            <div class="segmented-field chart-control" data-control="form">
-              <span class="visually-hidden" id="tfp-form-label">Form of technical progress</span>
-              <div class="segmented" role="group" aria-labelledby="tfp-form-label">
-                <button type="button" data-value="hicks" aria-pressed="true">Hicks-neutral</button>
-                <button type="button" data-value="harrod" aria-pressed="false">Harrod-neutral</button>
-              </div>
-            </div>
-            <div class="segmented-field chart-control" data-control="tfp">
-              <span class="visually-hidden" id="tfp-variant-label">Productivity measure</span>
-              <div class="segmented" role="group" aria-labelledby="tfp-variant-label">
-                <button type="button" data-value="measured" aria-pressed="true">Measured</button>
-                <button type="button" data-value="adjusted" aria-pressed="false">Utilization-adjusted</button>
-                <button type="button" data-value="comparison" aria-pressed="false">Comparison</button>
-              </div>
-            </div>
           </div>
         </figcaption>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
@@ -152,8 +162,109 @@
     </div>
   </section>
 
+  <section class="content-section reveal delay-180" aria-labelledby="simulation-title">
+    <h2 id="simulation-title" class="section-title">The model and the data</h2>
+    <p class="section-introduction">The model is fed with the technology shocks above, quarter by quarter, and its series are compared with the HP cyclical components of the US data shown on the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page. The model has no other shocks: every movement in its series comes from technology.</p>
+    <div class="chart-stack">
+      <figure class="chart-card" data-role="model-card">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title" data-role="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <div class="segmented-field chart-control" data-control="variable">
+          <span class="visually-hidden" id="variable-label">Variable</span>
+          <div class="segmented" role="group" aria-labelledby="variable-label">
+            <button type="button" data-value="y" aria-pressed="true">Output</button>
+            <button type="button" data-value="c" aria-pressed="false">Consumption</button>
+            <button type="button" data-value="i" aria-pressed="false">Investment</button>
+            <button type="button" data-value="h" aria-pressed="false">Hours worked</button>
+            <button type="button" data-value="k" aria-pressed="false">Capital</button>
+            <button type="button" data-value="yh" aria-pressed="false">Labour productivity</button>
+            <button type="button" data-value="w" aria-pressed="false">Real wage</button>
+            <button type="button" data-value="r" aria-pressed="false">Real interest rate</button>
+          </div>
+        </div>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="content-section reveal delay-200" aria-labelledby="statistics-title">
+    <h2 id="statistics-title" class="section-title">Business-cycle statistics: model and data</h2>
+    <p class="section-introduction">The statistics of King and Rebelo (1999, Tables 1 and 3), for the data and for the model over the same quarters. The last column is the correlation of each model series with its counterpart in the data, quarter by quarter: how much of the US history the model reproduces.</p>
+    <div class="table-toggle-row">
+      <button type="button" class="kr-toggle" data-control="king-rebelo" aria-pressed="false" title="Moments of King and Rebelo’s basic model">King and Rebelo (1999), Table 3</button>
+    </div>
+    <div class="shares" data-role="stats-table"></div>
+    <p class="chart-note" data-role="stats-note"></p>
+  </section>
+
+  <section class="content-section reveal delay-210" aria-labelledby="calibration-title">
+    <h2 id="calibration-title" class="section-title">Calibration and solution</h2>
+    <div class="shares" data-role="calibration-table"></div>
+    <p class="chart-note" data-role="calibration-note"></p>
+    <div class="dashboard-downloads" data-role="sim-downloads" hidden>
+      <span class="segmented-label">Download simulations</span>
+      <div class="download-row">
+        <a class="button-link" data-download="simulations_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> CSV
+        </a>
+        <a class="button-link" data-download="simulations_mat" href="#" download>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section class="content-section reveal delay-220" aria-labelledby="methods-title">
     <h2 id="methods-title" class="section-title">Definitions and methods</h2>
+    <details class="ribbon" id="method-model">
+      <summary>
+        <span class="ribbon-title">The model: households, firms and balanced growth</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The model is the basic neoclassical model of King and Rebelo (1999, sections 3 and 4), in the tradition of Kydland and Prescott (1982), Long and Plosser (1983) and Prescott (1986). A representative household values consumption, \(C_t\), and leisure, \(1-N_t\), where \(N_t\) is the share of its time spent working:</p>
+        <div class="math-display">\[ \max\; E_0 \sum_{t=0}^{\infty} \beta^t \left[ \ln C_t + \xi \ln (1-N_t) \right] . \]</div>
+        <p>Firms produce with capital, \(K_t\), and hours, using a Cobb–Douglas production function with two forms of technology: \(A_t\), which fluctuates around its trend and drives the business cycle, and \(X_t\), labour-augmenting technical progress that grows at the constant gross rate \(\gamma\) each quarter:</p>
+        <div class="math-display">\[ Y_t = A_t K_t^{\alpha} (X_t N_t)^{1-\alpha}, \qquad X_{t+1} = \gamma X_t . \]</div>
+        <p>Output is consumed or invested, and capital depreciates at the rate \(\delta\):</p>
+        <div class="math-display">\[ C_t + I_t = Y_t, \qquad K_{t+1} = (1-\delta) K_t + I_t . \]</div>
+        <p><strong>Balanced growth.</strong> Because trend growth is labour-augmenting (Harrod-neutral) and utility is logarithmic in consumption, the economy grows along a balanced growth path (King, Plosser and Rebelo, 1988): output, consumption, investment, capital and the real wage all grow at the rate of \(X_t\), while hours and the interest rate are constant. Dividing each growing variable by \(X_t\), as in \(y_t = Y_t/X_t\) and \(k_t = K_t/X_t\), gives a stationary economy, which has a steady state. Its conditions are those of the economy without growth, except that the growth of \(X_t\) appears in the accumulation of capital and in the discount factor:</p>
+        <div class="math-display">\[ c_t + \gamma\, k_{t+1} = A_t k_t^{\alpha} N_t^{1-\alpha} + (1-\delta) k_t , \]</div>
+        <div class="math-display">\[ \frac{\xi\, c_t}{1-N_t} = (1-\alpha) \frac{y_t}{N_t} , \qquad \frac{1}{c_t} = \frac{\beta}{\gamma}\, E_t \left[ \frac{1}{c_{t+1}} \left( \alpha \frac{y_{t+1}}{k_{t+1}} + 1 - \delta \right) \right] . \]</div>
+        <p>The first is the resource constraint, the second equates the value of leisure to the real wage, and the third is the Euler equation for saving. In the steady state, the marginal product of capital is \(\alpha\, y/k = \gamma/\beta - 1 + \delta\): faster growth raises the interest rate and lowers the capital–output ratio. The model’s series are percent deviations from the balanced growth path, so that, in logarithms, \(\ln Y_t = \ln y + \ln X_t + \hat{y}_t\): a constant, a linear trend and the cycle. The HP filter removes a linear trend exactly, so trend growth affects the model’s cycles only through the steady state and the dynamics, not through the trend itself.</p>
+        <p><strong>Technology.</strong> With Hicks-neutral technology, \(A_t\) is total factor productivity, as in King and Rebelo. With Harrod-neutral technology, \(Y_t = K_t^{\alpha} (Z_t X_t N_t)^{1-\alpha}\), so that \(A_t = Z_t^{1-\alpha}\) (see “Forms of technical progress” below). In both cases the trend of technology estimated in the data fixes \(\gamma\): the trend growth of TFP is \(1-\alpha\) times the growth of \(X_t\).</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="method-solution">
+      <summary>
+        <span class="ribbon-title">Solving and simulating the model</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p><strong>Log-linearisation.</strong> Each condition is approximated around the steady state in percent deviations, written with a hat (\(\hat{y}_t = 100 \ln (y_t/y)\)). With \(\Upsilon = \alpha + N/(1-N)\) and \(\Omega = 1 - \beta(1-\delta)/\gamma\):</p>
+        <div class="math-display">\[ \hat{y}_t = \hat{A}_t + \alpha\, \hat{k}_t + (1-\alpha)\, \hat{N}_t , \qquad \hat{N}_t = \frac{\hat{A}_t + \alpha\, \hat{k}_t - \hat{c}_t}{\Upsilon} , \]</div>
+        <div class="math-display">\[ \gamma\, \frac{k}{y}\, \hat{k}_{t+1} = \hat{y}_t + (1-\delta) \frac{k}{y}\, \hat{k}_t - \frac{c}{y}\, \hat{c}_t , \qquad E_t \hat{c}_{t+1} - \hat{c}_t = \Omega\, E_t \left( \hat{y}_{t+1} - \hat{k}_{t+1} \right) , \]</div>
+        <div class="math-display">\[ \hat{A}_{t+1} = \rho\, \hat{A}_t + \varepsilon^A_{t+1} . \]</div>
+        <p>Eliminating hours with the labour-supply condition leaves three equations in technology and capital, which are predetermined, and consumption, which is free to jump.</p>
+        <p><strong>Solution.</strong> The system is solved by the eigenvalue decomposition of Blanchard and Kahn (1980). It has a unique stable solution when the number of eigenvalues outside the unit circle equals the number of jump variables, here one; the table above reports the eigenvalues. Consumption then follows the saddle path</p>
+        <div class="math-display">\[ \hat{c}_t = g_A\, \hat{A}_t + g_K\, \hat{k}_t , \]</div>
+        <p>and every other variable follows from technology, capital and consumption: hours from the labour-supply condition, output from the production function, investment from the resource constraint, labour productivity and the real wage from \(\hat{y}_t - \hat{N}_t\) (the two are equal with a Cobb–Douglas production function), and the real interest rate from the Euler equation, \(\hat{r}_t = 4\,(E_t \hat{c}_{t+1} - \hat{c}_t)\), in percentage points a year.</p>
+        <p><strong>Simulation.</strong> The model starts in the first quarter of the technology data (1947 Q1), with technology at its measured deviation from trend and capital at its steady state, and is then driven by the measured shocks, quarter by quarter. The first three years are not shown, so that the starting value of capital has little effect on the series shown.</p>
+        <p><strong>Two ways of comparing the model with the data.</strong> The model’s series are deviations from the balanced growth path, while the data’s are HP cyclical components, from which slow movements around the trend have also been removed. King and Rebelo (1999, section 4.3.1) therefore HP filter the model’s series too (λ = 1600) before comparing them with the data: this is the “Linear trend” setting. The “HP-filtered” setting uses the shortcut described on the <a class="text-link" href="/economics/tfp-shocks.html#hp-filtered-shocks">Extracting Technology Shocks</a> page: the model is driven by the HP-filtered shocks, and its series are already HP cyclical components. Because the model is linear, the two coincide except near the ends of the sample; the comparison setting shows both.</p>
+        <p><strong>The data.</strong> As in King and Rebelo, the model is compared with per-capita data: output, consumption and investment per person, hours per person aged 16 and over (nonfarm business sector), and Fernald’s capital input of the business sector per person. The real wage is real hourly compensation and labour productivity is output per hour, both in the nonfarm business sector. The real interest rate is the ex-post real three-month Treasury-bill rate; King and Rebelo use an expected real rate built from inflation forecasts (Stock and Watson, 1999).</p>
+      </div>
+    </details>
+
     <details class="ribbon" id="method-shocks">
       <summary>
         <span class="ribbon-title">Technology shocks, step by step</span>
@@ -194,14 +305,19 @@
       <div class="ribbon-content">
         <ul class="reference-list">
           <li>Basu, S., J. G. Fernald and M. S. Kimball (2006). “Are Technology Improvements Contractionary?” <em>American Economic Review</em> 96(5): 1418–1448.</li>
+          <li>Blanchard, O. J. and C. M. Kahn (1980). “The Solution of Linear Difference Models under Rational Expectations.” <em>Econometrica</em> 48(5): 1305–1311.</li>
           <li>Fernald, J. G. (2014). “A Quarterly, Utilization-Adjusted Series on Total Factor Productivity.” Federal Reserve Bank of San Francisco Working Paper 2012-19 (updated March 2014).</li>
           <li>Harrod, R. F. (1948). <em>Towards a Dynamic Economics</em>. London: Macmillan.</li>
           <li>Hicks, J. R. (1932). <em>The Theory of Wages</em>. London: Macmillan.</li>
           <li>Kaldor, N. (1957). “A Model of Economic Growth.” <em>Economic Journal</em> 67(268): 591–624.</li>
           <li>Kaldor, N. (1961). “Capital Accumulation and Economic Growth.” In F. A. Lutz and D. C. Hague (eds.), <em>The Theory of Capital</em>: 177–222. London: Macmillan.</li>
+          <li>King, R. G., C. I. Plosser and S. T. Rebelo (1988). “Production, Growth and Business Cycles: I. The Basic Neoclassical Model.” <em>Journal of Monetary Economics</em> 21(2–3): 195–232.</li>
           <li>King, R. G. and S. T. Rebelo (1999). “Resuscitating Real Business Cycles.” In J. B. Taylor and M. Woodford (eds.), <em>Handbook of Macroeconomics</em>, Vol. 1B, Chapter 14: 927–1007. Amsterdam: Elsevier.</li>
+          <li>Kydland, F. E. and E. C. Prescott (1982). “Time to Build and Aggregate Fluctuations.” <em>Econometrica</em> 50(6): 1345–1370.</li>
+          <li>Long, J. B. and C. I. Plosser (1983). “Real Business Cycles.” <em>Journal of Political Economy</em> 91(1): 39–69.</li>
           <li>Prescott, E. C. (1986). “Theory Ahead of Business Cycle Measurement.” <em>Federal Reserve Bank of Minneapolis Quarterly Review</em> 10(4): 9–22.</li>
           <li>Solow, R. M. (1957). “Technical Change and the Aggregate Production Function.” <em>Review of Economics and Statistics</em> 39(3): 312–320.</li>
+          <li>Stock, J. H. and M. W. Watson (1999). “Business Cycle Fluctuations in US Macroeconomic Time Series.” In J. B. Taylor and M. Woodford (eds.), <em>Handbook of Macroeconomics</em>, Vol. 1A, Chapter 1: 3–64. Amsterdam: Elsevier.</li>
           <li>Uzawa, H. (1961). “Neutral Inventions and the Stability of Growth Equilibrium.” <em>Review of Economic Studies</em> 28(2): 117–124.</li>
         </ul>
       </div>
@@ -224,7 +340,7 @@
     <p><strong>© Arthur Galichère.</strong></p>
     <ul>
       <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
-      <li><strong>Reuse and citation:</strong> Total factor productivity and capital’s share of income are from John Fernald at the Federal Reserve Bank of San Francisco. The model, estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>RBC Model Simulation and Forecasting</em></strong>.</li>
+      <li><strong>Reuse and citation:</strong> Total factor productivity, capital input and capital’s share of income are from John Fernald at the Federal Reserve Bank of San Francisco; the other data are from the U.S. Bureau of Economic Analysis, the U.S. Bureau of Labor Statistics and the Federal Reserve, via FRED. The model, estimates, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>RBC Model Simulation and Forecasting</em></strong>.</li>
     </ul>
   </div>
 </section>

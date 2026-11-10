@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 12:38 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-10 01:13 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -857,3 +857,36 @@
   text-align: justify;
   hyphens: auto;
 }
+
+/* RBC model page: page-level settings note, model rows in the statistics
+   table, groups and symbols in the calibration table. */
+.dashboard-controls .controls-hint {
+  flex-basis: 100%;
+  margin-top: -0.4rem;
+  text-align: justify;
+}
+.bc-table tr.model-row th,
+.bc-table tr.model-row td {
+  color: var(--ink);
+  font-style: normal;
+  font-size: 0.92em;
+}
+.bc-table tr.model-row + tr:not(.kr-row) th,
+.bc-table tr.model-row + tr:not(.kr-row) td,
+.bc-table tr.kr-row + tr:not(.kr-row) th,
+.bc-table tr.kr-row + tr:not(.kr-row) td {
+  border-top: 1px solid var(--line-strong);
+}
+.calibration-table tr.table-group th {
+  padding-top: 0.9rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.calibration-table td.symbol-cell { white-space: nowrap; }
+.chart-card [data-control="variable"] { margin-bottom: 0.9rem; }
+[data-role="sim-downloads"] { margin-top: 1rem; }
