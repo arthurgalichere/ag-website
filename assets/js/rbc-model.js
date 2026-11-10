@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-10 01:13 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-10 01:31 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model.js: /economics/rbc-model.html
    Loads the generated rbc-model JSON for the selected country and
@@ -40,7 +40,7 @@
   };
 
   const techCard = body.querySelector('[data-role="technology-card"]');
-  const modelCard = body.querySelector('[data-role="model-card"]');
+  const modelCards = Array.from(body.querySelectorAll('[data-model-var]'));
   const inCard = (card, name) => card.querySelector(`[data-role="${name}"]`);
   const el = {
     pageStatus: body.querySelector('[data-role="page-status"]'),
@@ -54,8 +54,8 @@
     krToggle: body.querySelector('[data-control="king-rebelo"]'),
   };
   const state = {
-    country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr', variable: 'y',
-    showKR: false, payload: null, techChart: null, modelChart: null,
+    country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr',
+    showKR: false, payload: null, techChart: null, modelCharts: new Map(),
   };
   const token = name => getComputedStyle(body).getPropertyValue(name).trim() || '#3b5a75';
   const fmt = (value, digits = 2) => D.formatNumber(value, digits);
@@ -162,10 +162,13 @@
   const statRow = (rows, key) => (rows || []).find(row => row.key === key) || {};
   const techLabel = () => (state.form === 'harrod' ? 'Labour-augmenting technology' : 'Total factor productivity');
 
-  function renderModel() {
+  /* One chart per variable: the model (blue, or one colour per run in a
+     comparison) against the data (orange, dash-dot). */
+  function renderModelCard(card) {
     const payload = state.payload;
     const model = payload.model;
-    const key = state.variable;
+    const key = card.dataset.modelVar;
+    const role = name => inCard(card, name);
     const unit = model.variables.find(v => v.key === key).units;
     const list = variants();
     const series = list.map(v => ({
@@ -178,42 +181,51 @@
       values: model.data[key],
     });
     const dates = payload.dates;
-    inCard(modelCard, 'chart-title').textContent = VARIABLES[key];
-    inCard(modelCard, 'chart-subtitle').textContent = `${unit} · HP cyclical components · ${payload.technology[state.form].label} · ${sampleText(dates)}`;
-    if (state.modelChart) state.modelChart.destroy();
-    inCard(modelCard, 'chart-status').hidden = true;
-    inCard(modelCard, 'chart-frame').hidden = false;
-    state.modelChart = D.lineChart(inCard(modelCard, 'chart-frame'), {
+    role('chart-subtitle').textContent = `${unit} · HP cyclical components · ${payload.technology[state.form].label} · ${sampleText(dates)}`;
+    const previous = state.modelCharts.get(card);
+    if (previous) previous.destroy();
+    role('chart-status').hidden = true;
+    role('chart-frame').hidden = false;
+    state.modelCharts.set(card, D.lineChart(role('chart-frame'), {
       dates, series, period: 0.25, zeroLine: true, digits: 2,
       recessions: payload.recessions ? payload.recessions.intervals : [],
-      readout: inCard(modelCard, 'chart-readout'),
+      readout: role('chart-readout'),
       label: `${VARIABLES[key]}: the RBC model and the US data, HP cyclical components, with recessions shaded`,
-    });
-    inCard(modelCard, 'chart-legend').innerHTML = series.map(swatch).join('');
-    inCard(modelCard, 'chart-legend').hidden = false;
-    inCard(modelCard, 'chart-readout').textContent = 'Hover over the chart, or focus it and use the arrow keys, to read values.';
-    inCard(modelCard, 'chart-source').textContent = 'Data: HP cyclical components (λ = 1600) from the Real Business Cycles page, where the sources are listed. Model: author’s calculations.';
+    }));
+    role('chart-legend').innerHTML = series.map(swatch).join('');
+    role('chart-legend').hidden = false;
+    role('chart-readout').textContent = 'Hover over the chart, or focus it and use the arrow keys, to read values.';
 
     /* How close the model is: correlation with the data and volatility. */
-    const dataSd = statRow(run(list[0].measure).stats.data, key).sd;
-    const parts = list.map(v => {
-      const row = statRow(run(v.measure).stats[v.kind], key);
-      const name = v.suffix ? `model with ${v.suffix}` : 'model';
-      return `${name}: correlation with the data ${fmt(row.corr_data)}, standard deviation ${fmt(row.sd)}`;
-    });
-    let note = `${parts.join('; ')}; standard deviation of the data ${fmt(dataSd)}${key === 'r' ? ' (percentage points)' : ''}.`;
-    note = note.charAt(0).toUpperCase() + note.slice(1);
+    const dataRow = statRow(run(list[0].measure).stats.data, key);
+    const rows = list.map(v => ({ v, row: statRow(run(v.measure).stats[v.kind], key) }));
+    const units = key === 'r' ? ' percentage points' : '';
+    let note;
+    if (key === 'r') {
+      /* The interest rate: say plainly what the numbers mean. */
+      const m = rows[0].row;
+      const which = list.length > 1 ? ` (${rows[0].v.suffix})` : '';
+      note = `The model’s rate and the data’s move almost independently of each other: their correlation is ${fmt(m.corr_data)}${which}, close to zero. They also behave differently over the cycle. In the model, the real rate rises in expansions and falls in recessions (correlation with output ${fmt(m.corr_y)}) and moves little (standard deviation ${fmt(m.sd)} percentage points). In the data, the real Treasury-bill rate has almost no relation to output (correlation ${fmt(dataRow.corr_y)}) and is about ${fmt(dataRow.sd / m.sd, 0)} times as volatile (${fmt(dataRow.sd)} percentage points). The model’s rate is the expected return on saving, which moves only with technology; the data’s rate is set largely by monetary policy and, measured after the fact, also moves with unexpected inflation.`;
+    } else {
+      const parts = rows.map(({ v, row }) => `${v.suffix ? `model with ${v.suffix}` : 'model'}: correlation with the data ${fmt(row.corr_data)}, standard deviation ${fmt(row.sd)}${units}`);
+      note = `${parts.join('; ')}; standard deviation of the data ${fmt(dataRow.sd)}${units}.`;
+      note = note.charAt(0).toUpperCase() + note.slice(1);
+    }
     const adjusted = list.find(v => v.measure === 'adjusted');
     if (adjusted && key === 'y' && statRow(run('adjusted').stats[adjusted.kind], 'y').corr_data < 0.3) {
       note += ' With utilization-adjusted TFP, the model’s output is almost unrelated to the data: once changes in the intensity with which capital and labour are used are removed, technology shocks explain little of the US business cycle, as Basu, Fernald and Kimball (2006) found.';
     }
-    if (key === 'r') {
-      note += ' The model’s rate is the expected real return implied by the Euler equation; the data’s is the ex-post real Treasury-bill rate, which also moves with monetary policy and unexpected inflation.';
-    }
     if (key === 'yh' || key === 'w') {
       note += ' In the model, labour productivity and the real wage are the same series: with a Cobb–Douglas production function, the wage is proportional to output per hour.';
     }
-    inCard(modelCard, 'chart-note').textContent = note;
+    if (key === 'k') {
+      note += ' The data are capital services (Fernald’s capital input); the model’s series is the capital stock.';
+    }
+    role('chart-note').textContent = note;
+  }
+
+  function renderModel() {
+    modelCards.forEach(renderModelCard);
   }
 
   /* Statistics table --------------------------------------------- */
@@ -276,7 +288,7 @@
       ['Capital’s share of income', '\\(\\alpha\\)', same(fmt(cal.alpha, 3)), '0.333'],
       ['Depreciation rate (per quarter)', '\\(\\delta\\)', same(fmt(cal.delta, 3)), '0.025'],
       ['Weight of leisure in utility', '\\(\\xi\\)', same(fmt(cal.xi, 2)), '3.48'],
-      ['Trend growth (gross, per quarter)', '\\(\\gamma\\)', each(r => `${fmt(r.gamma, 5)}<br><span class="unit-label">${fmt(r.trend_growth_x_annual, 2)}% a year</span>`), '1.004'],
+      ['Trend growth (per quarter)', '\\(g_X\\)', each(r => `${fmt(r.g_x, 5)}<br><span class="unit-label">${fmt(r.trend_growth_x_annual, 2)}% a year</span>`), '0.004'],
       ['Persistence of technology', '\\(\\rho\\)', each(r => fmt(r.rho, 3)), '0.979'],
       ['Standard deviation of the shocks (percent)', shockSymbol, each((r, t) => fmt(t.sigma, 2)), state.form === 'harrod' ? '–' : '0.72'],
       ['Hours (share of time)', '\\(N\\)', each(r => fmt(r.steady_state.hours, 3)), '0.20'],
@@ -286,6 +298,8 @@
       ['Real interest rate (percent a year)', '\\(r\\)', each(r => fmt(r.steady_state.r_annual, 2)), '6.5'],
       ['Eigenvalues (absolute values)', '\\(|\\lambda|\\)', each(r => r.eigenvalues.map(v => fmt(v, 3)).join(', ')), '–'],
       ['Consumption rule', '\\(g_A,\\ g_K\\)', each(r => `${fmt(r.policy.c_a, 3)}, ${fmt(r.policy.c_k, 3)}`), '–'],
+      [`Starting values, ${D.quarterLabel(run(measures[0]).initial.quarter)}: linear-trend shocks`, `\\(${state.form === 'harrod' ? '\\hat{Z}_0' : '\\hat{A}_0'},\\ \\hat{k}_0\\)`, each(r => `${fmt(r.initial.kr.a, 2)}, ${fmt(r.initial.kr.k, 2)}`), '–'],
+      [`Starting values, ${D.quarterLabel(run(measures[0]).initial.quarter)}: HP-filtered shocks`, `\\(${state.form === 'harrod' ? '\\hat{Z}_0' : '\\hat{A}_0'},\\ \\hat{k}_0\\)`, each(r => `${fmt(r.initial.hp.a, 2)}, ${fmt(r.initial.hp.k, 2)}`), '–'],
     ];
     const group = (title, list) => `<tr class="table-group"><th scope="rowgroup" colspan="${3 + measures.length}">${title}</th></tr>`
       + list.map(([name, symbol, values, kr]) => `<tr><th scope="row">${esc(name)}</th><td class="symbol-cell">${symbol}</td>${values}<td>${kr}</td></tr>`).join('');
@@ -301,7 +315,7 @@
     const harrod = state.form === 'harrod'
       ? ' With Harrod-neutral technology, the shocks to \\(Z\\) enter the model as \\(A = Z^{1-\\alpha}\\), so their effect is that of shocks \\(1-\\alpha\\) times as large to total factor productivity.'
       : '';
-    setHTML(el.calibrationNote, `The discount factor, capital’s share, the depreciation rate and the weight of leisure are those of King and Rebelo (1999, Table 2); utility is logarithmic in consumption and leisure. Trend growth, persistence and the size of the shocks are estimated from the technology series selected above: the trend growth of \\(X\\) is the trend growth of TFP divided by labour’s share, \\(1-\\alpha\\), close to King and Rebelo’s 1.6 percent a year. With trend growth, the same discount factor implies a higher interest rate, \\(r = \\gamma/\\beta - 1\\), than King and Rebelo’s 6.5 percent, and a lower capital–output ratio. One eigenvalue lies outside the unit circle, as the Blanchard–Kahn condition requires; the other two are the persistence of technology and the speed at which capital returns to its steady state.${harrod}`);
+    setHTML(el.calibrationNote, `Capital’s share, the depreciation rate and the weight of leisure are those of King and Rebelo (1999, Table 2), and utility is logarithmic in consumption and leisure. The discount factor is set to 0.988 rather than their 0.984 so that, with trend growth, the steady-state real interest rate, \\(r = (1+g_X)/\\beta - 1\\), is about 6.5 percent a year, the return King and Rebelo target; it implies that hours take 20 percent of available time, as in their calibration. Trend growth, persistence and the size of the shocks are estimated from the technology series selected above: the trend growth of \\(X\\) is the trend growth of TFP divided by labour’s share, \\(1-\\alpha\\), close to King and Rebelo’s 1.6 percent a year. One eigenvalue lies outside the unit circle, as the Blanchard–Kahn condition requires; the other two are the persistence of technology and the speed at which capital returns to its steady state. Starting values are percent deviations from trend in the first quarter of the data (see “Solving and simulating the model”).${harrod}`);
   }
 
   /* Rendering ------------------------------------------------------- */
@@ -331,7 +345,7 @@
 
   function showModelMissing() {
     const message = '<p class="loading-message">The model simulations will appear after the next data update.</p>';
-    inCard(modelCard, 'chart-status').textContent = 'The model simulations will appear after the next data update.';
+    modelCards.forEach(card => { inCard(card, 'chart-status').textContent = 'The model simulations will appear after the next data update.'; });
     el.statsTable.innerHTML = message;
     el.calibration.innerHTML = '';
     if (el.krToggle) el.krToggle.hidden = true;
@@ -385,10 +399,6 @@
       tfpControl.select('measured', false);
     }
     render();
-  });
-  D.segmented(modelCard.querySelector('[data-control="variable"]'), value => {
-    state.variable = value;
-    if (state.payload && state.payload.model) renderModel();
   });
   if (el.krToggle) {
     el.krToggle.addEventListener('click', () => {

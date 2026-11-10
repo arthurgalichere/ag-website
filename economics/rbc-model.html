@@ -166,34 +166,112 @@
     <h2 id="simulation-title" class="section-title">The model and the data</h2>
     <p class="section-introduction">The model is fed with the technology shocks above, quarter by quarter, and its series are compared with the HP cyclical components of the US data shown on the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page. The model has no other shocks: every movement in its series comes from technology.</p>
     <div class="chart-stack">
-      <figure class="chart-card" data-role="model-card">
+      <figure class="chart-card" data-model-var="y">
         <figcaption class="chart-header">
           <div class="chart-heading">
-            <span class="chart-title" data-role="chart-title">Output</span>
+            <span class="chart-title">Output</span>
             <span class="chart-subtitle" data-role="chart-subtitle"></span>
           </div>
         </figcaption>
-        <div class="segmented-field chart-control" data-control="variable">
-          <span class="visually-hidden" id="variable-label">Variable</span>
-          <div class="segmented" role="group" aria-labelledby="variable-label">
-            <button type="button" data-value="y" aria-pressed="true">Output</button>
-            <button type="button" data-value="c" aria-pressed="false">Consumption</button>
-            <button type="button" data-value="i" aria-pressed="false">Investment</button>
-            <button type="button" data-value="h" aria-pressed="false">Hours worked</button>
-            <button type="button" data-value="k" aria-pressed="false">Capital</button>
-            <button type="button" data-value="yh" aria-pressed="false">Labour productivity</button>
-            <button type="button" data-value="w" aria-pressed="false">Real wage</button>
-            <button type="button" data-value="r" aria-pressed="false">Real interest rate</button>
-          </div>
-        </div>
         <p class="loading-message" data-role="chart-status">Loading chart…</p>
         <div class="chart-frame" data-role="chart-frame" hidden></div>
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="c">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="i">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Investment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="h">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Hours worked</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="k">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Capital</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="yh">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Labour productivity</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="w">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real wage</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="r">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real interest rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-note" data-role="chart-note"></p>
       </figure>
     </div>
+    <p class="chart-source model-source">Data: HP cyclical components (λ = 1600) from the Real Business Cycles page, where the sources are listed. Model: author’s calculations.</p>
   </section>
 
   <section class="content-section reveal delay-200" aria-labelledby="statistics-title">
@@ -233,15 +311,15 @@
       <div class="ribbon-content">
         <p>The model is the basic neoclassical model of King and Rebelo (1999, sections 3 and 4), in the tradition of Kydland and Prescott (1982), Long and Plosser (1983) and Prescott (1986). A representative household values consumption, \(C_t\), and leisure, \(1-N_t\), where \(N_t\) is the share of its time spent working:</p>
         <div class="math-display">\[ \max\; E_0 \sum_{t=0}^{\infty} \beta^t \left[ \ln C_t + \xi \ln (1-N_t) \right] . \]</div>
-        <p>Firms produce with capital, \(K_t\), and hours, using a Cobb–Douglas production function with two forms of technology: \(A_t\), which fluctuates around its trend and drives the business cycle, and \(X_t\), labour-augmenting technical progress that grows at the constant gross rate \(\gamma\) each quarter:</p>
-        <div class="math-display">\[ Y_t = A_t K_t^{\alpha} (X_t N_t)^{1-\alpha}, \qquad X_{t+1} = \gamma X_t . \]</div>
+        <p>Firms produce with capital, \(K_t\), and hours, using a Cobb–Douglas production function with two forms of technology: \(A_t\), which fluctuates around its trend and drives the business cycle, and \(X_t\), labour-augmenting technical progress that grows at the constant rate \(g_X\) each quarter:</p>
+        <div class="math-display">\[ Y_t = A_t K_t^{\alpha} (X_t N_t)^{1-\alpha}, \qquad X_{t+1} = (1+g_X)\, X_t . \]</div>
         <p>Output is consumed or invested, and capital depreciates at the rate \(\delta\):</p>
         <div class="math-display">\[ C_t + I_t = Y_t, \qquad K_{t+1} = (1-\delta) K_t + I_t . \]</div>
         <p><strong>Balanced growth.</strong> Because trend growth is labour-augmenting (Harrod-neutral) and utility is logarithmic in consumption, the economy grows along a balanced growth path (King, Plosser and Rebelo, 1988): output, consumption, investment, capital and the real wage all grow at the rate of \(X_t\), while hours and the interest rate are constant. Dividing each growing variable by \(X_t\), as in \(y_t = Y_t/X_t\) and \(k_t = K_t/X_t\), gives a stationary economy, which has a steady state. Its conditions are those of the economy without growth, except that the growth of \(X_t\) appears in the accumulation of capital and in the discount factor:</p>
-        <div class="math-display">\[ c_t + \gamma\, k_{t+1} = A_t k_t^{\alpha} N_t^{1-\alpha} + (1-\delta) k_t , \]</div>
-        <div class="math-display">\[ \frac{\xi\, c_t}{1-N_t} = (1-\alpha) \frac{y_t}{N_t} , \qquad \frac{1}{c_t} = \frac{\beta}{\gamma}\, E_t \left[ \frac{1}{c_{t+1}} \left( \alpha \frac{y_{t+1}}{k_{t+1}} + 1 - \delta \right) \right] . \]</div>
-        <p>The first is the resource constraint, the second equates the value of leisure to the real wage, and the third is the Euler equation for saving. In the steady state, the marginal product of capital is \(\alpha\, y/k = \gamma/\beta - 1 + \delta\): faster growth raises the interest rate and lowers the capital–output ratio. The model’s series are percent deviations from the balanced growth path, so that, in logarithms, \(\ln Y_t = \ln y + \ln X_t + \hat{y}_t\): a constant, a linear trend and the cycle. The HP filter removes a linear trend exactly, so trend growth affects the model’s cycles only through the steady state and the dynamics, not through the trend itself.</p>
-        <p><strong>Technology.</strong> With Hicks-neutral technology, \(A_t\) is total factor productivity, as in King and Rebelo. With Harrod-neutral technology, \(Y_t = K_t^{\alpha} (Z_t X_t N_t)^{1-\alpha}\), so that \(A_t = Z_t^{1-\alpha}\) (see “Forms of technical progress” below). In both cases the trend of technology estimated in the data fixes \(\gamma\): the trend growth of TFP is \(1-\alpha\) times the growth of \(X_t\).</p>
+        <div class="math-display">\[ c_t + (1+g_X)\, k_{t+1} = A_t k_t^{\alpha} N_t^{1-\alpha} + (1-\delta) k_t , \]</div>
+        <div class="math-display">\[ \frac{\xi\, c_t}{1-N_t} = (1-\alpha) \frac{y_t}{N_t} , \qquad \frac{1}{c_t} = \frac{\beta}{1+g_X}\, E_t \left[ \frac{1}{c_{t+1}} \left( \alpha \frac{y_{t+1}}{k_{t+1}} + 1 - \delta \right) \right] . \]</div>
+        <p>The first is the resource constraint, the second equates the value of leisure to the real wage, and the third is the Euler equation for saving. In the steady state, the marginal product of capital is \(\alpha\, y/k = (1+g_X)/\beta - 1 + \delta\): faster growth raises the interest rate and lowers the capital–output ratio. The model’s series are percent deviations from the balanced growth path, so that, in logarithms, \(\ln Y_t = \ln y + \ln X_t + \hat{y}_t\): a constant, a linear trend and the cycle. The HP filter removes a linear trend exactly, so trend growth affects the model’s cycles only through the steady state and the dynamics, not through the trend itself.</p>
+        <p><strong>Technology.</strong> With Hicks-neutral technology, \(A_t\) is total factor productivity, as in King and Rebelo. With Harrod-neutral technology, \(Y_t = K_t^{\alpha} (Z_t X_t N_t)^{1-\alpha}\), so that \(A_t = Z_t^{1-\alpha}\) (see “Forms of technical progress” below). In both cases the trend of technology estimated in the data fixes \(g_X\): the trend growth of TFP is \(1-\alpha\) times the growth of \(X_t\).</p>
       </div>
     </details>
 
@@ -251,15 +329,15 @@
         <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
       </summary>
       <div class="ribbon-content">
-        <p><strong>Log-linearisation.</strong> Each condition is approximated around the steady state in percent deviations, written with a hat (\(\hat{y}_t = 100 \ln (y_t/y)\)). With \(\Upsilon = \alpha + N/(1-N)\) and \(\Omega = 1 - \beta(1-\delta)/\gamma\):</p>
+        <p><strong>Log-linearisation.</strong> Each condition is approximated around the steady state in percent deviations, written with a hat (\(\hat{y}_t = 100 \ln (y_t/y)\)). With \(\Upsilon = \alpha + N/(1-N)\) and \(\Omega = 1 - \beta(1-\delta)/(1+g_X)\):</p>
         <div class="math-display">\[ \hat{y}_t = \hat{A}_t + \alpha\, \hat{k}_t + (1-\alpha)\, \hat{N}_t , \qquad \hat{N}_t = \frac{\hat{A}_t + \alpha\, \hat{k}_t - \hat{c}_t}{\Upsilon} , \]</div>
-        <div class="math-display">\[ \gamma\, \frac{k}{y}\, \hat{k}_{t+1} = \hat{y}_t + (1-\delta) \frac{k}{y}\, \hat{k}_t - \frac{c}{y}\, \hat{c}_t , \qquad E_t \hat{c}_{t+1} - \hat{c}_t = \Omega\, E_t \left( \hat{y}_{t+1} - \hat{k}_{t+1} \right) , \]</div>
+        <div class="math-display">\[ (1+g_X)\, \frac{k}{y}\, \hat{k}_{t+1} = \hat{y}_t + (1-\delta) \frac{k}{y}\, \hat{k}_t - \frac{c}{y}\, \hat{c}_t , \qquad E_t \hat{c}_{t+1} - \hat{c}_t = \Omega\, E_t \left( \hat{y}_{t+1} - \hat{k}_{t+1} \right) , \]</div>
         <div class="math-display">\[ \hat{A}_{t+1} = \rho\, \hat{A}_t + \varepsilon^A_{t+1} . \]</div>
         <p>Eliminating hours with the labour-supply condition leaves three equations in technology and capital, which are predetermined, and consumption, which is free to jump.</p>
         <p><strong>Solution.</strong> The system is solved by the eigenvalue decomposition of Blanchard and Kahn (1980). It has a unique stable solution when the number of eigenvalues outside the unit circle equals the number of jump variables, here one; the table above reports the eigenvalues. Consumption then follows the saddle path</p>
         <div class="math-display">\[ \hat{c}_t = g_A\, \hat{A}_t + g_K\, \hat{k}_t , \]</div>
         <p>and every other variable follows from technology, capital and consumption: hours from the labour-supply condition, output from the production function, investment from the resource constraint, labour productivity and the real wage from \(\hat{y}_t - \hat{N}_t\) (the two are equal with a Cobb–Douglas production function), and the real interest rate from the Euler equation, \(\hat{r}_t = 4\,(E_t \hat{c}_{t+1} - \hat{c}_t)\), in percentage points a year.</p>
-        <p><strong>Simulation.</strong> The model starts in the first quarter of the technology data (1947 Q1), with technology at its measured deviation from trend and capital at its steady state, and is then driven by the measured shocks, quarter by quarter. The first three years are not shown, so that the starting value of capital has little effect on the series shown.</p>
+        <p><strong>Simulation.</strong> The model starts in the first quarter of the technology data (1947 Q1), with technology and capital at their values in the data, and is then driven by the measured shocks, quarter by quarter. Both starting values are measured in the same way as the shocks that follow them: with the linear-trend shocks, technology and capital per capita start at their deviations from their linear trends; with the HP-filtered shocks, at their HP cyclical components, the cycle of capital being the one on the Real Business Cycles page. Capital is Fernald’s capital input, which measures the services of the capital stock. The table above reports the starting values; the first three years are not shown.</p>
         <p><strong>Two ways of comparing the model with the data.</strong> The model’s series are deviations from the balanced growth path, while the data’s are HP cyclical components, from which slow movements around the trend have also been removed. King and Rebelo (1999, section 4.3.1) therefore HP filter the model’s series too (λ = 1600) before comparing them with the data: this is the “Linear trend” setting. The “HP-filtered” setting uses the shortcut described on the <a class="text-link" href="/economics/tfp-shocks.html#hp-filtered-shocks">Extracting Technology Shocks</a> page: the model is driven by the HP-filtered shocks, and its series are already HP cyclical components. Because the model is linear, the two coincide except near the ends of the sample; the comparison setting shows both.</p>
         <p><strong>The data.</strong> As in King and Rebelo, the model is compared with per-capita data: output, consumption and investment per person, hours per person aged 16 and over (nonfarm business sector), and Fernald’s capital input of the business sector per person. The real wage is real hourly compensation and labour productivity is output per hour, both in the nonfarm business sector. The real interest rate is the ex-post real three-month Treasury-bill rate; King and Rebelo use an expected real rate built from inflation forecasts (Stock and Watson, 1999).</p>
       </div>
