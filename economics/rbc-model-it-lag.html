@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RBC Model: Firms Facing an Investment Installation Lag</title>
+  <meta name="description" content="A Real Business Cycle model in which firms own their capital stock and part of each period&#39;s investment is installed with a one-period delay: the model, calibration, steady state, simulations against the US data and impulse responses." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      
+
+
+<section
+  class="page-body dashboard-body"
+  data-dashboard="rbc-model-it-lag"
+  data-data-url="/assets/data/economics/{country}/rbc-model-it-lag.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Economics
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Model</p>
+    <h1 class="page-title">RBC Model: Firms Facing an Investment Installation Lag</h1>
+    <p class="lead">This model extends the <a class="text-link" href="/economics/rbc-model.html">canonical RBC model</a> in two ways. Firms, rather than households, own the capital stock: households hold shares in the firm, and the firm invests out of its revenue and pays the rest as dividends. And investment takes time to become productive: only a fraction \(\phi_t\) of the investment made in period \(t\) is installed in \(t+1\); the rest is installed one period later. The speed of installation is itself subject to shocks, so the economy is driven by two sources of fluctuations: technology shocks and installation shocks. The model is calibrated as the canonical one, simulated with the same technology shocks measured in the US data, and compared with both the data and the canonical model.</p>
+  </header>
+
+  <section class="content-section reveal delay-120" aria-labelledby="model-title">
+    <h2 id="model-title" class="section-title">The Model</h2>
+    <div class="model-stack">
+      <article class="model-card">
+        <h3 class="model-card-title">Households</h3>
+        <h4 class="model-card-subtitle">The household’s problem</h4>
+        <p>A representative household consumes \(c_t\) and divides one unit of time between leisure, \(l_t\), and hours of work, \(h_t\), so that \(l_t + h_t = 1\). It saves by holding shares of the representative firm, \(S_t\), bought at the price \(p_t\) and paying the dividend \(d_t\):</p>
+        <div class="equation-block">
+          \[ \max_{\{c_t,\, h_t,\, S_t\}_{t=0}^{\infty}}\; \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t \left[ \ln c_t + \theta \ln (1-h_t) \right] \]
+          \[ \text{subject to} \quad c_t + p_t S_t = (p_t + d_t)\, S_{t-1} + w_t h_t , \qquad S_{-1} \ \text{given} . \]
+        </div>
+        <p>With \(\lambda_t\) the multiplier on the budget constraint, the first-order conditions give \(\lambda_t = 1/c_t\), labour supply and the Euler equation for shares:</p>
+        <div class="equation-block">
+          \[ \frac{\theta}{1-h_t} = \frac{w_t}{c_t} , \qquad \frac{1}{c_t} = \beta\, \mathbb{E}_t \left[ \frac{1}{c_{t+1}}\, \frac{p_{t+1} + d_{t+1}}{p_t} \right] , \]
+        </div>
+        <p>where \((p_{t+1} + d_{t+1})/p_t\) is the gross return on holding the firm’s stock.</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">Firms</h3>
+        <h4 class="model-card-subtitle">Production, investment and the firm’s problem</h4>
+        <p>A representative firm produces with hours and its own capital stock. As in the canonical model, productivity has a stationary part, \(A_t\), which follows a first-order autoregressive process, and labour-augmenting technical progress, \(X_t\), which grows at the constant rate \(g_X\) and gives the economy a balanced growth path:</p>
+        <div class="equation-block">
+          \[ Y_t = A_t\, K_t^{\alpha} \left( X_t h_t \right)^{1-\alpha} , \qquad \ln A_t = \rho_A \ln A_{t-1} + \varepsilon^A_t , \qquad \varepsilon^A_t \sim \mathcal{N}(0, \sigma^2_{\varepsilon^A}) , \qquad X_{t+1} = (1+g_X)\, X_t . \]
+        </div>
+        <p>It pays wages and invests out of its revenue, and distributes the rest as dividends. Investment takes time to install: a fraction \(\phi_t\) of the investment made in period \(t\) becomes productive capital in \(t+1\), and the remaining fraction \(1-\phi_t\) one period later. The speed of installation fluctuates around its steady-state value, \(\phi \in (0,1]\), with installation shocks \(\varepsilon^\phi_t\):</p>
+        <div class="equation-block">
+          \[ d_t + w_t h_t + I_t = Y_t , \qquad K_{t+1} = (1-\delta)\, K_t + \phi_t I_t + (1-\phi_{t-1})\, I_{t-1} , \]
+          \[ \ln \phi_t = (1-\rho_\phi) \ln \phi + \rho_\phi \ln \phi_{t-1} + \varepsilon^\phi_t , \qquad \varepsilon^\phi_t \sim \mathcal{N}(0, \sigma^2_{\varepsilon^\phi}) . \]
+        </div>
+        <p>The firm maximises its value to its shareholders, the expected discounted stream of dividends, using their stochastic discount factor, \(\beta^t \lambda_t / \lambda_0\), by choosing hours, investment and next period’s capital, given \(K_0\) and the investment still to be installed from the previous period, \((1-\phi_{-1})\, I_{-1}\):</p>
+        <div class="equation-block">
+          \[ \max_{\{d_t,\, h_t,\, I_t,\, K_{t+1}\}_{t=0}^{\infty}}\; \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t\, \frac{\lambda_t}{\lambda_0}\, d_t \]
+        </div>
+        <p>subject to the flow-of-funds constraint and the accumulation of capital. With \(q_t\), the multiplier on the accumulation of capital, measuring the value of a unit of installed capital (Tobin’s \(q\)), and an interior solution for investment, the first-order conditions are</p>
+        <div class="equation-block">
+          \[ w_t = (1-\alpha)\, \frac{Y_t}{h_t} , \qquad 1 = \phi_t\, q_t + \beta\, (1-\phi_t)\, \mathbb{E}_t \left[ \frac{\lambda_{t+1}}{\lambda_t}\, q_{t+1} \right] , \]
+          \[ q_t = \beta\, \mathbb{E}_t \left[ \frac{\lambda_{t+1}}{\lambda_t} \left( \alpha\, \frac{Y_{t+1}}{K_{t+1}} + (1-\delta)\, q_{t+1} \right) \right] . \]
+        </div>
+        <p>A unit of output invested today costs one unit and buys \(\phi_t\) units of capital installed next period, worth \(q_t\) each, and \(1-\phi_t\) units installed a period later, worth \(q_{t+1}\) each, discounted by the shareholders. Installed capital is worth its marginal product next period plus its undepreciated value.</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">General Equilibrium</h3>
+        <h4 class="model-card-subtitle">Definition of competitive equilibrium</h4>
+        <p>Given the initial capital stock, \(K_0\), the investment made in the previous period and its installed fraction, \(I_{-1}\) and \(\phi_{-1}\), the household’s initial portfolio, \(S_{-1}\), the initial levels of technology and of the speed of installation, \(A_0\) and \(\phi_0\), and their stochastic processes, a competitive equilibrium consists of state-contingent sequences of household choices (consumption, labour supply and share holdings), firm choices (labour demand, investment, capital and dividends) and prices (the wage and the share price), in which every variable dated \(t\) depends only on the history of shocks up to \(t\), such that:</p>
+        <ol class="equilibrium-list">
+          <li><strong>Household optimisation.</strong> Given prices, households maximise lifetime expected utility subject to their sequence of budget constraints.</li>
+          <li><strong>Firm optimisation.</strong> Given prices and the shareholders’ stochastic discount factor, the firm maximises the expected discounted value of its dividends subject to its flow-of-funds constraint and the accumulation of capital.</li>
+          <li><strong>Market clearing.</strong> In every period and for every history of shocks, the labour market clears, the household holds the whole stock of the firm, \(S_t = 1\), and the goods market clears: combining the two budget constraints, \(c_t + I_t = Y_t\).</li>
+        </ol>
+        <p><a class="button-link" href="#equilibrium-conditions" data-open-ribbon><i class="fas fa-equals" aria-hidden="true"></i> Equilibrium conditions</a></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="content-section reveal delay-130" aria-labelledby="methodology-title">
+    <h2 id="methodology-title" class="section-title">Methodology</h2>
+    <p class="section-introduction">The model is calibrated as the <a class="text-link" href="/economics/rbc-model.html">canonical RBC model</a>, with three more parameters for the speed of installation. It is then log-linearised around its steady state and solved (see “Solution” in <a class="text-link" href="#solution" data-open-ribbon>Definitions, Methods and Solutions</a>), and fed with the same technology shocks, measured in the US data, quarter by quarter. The settings below choose the technology series and the shocks used everywhere on the page.</p>
+  <div class="dashboard-controls reveal delay-120">
+    <div class="segmented-field" data-control="form">
+      <span class="segmented-label" id="form-label">Neutral technical progress</span>
+      <div class="segmented" role="group" aria-labelledby="form-label">
+        <button type="button" data-value="hicks" aria-pressed="true" title="Hicks-neutral technical progress">Hicks</button>
+        <button type="button" data-value="harrod" aria-pressed="false" title="Harrod-neutral (labour-augmenting) technical progress">Harrod</button>
+      </div>
+    </div>
+    <div class="segmented-field" data-control="tfp">
+      <span class="segmented-label" id="tfp-label">Productivity</span>
+      <div class="segmented" role="group" aria-labelledby="tfp-label">
+        <button type="button" data-value="measured" aria-pressed="true">Measured</button>
+        <button type="button" data-value="adjusted" aria-pressed="false">Utilization-adjusted</button>
+        <button type="button" data-value="comparison" aria-pressed="false">Comparison</button>
+      </div>
+    </div>
+    <div class="segmented-field" data-control="shocks">
+      <span class="segmented-label" id="shocks-label">Technology shocks</span>
+      <div class="segmented" role="group" aria-labelledby="shocks-label">
+        <button type="button" data-value="kr" aria-pressed="true">Linear trend</button>
+        <button type="button" data-value="hp" aria-pressed="false">HP-filtered</button>
+        <button type="button" data-value="comparison" aria-pressed="false">Comparison</button>
+      </div>
+    </div>
+    <p class="segmented-hint controls-hint">These settings apply to every chart and table below. Linear trend: the shocks of King and Rebelo (1999), with the model’s series HP filtered afterwards. HP-filtered: the shortcut, with no filtering of the model’s series. One comparison at a time.</p>
+  </div>
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+    <h3 class="subsection-title is-first" id="calibration">Calibration</h3>
+    <div class="shares" data-role="calibration-table"></div>
+    <p class="chart-note" data-role="calibration-note"></p>
+    <h3 class="subsection-title" id="technology-shocks">Technology shocks</h3>
+    <p class="section-introduction">The technology shocks, and the starting values of technology and capital in 1947 Q1, are those of the canonical model; see <a class="text-link" href="/economics/rbc-model.html#technology-shocks">Technology shocks</a> on the canonical RBC model page. Investment awaiting installation and the speed of installation start at their steady-state values.</p>
+  </section>
+
+  <section class="content-section reveal delay-140" aria-labelledby="steady-state-title">
+    <h2 id="steady-state-title" class="section-title">Steady State</h2>
+    <div class="model-stack">
+      <article class="model-card">
+        <h3 class="model-card-title">The steady state</h3>
+        <h4 class="model-card-subtitle">Installation lags raise the value of capital</h4>
+        <p>In the steady state, \(A = 1\) and \(\phi_t = \phi\), so the accumulation of capital gives \(I = \delta K\), and the first-order condition for investment gives the value of installed capital:</p>
+        <div class="equation-block">
+          \[ q = \frac{1}{\phi + \beta\, (1-\phi)} . \]
+        </div>
+        <p>With \(r \equiv 1/\beta - 1 + \delta\), the condition for capital fixes the capital–labour ratio, and with it the great ratios:</p>
+        <div class="equation-block">
+          \[ \frac{K}{h} = \left( \frac{\alpha}{q\, r} \right)^{\frac{1}{1-\alpha}} , \qquad \frac{Y}{K} = \frac{q\, r}{\alpha} , \qquad \frac{I}{K} = \delta , \qquad \frac{c}{K} = \frac{q\, r}{\alpha} - \delta , \qquad \frac{d}{K} = q\, r - \delta . \]
+        </div>
+        <p>Labour supply then gives hours, and the share price is the present value of dividends:</p>
+        <div class="equation-block">
+          \[ h = \frac{(1-\alpha)\, Y/c}{\theta + (1-\alpha)\, Y/c} , \quad \text{with} \quad \frac{Y}{c} = \frac{q\, r}{q\, r - \alpha \delta} , \qquad p = \frac{\beta}{1-\beta}\, d . \]
+        </div>
+        <p>These expressions are for an economy without trend growth. With trend growth, as in the simulations, \(\beta\) is replaced by \(\beta/(1+g_X)\) in \(q\), \(r\) becomes \((1+g_X)/\beta - 1 + \delta\), and the investment–capital ratio is \(I/K = (g_X + \delta)/[\phi + (1-\phi)/(1+g_X)]\).</p>
+        <p>When \(\phi = 1\), all investment is installed within one period, \(q = 1\), and the model is the standard RBC model with firm-owned capital, in which the marginal product of capital equals \(r\). When \(\phi &lt; 1\), part of each unit of investment is installed a period later and its return is discounted by \(\beta\), so \(q &gt; 1\): installed capital is worth more than the unit of output it costs. The marginal product of capital required rises to \(q\, r\), and the steady-state capital–labour ratio is lower than in the standard model.</p>
+      </article>
+    </div>
+    <h3 class="subsection-title" id="steady-state-values">Steady state and great ratios</h3>
+    <p class="section-introduction">The steady state of the calibrated model, with trend growth, against that of the canonical model.</p>
+    <div class="shares" data-role="steady-table"></div>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="simulation-title">
+    <h2 id="simulation-title" class="section-title">Model Simulations vs the Data</h2>
+    <p class="section-introduction">The model is fed with the measured technology shocks, quarter by quarter, and its series are compared with the HP cyclical components of the US data shown on the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page. The installation shocks are not observed, so they are not used: the differences from the canonical model come from the installation lag alone.</p>
+    <div class="chart-stack">
+      <figure class="chart-card" data-model-var="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="c">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="i">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Investment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="h">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Hours worked</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="k">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Capital</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="yh">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Labour productivity</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="w">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real wage</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="r">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real interest rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+    </div>
+    <p class="chart-source model-source">Data: HP cyclical components (λ = 1600) from the Real Business Cycles page, where the sources are listed. Model: author’s calculations.</p>
+  </section>
+
+  <section class="content-section reveal delay-180" aria-labelledby="statistics-title">
+    <h2 id="statistics-title" class="section-title">Business-Cycle Statistics: Models and Data</h2>
+    <p class="section-introduction">The statistics of King and Rebelo (1999, Tables 1 and 3), for the US economy, the model with an installation lag and the canonical model, over the same quarters.</p>
+    <div class="shares" data-role="stats-table"></div>
+    <h3 class="subsection-title" id="model-data-correlation">Correlation with the data</h3>
+    <p class="section-introduction">How much of the US history each model reproduces: the volatility of each model series relative to the data, and the correlation between the two, quarter by quarter.</p>
+    <div class="shares" data-role="corr-table"></div>
+    <p class="chart-note" data-role="stats-note"></p>
+  </section>
+
+  <section class="content-section reveal delay-200" aria-labelledby="irf-tfp-title">
+    <h2 id="irf-tfp-title" class="section-title">Impulse Responses to One Positive Technology Shock</h2>
+    <p class="section-introduction" data-role="irf-tfp-intro"></p>
+    <div class="irf-grid">
+      <figure class="chart-card irf-card" data-irf-tfp="a">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Technology</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-tfp="c">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-tfp="i">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Investment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-tfp="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-tfp="k">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Capital</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-tfp="h">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Hours worked</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+    </div>
+    <p class="chart-note irf-note">With an installation lag, most of each period’s investment becomes productive capital only two quarters later, so capital responds more slowly to the shock than in the canonical model, and the higher return on capital is reaped later. Investment, hours and output therefore rise less after the first quarter, while consumption, which depends on lifetime wealth, is almost unchanged.</p>
+  </section>
+
+  <section class="content-section reveal delay-210" aria-labelledby="irf-phi-title">
+    <h2 id="irf-phi-title" class="section-title">Impulse Responses to One Positive Installation Shock</h2>
+    <p class="section-introduction" data-role="irf-phi-intro">A positive shock of 1 percent to the speed of installation, \(\varepsilon^\phi_1\), hits the economy on its balanced growth path in quarter 1, with no further shocks: a larger share of this quarter’s investment is installed next quarter. One standard deviation of the shock is about a third of this size.</p>
+    <div class="irf-grid">
+      <figure class="chart-card irf-card" data-irf-phi="f">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Speed of installation</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="q">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Tobin’s q</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="i">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Investment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="k">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Capital</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="c">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="h">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Hours worked</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="w">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real wage</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf-phi="r">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real interest rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percentage points (annual rate)</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+    </div>
+    <p class="chart-note irf-note">Faster installation makes investment pay off sooner, so firms invest more and the value of installed capital, Tobin’s q, falls towards its replacement cost: new capital is quicker to obtain. Capital rises the next quarter, and output with it, before both return slowly to their paths; households finance the extra investment by working more, which lowers the real wage at first, and by consuming less for a few quarters. With a steady-state speed of installation of 0.17, a 1 percent shock changes the share of investment installed within a quarter by less than 0.2 percentage points, so the responses are small.</p>
+  </section>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions, Methods and Solutions</h2>
+    <details class="ribbon" id="equilibrium-conditions">
+      <summary>
+        <span class="ribbon-title">Equilibrium conditions</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The equilibrium is described by eight equations in the eight endogenous variables \(\lambda_t, c_t, h_t, p_t, d_t, q_t, K_{t+1}\) and \(I_t\), given the processes for technology, \(A_t\), and the speed of installation, \(\phi_t\):</p>
+        <div class="math-display">\[ \frac{1}{c_t} = \lambda_t , \qquad \frac{\theta}{1-h_t} = \frac{(1-\alpha)\, A_t K_t^{\alpha} h_t^{-\alpha}}{c_t} , \qquad \frac{1}{c_t} = \beta\, \mathbb{E}_t \left[ \frac{1}{c_{t+1}}\, \frac{p_{t+1} + d_{t+1}}{p_t} \right] , \]</div>
+        <div class="math-display">\[ 1 = \phi_t\, q_t + \beta\, (1-\phi_t)\, \mathbb{E}_t \left[ \frac{\lambda_{t+1}}{\lambda_t}\, q_{t+1} \right] , \qquad q_t = \beta\, \mathbb{E}_t \left[ \frac{\lambda_{t+1}}{\lambda_t} \left( \alpha A_{t+1} K_{t+1}^{\alpha-1} h_{t+1}^{1-\alpha} + (1-\delta)\, q_{t+1} \right) \right] , \]</div>
+        <div class="math-display">\[ d_t = \alpha\, A_t K_t^{\alpha} h_t^{1-\alpha} - I_t , \qquad c_t + I_t = A_t K_t^{\alpha} h_t^{1-\alpha} , \qquad K_{t+1} = (1-\delta)\, K_t + \phi_t I_t + (1-\phi_{t-1})\, I_{t-1} . \]</div>
+        <p>The first three describe the household (the multiplier, labour supply with the wage substituted out, and the Euler equation for shares), the next two the firm’s investment and capital decisions, and the last three the firm’s dividends, the resource constraint of the economy and the accumulation of capital. Because part of each period’s investment is installed a period later, last period’s investment, \(I_{t-1}\), is a state variable alongside capital.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="solution">
+      <summary>
+        <span class="ribbon-title">Solution</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The equilibrium conditions are written for the stationary economy, with growing variables divided by \(X_t\), and investment awaiting installation, \(z_t = (1-\phi_{t-1})\, I_{t-1}\), as a state variable. They are linearised in logarithms around the steady state and solved by the generalised Schur (QZ) decomposition of Klein (2000), which handles the static conditions and the two lags in the accumulation of capital directly. The model has four predetermined states, technology, the speed of installation, capital and investment awaiting installation, and a unique stable solution when four eigenvalues lie inside the unit circle, as the table reports. With \(\phi = 1\), the same solver reproduces the solution of the canonical model.</p>
+        <div class="shares" data-role="solution-table"></div>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Basu, S., J. G. Fernald and M. S. Kimball (2006). “Are Technology Improvements Contractionary?” <em>American Economic Review</em> 96(5): 1418–1448.</li>
+          <li>Blanchard, O. J. and C. M. Kahn (1980). “The Solution of Linear Difference Models under Rational Expectations.” <em>Econometrica</em> 48(5): 1305–1311.</li>
+          <li>Klein, P. (2000). “Using the Generalized Schur Form to Solve a Multivariate Linear Rational Expectations Model.” <em>Journal of Economic Dynamics and Control</em> 24(10): 1405–1423.</li>
+          <li>Fernald, J. G. (2014). “A Quarterly, Utilization-Adjusted Series on Total Factor Productivity.” Federal Reserve Bank of San Francisco Working Paper 2012-19 (updated March 2014).</li>
+          <li>Harrod, R. F. (1948). <em>Towards a Dynamic Economics</em>. London: Macmillan.</li>
+          <li>Hicks, J. R. (1932). <em>The Theory of Wages</em>. London: Macmillan.</li>
+          <li>Kaldor, N. (1957). “A Model of Economic Growth.” <em>Economic Journal</em> 67(268): 591–624.</li>
+          <li>Kaldor, N. (1961). “Capital Accumulation and Economic Growth.” In F. A. Lutz and D. C. Hague (eds.), <em>The Theory of Capital</em>: 177–222. London: Macmillan.</li>
+          <li>King, R. G., C. I. Plosser and S. T. Rebelo (1988). “Production, Growth and Business Cycles: I. The Basic Neoclassical Model.” <em>Journal of Monetary Economics</em> 21(2–3): 195–232.</li>
+          <li>King, R. G. and S. T. Rebelo (1999). “Resuscitating Real Business Cycles.” In J. B. Taylor and M. Woodford (eds.), <em>Handbook of Macroeconomics</em>, Vol. 1B, Chapter 14: 927–1007. Amsterdam: Elsevier.</li>
+          <li>Kydland, F. E. and E. C. Prescott (1982). “Time to Build and Aggregate Fluctuations.” <em>Econometrica</em> 50(6): 1345–1370.</li>
+          <li>Long, J. B. and C. I. Plosser (1983). “Real Business Cycles.” <em>Journal of Political Economy</em> 91(1): 39–69.</li>
+          <li>Prescott, E. C. (1986). “Theory Ahead of Business Cycle Measurement.” <em>Federal Reserve Bank of Minneapolis Quarterly Review</em> 10(4): 9–22.</li>
+          <li>Solow, R. M. (1957). “Technical Change and the Aggregate Production Function.” <em>Review of Economics and Statistics</em> 39(3): 312–320.</li>
+          <li>Stock, J. H. and M. W. Watson (1999). “Business Cycle Fluctuations in US Macroeconomic Time Series.” In J. B. Taylor and M. Woodford (eds.), <em>Handbook of Macroeconomics</em>, Vol. 1A, Chapter 1: 3–64. Amsterdam: Elsevier.</li>
+          <li>Uzawa, H. (1961). “Neutral Inventions and the Stability of Growth Equilibrium.” <em>Review of Economic Studies</em> 28(2): 117–124.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  <div class="page-note reveal delay-200">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the model and derivations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Total factor productivity and capital input are from John Fernald at the Federal Reserve Bank of San Francisco; the other data are from the U.S. Bureau of Economic Analysis, the U.S. Bureau of Labor Statistics and the Federal Reserve, via FRED. The model, derivations and simulations are the author’s. When reusing this material, please cite this website: <strong>Arthur Galichère, <em>RBC Model: Firms Facing an Investment Installation Lag</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/rbc-model-it-lag.js" defer></script>
+  
+</body>
+</html>

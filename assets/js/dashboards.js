@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 17:52 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-11 23:43 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -180,7 +180,10 @@ window.AGDashboards = (() => {
       const height = Math.round(Math.min(440, Math.max(260, width * 0.48)));
       const compact = width < 560;
       const maxAbs = Math.max(...options.series.flatMap(item => item.values.filter(Number.isFinite).map(Math.abs)));
-      const labelChars = formatNumber(maxAbs, 0).length;
+      /* Width of the y-axis labels; small values (below 1) need decimals and a sign. */
+      const labelChars = maxAbs > 0 && maxAbs < 1
+        ? 4 + Math.max(1, Math.ceil(-Math.log10(maxAbs)) + 1)
+        : formatNumber(maxAbs, 0).length;
       const footer = (copyright && !copyrightTop) || options.xTitle ? 13 : 0;
       const margin = { top: copyrightTop ? 28 : 14, right: compact ? 10 : 18, bottom: 28 + footer, left: Math.max(compact ? 38 : 48, 14 + labelChars * (compact ? 6.2 : 7)) };
       const plotW = width - margin.left - margin.right;
