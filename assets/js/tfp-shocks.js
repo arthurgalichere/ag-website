@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 10:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-11 17:52 UTC (Claude, economics chat) */
 /* =========================================================
    tfp-shocks.js: /economics/tfp-shocks.html
    The extraction of technology shocks step by step (King and
@@ -105,7 +105,10 @@
     const draw = () => {
       const width = Math.max(280, frame.clientWidth);
       const height = Math.round(Math.min(440, Math.max(260, width * 0.6)));
-      const m = { top: 14, right: 16, bottom: 40, left: 52 };
+      /* "© Arthur Galichère": below the plot at its left edge, as on the
+         other charts, or above it at the right edge on narrow screens. */
+      const narrow = width < 560;
+      const m = { top: narrow ? 28 : 14, right: 16, bottom: 40, left: 52 };
       const all = pairs.flat();
       const lim = Math.ceil(Math.max(...all.map(Math.abs)));
       const x = v => m.left + ((v + lim) / (2 * lim)) * (width - m.left - m.right);
@@ -128,6 +131,7 @@
         <line x1="${x(-lim)}" y1="${y(-rho * lim)}" x2="${x(lim)}" y2="${y(rho * lim)}" stroke="${line}" stroke-width="2.2" stroke-dasharray="${DASH_DOT}" stroke-linecap="round"/>
         <text x="${(m.left + width - m.right) / 2}" y="${height - 6}" text-anchor="middle" class="chart-axis-text">Last quarter, c(t − 1), percent</text>
         <text transform="translate(14 ${(m.top + height - m.bottom) / 2}) rotate(-90)" text-anchor="middle" class="chart-axis-text">This quarter, c(t), percent</text>
+        <text class="chart-copyright" x="${narrow ? width - m.right : m.left}" y="${narrow ? m.top - 8 : height - 6}" text-anchor="${narrow ? 'end' : 'start'}" font-size="${narrow ? 10.5 : 11.5}" fill="var(--chart-copyright, rgba(28,28,30,0.55))">© Arthur Galichère</text>
       </svg>`;
     };
     draw();

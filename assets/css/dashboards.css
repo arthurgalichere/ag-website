@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 17:12 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-11 17:52 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -222,7 +222,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.45rem 1.25rem;
-  margin-top: 0.75rem;
+  margin-top: 0.35rem;
   color: var(--ink-soft);
   font-size: 0.82rem;
   list-style: none;
@@ -905,11 +905,23 @@
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
 }
-.dashboard-body .model-card h3 {
+/* Card titles as the page's subsection titles, with a smaller subtitle. */
+.dashboard-body .model-card .model-card-title {
+  margin-bottom: 0.3rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+.dashboard-body .model-card .model-card-subtitle {
   margin-bottom: 0.75rem;
   color: var(--accent-strong);
   font-family: var(--display);
-  font-size: 1.08rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   line-height: 1.4;
 }
 .dashboard-body .model-card p,
@@ -964,12 +976,33 @@
 .slide-table tr.table-group th {
   padding-top: 0.8rem;
   color: var(--ink);
+  font-size: 1rem;
   font-weight: 700;
   text-align: center;
   border-bottom: 1px solid var(--line-strong);
+}
+/* Rows about 15% thinner than the other tables. */
+.slide-table tbody th,
+.slide-table tbody td {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+.corr-table thead .unit-label {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.95rem;
 }
 .corr-table thead th[scope="colgroup"] {
   border-bottom: 1px solid var(--line-strong);
 }
 .chart-copyright { font-family: var(--sans, inherit); letter-spacing: 0.01em; }
 .dashboard-body .dashboard-controls ~ .subsection-title.is-first { margin-top: 1.75rem; }
+.irf-grid + .irf-note { margin-top: 1.5rem; }
+.dashboard-body .table-title {
+  margin: 1.5rem 0 0.6rem;
+  color: var(--accent-strong);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.dashboard-body .shares > .table-title:first-child { margin-top: 0.25rem; }

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 17:12 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-11 17:52 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model.js: /economics/rbc-model.html
    Loads the generated rbc-model JSON for the selected country and
@@ -148,7 +148,7 @@
     const lim = Math.max(4, Math.ceil(Math.max(...Object.values(tech)
       .flatMap(item => [...item.shock, ...(item.hp_shock || [])].filter(Number.isFinite).map(Math.abs)))));
     state.techChart = D.lineChart(inCard(techCard, 'chart-frame'), {
-      dates, series, period: 0.25, zeroLine: true, digits: 2, yRange: [-lim, lim], copyright: true,
+      dates, series, period: 0.25, zeroLine: true, digits: 2, yRange: [-lim, lim],
       recessions: payload.recessions ? payload.recessions.intervals : [],
       readout: inCard(techCard, 'chart-readout'),
       label: `Technology shocks, ${block.label}, with recessions shaded`,
@@ -192,7 +192,7 @@
     role('chart-status').hidden = true;
     role('chart-frame').hidden = false;
     state.modelCharts.set(card, D.lineChart(role('chart-frame'), {
-      dates, series, period: 0.25, zeroLine: true, digits: 2, copyright: true,
+      dates, series, period: 0.25, zeroLine: true, digits: 2,
       recessions: payload.recessions ? payload.recessions.intervals : [],
       readout: role('chart-readout'),
       label: `${VARIABLES[key]}: the RBC model and the US data, HP cyclical components, with recessions shaded`,
@@ -339,13 +339,13 @@
       ['Consumption share of output', '\\(C/Y\\)', each(r => fmt(r.steady_state.c_y, 3)), '–'],
       ['Real interest rate (percent a year)', '\\(r\\)', each(r => fmt(r.steady_state.r_annual, 2)), '6.5'],
     ];
-    const group = (title, list) => `<tr class="table-group"><th scope="rowgroup" colspan="${3 + measures.length}">${title}</th></tr>`
-      + list.map(([name, sym, values, kr]) => `<tr><th scope="row">${esc(name)}</th><td class="symbol-cell">${sym}</td>${values}<td>${kr}</td></tr>`).join('');
-    return `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table">
-      <caption class="visually-hidden">Calibration and steady state of the model</caption>
-      <thead><tr><th scope="col" class="component-head">Parameter</th><th scope="col">Symbol</th>${head}
+    const table = (caption, list) => `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table">
+      <caption class="visually-hidden">${caption}</caption>
+      <thead><tr><th scope="col" class="component-head">${caption === 'Parameters' ? 'Parameter' : 'Steady-state value'}</th><th scope="col">Symbol</th>${head}
         <th scope="col">King and Rebelo<br><span class="unit-label">(1999, Table 2)</span></th></tr></thead>
-      <tbody>${group('Parameters', rows.slice(0, 7))}${group('Steady state', rows.slice(7))}</tbody></table></div>`;
+      <tbody>${list.map(([name, sym, values, kr]) => `<tr><th scope="row">${esc(name)}</th><td class="symbol-cell">${sym}</td>${values}<td>${kr}</td></tr>`).join('')}</tbody></table></div>`;
+    return `<h4 class="table-title">Parameters</h4>${table('Parameters', rows.slice(0, 7))}
+      <h4 class="table-title">Steady state and great ratios</h4>${table('Steady state and great ratios', rows.slice(7))}`;
   }
 
   function solutionTable() {
@@ -397,7 +397,7 @@
       inCard(card, 'chart-frame').hidden = false;
       if (key === 'a') card.querySelector('.chart-title').textContent = harrod ? 'Labour-augmenting technology' : 'Technology';
       state.irfCharts.set(card, D.lineChart(inCard(card, 'chart-frame'), {
-        dates: quarters, xValues: quarters, series, xStep: 20, xTitle: 'Quarters', zeroLine: true, digits: 3, copyright: true,
+        dates: quarters, xValues: quarters, series, xStep: 20, xTitle: 'Quarters', zeroLine: true, digits: 3, copyrightPosition: 'top',
         readout: inCard(card, 'chart-readout'),
         label: `Impulse response of ${card.querySelector('.chart-title').textContent.toLowerCase()} to a 1 percent technology shock`,
       }));

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 17:12 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-11 17:52 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -9,8 +9,10 @@
      with recession bands, zero line, hover and keyboard readout;
      options.xValues (numbers, e.g. quarters after a shock) replaces
      dates for impulse responses; options.xTitle adds an axis title;
-     options.copyright (true or text) writes "© Arthur Galichère"
-     below the axis, at the left edge of the plot
+     "© Arthur Galichère" is written on every chart, below the axis at
+     the left edge of the plot (options.copyrightPosition = 'top': above
+     the plot, at its right edge, for small charts); options.copyright
+     = false removes it, or a string replaces it
    - helpers for dates, numbers and data paths
    Page scripts (e.g. business-cycles.js) load after this file.
    ========================================================= */
@@ -161,7 +163,9 @@ window.AGDashboards = (() => {
       ? (options.xLabel || (v => `Quarter ${v}`))
       : period >= 1 ? yearLabel : period < 0.2 ? monthLabel : quarterLabel;
     const xLabels = numeric ? options.xValues : options.dates;
-    const copyright = options.copyright === true ? '© Arthur Galichère' : (options.copyright || '');
+    const copyright = options.copyright === false ? ''
+      : typeof options.copyright === 'string' ? options.copyright : '© Arthur Galichère';
+    const copyrightTop = Boolean(copyright) && options.copyrightPosition === 'top';
 
     frame.textContent = '';
     frame.setAttribute('tabindex', '0');
@@ -177,8 +181,8 @@ window.AGDashboards = (() => {
       const compact = width < 560;
       const maxAbs = Math.max(...options.series.flatMap(item => item.values.filter(Number.isFinite).map(Math.abs)));
       const labelChars = formatNumber(maxAbs, 0).length;
-      const footer = copyright || options.xTitle ? 16 : 0;
-      const margin = { top: 14, right: compact ? 10 : 18, bottom: 30 + footer, left: Math.max(compact ? 38 : 48, 14 + labelChars * (compact ? 6.2 : 7)) };
+      const footer = (copyright && !copyrightTop) || options.xTitle ? 13 : 0;
+      const margin = { top: copyrightTop ? 28 : 14, right: compact ? 10 : 18, bottom: 28 + footer, left: Math.max(compact ? 38 : 48, 14 + labelChars * (compact ? 6.2 : 7)) };
       const plotW = width - margin.left - margin.right;
       const plotH = height - margin.top - margin.bottom;
 
@@ -252,15 +256,18 @@ window.AGDashboards = (() => {
       }, axis);
       /* Footer line: axis title in the centre, copyright at the left edge of
          the plot, below the tick labels. */
-      const footerY = margin.top + plotH + 33;
+      const footerY = margin.top + plotH + 31;
       if (options.xTitle) {
         const title = svg('text', { x: margin.left + plotW / 2, y: footerY, 'text-anchor': 'middle' }, axis);
         title.textContent = options.xTitle;
       }
       if (copyright) {
         const mark = svg('text', {
-          class: 'chart-copyright', x: margin.left, y: footerY, 'text-anchor': 'start',
-          'font-size': compact ? 9 : 10, fill: cssVar(frame, '--chart-copyright', 'rgba(28,28,30,0.55)'),
+          class: 'chart-copyright',
+          x: copyrightTop ? margin.left + plotW : margin.left,
+          y: copyrightTop ? margin.top - 8 : footerY,
+          'text-anchor': copyrightTop ? 'end' : 'start',
+          'font-size': compact ? 10.5 : 11.5, fill: cssVar(frame, '--chart-copyright', 'rgba(28,28,30,0.55)'),
         }, root);
         mark.textContent = copyright;
       }

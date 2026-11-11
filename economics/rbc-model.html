@@ -105,8 +105,8 @@
     <h2 id="model-title" class="section-title">The Model</h2>
     <div class="model-stack">
       <article class="model-card">
-        <span class="model-card-label">Households</span>
-        <h3>The household problem</h3>
+        <h3 class="model-card-title">Households</h3>
+        <h4 class="model-card-subtitle">The household’s problem</h4>
         <p>An infinitely lived representative household values consumption, \(c_t\), and leisure, \(1-h_t\), where \(h_t\) is hours worked and the time endowment is normalised to one. It discounts the future at the rate \(\beta\) and forms rational expectations. It owns the capital stock, \(K_t\), which it rents to firms at the rate \(r_t\) and which depreciates at the rate \(\delta\), and it supplies hours at the wage \(w_t\):</p>
         <div class="equation-block">
           \[ \max_{\{c_t,\, h_t,\, K_{t+1}\}_{t=0}^{\infty}}\; \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t \left[ \ln c_t + \xi \ln (1-h_t) \right] \]
@@ -119,28 +119,29 @@
       </article>
 
       <article class="model-card">
-        <span class="model-card-label">Firms</span>
-        <h3>Production technology and profit maximisation</h3>
+        <h3 class="model-card-title">Firms</h3>
+        <h4 class="model-card-subtitle">Production technology and the firm’s problem</h4>
         <p>A representative firm rents capital and hires hours in competitive markets and produces with a Cobb–Douglas technology, in which \(\alpha\) is capital’s share of income:</p>
         <div class="equation-block">
           \[ Y_t = A_t\, K_t^{\alpha} \left( X_t h_t \right)^{1-\alpha} , \qquad A_t = \bar{A}^{1-\rho} A_{t-1}^{\rho}\, e^{\varepsilon^A_t} , \qquad X_{t+1} = (1+g_X)\, X_t . \]
         </div>
         <p>Technology has two parts. Total factor productivity, \(A_t\), fluctuates around its long-run level, \(\bar{A}\), with persistence \(\rho\); its innovations, the technology shocks \(\varepsilon^A_t \sim \mathcal{N}(0, \sigma^2_{\varepsilon^A})\), are the only source of fluctuations. \(X_t\) is labour-augmenting technical progress: it makes each hour of work more productive and grows at the constant rate \(g_X\) each quarter.</p>
         <p>Placing trend growth on labour is what gives the economy a balanced growth path (Uzawa, 1961; see <a class="text-link" href="#technology-forms">Forms of technical progress</a>). Along that path, output, consumption, investment, capital and the wage all grow at the rate \(g_X\), while hours, the interest rate and the shares of capital and labour in income stay constant, as in the long-run US data (Kaldor, 1961). Variables divided by \(X_t\) are stationary, so the model has a steady state, and the business cycle is measured as deviations from the balanced growth path.</p>
-        <p>Because the firm rents its capital, its problem is static: it chooses capital and hours to maximise profits each period, which equates the wage and the rental rate to the marginal products of labour and capital:</p>
+        <p>Firms maximise profits by choosing capital and hours, given the market prices of the inputs, the wage, \(w_t\), and the rental rate of capital, \(r_t\):</p>
         <div class="equation-block">
-          \[ \max_{K_t,\, h_t}\; Y_t - w_t h_t - r_t K_t \quad \Longrightarrow \quad w_t = (1-\alpha)\, \frac{Y_t}{h_t} , \qquad r_t = \alpha\, \frac{Y_t}{K_t} . \]
+          \[ \max_{K_t,\, h_t}\; Y_t - w_t h_t - r_t K_t \qquad \text{subject to} \qquad Y_t = A_t\, K_t^{\alpha} \left( X_t h_t \right)^{1-\alpha} . \]
         </div>
+        <p>The first-order conditions equate the wage and the rental rate to the marginal products of labour and capital:</p>
+        <div class="equation-block">
+          \[ w_t = (1-\alpha)\, \frac{Y_t}{h_t} , \qquad r_t = \alpha\, \frac{Y_t}{K_t} . \]
+        </div>
+        <p>Because the firm rents its capital, its problem is static: it chooses capital and hours period by period, without regard to the future, and the dynamic decisions, saving and investment, are made by households.</p>
       </article>
 
       <article class="model-card">
-        <span class="model-card-label">Markets</span>
-        <h3>General equilibrium</h3>
-        <p>Given an initial capital stock and an initial level of technology,</p>
-        <div class="equation-block">
-          \[ K_0 \quad \text{and} \quad A_0 \quad \text{given}, \]
-        </div>
-        <p>and the stochastic process for technology, a competitive equilibrium consists of state-contingent sequences of household choices (consumption, labour supply and capital), firm choices (capital and labour demand) and prices (the wage and the rental rate of capital), in which every variable dated \(t\) depends only on the history of shocks up to \(t\), such that:</p>
+        <h3 class="model-card-title">General Equilibrium</h3>
+        <h4 class="model-card-subtitle">Definition of competitive equilibrium</h4>
+        <p>Given an initial capital stock, \(K_0\), an initial level of technology, \(A_0\), and the stochastic process for technology, a competitive equilibrium consists of state-contingent sequences of household choices (consumption, labour supply and capital), firm choices (capital and labour demand) and prices (the wage and the rental rate of capital), in which every variable dated \(t\) depends only on the history of shocks up to \(t\), such that:</p>
         <ol class="equilibrium-list">
           <li><strong>Household optimisation.</strong> Given prices and the stochastic process for technology, households maximise lifetime expected utility subject to their sequence of budget constraints, starting from \(K_0\).</li>
           <li><strong>Firm optimisation.</strong> Given prices and the current level of technology, firms maximise profits in every period.</li>
@@ -154,12 +155,13 @@
 
   <section class="content-section reveal delay-140" aria-labelledby="methodology-title">
     <h2 id="methodology-title" class="section-title">Methodology</h2>
+    <p class="section-introduction">Simulating the model takes three steps. The parameters are calibrated, so that the model’s steady state matches long-run features of the US economy. The model is then log-linearised around its steady state and solved, which gives the rules by which households and firms respond to technology (see “Solution” in <a class="text-link" href="#solution" data-open-ribbon>Definitions, Methods and Solutions</a>). Finally, the technology shocks measured in the US data are fed into the solved model, quarter by quarter. The settings below choose the technology series and the shocks used everywhere on the page.</p>
   <div class="dashboard-controls reveal delay-120">
     <div class="segmented-field" data-control="form">
-      <span class="segmented-label" id="form-label">Technical progress</span>
+      <span class="segmented-label" id="form-label">Neutral technical progress</span>
       <div class="segmented" role="group" aria-labelledby="form-label">
-        <button type="button" data-value="hicks" aria-pressed="true">Hicks-neutral</button>
-        <button type="button" data-value="harrod" aria-pressed="false">Harrod-neutral</button>
+        <button type="button" data-value="hicks" aria-pressed="true" title="Hicks-neutral technical progress">Hicks</button>
+        <button type="button" data-value="harrod" aria-pressed="false" title="Harrod-neutral (labour-augmenting) technical progress">Harrod</button>
       </div>
     </div>
     <div class="segmented-field" data-control="tfp">
@@ -186,17 +188,6 @@
     <p class="section-introduction">To simulate the model, each of its parameters must be given a value. The calibration follows King and Rebelo (1999), updated to current empirical targets.</p>
     <div class="shares" data-role="calibration-table"></div>
     <p class="chart-note" data-role="calibration-note"></p>
-
-    <details class="ribbon" id="solution">
-      <summary>
-        <span class="ribbon-title">Solution</span>
-        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
-      </summary>
-      <div class="ribbon-content">
-        <div class="shares" data-role="solution-table"></div>
-        <p data-role="solution-note"></p>
-      </div>
-    </details>
 
     <h3 class="subsection-title" id="technology-shocks">Technology shocks</h3>
     <p class="section-introduction">The technology shocks that drive the model are measured in the US data, following King and Rebelo (1999): the logarithm of technology is split into a linear trend and a deviation from it, whose innovations are the shocks.</p>
@@ -483,6 +474,17 @@
         <p><strong>Simulation.</strong> The model starts in the first quarter of the technology data (1947 Q1), with technology and capital at their values in the data, and is then driven by the measured shocks, quarter by quarter. Both starting values are measured in the same way as the shocks that follow them: with the linear-trend shocks, technology and capital per capita start at their deviations from their linear trends; with the HP-filtered shocks, at their HP cyclical components, the cycle of capital being the one on the Real Business Cycles page. Capital is Fernald’s capital input, which measures the services of the capital stock. The <a class="text-link" href="#solution" data-open-ribbon>Solution</a> table reports the starting values; the first three years are not shown.</p>
         <p><strong>Two ways of comparing the model with the data.</strong> The model’s series are deviations from the balanced growth path, while the data’s are HP cyclical components, from which slow movements around the trend have also been removed. King and Rebelo (1999, section 4.3.1) therefore HP filter the model’s series too (λ = 1600) before comparing them with the data: this is the “Linear trend” setting. The “HP-filtered” setting uses the shortcut described on the <a class="text-link" href="/economics/tfp-shocks.html#hp-filtered-shocks">Extracting Technology Shocks</a> page: the model is driven by the HP-filtered shocks, and its series are already HP cyclical components. Because the model is linear, the two coincide except near the ends of the sample; the comparison setting shows both.</p>
         <p><strong>The data.</strong> As in King and Rebelo, the model is compared with per-capita data: output, consumption and investment per person, hours per person aged 16 and over (nonfarm business sector), and Fernald’s capital input of the business sector per person. The real wage is real hourly compensation and labour productivity is output per hour, both in the nonfarm business sector. The real interest rate is the ex-post real three-month Treasury-bill rate; King and Rebelo use an expected real rate built from inflation forecasts (Stock and Watson, 1999).</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="solution">
+      <summary>
+        <span class="ribbon-title">Solution</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <div class="shares" data-role="solution-table"></div>
+        <p data-role="solution-note"></p>
       </div>
     </details>
 
