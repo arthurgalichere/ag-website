@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 11:21 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-11 17:12 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -6,7 +6,11 @@
    Exposes window.AGDashboards with:
    - segmented(fieldElement, onChange): accessible button groups
    - lineChart(frame, options): responsive SVG time-series chart
-     with recession bands, zero line, hover and keyboard readout
+     with recession bands, zero line, hover and keyboard readout;
+     options.xValues (numbers, e.g. quarters after a shock) replaces
+     dates for impulse responses; options.xTitle adds an axis title;
+     options.copyright (true or text) writes "© Arthur Galichère"
+     below the axis, at the left edge of the plot
    - helpers for dates, numbers and data paths
    Page scripts (e.g. business-cycles.js) load after this file.
    ========================================================= */
@@ -149,9 +153,15 @@ window.AGDashboards = (() => {
   */
   function lineChart(frame, options) {
     const state = { options, index: null };
-    const xs = options.dates.map(decimalYear);
-    const period = options.period || 0.25;
-    const labelDate = period >= 1 ? yearLabel : period < 0.2 ? monthLabel : quarterLabel;
+    const numeric = Array.isArray(options.xValues);
+    const xs = numeric ? options.xValues.slice() : options.dates.map(decimalYear);
+    const period = numeric ? 0 : (options.period || 0.25);
+    const half = period / 2;
+    const labelDate = numeric
+      ? (options.xLabel || (v => `Quarter ${v}`))
+      : period >= 1 ? yearLabel : period < 0.2 ? monthLabel : quarterLabel;
+    const xLabels = numeric ? options.xValues : options.dates;
+    const copyright = options.copyright === true ? '© Arthur Galichère' : (options.copyright || '');
 
     frame.textContent = '';
     frame.setAttribute('tabindex', '0');
@@ -167,7 +177,8 @@ window.AGDashboards = (() => {
       const compact = width < 560;
       const maxAbs = Math.max(...options.series.flatMap(item => item.values.filter(Number.isFinite).map(Math.abs)));
       const labelChars = formatNumber(maxAbs, 0).length;
-      const margin = { top: 14, right: compact ? 10 : 18, bottom: 30, left: Math.max(compact ? 38 : 48, 14 + labelChars * (compact ? 6.2 : 7)) };
+      const footer = copyright || options.xTitle ? 16 : 0;
+      const margin = { top: 14, right: compact ? 10 : 18, bottom: 30 + footer, left: Math.max(compact ? 38 : 48, 14 + labelChars * (compact ? 6.2 : 7)) };
       const plotW = width - margin.left - margin.right;
       const plotH = height - margin.top - margin.bottom;
 
@@ -194,7 +205,7 @@ window.AGDashboards = (() => {
       yMax = Math.ceil(yMax / yStep) * yStep;
 
       const xMin = xs[0];
-      const xMax = xs[xs.length - 1] + period;
+      const xMax = xs[xs.length - 1] + period || xMin + 1;
       const x = value => margin.left + ((value - xMin) / (xMax - xMin)) * plotW;
       const y = value => margin.top + ((yMax - value) / (yMax - yMin)) * plotH;
 
@@ -226,10 +237,10 @@ window.AGDashboards = (() => {
         text.textContent = formatNumber(value, stepDecimals(yStep));
       });
 
-      /* Year ticks on the x axis. */
+      /* Year ticks on the x axis (or quarters after a shock). */
       const span = xMax - xMin;
-      const yearStep = span / (plotW / (compact ? 70 : 80)) > 10 ? 20 : span / (plotW / (compact ? 70 : 80)) > 5 ? 10 : 5;
-      ticks(Math.ceil(xMin), Math.floor(xMax), yearStep).forEach(year => {
+      const yearStep = options.xStep || (span / (plotW / (compact ? 70 : 80)) > 10 ? 20 : span / (plotW / (compact ? 70 : 80)) > 5 ? 10 : 5);
+      ticks(Math.ceil(xMin / yearStep) * yearStep, Math.floor(xMax), yearStep).forEach(year => {
         svg('line', {
           x1: x(year), x2: x(year), y1: margin.top + plotH, y2: margin.top + plotH + 4, stroke: zero,
         }, axis);
@@ -239,6 +250,20 @@ window.AGDashboards = (() => {
       svg('line', {
         x1: margin.left, x2: margin.left + plotW, y1: margin.top + plotH, y2: margin.top + plotH, stroke: zero,
       }, axis);
+      /* Footer line: axis title in the centre, copyright at the left edge of
+         the plot, below the tick labels. */
+      const footerY = margin.top + plotH + 33;
+      if (options.xTitle) {
+        const title = svg('text', { x: margin.left + plotW / 2, y: footerY, 'text-anchor': 'middle' }, axis);
+        title.textContent = options.xTitle;
+      }
+      if (copyright) {
+        const mark = svg('text', {
+          class: 'chart-copyright', x: margin.left, y: footerY, 'text-anchor': 'start',
+          'font-size': compact ? 9 : 10, fill: cssVar(frame, '--chart-copyright', 'rgba(28,28,30,0.55)'),
+        }, root);
+        mark.textContent = copyright;
+      }
 
       /* Series: missing values break the line instead of being joined. */
       const lines = svg('g', { class: 'chart-lines', fill: 'none' }, root);
@@ -249,7 +274,7 @@ window.AGDashboards = (() => {
         let pen = false;
         item.values.forEach((value, i) => {
           if (!Number.isFinite(value)) { pen = false; return; }
-          path += `${pen ? 'L' : 'M'}${x(xs[i] + period / 2).toFixed(1)},${y(value).toFixed(1)}`;
+          path += `${pen ? 'L' : 'M'}${x(xs[i] + half).toFixed(1)},${y(value).toFixed(1)}`;
           pen = true;
         });
         const width = (compact ? 1.5 : 1.8) * (item.weight || 1);
@@ -261,7 +286,7 @@ window.AGDashboards = (() => {
         (item.marks || []).forEach(i => {
           if (!Number.isFinite(item.values[i])) return;
           svg('circle', {
-            class: 'chart-estimate', cx: x(xs[i] + period / 2), cy: y(item.values[i]), r: compact ? 3.5 : 4.2,
+            class: 'chart-estimate', cx: x(xs[i] + half), cy: y(item.values[i]), r: compact ? 3.5 : 4.2,
             fill: '#ffffff', stroke: item.color, 'stroke-width': 1.8,
           }, lines);
         });
@@ -284,7 +309,7 @@ window.AGDashboards = (() => {
       }
       state.index = Math.max(0, Math.min(xs.length - 1, index));
       const { x, y } = state.geometry;
-      const px = x(xs[state.index] + period / 2);
+      const px = x(xs[state.index] + half);
       state.marker.group.setAttribute('visibility', 'visible');
       state.marker.line.setAttribute('x1', px);
       state.marker.line.setAttribute('x2', px);
@@ -301,7 +326,7 @@ window.AGDashboards = (() => {
       });
       if (options.readout && announce !== null) {
         const parts = options.series.map(item => `${item.label}: ${formatNumber(item.values[state.index], options.digits ?? 2)}${(item.marks || []).includes(state.index) ? ' (estimated)' : ''}`);
-        options.readout.textContent = `${labelDate(options.dates[state.index])} · ${parts.join(' · ')}`;
+        options.readout.textContent = `${labelDate(xLabels[state.index])} · ${parts.join(' · ')}`;
       }
     }
 
@@ -311,7 +336,7 @@ window.AGDashboards = (() => {
       const scale = rect.width / root.viewBox.baseVal.width;
       const px = (event.clientX - rect.left) / scale;
       const fraction = (px - margin.left) / plotW;
-      return Math.round(fraction * (xs.length - 0.5) - 0.5);
+      return numeric ? Math.round(fraction * (xs.length - 1)) : Math.round(fraction * (xs.length - 0.5) - 0.5);
     }
 
     root.addEventListener('pointermove', event => showIndex(indexFromPointer(event)));
