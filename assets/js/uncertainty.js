@@ -1,3 +1,4 @@
+/* Last edited: 2026-11-12 17:15 UTC (Claude, website chat) */
 /* =========================================================
    EC9D5 interactive page: uncertainty and precautionary saving.
    Two-period model, CRRA utility, income W ± ε with prob. 1/2.
@@ -167,7 +168,7 @@
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const WIDTH = 560;
-  const HEIGHT = 420;
+  const HEIGHT = 466;   // plot area 15% taller than the original 420
   const MARGIN = { top: 36, right: 22, bottom: 78, left: 24 };
 
   /* Text scale set in uncertainty.css (larger on phones). */
@@ -329,7 +330,7 @@
 
   function renderUtilityChart(gamma) {
     const W = 480;
-    const H = 340;
+    const H = 381;   // plot area 15% taller than the original 340
     const M = { top: 30, right: 18, bottom: 34, left: 34 };
     const cMin = 0.15;
     const cMax = 4;
@@ -376,10 +377,13 @@
   /* Section 2. Fixed consumption range, so c1 and c2 visibly move. */
   function renderCertaintyChart(model) {
     const { gamma, c1, c2, betaR } = model;
-    const wide = ui.certChart.clientWidth > 600;
+    /* Wide screens: one SVG unit per CSS pixel, so text keeps its size;
+       plot area 15% taller than the original full-width chart. */
+    const chartWidth = Math.round(ui.certChart.clientWidth);
+    const wide = chartWidth > 600;
     const scales = chartScales({
       points: [c1, c2], gamma, lowestMarked: Math.min(c1, c2),
-      width: wide ? 980 : WIDTH, height: wide ? 380 : HEIGHT, domain: [7, 13.5]
+      width: wide ? chartWidth : WIDTH, height: wide ? 420 : HEIGHT, domain: [7, 13.5]
     });
     const chart = baseChart('certainty', scales, gamma);
     const g = drawGuides(chart, scales, gamma, [

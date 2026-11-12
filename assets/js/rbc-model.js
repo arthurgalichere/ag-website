@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 17:52 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model.js: /economics/rbc-model.html
    Loads the generated rbc-model JSON for the selected country and
@@ -329,7 +329,7 @@
       ['Discount factor', '\\(\\beta\\)', same(fmt(cal.beta, 3)), '0.984'],
       ['Capital’s share of income', '\\(\\alpha\\)', same(fmt(cal.alpha, 3)), '0.333'],
       ['Depreciation rate (per quarter)', '\\(\\delta\\)', same(fmt(cal.delta, 3)), '0.025'],
-      ['Weight of leisure in utility', '\\(\\xi\\)', same(fmt(cal.xi, 2)), '3.48'],
+      ['Weight of leisure in utility', '\\(\\theta\\)', same(fmt(cal.xi, 2)), '3.48'],
       ['Trend growth (per quarter)', '\\(g_X\\)', each(r => `${fmt(r.g_x, 5)}<br><span class="unit-label">${fmt(r.trend_growth_x_annual, 2)}% a year</span>`), '0.004'],
       ['Persistence of technology', '\\(\\rho\\)', each(r => fmt(r.rho, 3)), '0.979'],
       ['Standard deviation of the shocks (percent)', shockSymbol, each((r, t) => fmt(t.sigma, 2)), state.form === 'harrod' ? '–' : '0.72'],

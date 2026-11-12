@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynare: Log Variables</title>
+  <meta name="description" content="EC9D5, Working with Dynare (part 1): how to read a model variable written in logs, its steady state, and its deviations in levels, logs and percentages, and how to read Dynare&#39;s steady state and impulse responses." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dynare.css" />
+  
+</head>
+<body id="top" class="">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      
+
+<section class="page-body dynare-body">
+  <div class="page-toolbar reveal delay-40">
+    <a href="/teaching.html" class="back-link">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      Back to Teaching
+    </a>
+    <a href="/teaching/ec9d5/dynare-measurement-equations.html" class="toolbar-next-link">
+      Next: Part 2<i class="fas fa-arrow-right" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">EC9D5 · Working with Dynare · Part 1</p>
+    <h1 class="page-title">Interpreting Dynamic Variables in Log-Linear Macroeconomic Models</h1>
+    <p class="lead">
+      Many Dynare models write their variables in logarithms. A number such as 0.02 in the output can then mean a log deviation, roughly a 2% deviation, or, for an interest rate, 2 percentage points. This page explains what each object measures, how to move between levels, logs and percentages, and how to read Dynare’s steady state and impulse responses correctly.
+    </p>
+  </header>
+
+  <nav class="panel dynare-contents reveal delay-120" aria-label="On this page">
+    <span class="meta-label">On this page</span>
+    <ol>
+      <li><a href="#levels-logs">Levels and logs</a></li>
+      <li><a href="#steady-state">The steady state</a></li>
+      <li><a href="#deviations">Three ways to measure a deviation</a></li>
+      <li><a href="#approximation">Log deviations and percentages</a></li>
+      <li><a href="#dynare-output">Reading Dynare’s output</a></li>
+      <li><a href="#dynare-code">Writing transformations in Dynare</a></li>
+      <li><a href="#rules">Rules to remember</a></li>
+    </ol>
+  </nav>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-140" aria-labelledby="levels-logs">
+    <h2 id="levels-logs" class="section-title">1. Levels and Logs</h2>
+
+    <div class="prose">
+      <p>Let \(Y_t^{\text{level}}\) denote output in period \(t\), measured in its natural units. Its (natural) logarithm, written with a lower-case letter, is</p>
+    </div>
+
+    <div class="key-formula">
+      <span class="key-formula-label">Definition</span>
+      \[
+        y_t=\log\!\left(Y_t^{\text{level}}\right)
+        \quad\Longleftrightarrow\quad
+        Y_t^{\text{level}}=\exp(y_t).
+      \]
+    </div>
+
+    <div class="prose">
+      <p>The logarithm turns a positive level into a log variable; the exponential reverses it. Throughout, \(\log\) is the natural logarithm, the same as <code>log</code> in Dynare and MATLAB. The same convention applies to every other variable: \(c_t\) is log consumption, \(i_t\) log investment, \(k_t\) log capital, and so on.</p>
+    </div>
+
+    <div class="example-card">
+      <span class="example-label">Worked example</span>
+      <p>If output is 100, the model variable is</p>
+      <div class="math-block">\[ y_t=\log(100)\approx 4.605. \]</div>
+      <p>Conversely, if the model gives \(y_t=4.605\), output in levels is \(\exp(4.605)\approx 100\).</p>
+    </div>
+
+    <div class="callout" role="note">
+      <i class="fas fa-circle-info" aria-hidden="true"></i>
+      <div>The model variable \(y_t\) is not output: it is the logarithm of output. A value of 4.605 means output of about 100, not 4.605 units of output.</div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-160" aria-labelledby="steady-state">
+    <h2 id="steady-state" class="section-title">2. The Steady State in Levels and Logs</h2>
+
+    <div class="prose">
+      <p>The same distinction applies to the steady state. If \(\bar Y^{\text{level}}\) is steady-state output, its logarithm is</p>
+    </div>
+
+    <div class="math-block">
+      \[
+        \bar y=\log\!\left(\bar Y^{\text{level}}\right)
+        \quad\Longleftrightarrow\quad
+        \bar Y^{\text{level}}=\exp(\bar y).
+      \]
+    </div>
+
+    <div class="prose">
+      <p>If steady-state output is 100, then \(\bar Y^{\text{level}}=100\) and \(\bar y=\log(100)\approx4.605\). <strong>When a variable is written in logs in the model, its steady state is in logs too.</strong> The two representations carry the same information, but they must not be mixed.</p>
+      <p>In Dynare the steady state of <code>y</code> appears in two places, and both are log values:</p>
+      <ul>
+        <li>inside the <code>model</code> block, the operator <code>STEADY_STATE(y)</code> stands for \(\bar y\);</li>
+        <li>after <code>steady;</code> or <code>stoch_simul</code> has run, the values are stored in <code>oo_.steady_state</code>, in the order of the variable names in <code>M_.endo_names</code>.</li>
+      </ul>
+    </div>
+
+    <figure class="code-block">
+      <figcaption class="code-label">MATLAB, after Dynare has run</figcaption>
+<pre><code>ybar = oo_.steady_state(strcmp(M_.endo_names, 'y'));   % steady-state log output
+Ybar = exp(ybar);                                       % steady-state output in levels</code></pre>
+    </figure>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-180" aria-labelledby="deviations">
+    <h2 id="deviations" class="section-title">3. Three Ways to Measure a Deviation</h2>
+    <p class="section-introduction">
+      Once the variable and its steady state are defined, we can measure how far the variable is from its steady state. There are three common measures. They answer the same question in different units, so the numbers differ. As a running example, output rises from its steady state of 100 to 102.
+    </p>
+
+    <h3 class="subsection-title is-first">3.1. Deviation in levels</h3>
+    <div class="math-block">\[ Y_t^{\text{level}}-\bar Y^{\text{level}} \]</div>
+    <div class="prose">
+      <p>This is an absolute difference, in the units of the variable itself (a <strong>unit deviation</strong>). In the example, \(102-100=2\): output is 2 units above its steady state.</p>
+    </div>
+
+    <h3 class="subsection-title">3.2. Log deviation</h3>
+    <div class="prose">
+      <p>The log deviation is the difference between the log of the variable and the log of its steady state. Because the difference of two logs is the log of a ratio,</p>
+    </div>
+    <div class="key-formula">
+      <span class="key-formula-label">Log deviation</span>
+      \[
+        y_t-\bar y
+        =\log\!\left(Y_t^{\text{level}}\right)-\log\!\left(\bar Y^{\text{level}}\right)
+        =\log\!\left(\frac{Y_t^{\text{level}}}{\bar Y^{\text{level}}}\right).
+      \]
+    </div>
+    <div class="prose">
+      <p>It therefore measures the <em>relative</em> difference between the variable and its steady state. In the example, \(\log(102)-\log(100)=\log(1.02)\approx0.0198\). This is not 0.0198 units of output: it is a difference between two logarithms, a pure number with no units.</p>
+    </div>
+
+    <h3 class="subsection-title">3.3. Percentage deviation</h3>
+    <div class="math-block">
+      \[
+        100\times\frac{Y_t^{\text{level}}-\bar Y^{\text{level}}}{\bar Y^{\text{level}}}
+      \]
+    </div>
+    <div class="prose">
+      <p>In the example, \(100\times(102-100)/100=2\%\): output is 2% above its steady state. The percentage deviation can be computed from the log deviation alone. Taking the exponential of the log deviation gives the ratio \(Y_t^{\text{level}}/\bar Y^{\text{level}}=\exp(y_t-\bar y)\), so</p>
+    </div>
+    <div class="key-formula">
+      <span class="key-formula-label">Exact percentage deviation</span>
+      \[
+        100\times\frac{Y_t^{\text{level}}-\bar Y^{\text{level}}}{\bar Y^{\text{level}}}
+        =100\times\left[\exp(y_t-\bar y)-1\right].
+      \]
+    </div>
+
+    <h3 class="subsection-title">3.4. The three measures side by side</h3>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <caption class="visually-hidden">Three measures of a deviation from the steady state</caption>
+        <thead>
+          <tr>
+            <th scope="col">Measure</th>
+            <th scope="col">Formula</th>
+            <th scope="col">Units</th>
+            <th scope="col" class="is-number">Output 100 → 102</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Deviation in levels</td>
+            <td>\(Y_t^{\text{level}}-\bar Y^{\text{level}}\)</td>
+            <td>Units of the variable</td>
+            <td class="is-number">2 units</td>
+          </tr>
+          <tr>
+            <td>Log deviation</td>
+            <td>\(y_t-\bar y=\log(Y_t^{\text{level}}/\bar Y^{\text{level}})\)</td>
+            <td>Difference in logs (decimal)</td>
+            <td class="is-number">0.0198</td>
+          </tr>
+          <tr>
+            <td>Percentage deviation</td>
+            <td>\(100\left[\exp(y_t-\bar y)-1\right]\)</td>
+            <td>Per cent</td>
+            <td class="is-number">2%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-220" aria-labelledby="approximation">
+    <h2 id="approximation" class="section-title">4. Log Deviations and Percentages</h2>
+
+    <div class="prose">
+      <p>For small deviations, the log deviation is approximately the percentage deviation written as a decimal. The reason is the first-order approximation \(\exp(x)\approx1+x\) for small \(x\). Applied to the exact formula of section 3.3,</p>
+    </div>
+    <div class="math-block">
+      \[
+        100\times\left[\exp(y_t-\bar y)-1\right]\;\approx\;100\times(y_t-\bar y).
+      \]
+    </div>
+    <div class="key-formula">
+      <span class="key-formula-label">Rule of thumb</span>
+      \[
+        \text{Percentage deviation}\;\approx\;100\times\text{log deviation}.
+      \]
+    </div>
+    <div class="prose">
+      <p>This is why a log deviation of 0.01 is read as “about 1% above the steady state”. It is an approximation, and its accuracy depends on the size of the deviation:</p>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <caption class="visually-hidden">Accuracy of the approximation percentage deviation ≈ 100 × log deviation</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="is-number">Log deviation \(x\)</th>
+            <th scope="col" class="is-number">Approximation \(100x\)</th>
+            <th scope="col" class="is-number">Exact \(100(e^{x}-1)\)</th>
+            <th scope="col" class="is-number">Error (points)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="is-number">0.01</td><td class="is-number">1%</td><td class="is-number">1.005%</td><td class="is-number">0.005</td></tr>
+          <tr class="is-highlight"><td class="is-number">0.0198</td><td class="is-number">1.98%</td><td class="is-number">2.000%</td><td class="is-number">0.02</td></tr>
+          <tr><td class="is-number">0.05</td><td class="is-number">5%</td><td class="is-number">5.127%</td><td class="is-number">0.13</td></tr>
+          <tr><td class="is-number">0.10</td><td class="is-number">10%</td><td class="is-number">10.517%</td><td class="is-number">0.52</td></tr>
+          <tr><td class="is-number">0.20</td><td class="is-number">20%</td><td class="is-number">22.140%</td><td class="is-number">2.14</td></tr>
+          <tr><td class="is-number">−0.10</td><td class="is-number">−10%</td><td class="is-number">−9.516%</td><td class="is-number">0.48</td></tr>
+          <tr><td class="is-number">−0.20</td><td class="is-number">−20%</td><td class="is-number">−18.127%</td><td class="is-number">1.87</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>For business-cycle movements of a few per cent, the approximation is very close (the highlighted row is the running example). For large movements it is not: \(100x\) understates rises and overstates falls, and the error grows with the size of the deviation. A log deviation of 0.20 is a rise of about 22%, not 20%.</p>
+    </div>
+
+    <div class="example-card">
+      <span class="example-label">Why models use logs</span>
+      <p>Log deviations are symmetric and add up over time. If output rises from 100 to 102 and then falls back to 100, the two log changes are \(+0.0198\) and \(-0.0198\), which sum to zero. In percentages the same path is \(+2\%\) and then \(-1.96\%\). Logs also turn products into sums, so a Cobb–Douglas production function becomes linear in logs (section 6).</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-260" aria-labelledby="dynare-output">
+    <h2 id="dynare-output" class="section-title">5. Reading Dynare’s Output</h2>
+
+    <h3 class="subsection-title is-first">5.1. Impulse responses and simulations</h3>
+    <div class="prose">
+      <p>With a first-order approximation (<code>stoch_simul(order=1)</code>), Dynare reports impulse responses as <strong>deviations from the steady state, in the units in which the variable is declared</strong>. The response of <code>y</code> to the shock <code>eps_a</code> is stored in <code>oo_.irfs.y_eps_a</code>. Simulated series are reported in levels of the model variable, so subtracting the steady state gives the same kind of deviation.</p>
+      <p>If <code>y</code> is log output, its impulse response is a log deviation: a value of 0.004 means output is about 0.4% above its steady state. Dynare’s IRF plots show these raw numbers; multiply them by 100 before labelling an axis “% deviation from steady state”.</p>
+    </div>
+
+    <h3 class="subsection-title">5.2. Rates are not logged</h3>
+    <div class="prose">
+      <p>Interest rates, inflation and the unemployment rate are usually written in levels, as decimals. In a quarterly model, \(r_t=0.01\) is a 1% quarterly rate. Their deviation \(r_t-\bar r\) is then a change in the rate itself, read in <strong>percentage points</strong>, never as a percentage change of the rate.</p>
+    </div>
+    <div class="example-card">
+      <span class="example-label">Worked example</span>
+      <p>The impulse response of a quarterly interest rate is 0.0025 on impact. The rate is \(100\times0.0025=0.25\) percentage points higher per quarter, or about \(400\times0.0025=1\) percentage point higher at an annual rate. It is not 0.25% higher than its steady-state value.</p>
+    </div>
+
+    <h3 class="subsection-title">5.3. The <code>loglinear</code> option</h3>
+    <div class="prose">
+      <p>An alternative to writing the model in logs is to write it in levels and run <code>stoch_simul(order=1, loglinear)</code>. Dynare then approximates the model in the logs of all variables, so every reported response is a log deviation and can be read with the rule of thumb of section 4. All steady-state values must then be strictly positive.</p>
+    </div>
+    <div class="callout is-warning" role="note">
+      <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
+      <div><strong>Watch the rates.</strong> The <code>loglinear</code> option logs every variable, including interest rates and inflation. Their responses then become percentage changes of the rate (for example 25% of a 1% rate), not changes in percentage points. Many researchers therefore write the model in logs by hand and keep rates in levels.</div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-280" aria-labelledby="dynare-code">
+    <h2 id="dynare-code" class="section-title">6. Writing Transformations in Dynare</h2>
+
+    <div class="prose">
+      <p>Suppose output follows a Cobb–Douglas production function, \(Y_t=A_tK_{t-1}^{\alpha}H_t^{1-\alpha}\), and the model is written in logs. Taking logs turns the product into a sum, and every variable in the equation is now a log:</p>
+    </div>
+
+    <figure class="code-block">
+      <figcaption class="code-label">Dynare .mod file</figcaption>
+<pre><code>var y a k h;      // log output, log productivity, log capital, log hours
+varexo eps_a;     // productivity shock
+parameters alpha;
+
+model;
+  // Production function Y = A*K(-1)^alpha*H^(1-alpha), in logs
+  y = a + alpha*k(-1) + (1-alpha)*h;
+  // ... other equations
+end;</code></pre>
+    </figure>
+
+    <div class="prose">
+      <p>Here <code>y</code> is log output, so each of the following expressions measures something different:</p>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <caption class="visually-hidden">Dynare expressions and what they measure when y is log output</caption>
+        <thead>
+          <tr>
+            <th scope="col">Expression</th>
+            <th scope="col">What it measures</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>y</code></td><td>Log output, \(y_t\)</td></tr>
+          <tr><td><code>exp(y)</code></td><td>Output in levels, \(Y_t^{\text{level}}\)</td></tr>
+          <tr><td><code>STEADY_STATE(y)</code></td><td>Steady-state log output, \(\bar y\)</td></tr>
+          <tr><td><code>exp(STEADY_STATE(y))</code></td><td>Steady-state output in levels, \(\bar Y^{\text{level}}\)</td></tr>
+          <tr><td><code>y - STEADY_STATE(y)</code></td><td>Log deviation from the steady state</td></tr>
+          <tr><td><code>100*(y - STEADY_STATE(y))</code></td><td>Approximate percentage deviation</td></tr>
+          <tr><td><code>100*(exp(y - STEADY_STATE(y)) - 1)</code></td><td>Exact percentage deviation</td></tr>
+          <tr><td><code>exp(y) - exp(STEADY_STATE(y))</code></td><td>Deviation in levels (units of output)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout is-warning" role="note">
+      <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
+      <div><code>y - STEADY_STATE(y)</code> does not give the deviation of output in levels. It gives the log deviation.</div>
+    </div>
+
+    <h3 class="subsection-title">6.1. Exact formulas and first-order solutions</h3>
+    <div class="prose">
+      <p>Suppose you add a variable to the model block to report the exact percentage deviation, such as <code>y_pct = 100*(exp(y - STEADY_STATE(y)) - 1);</code>. With <code>order=1</code>, Dynare linearises <em>every</em> equation around the steady state, including this one. Its first-order approximation is \(100(y_t-\bar y)\), so <code>y_pct</code> gives exactly the same numbers as the approximate formula. Likewise, <code>exp(y) - exp(STEADY_STATE(y))</code> becomes \(\exp(\bar y)\,(y_t-\bar y)\).</p>
+      <p>To obtain the exact transformations, apply them to Dynare’s results after the model has been solved:</p>
+    </div>
+
+    <figure class="code-block">
+      <figcaption class="code-label">End of the .mod file</figcaption>
+<pre><code>stoch_simul(order=1, irf=40);</code></pre>
+    </figure>
+
+    <figure class="code-block">
+      <figcaption class="code-label">MATLAB, after Dynare has run</figcaption>
+<pre><code>ybar        = oo_.steady_state(strcmp(M_.endo_names, 'y'));  % steady-state log output
+y_log_dev   = oo_.irfs.y_eps_a;                  % log deviation (what Dynare reports)
+y_pct_exact = 100*(exp(y_log_dev) - 1);          % exact percentage deviation
+y_level_dev = exp(ybar + y_log_dev) - exp(ybar); % deviation in levels</code></pre>
+    </figure>
+
+    <div class="callout is-quiet" role="note">
+      <i class="fas fa-circle-info" aria-hidden="true"></i>
+      <div>For business-cycle-sized responses the difference is negligible (see the table in section 4). It matters for large shocks, and whenever you report results in levels.</div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-300" aria-labelledby="rules">
+    <h2 id="rules" class="section-title">7. Rules to Remember</h2>
+    <p class="section-introduction">
+      Whenever a model variable is the logarithm of a level, \(y_t=\log(Y_t^{\text{level}})\), distinguish the model variable from the economic quantity it represents.
+    </p>
+
+    <ul class="rule-list">
+      <li><code>y</code> is log output; <code>exp(y)</code> is output in levels.</li>
+      <li><code>STEADY_STATE(y)</code> and the value in <code>oo_.steady_state</code> are steady-state <strong>log</strong> output; their exponential is steady-state output in levels.</li>
+      <li><code>y - STEADY_STATE(y)</code> is the log deviation; <code>100*(y - STEADY_STATE(y))</code> is approximately the percentage deviation; <code>100*(exp(y - STEADY_STATE(y)) - 1)</code> is the exact percentage deviation.</li>
+      <li>Dynare’s impulse responses are deviations from the steady state in the units of the variable: log deviations for logged variables, changes in the rate for rates.</li>
+      <li>At <code>order=1</code>, transformations written inside the model block are linearised. Compute exact transformations after solving the model.</li>
+      <li>Keep the variable, its steady state and its deviation on the same scale: all in logs, or all in levels.</li>
+    </ul>
+  </section>
+
+  <nav class="page-navigation is-single reveal delay-340" aria-label="Part navigation">
+  <a href="/teaching/ec9d5/dynare-measurement-equations.html" class="page-nav-link is-next">
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Next part</span>
+      <span class="page-nav-title">Linking Data to a Macroeconomic Model for Bayesian Estimation</span>
+    </span>
+    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+  </a>
+</nav>
+</section>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+</body>
+</html>

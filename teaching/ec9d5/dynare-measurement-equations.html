@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynare: Measurement Equations</title>
+  <meta name="description" content="EC9D5, Working with Dynare (part 2): how to write measurement equations that link a log-linear model to HP-filtered cycles, growth rates and interest rates for Bayesian estimation in Dynare." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dynare.css" />
+  
+</head>
+<body id="top" class="">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      
+
+<section class="page-body dynare-body">
+  <div class="page-toolbar reveal delay-40">
+    <a href="/teaching.html" class="back-link">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      Back to Teaching
+    </a>
+  </div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">EC9D5 · Working with Dynare · Part 2</p>
+    <h1 class="page-title">Linking Data to a Macroeconomic Model for Bayesian Estimation in Dynare</h1>
+    <p class="lead">
+      Bayesian estimation compares what the model predicts with what the data show. Measurement equations make that comparison possible: they turn each model variable into exactly the object stored in your data file, in the same units. This page shows how to write them for cyclical components, growth rates and interest rates, and how to check them before estimating. It builds on <a href="/teaching/ec9d5/dynare-log-variables.html">Part 1</a>, which explains log deviations.
+    </p>
+  </header>
+
+  <nav class="panel dynare-contents reveal delay-120" aria-label="On this page">
+    <span class="meta-label">On this page</span>
+    <ol>
+      <li><a href="#role">What a measurement equation does</a></li>
+      <li><a href="#questions">Three questions about your data</a></li>
+      <li><a href="#hp-cycles">HP-filtered cycles</a></li>
+      <li><a href="#growth">Growth rates</a></li>
+      <li><a href="#units">Units and scale</a></li>
+      <li><a href="#implementation">Putting it together in Dynare</a></li>
+      <li><a href="#checklist">Checklist before estimating</a></li>
+    </ol>
+  </nav>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-140" aria-labelledby="role">
+    <h2 id="role" class="section-title">1. What a Measurement Equation Does</h2>
+
+    <div class="prose">
+      <p>The model describes theoretical quantities such as productivity, capital, consumption and output. The data contain particular statistical measures of some of them. The two are rarely the same object.</p>
+      <p>Suppose the model contains log output, \(y_t=\log(Y_t^{\text{level}})\), while the data contain the cyclical component of output, in percentage points of deviation from trend. The model variable is a log level (around 4.6 if output is 100); the data fluctuate around zero. They cannot be compared directly.</p>
+      <p>A <strong>measurement equation</strong> defines a new model variable that reproduces the observed series. In Dynare it is an ordinary endogenous variable, defined by an equation in the <code>model</code> block and declared as observed with <code>varobs</code>:</p>
+    </div>
+
+    <figure class="code-block">
+      <figcaption class="code-label">Dynare .mod file</figcaption>
+<pre><code>var y y_obs;      // y: log output (model); y_obs: model counterpart of the data</code></pre>
+    </figure>
+
+    <div class="prose">
+      <p>On this page \(Y_t^{\text{data}}\) denotes the observed series and <code>y_obs</code> its model counterpart. What the measurement equation looks like depends entirely on how the data were constructed.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-160" aria-labelledby="questions">
+    <h2 id="questions" class="section-title">2. Three Questions About Your Data</h2>
+    <p class="section-introduction">
+      Before writing a measurement equation, establish exactly what each series in the data file represents.
+    </p>
+
+    <ol class="step-list">
+      <li><strong>Which economic object?</strong> A deviation from trend (cyclical component), a growth rate, a level, or a rate such as the interest rate or inflation.</li>
+      <li><strong>Which transformation?</strong> Was the series logged before filtering or differencing? Was it detrended with the Hodrick–Prescott (HP) filter? Is the cycle a log difference or an exact percentage deviation from trend?</li>
+      <li><strong>Which units?</strong> Decimals or percentage points? For rates, quarterly or annualised?</li>
+    </ol>
+
+    <div class="prose">
+      <p>For example, “output as a percentage deviation from its HP trend” and “output growth from one quarter to the next, in per cent” are both expressed in per cent, but they are different economic objects and need different measurement equations.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-180" aria-labelledby="hp-cycles">
+    <h2 id="hp-cycles" class="section-title">3. HP-Filtered Cycles</h2>
+
+    <h3 class="subsection-title is-first">3.1. What the cyclical component measures</h3>
+    <div class="prose">
+      <p>The HP filter splits a series into a trend and a cyclical component. Applied to log output,</p>
+    </div>
+    <div class="math-block">
+      \[
+        \log\!\left(Y_t^{\text{level}}\right)=\log\!\left(Y_t^{\text{trend}}\right)+y_t^{\text{cycle}},
+      \]
+    </div>
+    <div class="prose">
+      <p>so the cyclical component is the log deviation of output from its HP trend:</p>
+    </div>
+    <div class="key-formula">
+      <span class="key-formula-label">HP cycle of a logged series</span>
+      \[
+        y_t^{\text{cycle}}
+        =\log\!\left(Y_t^{\text{level}}\right)-\log\!\left(Y_t^{\text{trend}}\right)
+        =\log\!\left(\frac{Y_t^{\text{level}}}{Y_t^{\text{trend}}}\right).
+      \]
+    </div>
+    <div class="prose">
+      <p>This is the data counterpart of the log deviation from the steady state in Part 1, with one difference. The steady state is a fixed reference point implied by the model; the HP trend is a statistical estimate that moves over time. Matching the two amounts to assuming that the stationary model describes fluctuations around the trend the filter has removed.</p>
+    </div>
+
+    <h3 class="subsection-title">3.2. Data in percentage log deviations</h3>
+    <div class="prose">
+      <p>The most common construction multiplies the log cycle by 100:</p>
+    </div>
+    <div class="math-block">
+      \[
+        Y_t^{\text{data}}=100\left[\log\!\left(Y_t^{\text{level}}\right)-\log\!\left(Y_t^{\text{trend}}\right)\right].
+      \]
+    </div>
+    <div class="prose">
+      <p>The factor of 100 expresses the log deviation in percentage points. A cycle of 0.02 is recorded as \(Y_t^{\text{data}}=2\): output about 2% above its trend.</p>
+    </div>
+    <div class="prose">
+      <p>The model counterpart uses the log deviation from the steady state, also multiplied by 100:</p>
+    </div>
+    <figure class="code-block">
+      <figcaption class="code-label">Measurement equation, model block</figcaption>
+<pre><code>y_obs = 100*(y - STEADY_STATE(y));</code></pre>
+    </figure>
+    <div class="prose">
+      <ul>
+        <li><code>y</code> is log output and <code>STEADY_STATE(y)</code> steady-state log output;</li>
+        <li>their difference is the log deviation from the steady state;</li>
+        <li>the factor of 100 puts it in percentage points, the units of the data.</li>
+      </ul>
+    </div>
+    <div class="example-card">
+      <span class="example-label">Worked example</span>
+      <p>If the model produces \(y_t-\bar y=0.02\), the measurement equation gives \(100\times0.02=2\), directly comparable with an observation of 2 in data built as above.</p>
+    </div>
+
+    <h3 class="subsection-title">3.3. Data in exact percentage deviations</h3>
+    <div class="prose">
+      <p>Some datasets instead report the exact percentage deviation from the HP trend:</p>
+    </div>
+    <div class="math-block">
+      \[
+        Y_t^{\text{data}}=100\left[\frac{Y_t^{\text{level}}}{Y_t^{\text{trend}}}-1\right]
+        =100\left[\exp\!\left(y_t^{\text{cycle}}\right)-1\right].
+      \]
+    </div>
+    <div class="prose">
+      <p>Its model counterpart applies the same exponential transformation to the log deviation:</p>
+    </div>
+    <figure class="code-block">
+      <figcaption class="code-label">Measurement equation, model block</figcaption>
+<pre><code>y_obs = 100*(exp(y - STEADY_STATE(y)) - 1);</code></pre>
+    </figure>
+
+    <div class="callout" role="note">
+      <i class="fas fa-circle-info" aria-hidden="true"></i>
+      <div>Standard Bayesian estimation in Dynare uses a first-order solution and the Kalman filter. Dynare then linearises the measurement equations along with the rest of the model, and the linearised form of <code>100*(exp(y - STEADY_STATE(y)) - 1)</code> is <code>100*(y - STEADY_STATE(y))</code>. At first order the two equations are therefore identical. The distinction only matters in nonlinear estimation (for example a second-order solution with a particle filter). The simplest consistent choice is to build the data as 100 times the log cycle (section 3.2) and use the matching equation.</div>
+    </div>
+
+    <h3 class="subsection-title">3.4. Which equation to use</h3>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <caption class="visually-hidden">Measurement equations for HP-filtered data</caption>
+        <thead>
+          <tr>
+            <th scope="col">How the data were built</th>
+            <th scope="col">Measurement equation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>\(100\left[\log(Y_t)-\log(Y_t^{\text{trend}})\right]\)</td>
+            <td><code>y_obs = 100*(y - STEADY_STATE(y));</code></td>
+          </tr>
+          <tr>
+            <td>\(100\left[Y_t/Y_t^{\text{trend}}-1\right]\)</td>
+            <td><code>y_obs = 100*(exp(y - STEADY_STATE(y)) - 1);</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p>The rule is to reproduce in the model the statistical definition of the observed series. Two series both described as “percentage deviations” may be built differently: check how yours was actually calculated.</p>
+    </div>
+
+    <h3 class="subsection-title">3.5. Other logged variables</h3>
+    <div class="prose">
+      <p>The same logic applies to any variable written in logs: consumption, investment, hours, wages. If log investment is \(inv_t=\log(I_t^{\text{level}})\) and the data are 100 times its HP log cycle,</p>
+    </div>
+    <figure class="code-block">
+      <figcaption class="code-label">Measurement equation, model block</figcaption>
+<pre><code>inv_obs = 100*(inv - STEADY_STATE(inv));</code></pre>
+    </figure>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-220" aria-labelledby="growth">
+    <h2 id="growth" class="section-title">4. Growth Rates</h2>
+    <p class="section-introduction">
+      Instead of HP-filtered cycles, many estimations use growth rates, which avoid filtering the data. The measurement equation must then reproduce the growth rate and deal with its mean.
+    </p>
+
+    <h3 class="subsection-title is-first">4.1. Log growth</h3>
+    <div class="prose">
+      <p>The log growth rate of output is the change in log output between two consecutive periods:</p>
+    </div>
+    <div class="key-formula">
+      <span class="key-formula-label">Log growth rate</span>
+      \[
+        \Delta y_t=y_t-y_{t-1}=\log\!\left(\frac{Y_t^{\text{level}}}{Y_{t-1}^{\text{level}}}\right).
+      \]
+    </div>
+    <div class="prose">
+      <p>As with deviations, for small changes the log growth rate is approximately the percentage growth rate written as a decimal.</p>
+    </div>
+
+    <h3 class="subsection-title">4.2. Percentage log growth</h3>
+    <div class="prose">
+      <p>If the data are built as \(Y_t^{\text{data}}=100\left[\log(Y_t^{\text{level}})-\log(Y_{t-1}^{\text{level}})\right]\), the measurement equation is</p>
+    </div>
+    <figure class="code-block">
+      <figcaption class="code-label">Measurement equation, model block</figcaption>
+<pre><code>y_obs = 100*(y - y(-1));</code></pre>
+    </figure>
+    <div class="prose">
+      <p>If \(y_t-y_{t-1}=0.02\), the model-implied observation is 2: output grew by about 2%. Note the timing: <code>y - y(-1)</code> is growth from \(t-1\) to \(t\), as in the data.</p>
+    </div>
+
+    <h3 class="subsection-title">4.3. Exact percentage growth</h3>
+    <div class="prose">
+      <p>If the data are the exact percentage change, \(Y_t^{\text{data}}=100\left[Y_t^{\text{level}}/Y_{t-1}^{\text{level}}-1\right]=100\left[\exp(y_t-y_{t-1})-1\right]\), the measurement equation is</p>
+    </div>
+    <figure class="code-block">
+      <figcaption class="code-label">Measurement equation, model block</figcaption>
+<pre><code>y_obs = 100*(exp(y - y(-1)) - 1);</code></pre>
+    </figure>
+    <div class="prose">
+      <p>As in section 3.3, a first-order estimation linearises this equation into the one of section 4.2.</p>
+    </div>
+
+    <h3 class="subsection-title">4.4. The mean growth rate</h3>
+    <div class="prose">
+      <p>In a stationary (detrended) model, \(y_t-y_{t-1}\) fluctuates around zero. Observed growth does not: US real GDP, for instance, has grown by around 0.5% per quarter on average in recent decades. Fitting a zero-mean model to data with a positive mean would distort the estimates. There are two standard fixes:</p>
+      <ul>
+        <li><strong>demean the data</strong>, so that the observed growth rate also fluctuates around zero; or</li>
+        <li><strong>add a trend-growth parameter</strong> to the measurement equation and estimate it with the other parameters.</li>
+      </ul>
+    </div>
+    <figure class="code-block">
+      <figcaption class="code-label">Measurement equation with a trend-growth parameter</figcaption>
+<pre><code>parameters gamma_bar;                // mean quarterly growth, in per cent
+
+model;
+  // ...
+  y_obs = gamma_bar + 100*(y - y(-1));
+end;</code></pre>
+    </figure>
+    <div class="prose">
+      <p>HP cycles do not need this step, because the filter removes the trend and the cycle has a mean close to zero.</p>
+    </div>
+
+    <h3 class="subsection-title">4.5. Summary</h3>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <caption class="visually-hidden">Measurement equations for growth rates</caption>
+        <thead>
+          <tr>
+            <th scope="col">How the data were built</th>
+            <th scope="col">Measurement equation</th>
+            <th scope="col">Units</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>\(\log(Y_t)-\log(Y_{t-1})\)</td>
+            <td><code>y_obs = y - y(-1);</code></td>
+            <td>Decimal log growth</td>
+          </tr>
+          <tr>
+            <td>\(100\left[\log(Y_t)-\log(Y_{t-1})\right]\)</td>
+            <td><code>y_obs = 100*(y - y(-1));</code></td>
+            <td>Percentage log growth</td>
+          </tr>
+          <tr>
+            <td>\(100\left[Y_t/Y_{t-1}-1\right]\)</td>
+            <td><code>y_obs = 100*(exp(y - y(-1)) - 1);</code></td>
+            <td>Exact percentage growth</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p>Each equation assumes demeaned data; otherwise add the trend-growth parameter of section 4.4.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-260" aria-labelledby="units">
+    <h2 id="units" class="section-title">5. Units and Scale</h2>
+
+    <div class="prose">
+      <p>Even when the model and the data measure the same economic object, their numbers may be on different scales. This is one of the most common sources of error in Bayesian estimation. A log deviation of 0.02 can be written in three ways:</p>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <caption class="visually-hidden">One log deviation of 0.02 written in three ways</caption>
+        <thead>
+          <tr>
+            <th scope="col">Representation</th>
+            <th scope="col">Formula</th>
+            <th scope="col" class="is-number">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Log deviation</td><td>\(y_t-\bar y\)</td><td class="is-number">0.02</td></tr>
+          <tr><td>Percentage log deviation</td><td>\(100(y_t-\bar y)\)</td><td class="is-number">2</td></tr>
+          <tr><td>Exact percentage deviation</td><td>\(100\left[\exp(y_t-\bar y)-1\right]\)</td><td class="is-number">2.0201</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>All three describe the same movement, but they are not numerically equal. If the data were built as percentage log deviations, an observation of 2 means a log deviation of 0.02, and the measurement equation must contain the factor of 100. Writing <code>y_obs = y - STEADY_STATE(y);</code> instead would make the model-implied series 100 times smaller than the data.</p>
+    </div>
+
+    <div class="callout is-warning" role="note">
+      <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
+      <div><strong>A factor-of-100 mismatch is not a minor error.</strong> Shock standard deviations are estimated in the model’s units (log points, so 0.01 is a 1% shock). To match data that are 100 times larger, the estimation pushes shock volatilities up by a factor of about 100, against their priors, and every other parameter estimate is distorted.</div>
+    </div>
+
+    <h3 class="subsection-title">5.1. Interest rates and inflation</h3>
+    <div class="prose">
+      <p>Rates need the same care. Suppose a quarterly model has the net interest rate \(r_t\) in decimals (\(\bar r=0.01\) is 1% per quarter), while the data are the annualised policy rate in per cent, demeaned. Since \(400\times0.01=4\), the model counterpart multiplies by 400:</p>
+    </div>
+    <figure class="code-block">
+      <figcaption class="code-label">Measurement equation, model block</figcaption>
+<pre><code>r_obs = 400*(r - STEADY_STATE(r));   // annualised percentage points, demeaned</code></pre>
+    </figure>
+    <div class="prose">
+      <p>If the data are not demeaned, use <code>r_obs = 400*r;</code> so that the model also matches the average level of the rate. Inflation works the same way.</p>
+    </div>
+
+    <h3 class="subsection-title">5.2. A practical scale check</h3>
+    <div class="prose">
+      <p>Before estimating, solve the model at your calibrated parameters with <code>stoch_simul</code>, which reports the theoretical standard deviation of every variable, including <code>y_obs</code>. Compare it with the standard deviation of the observed series. An HP cycle of quarterly real GDP built in percentage points typically has a standard deviation between 1 and 2. If the model reports about 0.015 instead, a factor of 100 is missing. Do this check for every observed variable.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-280" aria-labelledby="implementation">
+    <h2 id="implementation" class="section-title">6. Putting It Together in Dynare</h2>
+
+    <div class="prose">
+      <p>Suppose the model contains log output and log investment, and the data are 100 times the HP log cycles of the two series.</p>
+    </div>
+
+    <figure class="code-block">
+      <figcaption class="code-label">Dynare .mod file</figcaption>
+<pre><code>var y inv y_obs inv_obs;   // plus the model's other endogenous variables
+varexo eps_a eps_i;        // at least as many shocks as observed variables
+
+model;
+  // Structural equations
+  // ...
+
+  // Measurement equations
+  y_obs   = 100*(y   - STEADY_STATE(y));
+  inv_obs = 100*(inv - STEADY_STATE(inv));
+end;
+
+varobs y_obs inv_obs;
+
+estimated_params;
+  stderr eps_a, inv_gamma_pdf, 0.01, inf;   // shock size in log points
+  stderr eps_i, inv_gamma_pdf, 0.01, inf;
+  // ... structural parameters
+end;
+
+estimation(datafile = 'observables.csv', mh_replic = 20000);</code></pre>
+    </figure>
+
+    <div class="prose">
+      <ul>
+        <li><strong>Declare</strong> the measurement variables with <code>var</code>, like any endogenous variable, so that Dynare computes their model-implied values.</li>
+        <li><strong>Name the data columns</strong> exactly as in <code>varobs</code>: the file must contain columns <code>y_obs</code> and <code>inv_obs</code>, in the units of the measurement equations.</li>
+        <li><strong>Avoid stochastic singularity:</strong> the number of observed variables cannot exceed the number of shocks, counting any measurement errors. With fewer shocks than observables, the likelihood cannot be computed.</li>
+      </ul>
+      <p>If the data are exact percentage deviations, or growth rates, replace the two measurement equations with the corresponding lines of sections 3.4 and 4.5; nothing else changes.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-300" aria-labelledby="checklist">
+    <h2 id="checklist" class="section-title">7. Checklist Before Estimating</h2>
+
+    <ol class="step-list">
+      <li><strong>Identify the economic object.</strong> Cyclical component, growth rate, level or rate: these are different objects.</li>
+      <li><strong>Identify the transformation.</strong> Was the series logged before the HP filter or differencing? Is the cycle a log difference or an exact percentage deviation?</li>
+      <li><strong>Check the units.</strong> Decimals or percentage points? Quarterly or annualised? Does an observation of 2 mean a 2% deviation or a log deviation of 2?</li>
+      <li><strong>Deal with the mean.</strong> Demean growth rates and rates, or add a parameter for their mean.</li>
+      <li><strong>Write the measurement equation</strong> so that the model variable represents exactly the same object as the observed series.</li>
+      <li><strong>Check the scale.</strong> Compare the standard deviations reported by <code>stoch_simul</code> with those of the data to catch a missing factor of 100 or 400.</li>
+      <li><strong>Check the timing.</strong> For growth rates, <code>y - y(-1)</code> measures growth from \(t-1\) to \(t\), as in the data.</li>
+      <li><strong>Count shocks and observables.</strong> At least as many shocks (including measurement errors) as observed variables.</li>
+    </ol>
+  </section>
+
+  <!-- ===================================================== -->
+  <section class="content-section reveal delay-340" aria-labelledby="principle">
+    <h2 id="principle" class="section-title">8. Key Principle</h2>
+    <div class="prose">
+      <p>Measurement equations are not arbitrary transformations: they define how the theoretical model relates to the observed data. A correct measurement equation matches three things.</p>
+    </div>
+    <ul class="rule-list">
+      <li><strong>Economic meaning:</strong> the model variable and the data measure the same object.</li>
+      <li><strong>Statistical construction:</strong> the model reproduces the transformation applied to the data, such as logging, HP filtering, differencing or demeaning.</li>
+      <li><strong>Units:</strong> the model-implied and actual observations are on the same numerical scale.</li>
+    </ul>
+    <div class="prose">
+      <p>When all three hold, the model and the data are correctly linked for Bayesian estimation.</p>
+    </div>
+  </section>
+
+  <nav class="page-navigation is-single reveal delay-340" aria-label="Part navigation">
+  <a href="/teaching/ec9d5/dynare-log-variables.html" class="page-nav-link is-previous">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Previous part</span>
+      <span class="page-nav-title">Interpreting Dynamic Variables in Log-Linear Macroeconomic Models</span>
+    </span>
+  </a>
+</nav>
+</section>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 17:52 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -222,9 +222,9 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.45rem 1.25rem;
-  margin-top: 0.35rem;
+  margin-top: 0.3rem;
   color: var(--ink-soft);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   list-style: none;
 }
 
@@ -249,7 +249,7 @@
 
 .chart-readout {
   min-height: 1.5em;
-  margin-top: 0.6rem;
+  margin-top: 0.72rem;
   color: var(--ink-soft);
   font-family: var(--mono);
   font-size: 0.78rem;
@@ -274,6 +274,12 @@
 
 .chart-control {
   margin-bottom: 0.9rem;
+}
+
+/* A control card placed between a section introduction and its charts. */
+.dashboard-controls.simulation-controls {
+  margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .chart-hint {

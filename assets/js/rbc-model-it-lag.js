@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 23:43 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model-it-lag.js: /economics/rbc-model-it-lag.html
    The RBC model with firm-owned capital and an investment
@@ -52,7 +52,7 @@
     phiIntro: role('irf-phi-intro'),
   };
   const state = {
-    country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr', payload: null, charts: new Map(),
+    country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr', compare: 'data', payload: null, charts: new Map(),
   };
   const token = name => getComputedStyle(body).getPropertyValue(name).trim() || '#3b5a75';
   const fmt = (value, digits = 2) => D.formatNumber(value, digits);
@@ -168,32 +168,71 @@
 
   /* Simulations ------------------------------------------------------ */
 
+  /* Correlation and standard deviation of two series over the sample. */
+  function moments(x, y) {
+    const pairs = x.map((v, i) => [v, y[i]]).filter(([a, b]) => Number.isFinite(a) && Number.isFinite(b));
+    const n = pairs.length;
+    if (n < 3) return { corr: NaN, sdX: NaN, sdY: NaN };
+    const mx = pairs.reduce((t, p) => t + p[0], 0) / n;
+    const my = pairs.reduce((t, p) => t + p[1], 0) / n;
+    let sxx = 0, syy = 0, sxy = 0;
+    pairs.forEach(([a, b]) => { sxx += (a - mx) ** 2; syy += (b - my) ** 2; sxy += (a - mx) * (b - my); });
+    return { corr: sxy / Math.sqrt(sxx * syy), sdX: Math.sqrt(sxx / (n - 1)), sdY: Math.sqrt(syy / (n - 1)) };
+  }
+
   function renderModelCard(card) {
     const payload = state.payload;
     const key = card.dataset.modelVar;
     const unit = payload.variables.find(v => v.key === key).units;
     const list = variants();
+    const units = key === 'r' ? ' percentage points' : '';
+    const readoutText = 'Hover over the chart, or focus it and use the arrow keys, to read values.';
+    const options = {
+      dates: payload.dates, period: 0.25, zeroLine: true, digits: 2,
+      recessions: payload.recessions ? payload.recessions.intervals : [],
+      readoutText,
+    };
+    inCard(card, 'chart-subtitle').textContent = `${unit} · HP cyclical components · ${payload.technology[state.form].label} · ${sampleText(payload.dates)}`;
+
+    if (state.compare === 'canonical') {
+      // This model (solid) against the canonical model (dash-dot), same shocks.
+      const series = [];
+      list.forEach(v => {
+        const several = list.length > 1;
+        series.push({
+          label: v.suffix ? `Installation lag, ${v.suffix}` : 'Model with installation lag',
+          color: v.color, weight: several ? 1 : 1.1, values: run(v.measure).series[v.kind][key],
+        });
+        series.push({
+          label: v.suffix ? `Canonical, ${v.suffix}` : 'Canonical RBC model',
+          color: several ? v.color : token('--chart-benchmark'), dash: BENCHMARK_DASH, under: true,
+          values: canonical(v.measure).series[v.kind][key],
+        });
+      });
+      draw(card, { ...options, label: `${VARIABLES[key]}: the RBC model with an installation lag and the canonical RBC model, HP cyclical components` }, series);
+      const parts = list.map(v => {
+        const m = moments(run(v.measure).series[v.kind][key], canonical(v.measure).series[v.kind][key]);
+        return `${v.suffix ? `with ${v.suffix}, ` : ''}correlation between the two models ${fmt(m.corr)}, standard deviation ${fmt(m.sdX)}${units} with the installation lag and ${fmt(m.sdY)}${units} in the canonical model`;
+      });
+      const note = `${parts.join('; ')}. Both models are driven by the same technology shocks, from the same starting values.`;
+      inCard(card, 'chart-note').textContent = note.charAt(0).toUpperCase() + note.slice(1);
+      return;
+    }
+
     const series = list.map(v => ({
       label: v.suffix ? `Model, ${v.suffix}` : 'Model with installation lag',
       color: v.color, dash: v.dash, weight: list.length === 1 ? 1.1 : 1,
       values: run(v.measure).series[v.kind][key],
     }));
     series.push({ label: 'US data', color: token('--chart-benchmark'), dash: BENCHMARK_DASH, under: true, values: payload.data[key] });
-    inCard(card, 'chart-subtitle').textContent = `${unit} · HP cyclical components · ${payload.technology[state.form].label} · ${sampleText(payload.dates)}`;
-    draw(card, {
-      dates: payload.dates, period: 0.25, zeroLine: true, digits: 2,
-      recessions: payload.recessions ? payload.recessions.intervals : [],
-      label: `${VARIABLES[key]}: the RBC model with an installation lag and the US data, HP cyclical components`,
-      readoutText: 'Hover over the chart, or focus it and use the arrow keys, to read values.',
-    }, series);
+    draw(card, { ...options, label: `${VARIABLES[key]}: the RBC model with an installation lag and the US data, HP cyclical components` }, series);
     const dataRow = statRow(canonical(list[0].measure).stats.data, key);
-    const units = key === 'r' ? ' percentage points' : '';
     const parts = list.map(v => {
       const row = statRow(run(v.measure).stats[v.kind], key);
       const can = statRow(canonical(v.measure).stats[v.kind], key);
       return `${v.suffix ? `model with ${v.suffix}` : 'model'}: correlation with the data ${fmt(row.corr_data)} (canonical model ${fmt(can.corr_data)}), standard deviation ${fmt(row.sd)}${units} (canonical model ${fmt(can.sd)})`;
     });
-    let note = `${parts.join('; ')}; standard deviation of the data ${fmt(dataRow.sd)}${units}.`;
+    const note = `${parts.join('; ')}; standard deviation of the data ${fmt(dataRow.sd)}${units}.`;
     inCard(card, 'chart-note').textContent = note.charAt(0).toUpperCase() + note.slice(1);
   }
 
@@ -300,6 +339,8 @@
       state.payload = payload;
       el.pageStatus.hidden = true;
       if (!payload.runs.harrod) body.querySelector('[data-control="form"]').hidden = true;
+      const canonicalSeries = Object.values(payload.canonical || {}).every(form => Object.values(form).every(r => r.series));
+      if (!canonicalSeries) compareControl.setDisabled('canonical', true, 'Available after the next data update');
       render();
       if (payload.generated_at_utc) {
         el.updateNote.textContent = `Data updated on ${new Date(payload.generated_at_utc).toLocaleDateString('en-GB')}`;
@@ -317,6 +358,10 @@
   }
 
   const formControl = D.segmented(body.querySelector('[data-control="form"]'), value => { state.form = value; render(); });
+  const compareControl = D.segmented(body.querySelector('[data-control="compare"]'), value => {
+    state.compare = value;
+    if (state.payload) modelCards.forEach(renderModelCard);
+  });
   let shocksControl = null;
   const tfpControl = D.segmented(body.querySelector('[data-control="tfp"]'), value => {
     state.tfp = value;
@@ -337,5 +382,6 @@
   formControl.select('hicks', false);
   tfpControl.select('measured', false);
   shocksControl.select('kr', false);
+  compareControl.select('data', false);
   load();
 })();

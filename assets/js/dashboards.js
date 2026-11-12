@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-11 23:43 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -179,21 +179,6 @@ window.AGDashboards = (() => {
       const width = Math.max(280, frame.clientWidth);
       const height = Math.round(Math.min(440, Math.max(260, width * 0.48)));
       const compact = width < 560;
-      const maxAbs = Math.max(...options.series.flatMap(item => item.values.filter(Number.isFinite).map(Math.abs)));
-      /* Width of the y-axis labels; small values (below 1) need decimals and a sign. */
-      const labelChars = maxAbs > 0 && maxAbs < 1
-        ? 4 + Math.max(1, Math.ceil(-Math.log10(maxAbs)) + 1)
-        : formatNumber(maxAbs, 0).length;
-      const footer = (copyright && !copyrightTop) || options.xTitle ? 13 : 0;
-      const margin = { top: copyrightTop ? 28 : 14, right: compact ? 10 : 18, bottom: 28 + footer, left: Math.max(compact ? 38 : 48, 14 + labelChars * (compact ? 6.2 : 7)) };
-      const plotW = width - margin.left - margin.right;
-      const plotH = height - margin.top - margin.bottom;
-
-      root.setAttribute('viewBox', `0 0 ${width} ${height}`);
-      root.setAttribute('width', width);
-      root.setAttribute('height', height);
-      root.textContent = '';
-
       const visible = options.series.flatMap(item => item.values.filter(Number.isFinite));
       let yMin = Math.min(...visible);
       let yMax = Math.max(...visible);
@@ -210,6 +195,17 @@ window.AGDashboards = (() => {
       const yStep = niceStep(yMax - yMin || 1, compact ? 5 : 7);
       yMin = Math.floor(yMin / yStep) * yStep;
       yMax = Math.ceil(yMax / yStep) * yStep;
+      /* Width of the y-axis labels, from the labels themselves. */
+      const labelChars = Math.max(...ticks(yMin, yMax, yStep).map(value => formatNumber(value, stepDecimals(yStep)).length));
+      const footer = (copyright && !copyrightTop) || options.xTitle ? 13 : 0;
+      const margin = { top: copyrightTop ? 28 : 14, right: compact ? 10 : 18, bottom: 28 + footer, left: Math.max(compact ? 30 : 48, 12 + labelChars * (compact ? 6.2 : 7)) };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+
+      root.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      root.setAttribute('width', width);
+      root.setAttribute('height', height);
+      root.textContent = '';
 
       const xMin = xs[0];
       const xMax = xs[xs.length - 1] + period || xMin + 1;
@@ -259,7 +255,7 @@ window.AGDashboards = (() => {
       }, axis);
       /* Footer line: axis title in the centre, copyright at the left edge of
          the plot, below the tick labels. */
-      const footerY = margin.top + plotH + 31;
+      const footerY = margin.top + plotH + 34;
       if (options.xTitle) {
         const title = svg('text', { x: margin.left + plotW / 2, y: footerY, 'text-anchor': 'middle' }, axis);
         title.textContent = options.xTitle;

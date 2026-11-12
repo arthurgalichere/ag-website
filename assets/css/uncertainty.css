@@ -1,3 +1,4 @@
+/* Last edited: 2026-11-12 17:15 UTC (Claude, website chat) */
 /* =========================================================
    EC9D5 interactive page: /teaching/ec9d5/uncertainty.html
    Page structure, title, lead, sections, panels, callouts and
@@ -283,6 +284,29 @@
   margin-top: 1rem;
 }
 
+/* Section 2: controls on the left of the chart card (desktop). */
+.certainty-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+}
+
+.control-panel.is-stacked {
+  grid-template-columns: 1fr;
+  align-content: start;
+}
+
+.certainty-layout > .control-panel {
+  position: sticky;
+  top: 1rem;
+}
+
+.certainty-layout > .chart-card {
+  grid-row: auto;
+  margin-top: 0;
+}
+
 .insight-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -552,8 +576,13 @@
 
 @media (max-width: 900px) {
   .model-card.has-figure,
-  .chart-grid {
+  .chart-grid,
+  .certainty-layout {
     grid-template-columns: 1fr;
+  }
+
+  .certainty-layout > .control-panel {
+    position: static;
   }
 }
 

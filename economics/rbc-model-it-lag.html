@@ -225,6 +225,15 @@
   <section class="content-section reveal delay-160" aria-labelledby="simulation-title">
     <h2 id="simulation-title" class="section-title">Model Simulations vs the Data</h2>
     <p class="section-introduction">The model is fed with the measured technology shocks, quarter by quarter, and its series are compared with the HP cyclical components of the US data shown on the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page. The installation shocks are not observed, so they are not used: the differences from the canonical model come from the installation lag alone.</p>
+    <div class="dashboard-controls simulation-controls">
+      <div class="segmented-field" data-control="compare">
+        <span class="segmented-label" id="compare-label">Simulations</span>
+        <div class="segmented" role="group" aria-labelledby="compare-label">
+          <button type="button" data-value="data" aria-pressed="true">Model vs the data</button>
+          <button type="button" data-value="canonical" aria-pressed="false">Model vs the canonical RBC model</button>
+        </div>
+      </div>
+    </div>
     <div class="chart-stack">
       <figure class="chart-card" data-model-var="y">
         <figcaption class="chart-header">
