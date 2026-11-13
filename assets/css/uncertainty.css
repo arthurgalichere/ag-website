@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-12 17:15 UTC (Claude, website chat) */
+/* Last edited: 2026-11-13 12:30 UTC (Claude, website chat) */
 /* =========================================================
    EC9D5 interactive page: /teaching/ec9d5/uncertainty.html
    Page structure, title, lead, sections, panels, callouts and
@@ -67,6 +67,23 @@
   line-height: 1.65;
 }
 
+/* Site rule: running text is justified. */
+.uncertainty-body .model-card p,
+.uncertainty-body .chart-copy p,
+.uncertainty-body .normalisation-note,
+.uncertainty-body .chart-note,
+.uncertainty-body .gamma-roles dd,
+.uncertainty-body .equation-case p,
+.uncertainty-body .model-card li,
+.uncertainty-body .certainty-side .section-introduction {
+  text-align: justify;
+  hyphens: auto;
+}
+
+.model-card p + p {
+  margin-top: 0.75rem;
+}
+
 .model-card-label {
   display: inline-block;
   margin-bottom: 0.45rem;
@@ -90,7 +107,7 @@
 .model-card.has-figure {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: start;
+  align-items: center;
   gap: 1.5rem;
 }
 
@@ -287,9 +304,19 @@
 /* Section 2: controls on the left of the chart card (desktop). */
 .certainty-layout {
   display: grid;
-  grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
   align-items: start;
+  gap: 1.25rem;
+}
+
+.certainty-side {
+  display: grid;
   gap: 1rem;
+  align-content: start;
+}
+
+.certainty-side .section-introduction {
+  margin: 0;
 }
 
 .control-panel.is-stacked {
@@ -297,7 +324,7 @@
   align-content: start;
 }
 
-.certainty-layout > .control-panel {
+.certainty-layout > .certainty-side {
   position: sticky;
   top: 1rem;
 }
@@ -581,7 +608,7 @@
     grid-template-columns: 1fr;
   }
 
-  .certainty-layout > .control-panel {
+  .certainty-layout > .certainty-side {
     position: static;
   }
 }

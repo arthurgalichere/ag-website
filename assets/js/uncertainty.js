@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-12 17:15 UTC (Claude, website chat) */
+/* Last edited: 2026-11-13 12:30 UTC (Claude, website chat) */
 /* =========================================================
    EC9D5 interactive page: uncertainty and precautionary saving.
    Two-period model, CRRA utility, income W ± ε with prob. 1/2.
@@ -186,14 +186,14 @@
      Each chart caps its vertical axis just above its own highest marked
      point; the curve is clipped beyond it, so steep curvature (large γ,
      large ε) does not flatten everything else. */
-  function chartScales({ points, gamma, lowestMarked, width = WIDTH, height = HEIGHT, domain = null }) {
+  function chartScales({ points, gamma, lowestMarked, width = WIDTH, height = HEIGHT, domain = null, yTop = null }) {
     const valid = points.filter(v => Number.isFinite(v) && v > 0);
     const low = Math.min(...valid);
     const high = Math.max(...valid);
     const pad = Math.max(1, 0.14 * (high - low));
     const xMin = domain ? domain[0] : Math.max(0.05, low - pad);
     const xMax = domain ? domain[1] : high + pad;
-    const yMax = 1.22 * mu(lowestMarked, gamma);
+    const yMax = yTop || 1.22 * mu(lowestMarked, gamma);
     const axisY = height - MARGIN.bottom;
     const plotWidth = width - MARGIN.left - MARGIN.right;
     const plotHeight = axisY - MARGIN.top;
@@ -206,7 +206,10 @@
       xMax,
       x: value => MARGIN.left + (value - xMin) / (xMax - xMin) * plotWidth,
       y: value => axisY - Math.min(value, yMax * 1.05) / yMax * plotHeight,
-      isVisible: value => value <= yMax
+      /* Unclamped position, for lines drawn inside the clip area. */
+      yRaw: value => axisY - value / yMax * plotHeight,
+      isVisible: value => value <= yMax,
+      yMax
     };
   }
 
@@ -245,9 +248,10 @@
       svg,
       axisY: AXIS_Y,
       arrowId: `${id}-arrow`,
-      line(x1, y1, x2, y2, className, arrow = false) {
+      line(x1, y1, x2, y2, className, arrow = false, clipped = false) {
         const attributes = { x1, y1, x2, y2, class: className };
         if (arrow) attributes['marker-end'] = `url(#${id}-arrow)`;
+        if (clipped) attributes['clip-path'] = `url(#${id}-clip)`;
         svg.appendChild(el('line', attributes));
       },
       point(x, y, className = 'chart-point', radius = 4.5) {
@@ -276,9 +280,19 @@
 
     const k = textScale();
     const rowEnds = [];
+    let offRow = 0;
     groups.forEach(group => {
       group.items.forEach(item => chart.line(item.x, chart.axisY, item.x, item.y, `chart-guide ${item.tone}`));
-      chart.point(group.x, group.y);
+      const value = mu(group.items[0].c, gamma);
+      if (scales.yMax && !scales.isVisible(value)) {
+        /* Above the capped axis: arrow pointing up, with the value. */
+        const top = scales.y(scales.yMax);
+        chart.line(group.x, top + 18 * k, group.x, top - 6, `chart-guide ${group.items[0].tone}`, true);
+        chart.text(group.x + 6, top + (4 + 13 * offRow) * k, `u′(${group.items[0].label}) = ${formatSmall(value)} ↑`, 'chart-label-small', 'start');
+        offRow += 1;
+      } else {
+        chart.point(group.x, group.y);
+      }
 
       const label = group.items.map(item => item.label).join(' = ');
       const halfWidth = label.length * 4 * k;
@@ -330,7 +344,7 @@
 
   function renderUtilityChart(gamma) {
     const W = 480;
-    const H = 381;   // plot area 15% taller than the original 340
+    const H = 391;   // plot area 3% taller than the 12 Nov version (381)
     const M = { top: 30, right: 18, bottom: 34, left: 34 };
     const cMin = 0.15;
     const cMax = 4;
@@ -380,10 +394,17 @@
     /* Wide screens: one SVG unit per CSS pixel, so text keeps its size;
        plot area 15% taller than the original full-width chart. */
     const chartWidth = Math.round(ui.certChart.clientWidth);
-    const wide = chartWidth > 600;
+    const width = chartWidth > 400 ? chartWidth : WIDTH;
+    /* Roughly square plot: vertical axis about as long as the horizontal one. */
+    const height = Math.round(0.92 * (width - MARGIN.left - MARGIN.right)) + MARGIN.top + MARGIN.bottom;
+    /* The vertical scale depends on γ only (lowest consumption reachable on
+       the β(1+r) slider), so moving β(1+r) moves the points, not the curve. */
+    const lowest = Math.min(
+      solveCertainty(readNumber(ui.certReturn.min, 0.85), gamma).c2,
+      solveCertainty(readNumber(ui.certReturn.max, 1.15), gamma).c1
+    );
     const scales = chartScales({
-      points: [c1, c2], gamma, lowestMarked: Math.min(c1, c2),
-      width: wide ? chartWidth : WIDTH, height: wide ? 420 : HEIGHT, domain: [7, 13.5]
+      points: [c1, c2], gamma, lowestMarked: lowest, width, height, domain: [7, 13.5]
     });
     const chart = baseChart('certainty', scales, gamma);
     const g = drawGuides(chart, scales, gamma, [
@@ -422,9 +443,33 @@
     ui.certSaving.textContent = formatSigned(model.A);
   }
 
+  /* Section 4: both charts share axes that depend on γ only, built from the
+     largest shock on the slider, so changing ε moves the points, not the
+     curve. The vertical axis is capped at Y_CAP times u′ at the certainty
+     consumption; points above it get an arrow and their value. */
+  const Y_CAP = 6;
+  const fixedScaleCache = new Map();
+  function sectionFourScales(gamma) {
+    const key = gamma.toFixed(3);
+    if (!fixedScaleCache.has(key)) {
+      const widest = solveModel(readNumber(ui.epsilon.max, 7.5), gamma);
+      const points = uncertaintyPoints(widest);
+      const low = Math.min(...points);
+      const high = Math.max(...points);
+      const pad = 0.06 * (high - low);
+      const reference = mu(widest.certainty.c1, gamma);
+      const lowest = Math.min(widest.fixedSaving.c2Low, widest.uncertainty.c2Low, widest.impliedC1);
+      fixedScaleCache.set(key, {
+        domain: [Math.max(0.05, low - pad), high + pad],
+        yTop: 1.22 * Math.min(mu(lowest, gamma), Y_CAP * reference)
+      });
+    }
+    return fixedScaleCache.get(key);
+  }
+
   function renderPartialChart(model) {
     const { gamma, fixedSaving: s, certainty } = model;
-    const scales = chartScales({ points: uncertaintyPoints(model), gamma, lowestMarked: Math.min(s.c2Low, model.impliedC1) });
+    const scales = chartScales({ points: uncertaintyPoints(model), gamma, ...sectionFourScales(gamma) });
     const chart = baseChart('partial', scales, gamma);
     const hasRisk = model.epsilon > 0;
 
@@ -442,13 +487,14 @@
     const yEMU = scales.y(s.expectedMU);
 
     if (hasRisk) {
-      chart.line(g.low.x, g.low.y, g.high.x, g.high.y, 'chart-chord');
+      chart.line(g.low.x, scales.yRaw(mu(g.low.c, gamma)), g.high.x, scales.yRaw(mu(g.high.c, gamma)), 'chart-chord', false, true);
+      const emuVisible = scales.isVisible(s.expectedMU);
       drawLevels(chart, [
-        { y: yEMU, toX: g.mean.x, tone: 'is-current', label: 'E[u′(c₂)]' },
-        { y: g.mean.y, toX: g.mean.x, tone: 'is-mean', label: 'u′(E[c₂])' }
-      ]);
-      chart.point(g.mean.x, yEMU, 'chart-point is-current');
-      if (g.mean.y - yEMU > 18) {
+        { y: yEMU, toX: g.mean.x, tone: 'is-current', label: 'E[u′(c₂)]', show: emuVisible },
+        { y: g.mean.y, toX: g.mean.x, tone: 'is-mean', label: 'u′(E[c₂])', show: true }
+      ].filter(level => level.show));
+      if (emuVisible) chart.point(g.mean.x, yEMU, 'chart-point is-current');
+      if (emuVisible && g.mean.y - yEMU > 18) {
         chart.text(g.mean.x + 8, (g.mean.y + yEMU) / 2 + 4, 'Jensen gap', 'chart-label-small', 'start');
       }
       drawShift(chart, scales.x(certainty.c1), g.c1.x, 0, 'c₁ falls');
@@ -467,7 +513,7 @@
 
   function renderEquilibriumChart(model) {
     const { gamma, fixedSaving: f, uncertainty: u, certainty } = model;
-    const scales = chartScales({ points: uncertaintyPoints(model), gamma, lowestMarked: Math.min(u.c2Low, u.c1) });
+    const scales = chartScales({ points: uncertaintyPoints(model), gamma, ...sectionFourScales(gamma) });
     const chart = baseChart('equilibrium', scales, gamma);
     const hasRisk = model.epsilon > 0;
 
@@ -494,12 +540,13 @@
     const levelLabel = BETA_R === 1 ? 'u′(c₁*) = E[u′(c₂*)]' : 'E[u′(c₂*)]';
 
     if (hasRisk) {
-      chart.line(g.low.x, g.low.y, g.high.x, g.high.y, 'chart-chord');
+      chart.line(g.low.x, scales.yRaw(mu(g.low.c, gamma)), g.high.x, scales.yRaw(mu(g.high.c, gamma)), 'chart-chord', false, true);
+      const emuVisible = scales.isVisible(u.expectedMU);
       drawLevels(chart, [
-        { y: yEMU, toX: g.mean.x, tone: 'is-current', label: levelLabel },
-        { y: g.mean.y, toX: g.mean.x, tone: 'is-mean', label: 'u′(E[c₂*])' }
-      ]);
-      chart.point(g.mean.x, yEMU, 'chart-point is-current', 5);
+        { y: yEMU, toX: g.mean.x, tone: 'is-current', label: levelLabel, show: emuVisible },
+        { y: g.mean.y, toX: g.mean.x, tone: 'is-mean', label: 'u′(E[c₂*])', show: true }
+      ].filter(level => level.show));
+      if (emuVisible) chart.point(g.mean.x, yEMU, 'chart-point is-current', 5);
       drawShift(chart, scales.x(f.c2Low), g.low.x, 0, 'A ↑');
       drawShift(chart, scales.x(f.c2High), g.high.x, 0, 'A ↑');
       drawShift(chart, scales.x(certainty.c1), g.c1.x, 1, 'c₁ ↓');

@@ -94,7 +94,7 @@
     <p class="eyebrow">EC9D5 · Working with Dynare · Part 1</p>
     <h1 class="page-title">Interpreting Dynamic Variables in Log-Linear Macroeconomic Models</h1>
     <p class="lead">
-      Many Dynare models write their variables in logarithms. A number such as 0.02 in the output can then mean a log deviation, roughly a 2% deviation, or, for an interest rate, 2 percentage points. This page explains what each object measures, how to move between levels, logs and percentages, and how to read Dynare’s steady state and impulse responses correctly.
+      On this course, every variable in a Dynare model is a logarithm and every shock is measured in percent. A number in Dynare’s output can then be a log level, a deviation in percent, or, for an interest rate, a change in percentage points. This page explains what each object measures, how to move between levels, logs and percentages, and how to read Dynare’s steady state and impulse responses correctly.
     </p>
   </header>
 
@@ -106,7 +106,7 @@
       <li><a href="#deviations">Three ways to measure a deviation</a></li>
       <li><a href="#approximation">Log deviations and percentages</a></li>
       <li><a href="#dynare-output">Reading Dynare’s output</a></li>
-      <li><a href="#dynare-code">Writing transformations in Dynare</a></li>
+      <li><a href="#dynare-code">Writing the model in Dynare</a></li>
       <li><a href="#rules">Rules to remember</a></li>
     </ol>
   </nav>
@@ -174,6 +174,25 @@
       <figcaption class="code-label">MATLAB, after Dynare has run</figcaption>
 <pre><code>ybar = oo_.steady_state(strcmp(M_.endo_names, 'y'));   % steady-state log output
 Ybar = exp(ybar);                                       % steady-state output in levels</code></pre>
+    </figure>
+
+    <div class="prose">
+      <p>The steady state is best written in closed form in a <code>steady_state_model</code> block, so that Dynare recomputes it exactly for every parameter draw during estimation. Compute it in levels with temporary variables (ending in <code>_</code>), then take logs:</p>
+    </div>
+
+    <figure class="code-block">
+      <figcaption class="code-label">Dynare .mod file</figcaption>
+<pre><code>steady_state_model;
+  // levels first (temporary variables end in _) ...
+  k_ = ...;
+  h_ = ...;
+  y_ = k_^alpha*h_^(1-alpha);
+  // ... then the model variables, in logs
+  k = log(k_);
+  h = log(h_);
+  y = log(y_);
+  A = 0;
+end;</code></pre>
     </figure>
   </section>
 
@@ -318,59 +337,103 @@ Ybar = exp(ybar);                                       % steady-state output in
   <section class="content-section reveal delay-260" aria-labelledby="dynare-output">
     <h2 id="dynare-output" class="section-title">5. Reading Dynare’s Output</h2>
 
-    <h3 class="subsection-title is-first">5.1. Impulse responses and simulations</h3>
+    <h3 class="subsection-title is-first">5.1. Shocks in percent, deviations in percent</h3>
     <div class="prose">
-      <p>With a first-order approximation (<code>stoch_simul(order=1)</code>), Dynare reports impulse responses as <strong>deviations from the steady state, in the units in which the variable is declared</strong>. The response of <code>y</code> to the shock <code>eps_a</code> is stored in <code>oo_.irfs.y_eps_a</code>. Simulated series are reported in levels of the model variable, so subtracting the steady state gives the same kind of deviation.</p>
-      <p>If <code>y</code> is log output, its impulse response is a log deviation: a value of 0.004 means output is about 0.4% above its steady state. Dynare’s IRF plots show these raw numbers; multiply them by 100 before labelling an axis “% deviation from steady state”.</p>
+      <p>On this course, shock standard deviations are set <strong>in percent</strong>: <code>stderr 0.89</code> means a 0.89% shock, not 0.0089. With a first-order approximation (<code>stoch_simul(order = 1)</code>), the solution is linear in the shocks, so scaling every shock by 100 scales every deviation from the steady state by 100. Dynare’s deviations of a log variable are then <strong>100 times log deviations</strong>, that is, percentage deviations in the sense of section 4.</p>
     </div>
 
-    <h3 class="subsection-title">5.2. Rates are not logged</h3>
+    <div class="key-formula">
+      <span class="key-formula-label">Reading rule (shocks in percent, order = 1)</span>
+      \[
+        \text{Dynare's deviation of } y
+        \;=\;100\,(y_t-\bar y)
+        \;=\;100\times\log\!\left(\frac{Y_t^{\text{level}}}{\bar Y^{\text{level}}}\right)
+        \;\approx\;\text{percentage deviation of output}.
+      \]
+    </div>
+
     <div class="prose">
-      <p>Interest rates, inflation and the unemployment rate are usually written in levels, as decimals. In a quarterly model, \(r_t=0.01\) is a 1% quarterly rate. Their deviation \(r_t-\bar r\) is then a change in the rate itself, read in <strong>percentage points</strong>, never as a percentage change of the rate.</p>
+      <p>The response of <code>y</code> to the shock <code>eps_A</code> is stored in <code>oo_.irfs.y_eps_A</code>, as a deviation from the steady state. A value of 0.5 means output is about 0.5% above its steady state: no multiplication by 100 is needed. The same holds for simulated series minus their steady state, and for the moments Dynare reports.</p>
+    </div>
+
+    <div class="callout is-warning" role="note">
+      <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
+      <div><strong>Only at <code>order = 1</code>.</strong> The rescaling works because the first-order solution is linear. At <code>order = 2</code> or higher, the size of the shocks changes the solution itself (through risk terms such as the variance), so shocks must then be in log units.</div>
+    </div>
+
+    <div class="callout is-quiet" role="note">
+      <i class="fas fa-circle-info" aria-hidden="true"></i>
+      <div><strong>In other papers and code.</strong> Many models set shocks in log units instead (<code>stderr 0.0089</code>). Their impulse responses are then log deviations (0.005 for a 0.5% deviation), and must be multiplied by 100 before they are read as percentages. At <code>order = 1</code> the two set-ups give the same economics; only the units differ.</div>
+    </div>
+
+    <h3 class="subsection-title">5.2. Interest rates and inflation</h3>
+    <div class="prose">
+      <p>All endogenous variables are in logs, including gross rates: \(r_t=\log(1+R_t)\) for a net rate \(R_t\). Because \(\log(1+R_t)-\log(1+\bar R)\approx R_t-\bar R\), the deviation of a log gross rate is the change in the net rate itself. With shocks in percent it is read in <strong>percentage points per period</strong>, never as a percentage change of the rate.</p>
     </div>
     <div class="example-card">
       <span class="example-label">Worked example</span>
-      <p>The impulse response of a quarterly interest rate is 0.0025 on impact. The rate is \(100\times0.0025=0.25\) percentage points higher per quarter, or about \(400\times0.0025=1\) percentage point higher at an annual rate. It is not 0.25% higher than its steady-state value.</p>
+      <p>In a quarterly model, the impulse response of the log gross interest rate is 0.25 on impact. The interest rate is 0.25 percentage points higher per quarter, or about \(4\times0.25=1\) percentage point higher at an annual rate. It is not 0.25% higher than its steady-state value.</p>
     </div>
 
-    <h3 class="subsection-title">5.3. The <code>loglinear</code> option</h3>
+    <h3 class="subsection-title">5.3. Moments comparable with the data</h3>
     <div class="prose">
-      <p>An alternative to writing the model in logs is to write it in levels and run <code>stoch_simul(order=1, loglinear)</code>. Dynare then approximates the model in the logs of all variables, so every reported response is a log deviation and can be read with the rule of thumb of section 4. All steady-state values must then be strictly positive.</p>
+      <p>The data on this course are HP-filtered cyclical components, in percent. Asking Dynare to HP-filter the model’s theoretical moments with the same smoothing parameter makes the two directly comparable:</p>
     </div>
-    <div class="callout is-warning" role="note">
-      <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
-      <div><strong>Watch the rates.</strong> The <code>loglinear</code> option logs every variable, including interest rates and inflation. Their responses then become percentage changes of the rate (for example 25% of a 1% rate), not changes in percentage points. Many researchers therefore write the model in logs by hand and keep rates in levels.</div>
+    <figure class="code-block">
+      <figcaption class="code-label">Dynare .mod file</figcaption>
+<pre><code>stoch_simul(order = 1, irf = 40, hp_filter = 1600) y c inv h k A;</code></pre>
+    </figure>
+    <div class="prose">
+      <p>Impulse responses and standard deviations are then in percent, like the data: a standard deviation of 1.5 for <code>y</code> means output fluctuates by about 1.5% around its trend.</p>
     </div>
   </section>
 
   <!-- ===================================================== -->
   <section class="content-section reveal delay-280" aria-labelledby="dynare-code">
-    <h2 id="dynare-code" class="section-title">6. Writing Transformations in Dynare</h2>
+    <h2 id="dynare-code" class="section-title">6. Writing the Model in Dynare</h2>
 
     <div class="prose">
-      <p>Suppose output follows a Cobb–Douglas production function, \(Y_t=A_tK_{t-1}^{\alpha}H_t^{1-\alpha}\), and the model is written in logs. Taking logs turns the product into a sum, and every variable in the equation is now a log:</p>
+      <p>Every endogenous variable is declared in logs, and every equation is written <strong>in levels using <code>exp()</code></strong>. The equations then read like the model in the notes, and Dynare’s first-order approximation is automatically in log deviations. Exogenous processes are log AR(1) processes, written directly in logs.</p>
     </div>
 
     <figure class="code-block">
       <figcaption class="code-label">Dynare .mod file</figcaption>
-<pre><code>var y a k h;      // log output, log productivity, log capital, log hours
-varexo eps_a;     // productivity shock
-parameters alpha;
+<pre><code>// ---------------------------------------------------------
+// Variables
+// ---------------------------------------------------------
+var y      // log output
+    k      // log capital (end of period: k = log K_{t+1})
+    h      // log hours
+    A;     // log total factor productivity
+varexo eps_A;   // TFP shock, in percent
+parameters alpha rhoA;
 
+// ---------------------------------------------------------
+// Model
+// ---------------------------------------------------------
 model;
-  // Production function Y = A*K(-1)^alpha*H^(1-alpha), in logs
-  y = a + alpha*k(-1) + (1-alpha)*h;
+  // Production
+  exp(y) = exp(A)*exp(k(-1))^alpha*exp(h)^(1-alpha);
+  // TFP: log AR(1)
+  A = rhoA*A(-1) + eps_A;
   // ... other equations
+end;
+
+// ---------------------------------------------------------
+// Shocks (standard deviations in percent)
+// ---------------------------------------------------------
+shocks;
+  var eps_A; stderr 0.89;   // a 0.89% TFP shock
 end;</code></pre>
     </figure>
 
     <div class="prose">
-      <p>Here <code>y</code> is log output, so each of the following expressions measures something different:</p>
+      <p>Capital follows Dynare’s end-of-period convention: <code>k</code> is \(\log K_{t+1}\), chosen in period \(t\), so production uses <code>k(-1)</code>. With these conventions, each expression measures:</p>
     </div>
 
     <div class="data-table-wrap">
       <table class="data-table">
-        <caption class="visually-hidden">Dynare expressions and what they measure when y is log output</caption>
+        <caption class="visually-hidden">Dynare expressions and what they measure, with variables in logs and shocks in percent</caption>
         <thead>
           <tr>
             <th scope="col">Expression</th>
@@ -379,39 +442,31 @@ end;</code></pre>
         </thead>
         <tbody>
           <tr><td><code>y</code></td><td>Log output, \(y_t\)</td></tr>
-          <tr><td><code>exp(y)</code></td><td>Output in levels, \(Y_t^{\text{level}}\)</td></tr>
+          <tr><td><code>exp(y)</code></td><td>Output in levels, in the model equations</td></tr>
           <tr><td><code>STEADY_STATE(y)</code></td><td>Steady-state log output, \(\bar y\)</td></tr>
           <tr><td><code>exp(STEADY_STATE(y))</code></td><td>Steady-state output in levels, \(\bar Y^{\text{level}}\)</td></tr>
-          <tr><td><code>y - STEADY_STATE(y)</code></td><td>Log deviation from the steady state</td></tr>
-          <tr><td><code>100*(y - STEADY_STATE(y))</code></td><td>Approximate percentage deviation</td></tr>
-          <tr><td><code>100*(exp(y - STEADY_STATE(y)) - 1)</code></td><td>Exact percentage deviation</td></tr>
-          <tr><td><code>exp(y) - exp(STEADY_STATE(y))</code></td><td>Deviation in levels (units of output)</td></tr>
+          <tr><td><code>y - STEADY_STATE(y)</code></td><td>Deviation from the steady state: in percent at <code>order = 1</code> with shocks in percent</td></tr>
+          <tr><td><code>y - y(-1)</code></td><td>Growth of output from \(t-1\) to \(t\), in percent</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="callout is-warning" role="note">
       <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
-      <div><code>y - STEADY_STATE(y)</code> does not give the deviation of output in levels. It gives the log deviation.</div>
+      <div>Do not add <code>100*</code> in front of <code>y - STEADY_STATE(y)</code>: with shocks in percent, the deviation is already in percent, and the factor would put it in hundredths of a percent.</div>
     </div>
 
-    <h3 class="subsection-title">6.1. Exact formulas and first-order solutions</h3>
+    <h3 class="subsection-title">6.1. Exact numbers after solving</h3>
     <div class="prose">
-      <p>Suppose you add a variable to the model block to report the exact percentage deviation, such as <code>y_pct = 100*(exp(y - STEADY_STATE(y)) - 1);</code>. With <code>order=1</code>, Dynare linearises <em>every</em> equation around the steady state, including this one. Its first-order approximation is \(100(y_t-\bar y)\), so <code>y_pct</code> gives exactly the same numbers as the approximate formula. Likewise, <code>exp(y) - exp(STEADY_STATE(y))</code> becomes \(\exp(\bar y)\,(y_t-\bar y)\).</p>
-      <p>To obtain the exact transformations, apply them to Dynare’s results after the model has been solved:</p>
+      <p>Dynare’s percent deviations are 100 times log deviations, so the rule of thumb of section 4 applies. For large responses, or to report results in levels, convert them after the model has been solved. Do not write these conversions inside the model block: at <code>order = 1</code>, Dynare linearises every equation, so an “exact” formula there gives the same numbers as the approximate one.</p>
     </div>
-
-    <figure class="code-block">
-      <figcaption class="code-label">End of the .mod file</figcaption>
-<pre><code>stoch_simul(order=1, irf=40);</code></pre>
-    </figure>
 
     <figure class="code-block">
       <figcaption class="code-label">MATLAB, after Dynare has run</figcaption>
 <pre><code>ybar        = oo_.steady_state(strcmp(M_.endo_names, 'y'));  % steady-state log output
-y_log_dev   = oo_.irfs.y_eps_a;                  % log deviation (what Dynare reports)
-y_pct_exact = 100*(exp(y_log_dev) - 1);          % exact percentage deviation
-y_level_dev = exp(ybar + y_log_dev) - exp(ybar); % deviation in levels</code></pre>
+y_pct       = oo_.irfs.y_eps_A;                % deviation in percent (what Dynare reports)
+y_pct_exact = 100*(exp(y_pct/100) - 1);        % exact percentage deviation
+y_level_dev = exp(ybar)*(exp(y_pct/100) - 1);  % deviation in levels (units of output)</code></pre>
     </figure>
 
     <div class="callout is-quiet" role="note">
@@ -424,16 +479,16 @@ y_level_dev = exp(ybar + y_log_dev) - exp(ybar); % deviation in levels</code></p
   <section class="content-section reveal delay-300" aria-labelledby="rules">
     <h2 id="rules" class="section-title">7. Rules to Remember</h2>
     <p class="section-introduction">
-      Whenever a model variable is the logarithm of a level, \(y_t=\log(Y_t^{\text{level}})\), distinguish the model variable from the economic quantity it represents.
+      Whenever a model variable is the logarithm of a level, \(y_t=\log(Y_t^{\text{level}})\), distinguish the model variable from the economic quantity it represents, and know the units of the shocks.
     </p>
 
     <ul class="rule-list">
-      <li><code>y</code> is log output; <code>exp(y)</code> is output in levels.</li>
+      <li><code>y</code> is log output; <code>exp(y)</code> is output in levels. Write the equations in levels with <code>exp()</code>.</li>
       <li><code>STEADY_STATE(y)</code> and the value in <code>oo_.steady_state</code> are steady-state <strong>log</strong> output; their exponential is steady-state output in levels.</li>
-      <li><code>y - STEADY_STATE(y)</code> is the log deviation; <code>100*(y - STEADY_STATE(y))</code> is approximately the percentage deviation; <code>100*(exp(y - STEADY_STATE(y)) - 1)</code> is the exact percentage deviation.</li>
-      <li>Dynare’s impulse responses are deviations from the steady state in the units of the variable: log deviations for logged variables, changes in the rate for rates.</li>
-      <li>At <code>order=1</code>, transformations written inside the model block are linearised. Compute exact transformations after solving the model.</li>
-      <li>Keep the variable, its steady state and its deviation on the same scale: all in logs, or all in levels.</li>
+      <li>Shock standard deviations are in percent (<code>stderr 0.89</code> for a 0.89% shock). At <code>order = 1</code>, every deviation, impulse response and moment is then in percent.</li>
+      <li>The deviation of a log gross rate is a change in the rate in percentage points per period; multiply by 4 to annualise a quarterly rate.</li>
+      <li>The percent rescaling is valid only at <code>order = 1</code>; at higher orders, shocks must be in log units.</li>
+      <li>Compute exact transformations after solving the model, not inside the model block.</li>
     </ul>
   </section>
 

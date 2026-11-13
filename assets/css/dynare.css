@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-12 17:05 UTC (Claude, website chat) */
+/* Last edited: 2026-11-13 12:50 UTC (Claude, website chat) */
 /* =========================================================
    "Working with Dynare" pages (EC9D5): teaching/ec9d5/dynare-*.html
    Only what these pages need on top of site.css: the eyebrow,
@@ -186,6 +186,11 @@
   font-size: 0.84rem;
   text-align: right;
   white-space: nowrap;
+}
+
+.data-table th.is-number {
+  font-family: var(--display);
+  font-size: inherit;
 }
 
 .data-table tr.is-highlight td {
