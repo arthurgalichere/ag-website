@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banks and Credit Supply</title>
+  <meta name="description" content="US commercial banks since 1950: bank credit and loans by type, deposits and M2, bank leverage, the prime rate and its spread, lending standards from the Senior Loan Officer Survey, delinquency and charge-off rates, with their cyclical components." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="financial"
+  data-data-url="/assets/data/economics/us/financial-banking.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial and Credit Indicators
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial and Credit Indicators</p>
+    <h1 class="page-title">Banks and Credit Supply</h1>
+    <p class="lead">The lending of US commercial banks since 1950: how much credit they extend and to whom, how they fund it, how leveraged they are, the terms on which they lend and the losses they take, and how all of these move over the business cycle.</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="quarterly_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly series (CSV)
+        </a>
+        <a class="button-link" data-download="cycles_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Cyclical components (CSV)
+        </a>
+        <a class="button-link" data-download="mat" href="#" download hidden>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>All series are quarterly: monthly, weekly and daily data are averaged over each complete quarter. Charts start in 1950, or at the first quarter of a series published later.</li>
+      <li>Shaded bands on every chart mark US recessions, from the NBER-based quarterly recession indicator (USRECQ).</li>
+      <li>Hollow circles mark values estimated where the source published none; see <a class="text-link" href="#missing-title">Missing data and estimates</a>.</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  
+  <section class="content-section reveal delay-160" aria-labelledby="credit-title">
+    <h2 id="credit-title" class="section-title">Bank credit</h2>
+    <p class="section-introduction">Assets of all commercial banks in the United States (Federal Reserve H.8), seasonally adjusted, deflated by the consumer price index (2017 prices) and averaged over each quarter. Bank credit is loans and leases plus securities.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="bank_credit_real,bank_loans_real,bank_securities_real" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real bank credit: loans and leases, and securities</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="loans_re_real,loans_ci_real,loans_consumer_real" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real loans by type</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="deposits_real,m2_real" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real deposits and real M2</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Deposits of all commercial banks (from 1973) and the M2 money stock (from 1959): currency, demand and savings deposits, small time deposits and retail money funds.</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="balance-sheets-title">
+    <h2 id="balance-sheets-title" class="section-title">Bank leverage</h2>
+    <p class="section-introduction">Bank capital limits lending: when losses deplete it, banks cut credit, which amplifies downturns (Bernanke and Gertler, 1995; Gertler and Kiyotaki, 2010). Adrian and Shin (2010) find that the leverage of security broker-dealers rises in booms; the book leverage of commercial banks, shown here, moves much less.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="bank_leverage" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Total assets to equity capital, all commercial banks</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Total assets divided by the residual of assets less liabilities (equity capital), both from H.8. A ratio of 10 means each dollar of capital supports ten dollars of assets.</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="terms-title">
+    <h2 id="terms-title" class="section-title">Lending rates and standards</h2>
+    <p class="section-introduction">The prime rate is the rate that banks post as the base for many business and consumer loans. The Senior Loan Officer Opinion Survey asks banks each quarter whether they have tightened or eased their lending standards and how demand has changed: the net percentage is the share tightening (or seeing stronger demand) minus the share easing (or seeing weaker demand).</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="prime_rate,fedfunds" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Bank prime loan rate and the federal funds rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="prime_spread" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Prime-rate spread over the federal funds rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Since the mid-1990s banks have kept the prime rate 3 percentage points above the target federal funds rate, so the spread mainly moves when the effective rate departs from the target.</p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="sloos_ci_large,sloos_ci_small,sloos_cards" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net percentage of banks tightening lending standards</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Tighter standards predict slower lending and output growth (Lown and Morgan, 2006; Bassett, Chosak, Driscoll and Zakrajšek, 2014).</p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="sloos_demand_ci" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net percentage of banks reporting stronger demand for C&I loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="quality-title">
+    <h2 id="quality-title" class="section-title">Credit quality</h2>
+    <p class="section-introduction">Delinquent loans are 30 days or more past due or no longer accruing interest; charge-offs are loans written off as losses, net of recoveries, at an annual rate. Both are percentages of loans, from banks’ Call Reports.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="delinquency_all,chargeoff_all" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Delinquency and charge-off rates, all loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="delinquency_mortgage,delinquency_business,delinquency_cards" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Delinquency rates by type of loan</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+
+  <section class="content-section reveal delay-180" aria-labelledby="cycles-title">
+    <h2 id="cycles-title" class="section-title">Cyclical components</h2>
+    <p class="section-introduction">Bank lending moves with output but adjusts with a lag, while lending standards and loan losses are countercyclical. Each quarterly series is filtered on its full history; each chart compares its cyclical component with that of output (real GDP), drawn in red. The statistics use the quarters each variable shares with output, from 1950 Q1 or its first quarter.</p>
+    <div class="dashboard-controls cycle-controls">
+      <div class="segmented-field" data-control="filter">
+        <span class="segmented-label" id="filter-label">Filter</span>
+        <div class="segmented" role="group" aria-labelledby="filter-label">
+          <button type="button" data-value="hp" aria-pressed="true">HP</button>
+          <button type="button" data-value="hamilton" aria-pressed="false">Hamilton</button>
+          <button type="button" data-value="cf" aria-pressed="false">Christiano–Fitzgerald</button>
+        </div>
+      </div>
+    </div>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-vars="bank_credit_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real bank credit</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="bank_loans_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real loans and leases</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="loans_ci_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real commercial and industrial loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="loans_re_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real real-estate loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="loans_consumer_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real consumer loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="deposits_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real deposits</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="m2_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real M2</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="bank_leverage">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Bank leverage</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="prime_spread">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Prime-rate spread</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sloos_ci_large">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net percentage tightening standards for C&I loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="delinquency_all">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Delinquency rate, all loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="chargeoff_all">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Charge-off rate, all loans</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+
+    <h3 class="subsection-title">Business-cycle statistics: cyclical components</h3>
+    <p class="table-note">Cyclical components, <span data-role="filter-name">HP filter (λ = 1600)</span>. Standard deviations in percent, except those marked † (percentage points).</p>
+    <div class="shares" data-role="stats-table"><p class="loading-message">Loading…</p></div>
+    <h3 class="subsection-title">Leads and lags with output</h3>
+    <p class="table-note">Correlation of each variable’s cyclical component in quarter t + k with that of output in quarter t. The peak is the k with the largest correlation in absolute value: a negative k means the variable leads output, a positive k that it lags (Kydland and Prescott, 1990).</p>
+    <div class="shares" data-role="cross-table"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions, sources and methods</h2>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Data</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul>
+          <li><strong>Bank credit and loans</strong> (Federal Reserve H.8, all commercial banks, seasonally adjusted, monthly): bank credit (LOANINV), loans and leases (LOANS), securities (INVEST), commercial and industrial loans (BUSLOANS), real-estate loans (REALLN), consumer loans (CONSUMER), deposits (DPSACBM027SBOG), total assets (TLAACBM027SBOG) and the residual of assets less liabilities (RALACBM027SBOG). The H.8 series are based on weekly reports and benchmarked to the quarterly Call Reports.</li>
+          <li><strong>M2</strong> (Federal Reserve H.6, M2SL), seasonally adjusted.</li>
+          <li><strong>Rates</strong>: the bank prime loan rate (MPRIME) and the effective federal funds rate (FEDFUNDS), monthly averages (Federal Reserve H.15).</li>
+          <li><strong>Lending standards and demand</strong> (Senior Loan Officer Opinion Survey on Bank Lending Practices, quarterly): standards for commercial and industrial loans to large and middle-market firms (DRTSCILM) and to small firms (DRTSCIS), for credit card loans (DRTSCLCC), and demand for C&I loans from large and middle-market firms (DRSDCILM). The survey is taken in the first month of each quarter.</li>
+          <li><strong>Delinquency and charge-off rates</strong> (Federal Reserve, from the FFIEC Call Reports, all commercial banks, seasonally adjusted, quarterly): all loans (DRALACBS, CORALACBS), business loans (DRBLACBS), single-family residential mortgages (DRSFRMACBS) and credit card loans (DRCCLACBS).</li>
+        </ul>
+        <p>Real series divide each nominal value by the consumer price index for all urban consumers (CPIAUCSL) and multiply by its 2017 average, so they are in 2017 prices; this is the author’s construction. Bank leverage and the prime-rate spread are also the author’s calculations.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Cyclical components and statistics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Monthly series are averaged over each complete quarter. Real credit, loans, deposits and M2 are filtered as \(100 \times \ln x_t\), so their cycles are percent deviations from trend; leverage, rates, survey balances and loss rates are filtered in levels. The filters are those of the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page: Hodrick–Prescott (λ = 1600), Hamilton (2018; h = 8, p = 4) and Christiano–Fitzgerald (2003; 6–32 quarters), each applied to the full history and shown from 1950 or the series’ first quarter.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Adrian, T. and H. S. Shin (2010). “Liquidity and Leverage.” <em>Journal of Financial Intermediation</em> 19(3): 418–437.</li>
+          <li>Bassett, W. F., M. B. Chosak, J. C. Driscoll and E. Zakrajšek (2014). “Changes in Bank Lending Standards and the Macroeconomy.” <em>Journal of Monetary Economics</em> 62: 23–40.</li>
+          <li>Bernanke, B. S. and M. Gertler (1995). “Inside the Black Box: The Credit Channel of Monetary Policy Transmission.” <em>Journal of Economic Perspectives</em> 9(4): 27–48.</li>
+          <li>Gertler, M. and N. Kiyotaki (2010). “Financial Intermediation and Credit Policy in Business Cycle Analysis.” In B. M. Friedman and M. Woodford (eds), <em>Handbook of Monetary Economics</em>, vol. 3A: 547–599. Elsevier.</li>
+          <li>Hamilton, J. D. (2018). “Why You Should Never Use the Hodrick-Prescott Filter.” <em>Review of Economics and Statistics</em> 100(5): 831–843.</li>
+          <li>Lown, C. and D. P. Morgan (2006). “The Credit Cycle and the Business Cycle: New Findings Using the Loan Officer Opinion Survey.” <em>Journal of Money, Credit and Banking</em> 38(6): 1575–1597.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+<section class="content-section reveal delay-260" aria-labelledby="missing-title" data-role="missing-section">
+    <h2 id="missing-title" class="section-title">Missing data and estimates</h2>
+    <div class="prose">
+      <p>Where a source did not publish a value for a period, the value is estimated and flagged rather than left blank, because gaps break time-series and econometric analysis. An isolated gap of up to three consecutive periods is filled by linear interpolation between the published values on either side, in logs for series measured in levels (constant growth across the gap). Estimates in an input also flag the measures built from it. The downloads mark them in an <code>_estimated</code> column (1 = estimated).</p>
+    </div>
+    <div class="estimates-list" data-role="estimates"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Bank data are from the Federal Reserve Board (H.8, H.6, H.15, the Senior Loan Officer Opinion Survey and the charge-off and delinquency statistics from the Call Reports), prices from the Bureau of Labor Statistics and GDP from the Bureau of Economic Analysis, all via FRED. The constructed series, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Banks and Credit Supply</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/financial-indicators.js" defer></script>
+  
+</body>
+</html>

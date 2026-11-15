@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-08 01:08 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-15 20:26 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -44,7 +44,7 @@
   const SYMBOLS = {
     y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', k: 'K', h: 'h', w: 'w', yh: 'Y/h',
     tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: 'û*', lfpr: 'PR', infl: 'π', infl_cpi: 'π CPI',
-    ff: 'FF', tb: 'TB', rff: 'RFF', rtb: 'RTB', debt: 'Debt',
+    ff: 'FF', tb: 'TB', rff: 'RFF', rtb: 'RTB',
   };
 
   /* The same symbols in TeX, typeset by MathJax (math: true on the page). */
@@ -52,7 +52,7 @@
     y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', k: 'K', h: 'h', w: 'w', yh: 'Y/h',
     tfp: '\\mathrm{TFP}', tfp_util: '\\mathrm{TFP}^{u}', u: 'u', u_gap: '\\hat{u}^{*}', lfpr: '\\mathrm{PR}',
     infl: '\\pi', infl_cpi: '\\pi^{\\mathrm{CPI}}', ff: '\\mathrm{FF}', tb: '\\mathrm{TB}',
-    rff: '\\mathrm{RFF}', rtb: '\\mathrm{RTB}', debt: '\\mathrm{Debt}',
+    rff: '\\mathrm{RFF}', rtb: '\\mathrm{RTB}',
   };
   const math = key => (TEX[key] ? `\\(${TEX[key]}\\)` : S.escapeHTML(SYMBOLS[key] || key));
   /* Typeset new content once MathJax has started; clear old content first. */

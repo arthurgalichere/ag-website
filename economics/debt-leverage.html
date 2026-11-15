@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debt and Leverage</title>
+  <meta name="description" content="US debt since 1950 by sector — households, nonfinancial business, government — in real terms and relative to GDP, corporate leverage, BIS credit to the private sector and the Basel credit-to-GDP gap, with their cyclical components." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="financial"
+  data-data-url="/assets/data/economics/us/financial-debt-leverage.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial and Credit Indicators
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial and Credit Indicators</p>
+    <h1 class="page-title">Debt and Leverage</h1>
+    <p class="lead">How much the US economy borrows, and who borrows: the debt of households, nonfinancial businesses and governments since 1950, in real terms and relative to GDP, the leverage of nonfinancial corporations, and the credit-to-GDP gap that regulators watch as an early warning of financial crises.</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="quarterly_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly series (CSV)
+        </a>
+        <a class="button-link" data-download="cycles_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Cyclical components (CSV)
+        </a>
+        <a class="button-link" data-download="mat" href="#" download hidden>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>All series are quarterly: monthly, weekly and daily data are averaged over each complete quarter. Charts start in 1950, or at the first quarter of a series published later.</li>
+      <li>Shaded bands on every chart mark US recessions, from the NBER-based quarterly recession indicator (USRECQ).</li>
+      <li>Hollow circles mark values estimated where the source published none; see <a class="text-link" href="#missing-title">Missing data and estimates</a>.</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  
+  <section class="content-section reveal delay-160" aria-labelledby="real-debt-title">
+    <h2 id="real-debt-title" class="section-title">Debt by sector</h2>
+    <p class="section-introduction">Debt securities and loans owed by each sector, from the Financial Accounts of the United States, deflated by the GDP price index (2017 prices). The domestic nonfinancial sectors are households and nonprofit organisations, nonfinancial businesses and governments.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="debt_real_total" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real debt of the domestic nonfinancial sectors</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="debt_real_households,debt_real_business,debt_real_government" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real debt by sector</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="debt_real_business,debt_real_corporate" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real debt of nonfinancial business: total and corporations</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="debt_real_federal,debt_real_statelocal" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real government debt: federal, state and local</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="debt-gdp-title">
+    <h2 id="debt-gdp-title" class="section-title">Debt relative to GDP</h2>
+    <p class="section-introduction">Debt at the end of each quarter as a percentage of nominal GDP at an annual rate, the usual measure of indebtedness. Rapid growth of private debt relative to GDP has preceded deep recessions and financial crises (Schularick and Taylor, 2012; Jordà, Schularick and Taylor, 2013), and high household debt deepened the Great Recession (Mian and Sufi, 2014).</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="debt_gdp_all,debt_gdp_total" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Debt to GDP: all sectors and the domestic nonfinancial sectors</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">All sectors adds the debt of the financial sector and of the rest of the world (foreign borrowers in US markets) to that of the domestic nonfinancial sectors.</p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="debt_gdp_households,debt_gdp_business,debt_gdp_government" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Debt to GDP by sector</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="debt_gdp_corporate,debt_gdp_federal" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Nonfinancial corporate and federal debt to GDP</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="leverage-title">
+    <h2 id="leverage-title" class="section-title">Corporate leverage</h2>
+    <p class="section-introduction">Two measures of the leverage of nonfinancial corporations from the Financial Accounts: debt relative to net worth at historical cost (a book measure), and debt relative to the market value of their equities (a market measure, which falls when stock prices rise).</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="corp_debt_networth,corp_debt_equity" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Nonfinancial corporate debt to net worth and to the market value of equities</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="credit-title">
+    <h2 id="credit-title" class="section-title">Credit to the private nonfinancial sector</h2>
+    <p class="section-introduction">The Bank for International Settlements measures credit to households and nonfinancial corporations from all lenders (banks, bond markets and others), as a percentage of GDP, on a basis comparable across countries. Its gap to a slow-moving trend is the guide to the countercyclical capital buffer of Basel III.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="bis_credit_private,bis_credit_trend" data-dashed="bis_credit_trend" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Credit to the private nonfinancial sector and its one-sided trend</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="bis_credit_households,bis_credit_nfc" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Credit to households and to nonfinancial corporations</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="bis_credit_gap" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Credit-to-GDP gap</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Credit to GDP minus its one-sided Hodrick–Prescott trend (λ = 400,000), the trend at each date using only data available then. Under Basel III, a buffer starts to build when the gap exceeds 2 percentage points and reaches its maximum at 10 (Basel Committee on Banking Supervision, 2010); large positive gaps have preceded most banking crises (Borio and Lowe, 2002; Drehmann and Tsatsaronis, 2014).</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+
+  <section class="content-section reveal delay-180" aria-labelledby="cycles-title">
+    <h2 id="cycles-title" class="section-title">Cyclical components</h2>
+    <p class="section-introduction">Debt adjusts slowly, so its cyclical components are smooth; government debt rises in recessions, as tax revenues fall and spending rises. Each quarterly series is filtered on its full history; each chart compares its cyclical component with that of output (real GDP), drawn in red. The statistics use the quarters each variable shares with output, from 1950 Q1 or its first quarter.</p>
+    <div class="dashboard-controls cycle-controls">
+      <div class="segmented-field" data-control="filter">
+        <span class="segmented-label" id="filter-label">Filter</span>
+        <div class="segmented" role="group" aria-labelledby="filter-label">
+          <button type="button" data-value="hp" aria-pressed="true">HP</button>
+          <button type="button" data-value="hamilton" aria-pressed="false">Hamilton</button>
+          <button type="button" data-value="cf" aria-pressed="false">Christiano–Fitzgerald</button>
+        </div>
+      </div>
+    </div>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-vars="debt_real_total">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real debt of the domestic nonfinancial sectors</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="debt_real_households">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real household debt</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="debt_real_business">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real nonfinancial business debt</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="debt_real_corporate">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real nonfinancial corporate debt</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="debt_real_government">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real government debt</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="debt_gdp_total">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Nonfinancial debt to GDP</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="corp_debt_networth">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Corporate debt to net worth</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="bis_credit_private">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Credit to the private nonfinancial sector (BIS)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+
+    <h3 class="subsection-title">Business-cycle statistics: cyclical components</h3>
+    <p class="table-note">Cyclical components, <span data-role="filter-name">HP filter (λ = 1600)</span>. Standard deviations in percent, except those marked † (percentage points).</p>
+    <div class="shares" data-role="stats-table"><p class="loading-message">Loading…</p></div>
+    <h3 class="subsection-title">Leads and lags with output</h3>
+    <p class="table-note">Correlation of each variable’s cyclical component in quarter t + k with that of output in quarter t. The peak is the k with the largest correlation in absolute value: a negative k means the variable leads output, a positive k that it lags (Kydland and Prescott, 1990).</p>
+    <div class="shares" data-role="cross-table"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions, sources and methods</h2>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Financial Accounts debt</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Debt is debt securities and loans, the liabilities that bear interest, at the end of each quarter, from the Federal Reserve’s Financial Accounts of the United States (Z.1, table D.3): domestic nonfinancial sectors (TCMDODNS), households and nonprofit organisations (CMDEBT), nonfinancial business (TBSDODNS), of which nonfinancial corporate business (BCNSDODNS), the federal government (FGSDODNS) and state and local governments (SLGSDODNS); all sectors (TCMDO) adds the financial sector and the rest of the world. Government debt is the sum of federal, state and local debt. Federal debt includes Treasury securities held by the public but not those held by government trust funds.</p>
+        <p>Real debt divides the nominal level by the GDP price index (GDPDEF, 2017 = 100); this is the author’s construction, not an official real series. Debt-to-GDP ratios divide it by nominal GDP at a seasonally adjusted annual rate (GDP). Before 1951 Q4 the Financial Accounts give year-end values only; the other quarters are interpolated (see Missing data and estimates).</p>
+        <p>Corporate leverage: nonfinancial corporate debt as a percentage of net worth at historical cost (NCBCMDPNWHC) and of the market value of equities (NCBCMDPMVCE), both as published.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">BIS credit and the credit-to-GDP gap</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The Bank for International Settlements’ total credit statistics measure credit to the private nonfinancial sector (households and nonprofit institutions serving households, and nonfinancial corporations) from all sources, at market value, adjusted for breaks, as a percentage of GDP (QUSPAM770A, QUSHAM770A, QUSNAM770A; Dembiermont, Drehmann and Muksakunratana, 2013). They are released with a lag of about two quarters.</p>
+        <p>The credit-to-GDP gap is the ratio minus its trend from a one-sided Hodrick–Prescott filter with λ = 400,000, the Basel Committee’s method: at each quarter, the filter is run on the data up to that quarter only, and its last value is the trend (Basel Committee on Banking Supervision, 2010). The high smoothing parameter matches credit cycles, about four times as long as business cycles (Drehmann, Borio and Tsatsaronis, 2011). The trend starts after ten years of data. This is the author’s calculation; the BIS publishes its own gap, which can differ slightly in its starting point.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Cyclical components and statistics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Real debt is filtered as \(100 \times \ln x_t\), so its cycles are percent deviations from trend; debt and credit ratios and leverage are filtered in levels (percentage points). The filters are those of the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page: Hodrick–Prescott (λ = 1600), Hamilton (2018; h = 8, p = 4) and Christiano–Fitzgerald (2003; 6–32 quarters), each applied to the full history and shown from 1950.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Basel Committee on Banking Supervision (2010). <em>Guidance for National Authorities Operating the Countercyclical Capital Buffer</em>. Bank for International Settlements. <a class="text-link" href="https://www.bis.org/publ/bcbs187.htm" rel="noopener">bis.org</a></li>
+          <li>Borio, C. and P. Lowe (2002). “Asset Prices, Financial and Monetary Stability: Exploring the Nexus.” BIS Working Paper 114.</li>
+          <li>Dembiermont, C., M. Drehmann and S. Muksakunratana (2013). “How Much Does the Private Sector Really Borrow? A New Database for Total Credit to the Private Non-financial Sector.” <em>BIS Quarterly Review</em>, March 2013: 65–81.</li>
+          <li>Drehmann, M., C. Borio and K. Tsatsaronis (2011). “Anchoring Countercyclical Capital Buffers: The Role of Credit Aggregates.” <em>International Journal of Central Banking</em> 7(4): 189–240.</li>
+          <li>Drehmann, M. and K. Tsatsaronis (2014). “The Credit-to-GDP Gap and Countercyclical Capital Buffers: Questions and Answers.” <em>BIS Quarterly Review</em>, March 2014: 55–73.</li>
+          <li>Hamilton, J. D. (2018). “Why You Should Never Use the Hodrick-Prescott Filter.” <em>Review of Economics and Statistics</em> 100(5): 831–843.</li>
+          <li>Jordà, Ò., M. Schularick and A. M. Taylor (2013). “When Credit Bites Back.” <em>Journal of Money, Credit and Banking</em> 45(s2): 3–28.</li>
+          <li>Mian, A. and A. Sufi (2014). <em>House of Debt</em>. University of Chicago Press.</li>
+          <li>Schularick, M. and A. M. Taylor (2012). “Credit Booms Gone Bust: Monetary Policy, Leverage Cycles, and Financial Crises, 1870–2008.” <em>American Economic Review</em> 102(2): 1029–1061.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+<section class="content-section reveal delay-260" aria-labelledby="missing-title" data-role="missing-section">
+    <h2 id="missing-title" class="section-title">Missing data and estimates</h2>
+    <div class="prose">
+      <p>Where a source did not publish a value for a period, the value is estimated and flagged rather than left blank, because gaps break time-series and econometric analysis. An isolated gap of up to three consecutive periods is filled by linear interpolation between the published values on either side, in logs for series measured in levels (constant growth across the gap). Estimates in an input also flag the measures built from it. The downloads mark them in an <code>_estimated</code> column (1 = estimated).</p>
+    </div>
+    <div class="estimates-list" data-role="estimates"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Debt data are from the Federal Reserve’s Financial Accounts of the United States (Z.1), credit-to-GDP ratios from the Bank for International Settlements, and GDP and its price index from the Bureau of Economic Analysis, all via FRED. The constructed series, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Debt and Leverage</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/financial-indicators.js" defer></script>
+  
+</body>
+</html>

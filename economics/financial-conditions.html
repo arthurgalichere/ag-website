@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Conditions and Stress</title>
+  <meta name="description" content="US financial conditions since 1950: the Chicago Fed NFCI and its subindices, the St. Louis and Kansas City Fed stress indices, the VIX, corporate bond spreads, the Gilchrist–Zakrajšek excess bond premium and the term spread, with their cyclical components." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="financial"
+  data-data-url="/assets/data/economics/us/financial-conditions.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial and Credit Indicators
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial and Credit Indicators</p>
+    <h1 class="page-title">Financial Conditions and Stress</h1>
+    <p class="lead">How easy or hard it is to borrow and how much risk investors will bear: composite indices of financial conditions and stress, stock-market volatility, corporate credit spreads, the excess bond premium and the slope of the yield curve — indicators that tend to deteriorate before and during recessions.</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="quarterly_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly series (CSV)
+        </a>
+        <a class="button-link" data-download="cycles_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Cyclical components (CSV)
+        </a>
+        <a class="button-link" data-download="mat" href="#" download hidden>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>All series are quarterly: monthly, weekly and daily data are averaged over each complete quarter. Charts start in 1950, or at the first quarter of a series published later.</li>
+      <li>Shaded bands on every chart mark US recessions, from the NBER-based quarterly recession indicator (USRECQ).</li>
+      
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  
+  <section class="content-section reveal delay-160" aria-labelledby="indices-title">
+    <h2 id="indices-title" class="section-title">Financial conditions indices</h2>
+    <p class="section-introduction">Composite indices summarise many market and balance-sheet indicators into one number, scaled so that zero is the average (or normal) level and positive values mean tighter conditions or more stress than usual. Tight financial conditions signal a higher risk of weak growth ahead (Adrian, Boyarchenko and Giannone, 2019). Weekly and monthly values are averaged over each quarter.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="nfci,anfci" data-zero-line="true" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Chicago Fed National Financial Conditions Index and adjusted index</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">The NFCI is a weighted average of 105 indicators of risk, credit and leverage (Brave and Butters, 2012). The adjusted index (ANFCI) removes the part explained by economic activity and inflation, so it isolates conditions not already implied by the state of the economy.</p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="nfci_risk,nfci_credit,nfci_leverage,nfci_nonfin_leverage" data-zero-line="true" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">NFCI subindices: risk, credit and leverage</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="stlfsi,kcfsi" data-zero-line="true" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Financial stress indices: St. Louis Fed and Kansas City Fed</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Both indices are the first principal component of a set of yields, spreads and volatility measures; the Kansas City index follows Hakkio and Keeton (2009).</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="risk-title">
+    <h2 id="risk-title" class="section-title">Volatility and credit spreads</h2>
+    <p class="section-introduction">Spreads are the extra yield that investors demand to hold riskier debt; volatility measures the uncertainty priced in stock options. Both rise when risk appetite falls.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="vix" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">CBOE Volatility Index (VIX)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Expected volatility of the S&P 500 over the next 30 days implied by option prices, in percent at an annual rate; quarterly average of daily closes. Spikes in the VIX are a common measure of uncertainty shocks (Bloom, 2009).</p>
+      </figure>
+      
+      <figure class="chart-card" data-indicators="baa_aaa,baa_10y" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Corporate bond spreads: Moody’s Baa minus Aaa, and Baa minus the 10-year Treasury</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="gz_spread,ebp" data-zero-line="true" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Gilchrist–Zakrajšek credit spread and excess bond premium</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">The GZ spread is the average spread of corporate bonds over Treasury securities of the same maturity; the excess bond premium is the part not explained by expected default risk, a measure of investors’ risk appetite that predicts output (Gilchrist and Zakrajšek, 2012).</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="yield-curve-title">
+    <h2 id="yield-curve-title" class="section-title">Yield curve</h2>
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="term_spread" data-zero-line="true" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Term spread: 10-year Treasury yield minus the 3-month bill rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">An inverted yield curve (a negative spread) has preceded every US recession since the late 1960s (Estrella and Mishkin, 1998).</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+
+  <section class="content-section reveal delay-180" aria-labelledby="cycles-title">
+    <h2 id="cycles-title" class="section-title">Cyclical components</h2>
+    <p class="section-introduction">Financial stress, volatility and credit spreads are countercyclical: they rise as output falls below trend. Each quarterly series is filtered on its full history; each chart compares its cyclical component with that of output (real GDP), drawn in red. The statistics use the quarters each variable shares with output, from 1950 Q1 or its first quarter.</p>
+    <div class="dashboard-controls cycle-controls">
+      <div class="segmented-field" data-control="filter">
+        <span class="segmented-label" id="filter-label">Filter</span>
+        <div class="segmented" role="group" aria-labelledby="filter-label">
+          <button type="button" data-value="hp" aria-pressed="true">HP</button>
+          <button type="button" data-value="hamilton" aria-pressed="false">Hamilton</button>
+          <button type="button" data-value="cf" aria-pressed="false">Christiano–Fitzgerald</button>
+        </div>
+      </div>
+    </div>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-vars="nfci">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">NFCI</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="anfci">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Adjusted NFCI</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="stlfsi">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">St. Louis Fed Financial Stress Index</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="kcfsi">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Kansas City Financial Stress Index</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="vix">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">VIX</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="baa_aaa">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Baa minus Aaa spread</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="baa_10y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Baa minus 10-year Treasury spread</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="gz_spread">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">GZ credit spread</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="ebp">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Excess bond premium</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="term_spread">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Term spread</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+
+    <h3 class="subsection-title">Business-cycle statistics: cyclical components</h3>
+    <p class="table-note">Cyclical components, <span data-role="filter-name">HP filter (λ = 1600)</span>. Standard deviations in percent, except those marked † (percentage points).</p>
+    <div class="shares" data-role="stats-table"><p class="loading-message">Loading…</p></div>
+    <h3 class="subsection-title">Leads and lags with output</h3>
+    <p class="table-note">Correlation of each variable’s cyclical component in quarter t + k with that of output in quarter t. The peak is the k with the largest correlation in absolute value: a negative k means the variable leads output, a positive k that it lags (Kydland and Prescott, 1990).</p>
+    <div class="shares" data-role="cross-table"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions, sources and methods</h2>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Data</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul>
+          <li><strong>Chicago Fed NFCI, ANFCI and subindices</strong> (weekly, from January 1971; NFCI, ANFCI, NFCIRISK, NFCICREDIT, NFCILEVERAGE, NFCINONFINLEVERAGE). The indices are re-estimated every week, so their whole history can be revised.</li>
+          <li><strong>St. Louis Fed Financial Stress Index</strong> (weekly, from December 1993; STLFSI4) and <strong>Kansas City Financial Stress Index</strong> (monthly, from February 1990; KCFSI).</li>
+          <li><strong>VIX</strong> (daily, from January 1990; VIXCLS), Chicago Board Options Exchange.</li>
+          <li><strong>Corporate bond yields</strong>: Moody’s seasoned Aaa and Baa yields (AAA, BAA), and the 10-year Treasury constant-maturity yield (GS10, from April 1953) and 3-month Treasury bill rate (TB3MS), monthly averages (Federal Reserve H.15).</li>
+          <li><strong>GZ credit spread and excess bond premium</strong> (monthly, from January 1973), as updated by the Federal Reserve Board (Favara, Gilchrist, Lewis and Zakrajšek, 2016).</li>
+        </ul>
+        <p>Weekly and daily series are averaged over each complete month, and monthly values over each complete quarter. Spreads are the author’s calculations: the difference between the two monthly average yields, in percentage points.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Cyclical components and statistics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The quarterly series are filtered in levels, so their cycles are in index points or percentage points. The filters are those of the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page: Hodrick–Prescott (λ = 1600), Hamilton (2018; h = 8, p = 4) and Christiano–Fitzgerald (2003; 6–32 quarters). The indices are already stationary by construction; filtering them removes slow movements and keeps their business-cycle component, comparable with that of output.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Adrian, T., N. Boyarchenko and D. Giannone (2019). “Vulnerable Growth.” <em>American Economic Review</em> 109(4): 1263–1289.</li>
+          <li>Bloom, N. (2009). “The Impact of Uncertainty Shocks.” <em>Econometrica</em> 77(3): 623–685.</li>
+          <li>Brave, S. and R. A. Butters (2012). “Diagnosing the Financial System: Financial Conditions and Financial Stress.” <em>International Journal of Central Banking</em> 8(2): 191–239.</li>
+          <li>Estrella, A. and F. S. Mishkin (1998). “Predicting U.S. Recessions: Financial Variables as Leading Indicators.” <em>Review of Economics and Statistics</em> 80(1): 45–61.</li>
+          <li>Favara, G., S. Gilchrist, K. F. Lewis and E. Zakrajšek (2016). “Updating the Recession Risk and the Excess Bond Premium.” FEDS Notes, Board of Governors of the Federal Reserve System, 6 October 2016. Data: <a class="text-link" href="https://www.federalreserve.gov/econres/notes/feds-notes/updating-the-recession-risk-and-the-excess-bond-premium-20161006.html" rel="noopener">federalreserve.gov</a></li>
+          <li>Gilchrist, S. and E. Zakrajšek (2012). “Credit Spreads and Business Cycle Fluctuations.” <em>American Economic Review</em> 102(4): 1692–1720.</li>
+          <li>Hakkio, C. S. and W. R. Keeton (2009). “Financial Stress: What Is It, How Can It Be Measured, and Why Does It Matter?” Federal Reserve Bank of Kansas City <em>Economic Review</em> 94(2): 5–50.</li>
+          <li>Hamilton, J. D. (2018). “Why You Should Never Use the Hodrick-Prescott Filter.” <em>Review of Economics and Statistics</em> 100(5): 831–843.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+<section class="content-section reveal delay-260" aria-labelledby="missing-title" data-role="missing-section" hidden>
+    <h2 id="missing-title" class="section-title">Missing data and estimates</h2>
+    <div class="prose">
+      <p>Where a source did not publish a value for a period, the value is estimated and flagged rather than left blank, because gaps break time-series and econometric analysis. An isolated gap of up to three consecutive periods is filled by linear interpolation between the published values on either side, in logs for series measured in levels (constant growth across the gap). Estimates in an input also flag the measures built from it. The downloads mark them in an <code>_estimated</code> column (1 = estimated).</p>
+    </div>
+    <div class="estimates-list" data-role="estimates"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Data are from the Federal Reserve Banks of Chicago, St. Louis and Kansas City, the Chicago Board Options Exchange, Moody’s and the Federal Reserve Board (via FRED), and the excess bond premium from the Federal Reserve Board’s update of Gilchrist and Zakrajšek (2012). The constructed series, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Financial Conditions and Stress</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/financial-indicators.js" defer></script>
+  
+</body>
+</html>

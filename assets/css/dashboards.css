@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-15 20:26 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -1012,3 +1012,17 @@
   font-weight: 600;
 }
 .dashboard-body .shares > .table-title:first-child { margin-top: 0.25rem; }
+
+/* Financial and Credit Indicators subpages: the filter switch above the
+   cycle charts, and the sample column of the statistics table. */
+.dashboard-controls.cycle-controls {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.dashboard-controls.downloads-only .dashboard-downloads {
+  margin-left: 0;
+}
+.bc-table td.sample-cell {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}

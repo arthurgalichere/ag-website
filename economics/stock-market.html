@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock Market</title>
+  <meta name="description" content="The US stock market since 1950 from Robert J. Shiller&#39;s data, quarterly: the price–dividend and dividend–price ratios, real S&amp;P 500 prices, dividends and earnings, their growth rates, quarterly returns, and business-cycle statistics of growth rates and cyclical components." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="financial"
+  data-data-url="/assets/data/economics/us/financial-stock-market.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial and Credit Indicators
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial and Credit Indicators</p>
+    <h1 class="page-title">Stock Market</h1>
+    <p class="lead">The S&P 500 since 1950, quarterly, from Robert J. Shiller’s data: the price–dividend ratio, the prices, dividends and earnings behind it, their growth rates and quarterly returns, and how all of these move over the business cycle.</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="quarterly_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly series (CSV)
+        </a>
+        <a class="button-link" data-download="cycles_csv" href="#" download hidden>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Cyclical components (CSV)
+        </a>
+        <a class="button-link" data-download="mat" href="#" download hidden>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>All series are quarterly: monthly, weekly and daily data are averaged over each complete quarter. Charts start in 1950, or at the first quarter of a series published later.</li>
+      <li>Shaded bands on every chart mark US recessions, from the NBER-based quarterly recession indicator (USRECQ).</li>
+      
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  
+  <section class="content-section reveal delay-160" aria-labelledby="valuation-title">
+    <h2 id="valuation-title" class="section-title">The price–dividend ratio</h2>
+    <p class="section-introduction">The price–dividend ratio compares the price of the index with the dividends it pays, and its inverse, the dividend–price ratio, is the dividend yield. High prices relative to dividends have historically been followed by low returns over the following decade rather than by faster dividend growth (Campbell and Shiller, 1988; Cochrane, 2008, 2011).</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="sp_pd" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Price–dividend and dividend–price ratios</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+          <div class="segmented-field chart-control" data-control="variant">
+            <span class="visually-hidden" id="valuation-1-variant-label">Series</span>
+            <div class="segmented" role="group" aria-labelledby="valuation-1-variant-label">
+              <button type="button" data-value="pd" data-set="sp_pd" aria-pressed="true">Price–dividend</button>
+              <button type="button" data-value="dp" data-set="sp_dp" aria-pressed="false">Dividend–price</button>
+              
+            </div>
+          </div>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="sp_pe,sp_cape" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Price–earnings ratios: 12-month and cyclically adjusted (CAPE)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">The CAPE divides the real price by the average of real earnings over the previous ten years, which smooths out the collapse of earnings in recessions (Campbell and Shiller, 1988; Shiller, 2015). The 12-month ratio spikes when earnings fall, as in 2009.</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="prices-title">
+    <h2 id="prices-title" class="section-title">Prices, dividends and earnings</h2>
+    <p class="section-introduction">Quarterly averages of the monthly S&P Composite index (the S&P 500 from 1957), itself the average of daily closing prices, and of dividends and earnings over the past twelve months per share of the index. Real values are deflated by the consumer price index and expressed in 2017 prices.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="sp_price_real" data-zero-line="false" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">S&P 500 stock price index</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+          <div class="segmented-field chart-control" data-control="variant">
+            <span class="visually-hidden" id="prices-1-variant-label">Series</span>
+            <div class="segmented" role="group" aria-labelledby="prices-1-variant-label">
+              <button type="button" data-value="real" data-set="sp_price_real" aria-pressed="true">Real</button>
+              <button type="button" data-value="nominal" data-set="sp_price_nominal" aria-pressed="false">Nominal</button>
+              
+            </div>
+          </div>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="sp_dividends_real" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real dividends (12 months)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="sp_earnings_real" data-zero-line="false" data-digits="1">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real earnings (12 months)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="growth-title">
+    <h2 id="growth-title" class="section-title">Growth rates</h2>
+    <p class="section-introduction">Quarterly growth rates, 100 times the change in the natural logarithm (percent per quarter), compared with the growth rate of real GDP, drawn in red. The growth rate of the dividend–price ratio is that of the price–dividend ratio with the opposite sign.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="g_pd" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Growth rate of the valuation ratio</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          <div class="chart-controls">
+          <div class="segmented-field chart-control" data-control="variant">
+            <span class="visually-hidden" id="growth-1-variant-label">Series</span>
+            <div class="segmented" role="group" aria-labelledby="growth-1-variant-label">
+              <button type="button" data-value="pd" data-set="g_pd" aria-pressed="true">Price–dividend</button>
+              <button type="button" data-value="dp" data-set="g_dp" aria-pressed="false">Dividend–price</button>
+              
+            </div>
+          </div>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="g_price_real" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Growth rate of real stock prices</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="g_dividends_real" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Growth rate of real dividends</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="g_earnings_real" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Growth rate of real earnings</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Earnings growth is extremely volatile: S&P earnings almost vanished in late 2008, so their growth rates around 2009 dwarf every other quarter.</p>
+      </figure>
+      
+    </div>
+    
+    <div data-role="growth-block">
+      <h3 class="subsection-title">Business-cycle statistics: growth rates and returns</h3>
+      <p class="table-note">Quarterly growth rates (100 × change in the natural logarithm) and returns, in percent per quarter, except those marked † (percentage points). Relative standard deviations and correlations are with the growth rate of real GDP, over the quarters each series shares with it, from 1950 Q1 or its first quarter.</p>
+      <div class="shares" data-role="growth-table"><p class="loading-message">Loading…</p></div>
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="returns-title">
+    <h2 id="returns-title" class="section-title">Quarterly returns</h2>
+    <p class="section-introduction">The return of a quarter is the change in the quarterly average price plus a quarter of the twelve-month dividend, relative to the previous quarter’s price. Real returns use real prices and dividends.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-indicators="sp_return_real,sp_capital_gain_real" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real total return and real capital gain</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-indicators="sp_excess_return" data-zero-line="true" data-digits="0">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Excess return over Treasury bills</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+          
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Nominal quarterly return on stocks minus the quarter’s average 3-month Treasury bill rate divided by four. Its long-run average is the equity premium, far larger than standard models of risk aversion can explain (Mehra and Prescott, 1985).</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+
+  <section class="content-section reveal delay-180" aria-labelledby="cycles-title">
+    <h2 id="cycles-title" class="section-title">Cyclical components</h2>
+    <p class="section-introduction">Stock prices are far more volatile than output, and than the dividends they are a claim on (Shiller, 1981). Each quarterly series is filtered on its full history; each chart compares its cyclical component with that of output (real GDP), drawn in red. The statistics use the quarters each variable shares with output, from 1950 Q1 or its first quarter.</p>
+    <div class="dashboard-controls cycle-controls">
+      <div class="segmented-field" data-control="filter">
+        <span class="segmented-label" id="filter-label">Filter</span>
+        <div class="segmented" role="group" aria-labelledby="filter-label">
+          <button type="button" data-value="hp" aria-pressed="true">HP</button>
+          <button type="button" data-value="hamilton" aria-pressed="false">Hamilton</button>
+          <button type="button" data-value="cf" aria-pressed="false">Christiano–Fitzgerald</button>
+        </div>
+      </div>
+    </div>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-vars="sp_price_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real stock prices</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_dividends_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real dividends</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_earnings_real">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real earnings</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_pd">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Price–dividend ratio</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_cape">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Cyclically adjusted price–earnings ratio (CAPE)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+
+    <h3 class="subsection-title">Business-cycle statistics: cyclical components</h3>
+    <p class="table-note">Cyclical components, <span data-role="filter-name">HP filter (λ = 1600)</span>. Standard deviations in percent, except those marked † (percentage points).</p>
+    <div class="shares" data-role="stats-table"><p class="loading-message">Loading…</p></div>
+    <h3 class="subsection-title">Leads and lags with output</h3>
+    <p class="table-note">Correlation of each variable’s cyclical component in quarter t + k with that of output in quarter t. The peak is the k with the largest correlation in absolute value: a negative k means the variable leads output, a positive k that it lags (Kydland and Prescott, 1990).</p>
+    <div class="shares" data-role="cross-table"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions, sources and methods</h2>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Data</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>All stock-market series come from Robert J. Shiller’s monthly data (<a class="text-link" href="https://shillerdata.com/" rel="noopener">shillerdata.com</a>), the data behind <em>Irrational Exuberance</em> (Shiller, 2015). The price is the monthly average of daily closes of the S&P Composite index (the S&P 500 from March 1957). Dividends and earnings are twelve-month totals per share of the index, interpolated from quarterly figures; they are published a few months after prices, so those series end earlier. The 3-month Treasury bill rate (TB3MS) is from the Federal Reserve via FRED, and real GDP (GDPC1) from the Bureau of Economic Analysis via FRED.</p>
+        <p>Every series is the average of its monthly values over each complete quarter. Real series divide the quarterly average by the quarterly average of the consumer price index in Shiller’s file and multiply by the index’s 2017 average, so they are in 2017 prices.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Ratios, growth rates and returns</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul>
+          <li><strong>Price–dividend ratio:</strong> \(P_t / D_t\), the quarterly average price over the quarterly average of twelve-month dividends. The dividend–price ratio is \(100\,D_t / P_t\), in percent. Dividends are measured over twelve months, as in Shiller’s data and Campbell and Shiller (1988); a ratio built with the quarter’s dividend alone, \(D_t/4\), is four times larger and has the same growth rate.</li>
+          <li><strong>Price–earnings ratio:</strong> \(P_t / E_t\), the price over twelve-month earnings.</li>
+          <li><strong>CAPE:</strong> computed monthly as the real price over the average of real earnings in the ten years ending the previous month, \(p_m / \big(\tfrac{1}{120}\sum_{j=1}^{120} e_{m-j}\big)\) (Campbell and Shiller, 1988, 1998), then averaged over the quarter. The monthly values reproduce Shiller’s published CAPE exactly and are checked against it at every update.</li>
+          <li><strong>Growth rates:</strong> \(g_t = 100\,(\ln x_t - \ln x_{t-1})\), percent per quarter. The growth rate of the dividend–price ratio is \(-g_t\) of the price–dividend ratio, and that of the price–dividend ratio is the growth of prices minus the growth of dividends.</li>
+          <li><strong>Returns:</strong> the real total return is \(100\,\big[(p_t + d_t/4)/p_{t-1} - 1\big]\), with \(p\) and \(d\) the real quarterly price and twelve-month dividend; the capital gain uses the price alone. The excess return is the nominal return, computed in the same way, minus the quarter’s average 3-month Treasury bill rate divided by four.</li>
+        </ul>
+        <p>The statistics of growth rates and returns are the standard deviation, the standard deviation relative to that of real GDP growth, the first-order autocorrelation and the correlation with real GDP growth, on the quarters each series shares with GDP, from 1950 Q1; the mean is added for these series.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Cyclical components and statistics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Prices, dividends, earnings, the price–dividend ratio and the CAPE are filtered as \(100 \times \ln x_t\), so their cycles are percent deviations from trend. The filters are the ones used on the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page: Hodrick–Prescott (λ = 1600; Hodrick and Prescott, 1997), Hamilton (2018; h = 8, p = 4) and Christiano–Fitzgerald (2003; 6–32 quarters). Each is applied to the full quarterly history from 1871 and shown from 1950.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Campbell, J. Y. and R. J. Shiller (1988). “Stock Prices, Earnings, and Expected Dividends.” <em>Journal of Finance</em> 43(3): 661–676.</li>
+          <li>Campbell, J. Y. and R. J. Shiller (1998). “Valuation Ratios and the Long-Run Stock Market Outlook.” <em>Journal of Portfolio Management</em> 24(2): 11–26.</li>
+          <li>Christiano, L. J. and T. J. Fitzgerald (2003). “The Band Pass Filter.” <em>International Economic Review</em> 44(2): 435–465.</li>
+          <li>Cochrane, J. H. (2008). “The Dog That Did Not Bark: A Defense of Return Predictability.” <em>Review of Financial Studies</em> 21(4): 1533–1575.</li>
+          <li>Cochrane, J. H. (2011). “Presidential Address: Discount Rates.” <em>Journal of Finance</em> 66(4): 1047–1108.</li>
+          <li>Hamilton, J. D. (2018). “Why You Should Never Use the Hodrick-Prescott Filter.” <em>Review of Economics and Statistics</em> 100(5): 831–843.</li>
+          <li>Hodrick, R. J. and E. C. Prescott (1997). “Postwar U.S. Business Cycles: An Empirical Investigation.” <em>Journal of Money, Credit and Banking</em> 29(1): 1–16.</li>
+          <li>Kydland, F. E. and E. C. Prescott (1990). “Business Cycles: Real Facts and a Monetary Myth.” <em>Federal Reserve Bank of Minneapolis Quarterly Review</em> 14(2): 3–18.</li>
+          <li>Mehra, R. and E. C. Prescott (1985). “The Equity Premium: A Puzzle.” <em>Journal of Monetary Economics</em> 15(2): 145–161.</li>
+          <li>Shiller, R. J. (1981). “Do Stock Prices Move Too Much to Be Justified by Subsequent Changes in Dividends?” <em>American Economic Review</em> 71(3): 421–436.</li>
+          <li>Shiller, R. J. (2015). <em>Irrational Exuberance</em>, 3rd edition. Princeton University Press. Data: <a class="text-link" href="https://shillerdata.com/" rel="noopener">shillerdata.com</a></li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+<section class="content-section reveal delay-260" aria-labelledby="missing-title" data-role="missing-section" hidden>
+    <h2 id="missing-title" class="section-title">Missing data and estimates</h2>
+    <div class="prose">
+      <p>Where a source did not publish a value for a period, the value is estimated and flagged rather than left blank, because gaps break time-series and econometric analysis. An isolated gap of up to three consecutive periods is filled by linear interpolation between the published values on either side, in logs for series measured in levels (constant growth across the gap). Estimates in an input also flag the measures built from it. The downloads mark them in an <code>_estimated</code> column (1 = estimated).</p>
+    </div>
+    <div class="estimates-list" data-role="estimates"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Stock-market data are Robert J. Shiller’s (shillerdata.com), Treasury bill rates are from the Federal Reserve via FRED, and real GDP and the recession indicator from FRED. The constructed series, charts and text are the author’s; the source data remain subject to the terms of their providers. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Stock Market</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/financial-indicators.js" defer></script>
+  
+</body>
+</html>
