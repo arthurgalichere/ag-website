@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dividends and Stock Prices in the RBC Model</title>
+  <meta name="description" content="The RBC model with firm-owned capital and a stock market: the model, its calibration and steady state, the stock price and dividends it implies, simulations against the US data (per capita or in totals), business-cycle statistics and impulse responses." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      
+
+
+<section
+  class="page-body dashboard-body"
+  data-dashboard="rbc-model-stock-market"
+  data-data-url="/assets/data/economics/{country}/rbc-model-stock-market.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Economics
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Model</p>
+    <h1 class="page-title">Dividends and Stock Prices in the RBC Model</h1>
+    <p class="lead">What does the <a class="text-link" href="/economics/rbc-model.html">canonical RBC model</a> say about the stock market? In this version of the model, the firm owns the capital stock and households own the firm: they hold its shares, which pay the dividends the firm does not invest. Without adjustment costs, the allocation is exactly that of the canonical model, so the model delivers a stock price and a stream of dividends at no extra cost, and they can be compared with the S&amp;P 500 and with the dividends paid in the US economy. The comparison is a classic test of the model, and a demanding one (Rouwenhorst, 1995; Jermann, 1998).</p>
+  </header>
+
+  <section class="content-section reveal delay-120" aria-labelledby="model-title">
+    <h2 id="model-title" class="section-title">The Model</h2>
+    <div class="model-stack">
+      <article class="model-card">
+        <h3 class="model-card-title">Households</h3>
+        <h4 class="model-card-subtitle">The household’s problem</h4>
+        <p>A representative household consumes \(c_t\) and divides one unit of time between leisure, \(l_t\), and hours of work, \(h_t\), so that \(l_t + h_t = 1\). Its utility is logarithmic in consumption, so the coefficient of relative risk aversion is one, which is consistent with balanced growth (King, Plosser and Rebelo, 1988), and \(\theta\) is the weight of leisure. It saves by holding shares of the representative firm, \(S_t\), bought at the ex-dividend price \(p_t\) and paying the dividend \(d_t\):</p>
+        <div class="equation-block">
+          \[ \max_{\{c_t,\, h_t,\, S_t\}_{t=0}^{\infty}}\; \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t \left[ \ln c_t + \theta \ln (1-h_t) \right] \]
+          \[ \text{subject to} \quad c_t + p_t S_t = (p_t + d_t)\, S_{t-1} + w_t h_t , \]
+          \[ S_{-1} \ \text{given} . \]
+        </div>
+        <p>With \(\lambda_t\) the multiplier on the budget constraint, the first-order conditions give \(\lambda_t = 1/c_t\), labour supply and the Euler equation for shares:</p>
+        <div class="equation-block">
+          \[ \frac{\theta}{1-h_t} = \frac{w_t}{c_t} , \qquad \frac{1}{c_t} = \beta\, \mathbb{E}_t \left[ \frac{1}{c_{t+1}}\, \frac{p_{t+1} + d_{t+1}}{p_t} \right] , \]
+        </div>
+        <p>where \((p_{t+1} + d_{t+1})/p_t\) is the gross return on the firm’s stock.</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">Firms</h3>
+        <h4 class="model-card-subtitle">Production, investment and the firm’s problem</h4>
+        <p>A representative firm owns the capital stock and hires hours to produce with a Cobb–Douglas technology:</p>
+        <div class="equation-block">
+          \[ Y_t = A_t\, K_t^{\alpha} \left( X_t h_t \right)^{1-\alpha} . \]
+        </div>
+        <p>Technology has two parts. Total factor productivity, \(A_t\), fluctuates around its long-run level with persistence \(\rho\), and labour-augmenting technical progress, \(X_t\), grows at the constant rate \(g_X\) each quarter and gives the economy a balanced growth path:</p>
+        <div class="equation-block">
+          \[ \ln A_t = \rho \ln A_{t-1} + \varepsilon^A_t , \qquad \varepsilon^A_t \sim \mathcal{N}(0, \sigma^2_{\varepsilon^A}) , \qquad X_{t+1} = (1+g_X)\, X_t . \]
+        </div>
+        <p>The firm pays wages and invests out of its revenue and distributes the rest as dividends; there are no adjustment costs, so a unit of output buys a unit of capital:</p>
+        <div class="equation-block">
+          \[ d_t + w_t h_t + I_t = Y_t , \qquad K_{t+1} = (1-\delta)\, K_t + I_t , \qquad K_0 \ \text{given} . \]
+        </div>
+        <p>The firm maximises its value to its shareholders, the expected stream of dividends discounted with their stochastic discount factor, \(\beta^t \lambda_t/\lambda_0\), by choosing hours, investment and capital:</p>
+        <div class="equation-block">
+          \[ \max_{\{d_t,\, h_t,\, I_t,\, K_{t+1}\}_{t=0}^{\infty}}\; \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t\, \frac{\lambda_t}{\lambda_0}\, d_t . \]
+        </div>
+        <p>With \(q_t\) the multiplier on the accumulation of capital (Tobin’s \(q\)), the first-order conditions are</p>
+        <div class="equation-block">
+          \[ w_t = (1-\alpha)\, \frac{Y_t}{h_t} , \qquad q_t = 1 , \qquad 1 = \beta\, \mathbb{E}_t \left[ \frac{\lambda_{t+1}}{\lambda_t} \left( \alpha\, \frac{Y_{t+1}}{K_{t+1}} + 1 - \delta \right) \right] . \]
+        </div>
+        <p>Installed capital is worth exactly what it costs, \(q_t = 1\), and the firm invests until the discounted return on a unit of capital equals one.</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">General Equilibrium</h3>
+        <h4 class="model-card-subtitle">Definition of competitive equilibrium</h4>
+        <p>Given the initial capital stock, \(K_0\), the household’s initial portfolio, \(S_{-1}\), the initial level of technology, \(A_0\), and its stochastic process, a competitive equilibrium consists of state-contingent sequences of household choices (consumption, labour supply and share holdings), firm choices (labour demand, investment, capital and dividends) and prices (the wage and the share price), in which every variable dated \(t\) depends only on the history of shocks up to \(t\), such that:</p>
+        <ol class="equilibrium-list">
+          <li><strong>Household optimisation.</strong> Given prices, households maximise lifetime expected utility subject to their sequence of budget constraints.</li>
+          <li><strong>Firm optimisation.</strong> Given prices and the shareholders’ stochastic discount factor, the firm maximises the expected discounted value of its dividends subject to its flow-of-funds constraint and the accumulation of capital.</li>
+          <li><strong>Market clearing.</strong> In every period and for every history of shocks, the labour market clears, the household holds the whole stock of the firm, \(S_t = 1\), and the goods market clears: combining the two budget constraints, \(c_t + I_t = Y_t\).</li>
+        </ol>
+        <p>Labour supply, the Euler equation for shares and the resource constraint are then the three equations of the <a class="text-link" href="/economics/rbc-model.html">canonical model</a>, in which households own the capital and rent it to firms: who owns the capital does not matter when markets are complete and there are no adjustment costs. The allocation, consumption, hours, investment and capital, is the same; what this model adds is the price of the firm and its dividends.</p>
+        <p><a class="button-link" href="#equilibrium-conditions" data-open-ribbon><i class="fas fa-equals" aria-hidden="true"></i> Equilibrium conditions</a></p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">Stock Price and Dividends</h3>
+        <h4 class="model-card-subtitle">The value of the firm equals its capital stock</h4>
+        <p>With one share outstanding, the Euler equation for shares prices the firm as the discounted value of next period’s price and dividend, \(p_t = \beta\, \mathbb{E}_t [(\lambda_{t+1}/\lambda_t)(p_{t+1} + d_{t+1})]\). Because the technology has constant returns to scale and there are no adjustment costs, the ex-dividend value of the firm is the replacement cost of its capital (Hayashi, 1982), and dividends are capital income less investment:</p>
+        <div class="equation-block">
+          \[ p_t = K_{t+1} , \qquad d_t = Y_t - w_t h_t - I_t = \alpha\, Y_t - I_t . \]
+        </div>
+        <p>To check the first, substitute \(p_{t+1} + d_{t+1} = K_{t+2} + \alpha Y_{t+1} - I_{t+1} = \alpha Y_{t+1} + (1-\delta) K_{t+1}\) into the pricing equation: the firm’s first-order condition for capital then gives \(p_t = K_{t+1}\). The return on the stock is the return on capital, \((p_{t+1} + d_{t+1})/p_t = 1 + \alpha Y_{t+1}/K_{t+1} - \delta\).</p>
+        <p>Two predictions follow. The stock price moves only with the capital stock, which changes slowly, so it should be smooth and very persistent. And dividends fall when investment rises: in a boom, investment rises by more than capital income, so dividends are countercyclical.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="content-section reveal delay-130" aria-labelledby="methodology-title">
+    <h2 id="methodology-title" class="section-title">Methodology</h2>
+    <p class="section-introduction">The model is calibrated as the <a class="text-link" href="/economics/rbc-model.html">canonical RBC model</a> and driven by the same technology shocks, measured in the US data, quarter by quarter, from the same starting values. Its consumption, hours, investment and capital are those of the canonical model; the stock price and dividends follow from them (see “Stock price and dividends in the stationary economy” in <a class="text-link" href="#asset-solution" data-open-ribbon>Definitions, Methods and Solutions</a>). The settings below choose the technology series and the shocks used everywhere on the page.</p>
+  <div class="dashboard-controls reveal delay-120">
+    <div class="segmented-field" data-control="form">
+      <span class="segmented-label" id="form-label">Neutral technical progress</span>
+      <div class="segmented" role="group" aria-labelledby="form-label">
+        <button type="button" data-value="hicks" aria-pressed="true" title="Hicks-neutral technical progress">Hicks</button>
+        <button type="button" data-value="harrod" aria-pressed="false" title="Harrod-neutral (labour-augmenting) technical progress">Harrod</button>
+      </div>
+    </div>
+    <div class="segmented-field" data-control="tfp">
+      <span class="segmented-label" id="tfp-label">Productivity</span>
+      <div class="segmented" role="group" aria-labelledby="tfp-label">
+        <button type="button" data-value="measured" aria-pressed="true">Measured</button>
+        <button type="button" data-value="adjusted" aria-pressed="false">Utilization-adjusted</button>
+        <button type="button" data-value="comparison" aria-pressed="false">Comparison</button>
+      </div>
+    </div>
+    <div class="segmented-field" data-control="shocks">
+      <span class="segmented-label" id="shocks-label">Technology shocks</span>
+      <div class="segmented" role="group" aria-labelledby="shocks-label">
+        <button type="button" data-value="kr" aria-pressed="true">Linear trend</button>
+        <button type="button" data-value="hp" aria-pressed="false">HP-filtered</button>
+        <button type="button" data-value="comparison" aria-pressed="false">Comparison</button>
+      </div>
+    </div>
+    <p class="segmented-hint controls-hint">These settings apply to every chart and table below. Linear trend: the shocks of King and Rebelo (1999), with the model’s series HP filtered afterwards. HP-filtered: the shortcut, with no filtering of the model’s series. One comparison at a time.</p>
+  </div>
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+    <h3 class="subsection-title is-first" id="calibration">Calibration</h3>
+    <div class="shares" data-role="calibration-table"></div>
+    <p class="chart-note">The preferences, technology and trend growth are calibrated as for the <a class="text-link" href="/economics/rbc-model.html#calibration">canonical RBC model</a>: King and Rebelo (1999, Table 2), with a discount factor of 0.988 and logarithmic utility, and the trend, persistence and size of the technology shocks estimated from the technology series selected above.</p>
+    <h3 class="subsection-title" id="technology-shocks">Technology shocks</h3>
+    <p class="section-introduction">The technology shocks, and the starting values of technology and capital in 1947 Q1, are those of the canonical model; see <a class="text-link" href="/economics/rbc-model.html#technology-shocks">Technology shocks</a> on the canonical RBC model page.</p>
+  </section>
+
+  <section class="content-section reveal delay-140" aria-labelledby="steady-state-title">
+    <h2 id="steady-state-title" class="section-title">Steady State</h2>
+    <div class="model-stack">
+      <article class="model-card">
+        <h3 class="model-card-title">The steady state</h3>
+        <h4 class="model-card-subtitle">Dividends, the value of the firm and the return on stocks</h4>
+        <p>On the balanced growth path, variables divided by \(X_t\), written with a tilde, are constant. The accumulation of capital gives \(\tilde{I} = (g_X + \delta)\, \tilde{K}\), so dividends and the value of the firm are fixed shares of output:</p>
+        <div class="equation-block">
+          \[ \frac{\tilde{d}}{\tilde{Y}} = \alpha - (g_X + \delta)\, \frac{\tilde{K}}{\tilde{Y}} , \qquad \frac{\tilde{p}}{\tilde{Y}} = (1+g_X)\, \frac{\tilde{K}}{\tilde{Y}} , \qquad \frac{\alpha \tilde{Y}}{\tilde{K}} = \frac{1+g_X}{\beta} - 1 + \delta . \]
+        </div>
+        <p>The gross return on stocks equals that on capital, \(R = (1+g_X)/\beta\), and the price–dividend ratio is \(\tilde{p}/\tilde{d}\), a quarter of the ratio measured with annual dividends, as in the data.</p>
+      </article>
+    </div>
+    <h3 class="subsection-title" id="steady-state-values">Steady state and great ratios</h3>
+    <p class="section-introduction">The steady state of the calibrated model, with trend growth, and the average of the price–dividend and dividend–price ratios of the S&amp;P 500 since 1950.</p>
+    <div class="shares" data-role="steady-table"></div>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="simulation-title">
+    <h2 id="simulation-title" class="section-title">Model Simulations vs the Data</h2>
+    <p class="section-introduction">The model is fed with the measured technology shocks, quarter by quarter, and its output, stock price and dividends are compared with the HP cyclical components of the US data. The stock price is the real S&amp;P 500 index: a price per share, which is not divided by population. Dividends can be the dividends per share of the S&amp;P 500 (“Total”), or, per capita, the aggregate dividends paid by US corporations per person, the counterpart of the model’s dividends; output is real GDP, in total or per person. The switch also applies to the statistics below.</p>
+    <div class="dashboard-controls simulation-controls">
+      <div class="segmented-field" data-control="measure">
+        <span class="segmented-label" id="measure-label">Data</span>
+        <div class="segmented" role="group" aria-labelledby="measure-label">
+          <button type="button" data-value="pc" aria-pressed="true">Per capita</button>
+          <button type="button" data-value="total" aria-pressed="false">Total</button>
+        </div>
+      </div>
+      <div class="dashboard-downloads" data-role="downloads" hidden>
+        <span class="segmented-label">Download data</span>
+        <div class="download-row">
+          <a class="button-link" data-download="csv" href="#" download hidden><i class="fas fa-file-csv" aria-hidden="true"></i> Simulations and data (CSV)</a>
+          <a class="button-link" data-download="mat" href="#" download hidden><i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)</a>
+        </div>
+      </div>
+    </div>
+    <div class="chart-stack">
+      <figure class="chart-card" data-model-var="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="p">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Stock price</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-model-var="d">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Dividends</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="content-section reveal delay-180" aria-labelledby="statistics-title">
+    <h2 id="statistics-title" class="section-title">Business-Cycle Statistics: Model and Data</h2>
+    <p class="section-introduction">The statistics of King and Rebelo (1999, Table 1) for output, the stock price and dividends, in the US economy and in the model, over the same quarters.</p>
+    <div class="shares" data-role="stats-table"></div>
+    <h3 class="subsection-title" id="model-data-correlation">Correlation with the data</h3>
+    <p class="section-introduction">How much of the US history the model reproduces: the volatility of each model series relative to the data, and the correlation between the two, quarter by quarter.</p>
+    <div class="shares" data-role="corr-table"></div>
+    <p class="chart-note" data-role="stats-note"></p>
+    <p class="chart-note">The model misses on both counts. Its stock price barely moves and is far too persistent, because the value of the firm is its capital stock; in the data, stock prices are several times more volatile than output (Shiller, 1981). Its dividends are more volatile than in the data and strongly countercyclical, while US dividends are smoother and mildly procyclical, because firms smooth them (Lintner, 1956). Explaining the stock market requires adjustment costs, which make the price of capital move, and preferences or shocks that make risk premia vary over time (Jermann, 1998; Boldrin, Christiano and Fisher, 2001; Campbell and Cochrane, 1999).</p>
+  </section>
+
+  <section class="content-section reveal delay-200" aria-labelledby="irf-title">
+    <h2 id="irf-title" class="section-title">Impulse Responses to One Positive Technology Shock</h2>
+    <p class="section-introduction" data-role="irf-intro"></p>
+    <div class="irf-grid">
+      <figure class="chart-card irf-card" data-irf="a">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Technology</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from trend</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="c">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Consumption</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="i">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Investment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="h">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Hours worked</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="k">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Capital</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="p">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Stock price</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="d">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Dividends</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from the balanced growth path</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+    </div>
+    <p class="chart-note irf-note">The quantities respond as in the canonical model. The stock price follows capital: it rises gradually, peaks with the capital stock after several years and returns slowly to its path. Dividends fall sharply on impact, because the firm invests most of its extra income, then recover gradually and, after about five years, rise above their path, as investment returns to normal while the larger capital stock keeps capital income high.</p>
+  </section>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions, Methods and Solutions</h2>
+
+    <details class="ribbon" id="equilibrium-conditions">
+      <summary>
+        <span class="ribbon-title">Equilibrium conditions</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Combining labour supply and labour demand, the Euler equation for shares with the firm’s condition for capital, and the two budget constraints with \(S_t = 1\), the allocation solves the three equations of the canonical model in consumption, hours and capital:</p>
+        <div class="math-display">\[ \frac{\theta\, c_t}{1-h_t} = (1-\alpha)\, A_t K_t^{\alpha} X_t^{1-\alpha} h_t^{-\alpha} , \qquad \frac{1}{c_t} = \beta\, \mathbb{E}_t \left[ \frac{1}{c_{t+1}} \left( 1 + \alpha A_{t+1} K_{t+1}^{\alpha-1} (X_{t+1} h_{t+1})^{1-\alpha} - \delta \right) \right] , \]</div>
+        <div class="math-display">\[ c_t + K_{t+1} = A_t K_t^{\alpha} (X_t h_t)^{1-\alpha} + (1-\delta)\, K_t , \]</div>
+        <p>and the stock price and dividends follow: \(p_t = K_{t+1}\) and \(d_t = \alpha Y_t - I_t\).</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="asset-solution">
+      <summary>
+        <span class="ribbon-title">Stock price and dividends in the stationary economy</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Dividing by \(X_t\), \(\tilde{p}_t = p_t/X_t = (1+g_X)\, \tilde{K}_{t+1}\), and the accumulation of capital, \((1+g_X)\, \tilde{K}_{t+1} = (1-\delta)\, \tilde{K}_t + \tilde{I}_t\), gives the stock price in terms of this quarter’s capital and investment. Log-linearised around the steady state, with hats for percent deviations,</p>
+        <div class="math-display">\[ \hat{p}_t = \hat{k}_{t+1} = \frac{(1-\delta)\, \hat{k}_t + (\tilde{I}/\tilde{K})\, \hat{\imath}_t}{1+g_X} , \qquad \hat{d}_t = \frac{\alpha \tilde{Y}\, \hat{y}_t - \tilde{I}\, \hat{\imath}_t}{\tilde{d}} . \]</div>
+        <p>Both are linear in the canonical model’s output, investment and capital, so they hold for the simulated series, before or after HP filtering (the filter is linear), and for the impulse responses. The coefficients, with the technology series selected above:</p>
+        <div class="shares" data-role="coefficients-table"></div>
+        <p>The canonical model is solved as on its page (Blanchard and Kahn, 1980). Investment is about three times as volatile as output in the model, so with these coefficients a 1 percent rise in output above trend comes with a fall in dividends of several percent.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Data</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul>
+          <li><strong>Stock price:</strong> the S&amp;P Composite index (the S&amp;P 500 from 1957) from Robert J. Shiller’s data, averaged over each quarter and deflated by the GDP price index (GDPDEF), as on the <a class="text-link" href="/economics/stock-market.html">Stock Market</a> page. It is a price per share, not divided by population in either view.</li>
+          <li><strong>Dividends, total:</strong> twelve-month dividends per share of the S&amp;P 500 (Shiller), deflated by the GDP price index.</li>
+          <li><strong>Dividends, per capita:</strong> net dividends paid by US corporations in the national accounts (DIVIDEND, U.S. Bureau of Economic Analysis), deflated by the GDP price index and divided by the population (B230RC0Q173SBEA). The model’s dividend is the total payout of the firm per person, so its counterpart is aggregate dividends per person, not dividends per share.</li>
+          <li><strong>Output:</strong> real GDP (GDPC1), in total or per person, the latter as on the canonical RBC model page.</li>
+        </ul>
+        <p>All data are HP filtered (λ = 1600) as \(100 \times \ln x_t\) on their full history and shown from 1950 Q1.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Blanchard, O. J. and C. M. Kahn (1980). “The Solution of Linear Difference Models under Rational Expectations.” <em>Econometrica</em> 48(5): 1305–1311.</li>
+          <li>Boldrin, M., L. J. Christiano and J. D. M. Fisher (2001). “Habit Persistence, Asset Returns, and the Business Cycle.” <em>American Economic Review</em> 91(1): 149–166.</li>
+          <li>Campbell, J. Y. and J. H. Cochrane (1999). “By Force of Habit: A Consumption-Based Explanation of Aggregate Stock Market Behavior.” <em>Journal of Political Economy</em> 107(2): 205–251.</li>
+          <li>Hayashi, F. (1982). “Tobin’s Marginal q and Average q: A Neoclassical Interpretation.” <em>Econometrica</em> 50(1): 213–224.</li>
+          <li>Jermann, U. J. (1998). “Asset Pricing in Production Economies.” <em>Journal of Monetary Economics</em> 41(2): 257–275.</li>
+          <li>King, R. G., C. I. Plosser and S. T. Rebelo (1988). “Production, Growth and Business Cycles: I. The Basic Neoclassical Model.” <em>Journal of Monetary Economics</em> 21(2–3): 195–232.</li>
+          <li>King, R. G. and S. T. Rebelo (1999). “Resuscitating Real Business Cycles.” In J. B. Taylor and M. Woodford (eds.), <em>Handbook of Macroeconomics</em>, Vol. 1B, Chapter 14: 927–1007. Amsterdam: Elsevier.</li>
+          <li>Lintner, J. (1956). “Distribution of Incomes of Corporations Among Dividends, Retained Earnings, and Taxes.” <em>American Economic Review</em> 46(2): 97–113.</li>
+          <li>Rouwenhorst, K. G. (1995). “Asset Pricing Implications of Equilibrium Business Cycle Models.” In T. F. Cooley (ed.), <em>Frontiers of Business Cycle Research</em>, Chapter 10: 294–330. Princeton University Press.</li>
+          <li>Shiller, R. J. (1981). “Do Stock Prices Move Too Much to Be Justified by Subsequent Changes in Dividends?” <em>American Economic Review</em> 71(3): 421–436.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  <div class="page-note reveal delay-200">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the model and derivations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Stock-market data are Robert J. Shiller’s (shillerdata.com); total factor productivity is from John Fernald at the Federal Reserve Bank of San Francisco; the other data are from the U.S. Bureau of Economic Analysis via FRED. The model simulations, charts and text are the author’s. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Dividends and Stock Prices in the RBC Model</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/rbc-model-stock-market.js" defer></script>
+  
+</body>
+</html>

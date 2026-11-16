@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-16 01:11 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model-it-lag.js: /economics/rbc-model-it-lag.html
    The RBC model with firm-owned capital and an investment
@@ -6,7 +6,8 @@
    canonical model in main_aggregate.py) and draws: calibration and
    steady state (against the canonical model); simulations driven by
    the measured technology shocks against the HP cycles of the data;
-   business-cycle statistics (data, this model, the canonical model);
+   business-cycle statistics (data, this model, the canonical model),
+   with the data per capita or in totals (switch);
    impulse responses to a technology shock (against the canonical
    model) and to an installation shock.
    Page-level settings as on the canonical RBC page: technical
@@ -52,7 +53,7 @@
     phiIntro: role('irf-phi-intro'),
   };
   const state = {
-    country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr', compare: 'data', payload: null, charts: new Map(),
+    country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr', compare: 'data', measure: 'pc', payload: null, charts: new Map(),
   };
   const token = name => getComputedStyle(body).getPropertyValue(name).trim() || '#3b5a75';
   const fmt = (value, digits = 2) => D.formatNumber(value, digits);
@@ -84,6 +85,11 @@
   const measuresInUse = () => Array.from(new Set(variants().map(v => v.measure)));
   const run = measure => state.payload.runs[state.form][measure];
   const canonical = measure => state.payload.canonical[state.form][measure];
+  /* Data per capita (as in King and Rebelo) or in totals (Arthur, 16 Nov 2026). */
+  const total = () => state.measure === 'total' && state.payload.data_total;
+  const dataSeries = key => (total() ? state.payload.data_total : state.payload.data)[key];
+  const statsOf = obj => (total() && obj.stats_total ? obj.stats_total : obj.stats);
+  const MEASURE_TEXT = { pc: 'per capita', total: 'totals' };
   const statRow = (rows, key) => (rows || []).find(row => row.key === key) || {};
   const sampleText = dates => `${D.quarterLabel(dates[0])}–${D.quarterLabel(dates[dates.length - 1])}`;
   const swatch = item => `
@@ -224,12 +230,12 @@
       color: v.color, dash: v.dash, weight: list.length === 1 ? 1.1 : 1,
       values: run(v.measure).series[v.kind][key],
     }));
-    series.push({ label: 'US data', color: token('--chart-benchmark'), dash: BENCHMARK_DASH, under: true, values: payload.data[key] });
+    series.push({ label: ['y', 'c', 'i', 'h', 'k'].includes(key) ? `US data (${MEASURE_TEXT[state.measure]})` : 'US data', color: token('--chart-benchmark'), dash: BENCHMARK_DASH, under: true, values: dataSeries(key) });
     draw(card, { ...options, label: `${VARIABLES[key]}: the RBC model with an installation lag and the US data, HP cyclical components` }, series);
-    const dataRow = statRow(canonical(list[0].measure).stats.data, key);
+    const dataRow = statRow(statsOf(canonical(list[0].measure)).data, key);
     const parts = list.map(v => {
-      const row = statRow(run(v.measure).stats[v.kind], key);
-      const can = statRow(canonical(v.measure).stats[v.kind], key);
+      const row = statRow(statsOf(run(v.measure))[v.kind], key);
+      const can = statRow(statsOf(canonical(v.measure))[v.kind], key);
       return `${v.suffix ? `model with ${v.suffix}` : 'model'}: correlation with the data ${fmt(row.corr_data)} (canonical model ${fmt(can.corr_data)}), standard deviation ${fmt(row.sd)}${units} (canonical model ${fmt(can.sd)})`;
     });
     const note = `${parts.join('; ')}; standard deviation of the data ${fmt(dataRow.sd)}${units}.`;
@@ -250,10 +256,10 @@
     const cells = row => `<td>${fmt(row.sd)}</td><td>${fmt(row.rel_sd)}</td><td>${fmt(row.ar1)}</td><td>${fmt(row.corr_y)}</td>`;
     const block = (title, rows) => `<tr class="table-group"><th scope="rowgroup" colspan="5">${esc(title)}</th></tr>${rows}`;
     const dataRows = STAT_KEYS.flatMap(key => (key === 'a' ? measures : [measures[0]])
-      .map(m => `<tr><th scope="row" class="symbol-cell">${symbol(key, m)}</th>${cells(statRow(canonical(m).stats.data, key))}</tr>`)).join('');
+      .map(m => `<tr><th scope="row" class="symbol-cell">${symbol(key, m)}</th>${cells(statRow(statsOf(canonical(m)).data, key))}</tr>`)).join('');
     const rowsFor = (stats, v) => STAT_KEYS.map(key => `<tr><th scope="row" class="symbol-cell">${symbol(key, v.measure)}</th>${cells(statRow(stats, key))}</tr>`).join('');
-    const blocks = list.map(v => block(`Business-cycle statistics for the RBC model with an installation lag${v.suffix ? `, ${v.suffix}` : ''}`, rowsFor(run(v.measure).stats[v.kind], v))
-      + block(`Business-cycle statistics for the canonical RBC model${v.suffix ? `, ${v.suffix}` : ''}`, rowsFor(canonical(v.measure).stats[v.kind], v))).join('');
+    const blocks = list.map(v => block(`Business-cycle statistics for the RBC model with an installation lag${v.suffix ? `, ${v.suffix}` : ''}`, rowsFor(statsOf(run(v.measure))[v.kind], v))
+      + block(`Business-cycle statistics for the canonical RBC model${v.suffix ? `, ${v.suffix}` : ''}`, rowsFor(statsOf(canonical(v.measure))[v.kind], v))).join('');
     setHTML(el.statsTable, `<div class="table-scroll"><table class="data-table shares-table bc-table slide-table">
       <caption class="visually-hidden">Business-cycle statistics of the US economy and of the models</caption>
       <thead><tr><th scope="col" class="component-head"><span class="visually-hidden">Variable</span></th>
@@ -262,22 +268,22 @@
       <tbody>${block('Business-cycle statistics for the US economy', dataRows)}${blocks}</tbody></table></div>`);
 
     const groups = list.flatMap(v => [
-      { title: `RBC model with an installation lag${v.suffix ? `, ${v.suffix}` : ''}`, stats: run(v.measure).stats[v.kind], v },
-      { title: `Canonical RBC model${v.suffix ? `, ${v.suffix}` : ''}`, stats: canonical(v.measure).stats[v.kind], v },
+      { title: `RBC model with an installation lag${v.suffix ? `, ${v.suffix}` : ''}`, stats: statsOf(run(v.measure))[v.kind], v },
+      { title: `Canonical RBC model${v.suffix ? `, ${v.suffix}` : ''}`, stats: statsOf(canonical(v.measure))[v.kind], v },
     ]);
     const top = `<tr><th scope="col" class="component-head"></th>${groups.map(g => `<th scope="colgroup" colspan="2">${esc(g.title)}</th>`).join('')}</tr>`;
     const heads = groups.map(() => `<th scope="col">Relative standard deviation<br><span class="unit-label">\\(\\sigma_{\\text{Model}} / \\sigma_{\\text{Data}}\\)</span></th>
       <th scope="col">Correlation model–data<br><span class="unit-label">\\(\\rho_{\\text{Model},\\,\\text{Data}}\\)</span></th>`).join('');
     const rows = STAT_KEYS.map(key => `<tr><th scope="row" class="symbol-cell">${symbol(key, list[0].measure)}</th>${groups.map(g => {
       const model = statRow(g.stats, key);
-      const data = statRow(canonical(g.v.measure).stats.data, key);
+      const data = statRow(statsOf(canonical(g.v.measure)).data, key);
       return `<td>${fmt(model.sd / data.sd)}</td><td>${fmt(model.corr_data)}</td>`;
     }).join('')}</tr>`).join('');
     setHTML(el.corrTable, `<div class="table-scroll"><table class="data-table shares-table bc-table slide-table corr-table">
       <caption class="visually-hidden">Volatility and correlation of the models’ series relative to the data</caption>
       <thead>${top}<tr><th scope="col" class="component-head"><span class="visually-hidden">Variable</span></th>${heads}</tr></thead>
       <tbody>${rows}</tbody></table></div>`);
-    el.statsNote.textContent = `Note: United States, ${sampleText(state.payload.dates)}. All variables are in logarithms, except the real interest rate, and are HP filtered (λ = 1600); definitions as on the canonical RBC model page. Both models are driven by the same measured technology shocks, from the same starting values; the installation shocks are not used in the simulations, as they are not observed.`;
+    el.statsNote.textContent = `Note: United States, ${sampleText(state.payload.dates)}. Output, consumption, investment, hours and capital in the data are ${total() ? 'totals' : 'per capita'}. All variables are in logarithms, except the real interest rate, and are HP filtered (λ = 1600); definitions as on the canonical RBC model page. Both models are driven by the same measured technology shocks, from the same starting values; the installation shocks are not used in the simulations, as they are not observed.`;
   }
 
   /* Impulse responses ------------------------------------------------ */
@@ -341,6 +347,7 @@
       if (!payload.runs.harrod) body.querySelector('[data-control="form"]').hidden = true;
       const canonicalSeries = Object.values(payload.canonical || {}).every(form => Object.values(form).every(r => r.series));
       if (!canonicalSeries) compareControl.setDisabled('canonical', true, 'Available after the next data update');
+      if (!payload.data_total) measureControl.setDisabled('total', true, 'Available after the next data update');
       render();
       if (payload.generated_at_utc) {
         el.updateNote.textContent = `Data updated on ${new Date(payload.generated_at_utc).toLocaleDateString('en-GB')}`;
@@ -358,6 +365,10 @@
   }
 
   const formControl = D.segmented(body.querySelector('[data-control="form"]'), value => { state.form = value; render(); });
+  const measureControl = D.segmented(body.querySelector('[data-control="measure"]'), value => {
+    state.measure = value;
+    if (state.payload) { modelCards.forEach(renderModelCard); renderStats(); }
+  });
   const compareControl = D.segmented(body.querySelector('[data-control="compare"]'), value => {
     state.compare = value;
     if (state.payload) modelCards.forEach(renderModelCard);
@@ -383,5 +394,6 @@
   tfpControl.select('measured', false);
   shocksControl.select('kr', false);
   compareControl.select('data', false);
+  measureControl.select('pc', false);
   load();
 })();

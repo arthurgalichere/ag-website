@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stock Market</title>
-  <meta name="description" content="The US stock market since 1950 from Robert J. Shiller&#39;s data, quarterly: the price–dividend and dividend–price ratios, real S&amp;P 500 prices, dividends and earnings, their growth rates, quarterly returns, and business-cycle statistics of growth rates and cyclical components." />
+  <meta name="description" content="The US stock market since 1950 from Robert J. Shiller&#39;s data, quarterly: real S&amp;P 500 prices, dividends and earnings, the price–dividend and dividend–price ratios, their growth rates, quarterly returns, and business-cycle statistics of growth rates and cyclical components." />
 
   
 
@@ -95,7 +95,7 @@
   <header class="reveal delay-80">
     <p class="eyebrow">Economics · Financial and Credit Indicators</p>
     <h1 class="page-title">Stock Market</h1>
-    <p class="lead">The S&P 500 since 1950, quarterly, from Robert J. Shiller’s data: the price–dividend ratio, the prices, dividends and earnings behind it, their growth rates and quarterly returns, and how all of these move over the business cycle.</p>
+    <p class="lead">The S&P 500 since 1950, quarterly, from Robert J. Shiller’s data: real stock prices, dividends and earnings, the price–dividend ratio, their growth rates and quarterly returns, and how all of these move over the business cycle.</p>
   </header>
 
   <div class="dashboard-controls downloads-only reveal delay-120">
@@ -127,59 +127,10 @@
   <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
 
   
-  <section class="content-section reveal delay-160" aria-labelledby="valuation-title">
-    <h2 id="valuation-title" class="section-title">The price–dividend ratio</h2>
-    <p class="section-introduction">The price–dividend ratio compares the price of the index with the dividends it pays, and its inverse, the dividend–price ratio, is the dividend yield. High prices relative to dividends have historically been followed by low returns over the following decade rather than by faster dividend growth (Campbell and Shiller, 1988; Cochrane, 2008, 2011).</p>
-    <div class="chart-stack">
-      
-      <figure class="chart-card" data-indicators="sp_pd" data-zero-line="false">
-        <figcaption class="chart-header">
-          <div class="chart-heading">
-            <span class="chart-title">Price–dividend and dividend–price ratios</span>
-            <span class="chart-subtitle" data-role="chart-subtitle"></span>
-          </div>
-          <div class="chart-controls">
-          <div class="segmented-field chart-control" data-control="variant">
-            <span class="visually-hidden" id="valuation-1-variant-label">Series</span>
-            <div class="segmented" role="group" aria-labelledby="valuation-1-variant-label">
-              <button type="button" data-value="pd" data-set="sp_pd" aria-pressed="true">Price–dividend</button>
-              <button type="button" data-value="dp" data-set="sp_dp" aria-pressed="false">Dividend–price</button>
-              
-            </div>
-          </div>
-          </div>
-        </figcaption>
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-        
-      </figure>
-      
-      <figure class="chart-card" data-indicators="sp_pe,sp_cape" data-zero-line="false" data-digits="0">
-        <figcaption class="chart-header">
-          <div class="chart-heading">
-            <span class="chart-title">Price–earnings ratios: 12-month and cyclically adjusted (CAPE)</span>
-            <span class="chart-subtitle" data-role="chart-subtitle"></span>
-          </div>
-          
-        </figcaption>
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-        <p class="chart-note">The CAPE divides the real price by the average of real earnings over the previous ten years, which smooths out the collapse of earnings in recessions (Campbell and Shiller, 1988; Shiller, 2015). The 12-month ratio spikes when earnings fall, as in 2009.</p>
-      </figure>
-      
-    </div>
-    
-  </section>
-  
   <section class="content-section reveal delay-160" aria-labelledby="prices-title">
     <h2 id="prices-title" class="section-title">Prices, dividends and earnings</h2>
-    <p class="section-introduction">Quarterly averages of the monthly S&P Composite index (the S&P 500 from 1957), itself the average of daily closing prices, and of dividends and earnings over the past twelve months per share of the index. Real values are deflated by the consumer price index and expressed in 2017 prices.</p>
+    <p class="section-introduction">Quarterly averages of the monthly S&P Composite index (the S&P 500 from 1957), itself the average of daily closing prices, and of dividends and earnings over the past twelve months per share of the index. Real values are deflated by the GDP price index (2017 = 100), the deflator of the model’s output.</p>
+    
     <div class="chart-stack">
       
       <figure class="chart-card" data-indicators="sp_price_real" data-zero-line="false" data-digits="0">
@@ -241,25 +192,27 @@
       
     </div>
     
+    
   </section>
   
-  <section class="content-section reveal delay-160" aria-labelledby="growth-title">
-    <h2 id="growth-title" class="section-title">Growth rates</h2>
-    <p class="section-introduction">Quarterly growth rates, 100 times the change in the natural logarithm (percent per quarter), compared with the growth rate of real GDP, drawn in red. The growth rate of the dividend–price ratio is that of the price–dividend ratio with the opposite sign.</p>
+  <section class="content-section reveal delay-160" aria-labelledby="valuation-title">
+    <h2 id="valuation-title" class="section-title">The price–dividend ratio</h2>
+    <p class="section-introduction">The price–dividend ratio compares the price of the index with the dividends it pays, and its inverse, the dividend–price ratio, is the dividend yield. High prices relative to dividends have historically been followed by low returns over the following decade rather than by faster dividend growth (Campbell and Shiller, 1988; Cochrane, 2008, 2011).</p>
+    
     <div class="chart-stack">
       
-      <figure class="chart-card" data-indicators="g_pd" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
+      <figure class="chart-card" data-indicators="sp_pd" data-zero-line="false">
         <figcaption class="chart-header">
           <div class="chart-heading">
-            <span class="chart-title">Growth rate of the valuation ratio</span>
+            <span class="chart-title">Price–dividend and dividend–price ratios</span>
             <span class="chart-subtitle" data-role="chart-subtitle"></span>
           </div>
           <div class="chart-controls">
           <div class="segmented-field chart-control" data-control="variant">
-            <span class="visually-hidden" id="growth-1-variant-label">Series</span>
-            <div class="segmented" role="group" aria-labelledby="growth-1-variant-label">
-              <button type="button" data-value="pd" data-set="g_pd" aria-pressed="true">Price–dividend</button>
-              <button type="button" data-value="dp" data-set="g_dp" aria-pressed="false">Dividend–price</button>
+            <span class="visually-hidden" id="valuation-1-variant-label">Series</span>
+            <div class="segmented" role="group" aria-labelledby="valuation-1-variant-label">
+              <button type="button" data-value="pd" data-set="sp_pd" aria-pressed="true">Price–dividend</button>
+              <button type="button" data-value="dp" data-set="sp_dp" aria-pressed="false">Dividend–price</button>
               
             </div>
           </div>
@@ -273,10 +226,10 @@
         
       </figure>
       
-      <figure class="chart-card" data-indicators="g_price_real" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
+      <figure class="chart-card" data-indicators="sp_pe,sp_cape" data-zero-line="false" data-digits="0">
         <figcaption class="chart-header">
           <div class="chart-heading">
-            <span class="chart-title">Growth rate of real stock prices</span>
+            <span class="chart-title">Price–earnings ratios: 12-month and cyclically adjusted (CAPE)</span>
             <span class="chart-subtitle" data-role="chart-subtitle"></span>
           </div>
           
@@ -286,54 +239,18 @@
         <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
-        
-      </figure>
-      
-      <figure class="chart-card" data-indicators="g_dividends_real" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
-        <figcaption class="chart-header">
-          <div class="chart-heading">
-            <span class="chart-title">Growth rate of real dividends</span>
-            <span class="chart-subtitle" data-role="chart-subtitle"></span>
-          </div>
-          
-        </figcaption>
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-        
-      </figure>
-      
-      <figure class="chart-card" data-indicators="g_earnings_real" data-benchmark="g_gdp" data-zero-line="true" data-digits="0">
-        <figcaption class="chart-header">
-          <div class="chart-heading">
-            <span class="chart-title">Growth rate of real earnings</span>
-            <span class="chart-subtitle" data-role="chart-subtitle"></span>
-          </div>
-          
-        </figcaption>
-        <p class="loading-message" data-role="chart-status">Loading chart…</p>
-        <div class="chart-frame" data-role="chart-frame" hidden></div>
-        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
-        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
-        <p class="chart-source" data-role="chart-source"></p>
-        <p class="chart-note">Earnings growth is extremely volatile: S&P earnings almost vanished in late 2008, so their growth rates around 2009 dwarf every other quarter.</p>
+        <p class="chart-note">The CAPE divides the real price by the average of real earnings over the previous ten years, which smooths out the collapse of earnings in recessions (Campbell and Shiller, 1988; Shiller, 2015). The 12-month ratio spikes when earnings fall, as in 2009.</p>
       </figure>
       
     </div>
     
-    <div data-role="growth-block">
-      <h3 class="subsection-title">Business-cycle statistics: growth rates and returns</h3>
-      <p class="table-note">Quarterly growth rates (100 × change in the natural logarithm) and returns, in percent per quarter, except those marked † (percentage points). Relative standard deviations and correlations are with the growth rate of real GDP, over the quarters each series shares with it, from 1950 Q1 or its first quarter.</p>
-      <div class="shares" data-role="growth-table"><p class="loading-message">Loading…</p></div>
-    </div>
     
   </section>
   
   <section class="content-section reveal delay-160" aria-labelledby="returns-title">
     <h2 id="returns-title" class="section-title">Quarterly returns</h2>
     <p class="section-introduction">The return of a quarter is the change in the quarterly average price plus a quarter of the twelve-month dividend, relative to the previous quarter’s price. Real returns use real prices and dividends.</p>
+    
     <div class="chart-stack">
       
       <figure class="chart-card" data-indicators="sp_return_real,sp_capital_gain_real" data-zero-line="true" data-digits="0">
@@ -368,6 +285,20 @@
         <p class="chart-note">Nominal quarterly return on stocks minus the quarter’s average 3-month Treasury bill rate divided by four. Its long-run average is the equity premium, far larger than standard models of risk aversion can explain (Mehra and Prescott, 1985).</p>
       </figure>
       
+    </div>
+    
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="growth-title">
+    <h2 id="growth-title" class="section-title">Growth rates and returns</h2>
+    <p class="section-introduction">Quarterly growth rates, 100 times the change in the natural logarithm (percent per quarter), of real stock prices, dividends and earnings and of the valuation ratios, and the quarterly returns above, against the growth rate of real GDP. The growth rate of the dividend–price ratio is that of the price–dividend ratio with the opposite sign, and that of the price–dividend ratio is the growth of prices minus the growth of dividends. The series are in the quarterly download.</p>
+    
+    
+    <div data-role="growth-block">
+      <h3 class="subsection-title">Business-cycle statistics: growth rates and returns</h3>
+      <p class="table-note">Quarterly growth rates (100 × change in the natural logarithm) and returns, in percent per quarter, except those marked † (percentage points). Relative standard deviations and correlations are with the growth rate of real GDP, over the quarters each series shares with it, from 1950 Q1 or its first quarter.</p>
+      <div class="shares" data-role="growth-table"><p class="loading-message">Loading…</p></div>
     </div>
     
   </section>
@@ -487,7 +418,7 @@
       </summary>
       <div class="ribbon-content">
         <p>All stock-market series come from Robert J. Shiller’s monthly data (<a class="text-link" href="https://shillerdata.com/" rel="noopener">shillerdata.com</a>), the data behind <em>Irrational Exuberance</em> (Shiller, 2015). The price is the monthly average of daily closes of the S&P Composite index (the S&P 500 from March 1957). Dividends and earnings are twelve-month totals per share of the index, interpolated from quarterly figures; they are published a few months after prices, so those series end earlier. The 3-month Treasury bill rate (TB3MS) is from the Federal Reserve via FRED, and real GDP (GDPC1) from the Bureau of Economic Analysis via FRED.</p>
-        <p>Every series is the average of its monthly values over each complete quarter. Real series divide the quarterly average by the quarterly average of the consumer price index in Shiller’s file and multiply by the index’s 2017 average, so they are in 2017 prices.</p>
+        <p>Every series is the average of its monthly values over each complete quarter. Real series divide the quarterly average by the GDP price index (GDPDEF, 2017 = 100, from the Bureau of Economic Analysis via FRED), the deflator of real GDP, so that real stock prices and dividends are measured like the output of the RBC model they are compared with. The CAPE alone is built with the consumer price index in Shiller’s file, to reproduce his published series.</p>
       </div>
     </details>
 
