@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-03 01:10 UTC (Claude, website chat) */
+/* Last edited: 2026-11-16 10:56 UTC (Claude, economics chat) */
 /* =========================================================
    site.css — the single source of the site-wide design.
 
@@ -823,6 +823,14 @@ a.tile:hover {
   font-size: 0.78rem;
   letter-spacing: 0.03em;
   text-align: center;
+}
+/* Economics pages: "Page created on …   Data updated on …" on one line,
+   wrapping onto two on narrow screens. */
+.page-dates > span { display: inline-block; }
+.page-dates .page-created + .data-updated { margin-left: 2.5em; }
+@media (max-width: 30rem) {
+  .page-dates > span { display: block; }
+  .page-dates .page-created + .data-updated { margin-left: 0; }
 }
 
 /* Small centred note at the end of a page (copyright, status). */

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-16 09:32 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-16 11:24 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -269,7 +269,7 @@
 /* Stack of chart cards inside a section. */
 .chart-stack {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.75rem;
 }
 
 .chart-control {
@@ -1104,3 +1104,44 @@ button.button-link { cursor: pointer; font-family: inherit; }
 .robustness-table tbody th { min-width: 14rem; font-size: 0.9em; }
 .compact-table { max-width: 32rem; }
 .bc-table td.table-footnote { color: var(--muted); font-size: 0.85em; font-style: italic; text-align: left; }
+
+/* Key terms: short definitions of unusual measures under a section's
+   introduction (Financial and Credit Indicators), and the link to the
+   ribbon with the longer explanation. */
+.key-terms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 0.9rem 1.75rem;
+  margin: 0 0 1.25rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+}
+.key-term { margin: 0; }
+.key-terms dt {
+  margin-bottom: 0.2rem;
+  color: var(--accent-strong);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+.key-terms dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  text-align: justify;
+  hyphens: auto;
+}
+.more-link { margin: 0 0 1.75rem; font-size: 0.88rem; }
+.more-link .fa-arrow-down { margin-left: 0.25rem; font-size: 0.75em; }
+
+/* Spacing (economics pages): more air between charts, and between a
+   group of charts and the note or table that follows it (the gap between
+   charts is set in .chart-stack). */
+.chart-stack + .chart-note,
+.chart-stack + .shares,
+.chart-stack + .table-note,
+.chart-stack + p,
+.shares + .chart-note,
+.shares + .section-introduction { margin-top: 1.5rem; }
+.chart-card .chart-note { margin-top: 0.75rem; }
