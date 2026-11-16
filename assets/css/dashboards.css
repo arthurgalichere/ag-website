@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-15 20:26 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-16 09:32 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -1026,3 +1026,81 @@
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+
+/* New Keynesian model page: the adjustable calibration (groups of number
+   fields), the reset button and the determinacy note. */
+.dashboard-controls .param-grid {
+  display: grid;
+  flex-basis: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem 1.5rem;
+}
+.param-group {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.param-group legend {
+  margin-bottom: 0.45rem;
+  padding: 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.param-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5.5rem;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+.param-field .param-symbol { display: inline-block; min-width: 1.6rem; color: var(--ink); }
+.param-field input {
+  width: 100%;
+  padding: 0.35rem 0.45rem;
+  color: var(--ink);
+  background: var(--sheet);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-small);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.param-field input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.param-field.is-inactive { opacity: 0.45; }
+.dashboard-controls .param-actions {
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+.dashboard-controls .param-actions .controls-hint {
+  flex: 1 1 18rem;
+  margin: 0;
+}
+button.button-link { cursor: pointer; font-family: inherit; }
+.callout.determinacy-note { margin-top: 1.25rem; }
+.callout.determinacy-note p { margin: 0; }
+.calibration-table td.symbol-cell { text-align: center; white-space: nowrap; }
+
+/* Extracting Shocks for the New Keynesian Model: correlations that differ
+   from zero, the baseline row of the robustness table, a narrow table. */
+.bc-table td.is-significant { color: var(--ink); font-weight: 700; }
+.bc-table tr.baseline-row th,
+.bc-table tr.baseline-row td { background: var(--accent-soft); }
+.robustness-table tbody th { min-width: 14rem; font-size: 0.9em; }
+.compact-table { max-width: 32rem; }
+.bc-table td.table-footnote { color: var(--muted); font-size: 0.85em; font-style: italic; text-align: left; }

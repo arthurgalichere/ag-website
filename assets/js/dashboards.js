@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-16 09:32 UTC (Claude, economics chat) */
 /* =========================================================
    dashboards.js: shared tools for the economics dashboards
    (business-cycles, main-indicators, ...). Dependency-free.
@@ -288,7 +288,8 @@ window.AGDashboards = (() => {
           d: path, stroke: item.color, 'stroke-width': width, 'stroke-opacity': item.opacity ?? 1,
           'stroke-dasharray': item.dash || 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round',
         }, lines);
-        /* Hollow markers for values estimated by the author (item.marks: indices). */
+        /* Hollow markers for values estimated by the author (item.marks: indices;
+           item.markLabel replaces "estimated" in the readout, for other uses). */
         (item.marks || []).forEach(i => {
           if (!Number.isFinite(item.values[i])) return;
           svg('circle', {
@@ -331,7 +332,7 @@ window.AGDashboards = (() => {
         }
       });
       if (options.readout && announce !== null) {
-        const parts = options.series.map(item => `${item.label}: ${formatNumber(item.values[state.index], options.digits ?? 2)}${(item.marks || []).includes(state.index) ? ' (estimated)' : ''}`);
+        const parts = options.series.map(item => `${item.label}: ${formatNumber(item.values[state.index], options.digits ?? 2)}${(item.marks || []).includes(state.index) ? ` (${item.markLabel || 'estimated'})` : ''}`);
         options.readout.textContent = `${labelDate(xLabels[state.index])} · ${parts.join(' · ')}`;
       }
     }

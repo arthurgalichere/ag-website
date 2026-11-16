@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Canonical New Keynesian Model</title>
+  <meta name="description" content="The canonical New Keynesian model with Calvo or Rotemberg pricing, solved in the browser: the model, an adjustable calibration, the steady state, impulse responses to technology, labour-preference, demand and monetary policy shocks, and the US history of output, inflation and the federal funds rate decomposed into the four shocks." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      
+
+
+<section
+  class="page-body dashboard-body"
+  data-dashboard="nk-model"
+  data-data-url="/assets/data/economics/{country}/nk-model.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Economics
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Model</p>
+    <h1 class="page-title">The Canonical New Keynesian Model</h1>
+    <p class="lead">In the <a class="text-link" href="/economics/rbc-model.html">canonical RBC model</a>, money plays no role: prices adjust at once and monetary policy cannot move output. The New Keynesian model adds monopolistic competition and prices that adjust only gradually, so that the central bank, by setting the nominal interest rate, moves the real interest rate and with it demand, output and inflation (Clarida, Galí and Gertler, 1999; Woodford, 2003; Galí, 2015). This page sets out its canonical version, without capital, solves it in your browser for the parameters you choose, and uses it to read the US history of output, inflation and the federal funds rate since 1954 as the outcome of four shocks: to technology, to the supply of labour, to demand and to monetary policy.</p>
+  </header>
+
+  <section class="content-section reveal delay-120" aria-labelledby="model-title">
+    <h2 id="model-title" class="section-title">The Model</h2>
+    <div class="model-stack">
+      <article class="model-card">
+        <h3 class="model-card-title">Households</h3>
+        <h4 class="model-card-subtitle">The household’s problem</h4>
+        <p>A representative household consumes \(c_t\) and works \(h_t\) hours. Its utility has a constant relative risk aversion \(\sigma\) in consumption, so that \(1/\sigma\) is the intertemporal elasticity of substitution, and a disutility of work with a Frisch elasticity \(1/\eta\); \(\theta_t\) is the weight on the disutility of labour, which can change over time and so acts as a labour-supply shock, and \(\zeta_t\) shifts the discount factor, so that it changes how much the household values the present relative to the future: a demand shock. The household owns the firms and receives their profits as dividends, \(D_t\). Its only financial asset is a one-period nominal bond: a bond bought at the price \(Q_t\) in quarter \(t\) pays one unit of money in \(t+1\), so the gross nominal interest rate is \(R_t = 1/Q_t\). In real terms, with \(b_{t+1}\) the real value of the bonds bought in \(t\) and \(1+\pi_t = P_t/P_{t-1}\) gross inflation:</p>
+        <div class="equation-block">
+          \[ \max_{\{c_t,\, h_t,\, b_{t+1}\}_{t=0}^{\infty}}\; \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t \zeta_t \left[ \frac{c_t^{1-\sigma}}{1-\sigma} - \theta_t\, \frac{h_t^{1+\eta}}{1+\eta} \right] \]
+          \[ \text{subject to} \quad c_t + Q_t\, b_{t+1} = w_t h_t + \frac{b_t}{1+\pi_t} + D_t , \]
+          \[ b_0 \ \text{given} . \]
+        </div>
+        <p>With \(\beta^t \zeta_t \lambda_t\) the multiplier on the budget constraint, the first-order conditions give \(\lambda_t = c_t^{-\sigma}\), labour supply, where the marginal rate of substitution between leisure and consumption equals the real wage, and the Euler equation for bonds:</p>
+        <div class="equation-block">
+          \[ \theta_t\, h_t^{\eta} = w_t\, c_t^{-\sigma} , \qquad c_t^{-\sigma} = \beta\, \mathbb{E}_t \left[ \frac{\zeta_{t+1}}{\zeta_t}\, c_{t+1}^{-\sigma}\, \frac{R_t}{1+\pi_{t+1}} \right] , \]
+        </div>
+        <p>where \(R_t/(1+\pi_{t+1})\) is the gross real interest rate (the Fisher relation). Because prices are sticky, inflation does not adjust one for one when the central bank changes \(R_t\): monetary policy moves the real interest rate, and therefore consumption. The two preference shifters follow \(\ln \theta_t = (1-\rho_\theta) \ln \theta + \rho_\theta \ln \theta_{t-1} + \varepsilon^\theta_t\) and \(\ln \zeta_t = \rho_\zeta \ln \zeta_{t-1} + \varepsilon^\zeta_t\). The discount-factor shock is not in the notes this page follows; it is added, as in Galí (2015, Chapter 3), because without it the technology and labour-preference shocks could not be told apart in the data (see <a class="text-link" href="#backing-out" data-open-ribbon>Backing out the shocks</a>). It leaves labour supply and the steady state unchanged.</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">Final-Good Firms</h3>
+        <h4 class="model-card-subtitle">Aggregating the intermediate goods</h4>
+        <p>Competitive firms assemble a unit mass of differentiated intermediate goods, \(y_t(j)\), \(j \in [0,1]\), into the final good with a constant elasticity of substitution \(\varepsilon > 1\) (Dixit and Stiglitz, 1977):</p>
+        <div class="equation-block">
+          \[ Y_t = \left[ \int_0^1 y_t(j)^{\frac{\varepsilon-1}{\varepsilon}}\, dj \right]^{\frac{\varepsilon}{\varepsilon-1}} . \]
+        </div>
+        <p>Maximising profit, \(P_t Y_t - \int_0^1 P_t(j)\, y_t(j)\, dj\), gives the demand for each good and, with zero profits, the price of the final good:</p>
+        <div class="equation-block">
+          \[ y_t(j) = \left( \frac{P_t(j)}{P_t} \right)^{-\varepsilon} Y_t , \qquad P_t = \left[ \int_0^1 P_t(j)^{1-\varepsilon}\, dj \right]^{\frac{1}{1-\varepsilon}} . \]
+        </div>
+        <p>Each intermediate good has imperfect substitutes, so its producer faces a downward-sloping demand curve and sets its price: this is what makes sticky prices possible.</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">Intermediate-Good Firms</h3>
+        <h4 class="model-card-subtitle">Costs, and two ways of making prices sticky</h4>
+        <p>Firm \(j\) produces with labour only, with a technology common to all firms:</p>
+        <div class="equation-block">
+          \[ y_t(j) = A_t\, h_t(j) , \qquad \ln A_t = (1-\rho_A) \ln A + \rho_A \ln A_{t-1} + \varepsilon^A_t . \]
+        </div>
+        <p>It hires labour in a competitive market, so it first minimises the cost of producing \(y_t(j)\) (Mas-Colell, Whinston and Green, 1995): the multiplier on the technology constraint is the real marginal cost, the same for every firm, and real profit before any cost of changing prices is</p>
+        <div class="equation-block">
+          \[ \mu_t = \frac{w_t}{A_t} , \qquad \Pi_t(j) = \left( \frac{P_t(j)}{P_t} - \mu_t \right) y_t(j) . \]
+        </div>
+        <p><strong>Rotemberg (1982) pricing.</strong> Every firm can change its price every quarter, at a quadratic cost governed by \(\omega \geq 0\). It chooses its price to maximise the value of its dividends to the household, subject to the demand for its good:</p>
+        <div class="equation-block">
+          \[ \max_{\{P_t(j)\}}\; \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t\, \frac{\lambda_t}{\lambda_0} \left[ \left( \frac{P_t(j)}{P_t} - \mu_t \right) y_t(j) - \frac{\omega}{2} \left( \frac{P_t(j)}{P_{t-1}(j)} - 1 \right)^{2} \frac{P_t(j)}{P_t}\, y_t(j) \right] . \]
+        </div>
+        <p>All firms face the same problem and set the same price, \(P_t(j) = P_t\), which gives a non-linear Phillips curve:</p>
+        <div class="equation-block">
+          \[ \pi_t (1+\pi_t) + \frac{1-\varepsilon}{2}\, \pi_t^2 = \frac{1-\varepsilon+\varepsilon \mu_t}{\omega} + \beta\, \mathbb{E}_t \left[ \frac{\lambda_{t+1}}{\lambda_t}\, \frac{Y_{t+1}}{Y_t}\, \pi_{t+1} (1+\pi_{t+1}) \right] . \]
+        </div>
+        <p><strong>Calvo (1983) pricing.</strong> Each quarter, a firm can reset its price with probability \(1-\xi\), whatever its history, and otherwise keeps it. A firm that resets chooses the price \(P^*_t\) that maximises the expected value of its profits while that price is in force, which happens \(s\) quarters later with probability \(\xi^s\):</p>
+        <div class="equation-block">
+          \[ P^*_t = \frac{\varepsilon}{\varepsilon-1}\; \frac{\mathbb{E}_t \sum_{s=0}^{\infty} (\xi\beta)^s\, \lambda_{t+s}\, \mu_{t+s}\, P_{t+s}^{\varepsilon}\, Y_{t+s}}{\mathbb{E}_t \sum_{s=0}^{\infty} (\xi\beta)^s\, \lambda_{t+s}\, P_{t+s}^{\varepsilon-1}\, Y_{t+s}} , \qquad P_t^{1-\varepsilon} = (1-\xi)\, P_t^{*\,1-\varepsilon} + \xi\, P_{t-1}^{1-\varepsilon} . \]
+        </div>
+        <p>The reset price is a markup \(\varepsilon/(\varepsilon-1)\) over a weighted average of the nominal marginal costs the firm expects while its price is in force. Without price rigidity, \(\omega = 0\) or \(\xi = 0\), both give \(P_t(j)/P_t = 1\) and a constant real marginal cost, \(\mu_t = (\varepsilon-1)/\varepsilon\).</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">Monetary Policy</h3>
+        <h4 class="model-card-subtitle">A Taylor rule</h4>
+        <p>Unlike the RBC model, the model needs a rule for the nominal interest rate: without one, neither nominal nor real variables are determined. The central bank follows a Taylor (1993) rule, written in deviations from the steady state:</p>
+        <div class="equation-block">
+          \[ \hat{R}_t = \phi_\pi\, \pi_t + \phi_y\, \tilde{y}_t + \nu_t , \qquad \nu_t \sim \text{i.i.d.}\ \mathcal{N}(0, \sigma^2_\nu) , \]
+        </div>
+        <p>where \(\tilde{y}_t\) is the output gap, the deviation of output from the level it would reach with flexible prices, and \(\nu_t\) is a monetary policy shock. The rule raises the interest rate when inflation or the output gap rises. Because the bond is traded between identical households and is in zero net supply, \(R_t\) is a shadow rate: households adjust their consumption and hours until the rate set by the central bank clears the bond market at \(b_t = 0\).</p>
+      </article>
+
+      <article class="model-card">
+        <h3 class="model-card-title">General Equilibrium</h3>
+        <h4 class="model-card-subtitle">Definition of competitive equilibrium</h4>
+        <p>Given the initial bond holdings, \(b_0\), the initial prices of the intermediate goods, the initial levels of technology and of the weight on the disutility of labour, and the stochastic processes of the four shocks, a competitive equilibrium consists of state-contingent sequences of household choices (consumption, hours and bonds), firm choices (outputs, hours and prices) and prices (the real wage, the price level and the interest rate), in which every variable dated \(t\) depends only on the history of shocks up to \(t\), such that:</p>
+        <ol class="equilibrium-list">
+          <li><strong>Household optimisation.</strong> Given prices, households maximise lifetime expected utility subject to their sequence of budget constraints.</li>
+          <li><strong>Firm optimisation.</strong> Final-good firms maximise profit; intermediate-good firms minimise costs and set their prices to maximise the value of their dividends, subject to the demand for their good and to the Rotemberg cost or the Calvo lottery.</li>
+          <li><strong>Monetary policy.</strong> The interest rate follows the Taylor rule.</li>
+          <li><strong>Market clearing.</strong> In every period and for every history of shocks, the bond market clears, \(b_t = 0\), the labour market clears, \(h_t = \int_0^1 h_t(j)\, dj\), and the goods market clears: \(c_t = Y_t\) with Calvo pricing and \(c_t = Y_t - \frac{\omega}{2} \pi_t^2 Y_t\) with Rotemberg pricing, whose price-adjustment costs use up goods.</li>
+        </ol>
+        <p><a class="button-link" href="#log-linear" data-open-ribbon><i class="fas fa-equals" aria-hidden="true"></i> The log-linear model</a></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="content-section reveal delay-130" aria-labelledby="calibration-title">
+    <h2 id="calibration-title" class="section-title">Calibration and Solution</h2>
+    <p class="section-introduction">The model is solved in your browser, to a first-order approximation around its zero-inflation steady state, for the parameters below. Change any of them and every table and chart on the page is recomputed; the default calibration is that of the notes on which this page is based, with a markup of 10 percent (\(\varepsilon = 11\)) and prices that last about ten months on average (\(\xi = 0.7\)), in line with the evidence on US consumer prices (Nakamura and Steinsson, 2008). The persistences and sizes of the shocks are estimated from US data on <a class="text-link" href="/economics/nk-shocks.html">Extracting Shocks for the New Keynesian Model</a>: the persistences are those that the shocks backed out from the data reproduce, with the structural parameters of the notes. The two ways of making prices sticky give the same log-linear model when their Phillips curves have the same slope.</p>
+    <div class="dashboard-controls">
+      <div class="segmented-field" data-control="pricing">
+        <span class="segmented-label" id="pricing-label">Price setting</span>
+        <div class="segmented" role="group" aria-labelledby="pricing-label">
+          <button type="button" data-value="calvo" aria-pressed="true">Calvo</button>
+          <button type="button" data-value="rotemberg" aria-pressed="false">Rotemberg</button>
+        </div>
+      </div>
+      <div class="param-grid" data-role="parameters"></div>
+      <div class="param-actions">
+        <button type="button" class="button-link" data-role="reset"><i class="fas fa-rotate-left" aria-hidden="true"></i> Reset the calibration</button>
+        <p class="segmented-hint controls-hint">Rates are quarterly in the model, so \(\phi_y = 0.125\) is Taylor’s coefficient of 0.5 on the output gap with annual rates. The parameter that the selected price setting does not use is greyed out. The reset restores the calibration of the notes for the structural parameters and the estimated calibration for the shocks.</p>
+      </div>
+    </div>
+    <div class="callout is-quiet determinacy-note" data-role="determinacy" role="status"></div>
+    <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+    <h3 class="subsection-title" id="implied-values">Implied values</h3>
+    <div class="shares" data-role="derived-table"></div>
+    <h3 class="subsection-title" id="steady-state">Steady state</h3>
+    <p class="section-introduction">Without shocks, inflation is zero, every firm charges the same price, a markup \(\varepsilon/(\varepsilon-1)\) over marginal cost, and the real interest rate is \(1/\beta\). The levels depend on steady-state technology, \(A = 1.2\), and on the steady-state weight on the disutility of labour, \(\theta = 1\), which do not affect the log-linear dynamics.</p>
+    <div class="shares" data-role="steady-table"></div>
+    <h3 class="subsection-title" id="solution">Solution</h3>
+    <p class="section-introduction">Output and inflation are linear in the four states, \(z_t = (\hat{a}_t, \hat{\theta}_t, \hat{\zeta}_t, \nu_t)\): \(\hat{y}_t = g_y z_t\) and \(\pi_t = g_\pi z_t\), and the rule gives the interest rate, \(\hat{R}_t = g_R z_t\) (see <a class="text-link" href="#solution-method" data-open-ribbon>Solving the model</a>). Each coefficient is the response, in percent or quarterly percentage points, to a 1 percent deviation of the state.</p>
+    <div class="shares" data-role="solution-table"></div>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="irf-title">
+    <h2 id="irf-title" class="section-title">Impulse Responses</h2>
+    <p class="section-introduction">One shock of one standard deviation hits the economy in its steady state in quarter 1, with no further shocks: a rise of \(\sigma_A\), \(\sigma_\theta\) or \(\sigma_\zeta\) percent in technology, in the weight on the disutility of labour or in the discount factor, which then decays at the rate \(\rho_A\), \(\rho_\theta\) or \(\rho_\zeta\), or a monetary policy shock that raises the interest rate by \(\sigma_\nu\) percentage points at an annual rate for one quarter, before the rule responds. Set a standard deviation to 1 for a 1 percent shock. Inflation and interest rates are in percentage points at an annual rate (four times the model’s quarterly rates).</p>
+    <div class="dashboard-controls simulation-controls">
+      <div class="segmented-field" data-control="shock">
+        <span class="segmented-label" id="shock-label">Shock</span>
+        <div class="segmented" role="group" aria-labelledby="shock-label">
+          <button type="button" data-value="a" aria-pressed="true">Technology</button>
+          <button type="button" data-value="th" aria-pressed="false">Labour preference</button>
+          <button type="button" data-value="z" aria-pressed="false">Demand</button>
+          <button type="button" data-value="nu" aria-pressed="false">Monetary policy</button>
+        </div>
+      </div>
+    </div>
+    <div class="irf-grid">
+      <figure class="chart-card irf-card" data-irf="shock">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Technology</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="gap">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output gap</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent of flexible-price output</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="pi">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Inflation</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percentage points, annual rate</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="R">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Nominal interest rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percentage points, annual rate</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="rr">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real interest rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percentage points, annual rate</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="h">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Hours worked</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="w">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real wage</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+      <figure class="chart-card irf-card" data-irf="mu">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real marginal cost</span>
+            <span class="chart-subtitle" data-role="chart-subtitle">Percent deviation from steady state</span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+      </figure>
+    </div>
+    <p class="chart-note irf-note">With the default calibration, a rise in technology raises output, but by less than it raises flexible-price output: with sticky prices, prices fall too slowly and the rule lowers the interest rate too little, so the output gap and inflation fall and hours decline (Galí, 2015, Chapter 3). A higher weight on the disutility of labour is a negative supply shock: output falls, by less than flexible-price output, so the gap is positive and inflation rises. A rise in the discount factor raises demand without changing flexible-price output: output, the gap, inflation and the interest rate all rise, the textbook demand shock. A monetary tightening raises the nominal and the real interest rate, and lowers output, hours, real marginal cost and inflation; with no persistence in the shock, everything returns to the steady state the next quarter.</p>
+  </section>
+
+  <section class="content-section reveal delay-180" aria-labelledby="simulation-title">
+    <h2 id="simulation-title" class="section-title">The Model and the US Data</h2>
+    <p class="section-introduction">The model has four shocks, and four US series pin them down exactly each quarter: output, labour productivity, inflation and the interest rate. In the model, labour productivity is technology, \(Y_t/h_t = A_t\), so technology is measured directly; given technology, output, inflation and the interest rate determine the other three shocks. The model then tells the US history since 1954 as the sum of four stories: what technology, labour-supply, demand and monetary policy shocks did to the economy (see <a class="text-link" href="#backing-out" data-open-ribbon>Backing out the shocks</a>, and, step by step, with the properties of the shocks and tests of the model’s assumptions, <a class="text-link" href="/economics/nk-shocks.html">Extracting Shocks for the New Keynesian Model</a>). Output and labour productivity are HP cyclical components. The model has no inflation trend and a constant steady-state interest rate, so inflation and the federal funds rate are either taken in deviation from their averages since 1954, which keeps the slow swings of the Great Inflation and of the decline in interest rates since the 1980s, or HP filtered like output, which removes them.</p>
+    <div class="dashboard-controls simulation-controls">
+      <div class="segmented-field" data-control="measure">
+        <span class="segmented-label" id="measure-label">Inflation and interest rate</span>
+        <div class="segmented" role="group" aria-labelledby="measure-label">
+          <button type="button" data-value="demeaned" aria-pressed="true">Demeaned</button>
+          <button type="button" data-value="hp" aria-pressed="false">HP cyclical components</button>
+        </div>
+      </div>
+      <div class="dashboard-downloads">
+        <span class="segmented-label">Download data</span>
+        <div class="download-row">
+          <button type="button" class="button-link" data-role="download"><i class="fas fa-file-csv" aria-hidden="true"></i> Data, shocks and decomposition (CSV)</button>
+        </div>
+      </div>
+      <p class="segmented-hint controls-hint">The decomposition uses the parameters chosen above; the CSV file records them.</p>
+    </div>
+    <h3 class="subsection-title is-first" id="decomposition">Historical decomposition</h3>
+    <p class="section-introduction">Each chart shows a US series, in orange, and the contribution of each shock to it; the four contributions add up to the data.</p>
+    <div class="chart-stack">
+      <figure class="chart-card" data-decomp="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-decomp="pi">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Inflation</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-decomp="R">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Nominal interest rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+    </div>
+    <h3 class="subsection-title" id="shares">How much each shock explains</h3>
+    <p class="section-introduction">For each variable, the correlation of each shock’s contribution with the data, and the variance of that contribution relative to the variance of the data.</p>
+    <div class="shares" data-role="shares-table"></div>
+    <h3 class="subsection-title" id="shocks">The shocks backed out from the data</h3>
+    <p class="section-introduction">The states that reproduce the data exactly, and the output gap they imply. Nothing forces them to behave as the model assumes: comparing their persistence with \(\rho_A\), \(\rho_\theta\) and \(\rho_\zeta\), and their size with plausible movements in preferences, is a test of the model.</p>
+    <div class="chart-stack">
+      <figure class="chart-card" data-state="a">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Technology</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-state="th">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Weight on the disutility of labour</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-state="z">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Discount factor (demand)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-state="nu">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Monetary policy shock</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      <figure class="chart-card" data-state="gap">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Output gap</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+    </div>
+    <p class="chart-note">Two episodes need care. From 2009 to 2015 and in 2020–21 the federal funds rate was at its lower bound, which the linear rule ignores: the monetary shocks backed out for those quarters measure how far the rule would have taken the rate below zero. And the model has no capital, no wage rigidity and no other shocks, so whatever the four shocks cannot capture, such as oil prices, fiscal policy or financial crises, is attributed to them.</p>
+  </section>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions, Methods and Solutions</h2>
+
+    <details class="ribbon" id="log-linear">
+      <summary>
+        <span class="ribbon-title">The log-linear model</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Around the zero-inflation steady state, with hats for log deviations, \(\pi_t\) the net inflation rate and \(\hat{R}_t\) the deviation of the nominal interest rate, both quarterly, the goods market, technology, labour supply and marginal cost give</p>
+        <div class="math-display">\[ \hat{c}_t = \hat{y}_t , \qquad \hat{h}_t = \hat{y}_t - \hat{a}_t , \qquad \hat{w}_t = \hat{\theta}_t + \eta \hat{h}_t + \sigma \hat{c}_t , \qquad \hat{\mu}_t = \hat{w}_t - \hat{a}_t , \]</div>
+        <p>(the Rotemberg cost \(\frac{\omega}{2}\pi_t^2 Y_t\) is of second order). Combining them, real marginal cost is \(\hat{\mu}_t = \hat{\theta}_t + (\eta+\sigma)\hat{y}_t - (1+\eta)\hat{a}_t\). The Euler equation gives the dynamic IS curve, and both pricing models give the New Keynesian Phillips curve, with different slopes \(\kappa\):</p>
+        <div class="math-display">\[ \hat{y}_t = \mathbb{E}_t \hat{y}_{t+1} - \frac{1}{\sigma} \left( \hat{R}_t - \mathbb{E}_t \pi_{t+1} - (1-\rho_\zeta)\, \hat{\zeta}_t \right) , \qquad \pi_t = \kappa\, \hat{\mu}_t + \beta\, \mathbb{E}_t \pi_{t+1} , \]</div>
+        <div class="math-display">\[ \kappa^{\text{Calvo}} = \frac{(1-\xi)(1-\xi\beta)}{\xi} , \qquad \kappa^{\text{Rotemberg}} = \frac{\varepsilon-1}{\omega} . \]</div>
+        <p>With flexible prices, marginal cost is constant, \(\hat{\mu}^f_t = 0\), which gives flexible-price output and the output gap; marginal cost is proportional to the gap:</p>
+        <div class="math-display">\[ \hat{y}^f_t = \frac{1+\eta}{\eta+\sigma}\, \hat{a}_t - \frac{1}{\eta+\sigma}\, \hat{\theta}_t , \qquad \tilde{y}_t = \hat{y}_t - \hat{y}^f_t , \qquad \hat{\mu}_t = (\eta+\sigma)\, \tilde{y}_t . \]</div>
+        <p>The rule, \(\hat{R}_t = \phi_\pi \pi_t + \phi_y \tilde{y}_t + \nu_t\), and the processes \(\hat{a}_t = \rho_A \hat{a}_{t-1} + \varepsilon^A_t\), \(\hat{\theta}_t = \rho_\theta \hat{\theta}_{t-1} + \varepsilon^\theta_t\) and \(\hat{\zeta}_t = \rho_\zeta \hat{\zeta}_{t-1} + \varepsilon^\zeta_t\) complete the model. In terms of the gap, the IS curve is \(\tilde{y}_t = \mathbb{E}_t \tilde{y}_{t+1} - \frac{1}{\sigma}(\hat{R}_t - \mathbb{E}_t \pi_{t+1} - \hat{r}^f_t)\), with \(\hat{r}^f_t = \sigma\, \mathbb{E}_t[\hat{y}^f_{t+1} - \hat{y}^f_t] + (1-\rho_\zeta)\, \hat{\zeta}_t\) the natural real interest rate.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="solution-method">
+      <summary>
+        <span class="ribbon-title">Solving the model</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The model is solved by undetermined coefficients (Uhlig, 1999). Guess \(\hat{y}_t = g_y z_t\) and \(\pi_t = g_\pi z_t\). For a state \(z^k_t\) with persistence \(\rho_k\) (\(\rho_\nu = 0\)), \(\mathbb{E}_t z^k_{t+1} = \rho_k z^k_t\), and substituting the guess and the rule into the IS and Phillips curves gives two linear equations in its two coefficients:</p>
+        <div class="math-display">\[ \begin{bmatrix} \sigma(\rho_k - 1) - \phi_y & \rho_k - \phi_\pi \\ -\kappa(\eta+\sigma) & 1 - \beta\rho_k \end{bmatrix} \begin{bmatrix} g^k_y \\ g^k_\pi \end{bmatrix} = \begin{bmatrix} n_k - \phi_y f_k - i_k \\ -c_k \end{bmatrix} , \]</div>
+        <p>where \(f_k\) is the coefficient of the state in flexible-price output (\((1+\eta)/(\eta+\sigma)\) for technology, \(-1/(\eta+\sigma)\) for the labour weight, 0 for the discount factor and the policy shock), \(n_k\) its coefficient in the rule (1 for the policy shock, 0 otherwise), \(i_k\) its coefficient in the IS curve (\(1-\rho_\zeta\) for the discount factor, 0 otherwise) and \(c_k\) its direct effect on inflation through marginal cost (\(\kappa(1+\eta)\) for technology, \(-\kappa\) for the labour weight, 0 otherwise). The solution is unique and stable when the rule satisfies the condition of Bullard and Mitra (2002), \(\kappa(\eta+\sigma)(\phi_\pi - 1) + (1-\beta)\phi_y > 0\): since \(1-\beta\) is small, the interest rate must rise by more than inflation, so that the real interest rate rises when inflation does (the Taylor principle). For the technology, labour-preference and policy shocks, the coefficients coincide, to twelve decimal places, with those of the iterative solver in the MATLAB code accompanying the notes.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="backing-out">
+      <summary>
+        <span class="ribbon-title">Backing out the shocks</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Technology and the weight on the disutility of labour enter the IS curve, the Phillips curve and the rule only through \((1+\eta)\hat{a}_t - \hat{\theta}_t\), in marginal cost and in flexible-price output. With the same persistence, they therefore move output, inflation and the interest rate in exactly the same proportions, and these three series cannot tell them apart; with different persistences, the split would rest on that difference alone, and would be very imprecise. They differ in their effect on hours, \(\hat{h}_t = \hat{y}_t - \hat{a}_t\), so labour productivity, \(\hat{y}_t - \hat{h}_t = \hat{a}_t\), measures technology. The demand shock then adds a fourth source of movements in output, inflation and the interest rate, and the model is exactly identified.</p>
+        <p>Stacking the observables \(x_t = (\hat{y}_t, \hat{y}_t - \hat{h}_t, \pi_t, \hat{R}_t)'\), the solution is \(x_t = M z_t\), where the columns of the \(4 \times 4\) matrix \(M\) are the coefficients \((g_y, 1_{k=A}, g_\pi, g_R)'\) of each state. When \(M\) is invertible, the states are \(z_t = M^{-1} x_t\), quarter by quarter, and the contribution of shock \(k\) to variable \(x\) is \(g^k_x z^k_t\); the four contributions add up to the data exactly. The innovations follow as \(\varepsilon^k_t = z^k_t - \rho_k z^k_{t-1}\). This is the exactly identified case of the historical decompositions of estimated models, which use the Kalman filter when there are fewer observables than shocks (Smets and Wouters, 2007); here no shock is left over to absorb measurement error, so every movement in the data is attributed to one of the four shocks. The standard deviations of the shocks are not needed for the decomposition; they only set the size of the shocks in the impulse responses.</p>
+        <p>The data are converted to model units: output and labour productivity in percent of trend divided by 100; inflation and the federal funds rate in percent at an annual rate, demeaned or HP filtered, divided by 400 to give quarterly rates.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Data</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul>
+          <li><strong>Output:</strong> real GDP (GDPC1, U.S. Bureau of Economic Analysis) divided by the population (B230RC0Q173SBEA), HP cyclical component (λ = 1600) of \(100 \times \ln\), as on the <a class="text-link" href="/economics/business-cycles.html">Business Cycles</a> page.</li>
+          <li><strong>Inflation:</strong> annualised quarterly change in the GDP price index (GDPDEF), \(400 \times \Delta \ln P_t\), the price of the goods produced in the economy, the counterpart of the model’s final good.</li>
+          <li><strong>Interest rate:</strong> the effective federal funds rate (FEDFUNDS, Board of Governors of the Federal Reserve System), averaged over each quarter, the US counterpart of the one-period nominal rate set by the central bank.</li>
+          <li><strong>Labour productivity:</strong> output per hour in the nonfarm business sector (OPHNFB, U.S. Bureau of Labor Statistics), HP cyclical component (λ = 1600) of \(100 \times \ln\), the counterpart of the model’s technology, \(A_t = Y_t/h_t\). It covers the nonfarm business sector, about three quarters of GDP, and is the standard measure of labour productivity.</li>
+        </ul>
+        <p>The sample starts in 1954 Q3, the first full quarter of the federal funds rate. Inflation and the federal funds rate are demeaned over the whole sample, or HP filtered (λ = 1600) on their full history.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Bullard, J. and K. Mitra (2002). “Learning about Monetary Policy Rules.” <em>Journal of Monetary Economics</em> 49(6): 1105–1129.</li>
+          <li>Calvo, G. A. (1983). “Staggered Prices in a Utility-Maximizing Framework.” <em>Journal of Monetary Economics</em> 12(3): 383–398.</li>
+          <li>Clarida, R., J. Galí and M. Gertler (1999). “The Science of Monetary Policy: A New Keynesian Perspective.” <em>Journal of Economic Literature</em> 37(4): 1661–1707.</li>
+          <li>Dixit, A. K. and J. E. Stiglitz (1977). “Monopolistic Competition and Optimum Product Diversity.” <em>American Economic Review</em> 67(3): 297–308.</li>
+          <li>Galí, J. (2015). <em>Monetary Policy, Inflation, and the Business Cycle: An Introduction to the New Keynesian Framework and Its Applications</em>, 2nd edition. Princeton University Press.</li>
+          <li>Hodrick, R. J. and E. C. Prescott (1997). “Postwar U.S. Business Cycles: An Empirical Investigation.” <em>Journal of Money, Credit and Banking</em> 29(1): 1–16.</li>
+          <li>Mas-Colell, A., M. D. Whinston and J. R. Green (1995). <em>Microeconomic Theory</em>. Oxford University Press.</li>
+          <li>Nakamura, E. and J. Steinsson (2008). “Five Facts about Prices: A Reevaluation of Menu Cost Models.” <em>Quarterly Journal of Economics</em> 123(4): 1415–1464.</li>
+          <li>Rotemberg, J. J. (1982). “Sticky Prices in the United States.” <em>Journal of Political Economy</em> 90(6): 1187–1211.</li>
+          <li>Smets, F. and R. Wouters (2007). “Shocks and Frictions in US Business Cycles: A Bayesian DSGE Approach.” <em>American Economic Review</em> 97(3): 586–606.</li>
+          <li>Taylor, J. B. (1993). “Discretion versus Policy Rules in Practice.” <em>Carnegie-Rochester Conference Series on Public Policy</em> 39: 195–214.</li>
+          <li>Uhlig, H. (1999). “A Toolkit for Analysing Nonlinear Dynamic Stochastic Models Easily.” In R. Marimon and A. Scott (eds.), <em>Computational Methods for the Study of Dynamic Economies</em>, Chapter 3: 30–61. Oxford University Press.</li>
+          <li>Woodford, M. (2003). <em>Interest and Prices: Foundations of a Theory of Monetary Policy</em>. Princeton University Press.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  <div class="page-note reveal delay-200">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the model and derivations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> The data are from the U.S. Bureau of Economic Analysis, the U.S. Bureau of Labor Statistics and the Board of Governors of the Federal Reserve System, via FRED. The model solution, simulations, charts and text are the author’s. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>The Canonical New Keynesian Model</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/nk-model.js" defer></script>
+  
+</body>
+</html>

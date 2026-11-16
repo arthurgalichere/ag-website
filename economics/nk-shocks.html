@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Extracting Shocks for the New Keynesian Model</title>
+  <meta name="description" content="How the four shocks of the canonical New Keynesian model are backed out from US data, step by step: why output, inflation and the interest rate are not enough, technology from labour productivity, the inversion, persistences consistent with the shocks, the properties of the shocks, tests against the model&#39;s assumptions and the Romer and Romer narrative dates, and robustness." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      
+
+
+<section
+  class="page-body dashboard-body"
+  data-dashboard="nk-shocks"
+  data-data-url="/assets/data/economics/{country}/nk-shocks.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+    <a href="/economics/nk-model.html" class="back-link">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      Back to The Canonical New Keynesian Model
+    </a>
+  </div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Model</p>
+    <h1 class="page-title">Extracting Shocks for the New Keynesian Model</h1>
+    <p class="lead">The <a class="text-link" href="/economics/nk-model.html">canonical New Keynesian model</a> is driven by four shocks: to technology, to the weight households put on the disutility of work, to their discount factor (demand) and to monetary policy. Each needs a persistence and a size, and the model says nothing about either. This page backs the four shocks out of US data, step by step, measures their persistence and size, and asks whether they behave as the model assumes: persistent but independent of one another, and, for monetary policy, in line with the episodes that the Federal Reserve’s own records identify as policy shocks (Romer and Romer, 2023).</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="csv" href="#" download hidden><i class="fas fa-file-csv" aria-hidden="true"></i> States and shocks (CSV)</a>
+        <a class="button-link" data-download="mat" href="#" download hidden><i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>The structural parameters are those of the notes on which the model page is based (\(\beta = 0.99\), \(\sigma = 1\), \(\eta = 5\), \(\xi = 0.7\), \(\phi_\pi = 1.5\), \(\phi_y = 0.125\)), with Calvo pricing; inflation and the federal funds rate are taken in deviation from their averages since 1954. Step 7 shows what changes with other choices.</li>
+      <li>Shaded bands on every chart mark US recessions, from the NBER-based quarterly recession indicator (USRECQ).</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  <section class="content-section reveal delay-160" aria-labelledby="step1-title">
+    <h2 id="step1-title" class="section-title"><span class="step-number">Step 1</span> Output, inflation and the interest rate are not enough</h2>
+    <p class="section-introduction">The natural way to back out the shocks is to use the variables the model is about: output, inflation and the interest rate. With three shocks, as in the notes, three series would pin them down exactly each quarter. But technology and the weight on the disutility of labour enter the model in only one place, real marginal cost, \(\hat{\mu}_t = \hat{\theta}_t + (\eta+\sigma)\hat{y}_t - (1+\eta)\hat{a}_t\), and through it flexible-price output. A 1 percent rise in technology therefore has exactly the same effect on output, inflation and the interest rate as a fall of \(1+\eta = 6\) percent in the weight on the disutility of labour, whenever the two have the same persistence, as in the notes:</p>
+    <div class="shares" data-role="identification-table"></div>
+    <p class="section-introduction">The two columns are proportional, so the matrix linking the three series to the three shocks has a zero determinant and cannot be inverted. With different persistences, the split would rest on that difference alone, and would be very imprecise. What separates the two shocks is their effect on hours worked: more technology raises output per hour, a lower willingness to work does not. So the model needs one more series, labour productivity, and one more shock to keep the system exactly identified. The shock added is a shock to the discount factor, the standard demand shock of the New Keynesian model (Galí, 2015, Chapter 3).</p>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="step2-title">
+    <h2 id="step2-title" class="section-title"><span class="step-number">Step 2</span> Measure technology with labour productivity</h2>
+    <p class="section-introduction">In the model, firms produce with labour only, \(Y_t = A_t h_t\), so technology is output per hour: \(\hat{a}_t = \hat{y}_t - \hat{h}_t\). Its data counterpart is the HP cyclical component of output per hour in the nonfarm business sector, which gives the technology state directly, without using the rest of the model. The chart compares it with John Fernald’s utilization-adjusted total factor productivity, which corrects measured productivity for capital and for the intensity with which labour and capital are used (Basu, Fernald and Kimball, 2006).</p>
+    <div class="chart-stack">
+      <figure class="chart-card" data-chart="technology">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Technology: labour productivity and utilization-adjusted TFP</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+    </div>
+    <div class="shares" data-role="technology-table"></div>
+    <p class="chart-note">The two measures move together but are far from identical. Labour productivity is procyclical, while utilization-adjusted TFP is roughly acyclical: part of what the model calls technology is the more intensive use of labour and capital in booms, which a model without capital or variable effort cannot separate from technology.</p>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="step3-title">
+    <h2 id="step3-title" class="section-title"><span class="step-number">Step 3</span> Back out the other three shocks</h2>
+    <p class="section-introduction">Given the solution of the model, the four observables are linear in the four states, \(x_t = M z_t\), with \(x_t = (\hat{y}_t,\ \hat{y}_t - \hat{h}_t,\ \pi_t,\ \hat{R}_t)'\) and \(z_t = (\hat{a}_t,\ \hat{\theta}_t,\ \hat{\zeta}_t,\ \nu_t)'\). Each column of \(M\) gives the effect of one state; the row for labour productivity is \((1, 0, 0, 0)\), since it is technology. The matrix depends on the persistences of the states, here those of Step 4:</p>
+    <div class="shares" data-role="matrix-table"></div>
+    <p class="section-introduction">Inverting it, \(z_t = M^{-1} x_t\) quarter by quarter: given technology, output, inflation and the interest rate determine the weight on the disutility of labour, the discount factor and the monetary policy shock. The states reproduce the four series exactly.</p>
+    <div class="chart-stack">
+      <figure class="chart-card" data-state-chart="th">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Weight on the disutility of labour</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-state-chart="z">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Discount factor (demand)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-state-chart="nu">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Monetary policy shock</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+    </div>
+    <p class="chart-note">The monetary policy shock is the gap between the federal funds rate and the rate prescribed by the rule given the backed-out economy: positive values are a tighter policy than the rule. Its largest negative values, in 2021–22, are the quarters when the Federal Reserve kept its rate near zero while inflation rose. Hollow circles mark the narrative dates of Romer and Romer (2023), discussed in Step 6.</p>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="step4-title">
+    <h2 id="step4-title" class="section-title"><span class="step-number">Step 4</span> Persistences consistent with the shocks</h2>
+    <p class="section-introduction">The matrix \(M\) depends on the persistences, which the states backed out with it should reproduce. Starting from the persistences of the notes, the states are backed out, an autoregression of order one is estimated on each by ordinary least squares, \(z^k_t = c_k + \rho_k z^k_{t-1} + \varepsilon^k_t\), and the model is solved again with the estimates, until the persistences no longer change:</p>
+    <div class="shares" data-role="fixed-point-table"></div>
+    <p class="section-introduction">The persistence of technology does not change, because labour productivity measures technology whatever the other parameters; the other two converge in a few iterations. The monetary shock stays i.i.d., as in the notes (Step 6 shows what happens if it is not).</p>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="step5-title">
+    <h2 id="step5-title" class="section-title"><span class="step-number">Step 5</span> The shocks and their properties</h2>
+    <p class="section-introduction">The shocks are the innovations of the four processes, the part of each state that its own past does not predict, \(\varepsilon^k_t = z^k_t - \rho_k z^k_{t-1}\); the monetary shock, i.i.d., is its own innovation. Their standard deviations are the sizes of the shocks in the model.</p>
+    <div class="chart-stack">
+      <figure class="chart-card" data-innov-chart="a">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Technology shock</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-innov-chart="th">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Labour-preference shock</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-innov-chart="z">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Demand shock</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+      <figure class="chart-card" data-innov-chart="nu">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Monetary policy shock</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-note" data-role="chart-note"></p>
+      </figure>
+    </div>
+    <h3 class="subsection-title" id="properties">Properties of the states and the shocks</h3>
+    <p class="table-note">Technology, the labour-disutility weight and the discount factor in percent; the monetary policy shock in percentage points at an annual rate. * Galí (2015, Chapter 3); the notes have no demand shock.</p>
+    <div class="shares" data-role="properties-table"></div>
+    <p class="chart-note">None of the shocks is normally distributed. The labour-preference shock is dominated by a few very large values, above all in 2020, when output collapsed while output per hour rose: the model can only read the fall in hours as households suddenly unwilling to work. Recessions come with negative technology and demand shocks and positive labour-preference shocks.</p>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="step6-title">
+    <h2 id="step6-title" class="section-title"><span class="step-number">Step 6</span> Do the shocks behave as the model assumes?</h2>
+    <h3 class="subsection-title is-first" id="independence">Are the shocks independent?</h3>
+    <p class="section-introduction">The model treats the four shocks as independent sources of fluctuations, which is what makes it possible to ask what each of them did. Nothing in the inversion imposes it, so their correlations are a test of the model:</p>
+    <div class="shares" data-role="correlation-table"></div>
+    <p class="table-note" data-role="correlation-note"></p>
+    <p class="chart-note">The monetary policy shock is essentially uncorrelated with the others, as the model assumes. The three non-monetary shocks are not: the labour-preference and demand shocks move strongly in opposite directions, and both are correlated with technology. They are partly picking up the same disturbances, which suggests that the model lacks a source of fluctuations, such as a cost-push shock, wage rigidity or investment, that the three are sharing between them (Ireland, 2004; Smets and Wouters, 2007).</p>
+    <h3 class="subsection-title" id="monetary-persistence">Is the monetary shock i.i.d.?</h3>
+    <p class="section-introduction">The notes assume that monetary policy shocks last one quarter. The backed-out shock is instead very persistent (see “AR(1) of \(\nu_t\)” in Step 7): the Federal Reserve moves its rate gradually, while the rule in the model responds at once to inflation and the output gap, so the gap between the two persists. This is the interest-rate smoothing that estimated rules capture with a lagged interest rate (Clarida, Galí and Gertler, 2000). Making the shock persistent instead (the last row of Step 7) is not a remedy: it makes the monetary and demand shocks strongly correlated, because both then describe slow movements in the interest rate.</p>
+    <h3 class="subsection-title" id="romer">The Romer and Romer narrative dates</h3>
+    <p class="section-introduction">Romer and Romer (2023) read the records of the Federal Open Market Committee and identify ten episodes in which the Federal Reserve deliberately changed policy to move the economy, rather than in response to it: nine contractions and one expansion. They are an external check that uses no model. If the backed-out shock captures monetary policy, it should rise around a contraction and fall around the expansion. Since the dates are months and the data quarterly averages, a shock late in a quarter shows partly in the next one, so the table reports the change over two quarters as well.</p>
+    <div class="shares" data-role="romer-table"></div>
+    <p class="table-note" data-role="romer-note"></p>
+    <p class="chart-note">The agreement is good from 1978, for the Volcker disinflation and the tightening of 1988, but weak before: until the 1970s the Federal Reserve steered money-market conditions more broadly rather than the federal funds rate, so the rate, and the shock backed out from it, reflect its decisions less closely. The continuous Romer and Romer (2004) series, updated by Wieland and Yang (2020), would allow a quarter-by-quarter comparison; see <a class="text-link" href="#continuous-series" data-open-ribbon>Variants and background</a>.</p>
+  </section>
+
+  <section class="content-section reveal delay-160" aria-labelledby="step7-title">
+    <h2 id="step7-title" class="section-title"><span class="step-number">Step 7</span> Robustness</h2>
+    <p class="section-introduction">The whole procedure, Steps 3 to 5, repeated with other choices: HP-filtered rather than demeaned inflation and interest rate, Rotemberg rather than Calvo pricing (with the notes’ \(\omega = 75\), which gives almost the same Phillips curve), two subsamples before and during the Great Moderation, without the quarters when the federal funds rate was at its lower bound (an average below 0.25 percent: 2009–15 and 2020–21), which the linear rule ignores, and with a persistent monetary shock.</p>
+    <div class="shares" data-role="robustness-table"></div>
+    <p class="chart-note">The persistences are broadly stable across samples and methods; the sizes of the shocks are not. All are much smaller during the Great Moderation, and the labour-preference shock shrinks by more than a third without the lower-bound quarters, which include 2020. The correlation between the labour-preference and demand shocks changes sign across subsamples, another sign that the two are not well separated.</p>
+  </section>
+
+  <section class="content-section reveal delay-180" aria-labelledby="calibration-title">
+    <h2 id="calibration-title" class="section-title">Calibration for the New Keynesian Model</h2>
+    <p class="section-introduction">The persistences of Step 4 and the standard deviations of Step 5 are the default calibration of the shocks on <a class="text-link" href="/economics/nk-model.html">The Canonical New Keynesian Model</a>. They are consistent with the structural parameters used here; changing those parameters on the model page changes the backed-out shocks, and these values would then no longer be exactly consistent.</p>
+    <div class="shares" data-role="calibration-table"></div>
+  </section>
+
+  <section class="content-section reveal delay-220" aria-labelledby="variants-title">
+    <h2 id="variants-title" class="section-title">Variants and background</h2>
+
+    <details class="ribbon" id="continuous-series">
+      <summary>
+        <span class="ribbon-title">The continuous Romer and Romer series</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Romer and Romer (2004) built a continuous series of monetary policy shocks: the change in the intended federal funds rate at each meeting that is not explained by the Federal Reserve’s own Greenbook forecasts. Wieland and Yang (2020) extended it to 2007. It would allow a quarter-by-quarter correlation with the shock backed out here, but it is distributed with a program that has to be run to produce the series, and it ends in 2007; it may be added later. The 2023 dates used above are published in the paper and need no processing.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Method</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The model is solved by undetermined coefficients, as on the model page, at the structural parameters of the notes. The observables are in model units: output and labour productivity in percent of trend divided by 100, inflation and the federal funds rate in percent at an annual rate, demeaned (or HP filtered), divided by 400. The autoregressions include a constant and are estimated by ordinary least squares; the standard errors are the usual ones, which ignore that the states are themselves estimated. The fixed point is reached when no persistence changes by more than \(10^{-8}\) between two iterations. Skewness and kurtosis are those of the sample; the Jarque and Bera (1980) statistic tests whether they are those of a normal distribution. In the subsamples, the states are backed out and the persistences estimated on the subsample only.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Data</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul>
+          <li><strong>Output:</strong> real GDP (GDPC1) per person (B230RC0Q173SBEA), U.S. Bureau of Economic Analysis, HP cyclical component (λ = 1600) of \(100 \times \ln\).</li>
+          <li><strong>Labour productivity:</strong> output per hour in the nonfarm business sector (OPHNFB), U.S. Bureau of Labor Statistics, HP cyclical component.</li>
+          <li><strong>Inflation:</strong> annualised quarterly change in the GDP price index (GDPDEF), \(400 \times \Delta \ln P_t\).</li>
+          <li><strong>Interest rate:</strong> effective federal funds rate (FEDFUNDS), Board of Governors of the Federal Reserve System, quarterly average.</li>
+          <li><strong>Utilization-adjusted TFP:</strong> John Fernald, Federal Reserve Bank of San Francisco (Fernald, 2014), HP cyclical component of the log level; used only for comparison.</li>
+        </ul>
+        <p>The sample starts in 1954 Q3, the first full quarter of the federal funds rate, and the HP filter is applied to each series on its full history, as on the <a class="text-link" href="/economics/business-cycles.html">Business Cycles</a> page.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Basu, S., J. G. Fernald and M. S. Kimball (2006). “Are Technology Improvements Contractionary?” <em>American Economic Review</em> 96(5): 1418–1448.</li>
+          <li>Clarida, R., J. Galí and M. Gertler (2000). “Monetary Policy Rules and Macroeconomic Stability: Evidence and Some Theory.” <em>Quarterly Journal of Economics</em> 115(1): 147–180.</li>
+          <li>Fernald, J. G. (2014). “A Quarterly, Utilization-Adjusted Series on Total Factor Productivity.” Federal Reserve Bank of San Francisco Working Paper 2012-19.</li>
+          <li>Galí, J. (2015). <em>Monetary Policy, Inflation, and the Business Cycle: An Introduction to the New Keynesian Framework and Its Applications</em>, 2nd edition. Princeton University Press.</li>
+          <li>Ireland, P. N. (2004). “Technology Shocks in the New Keynesian Model.” <em>Review of Economics and Statistics</em> 86(4): 923–936.</li>
+          <li>Jarque, C. M. and A. K. Bera (1980). “Efficient Tests for Normality, Homoscedasticity and Serial Independence of Regression Residuals.” <em>Economics Letters</em> 6(3): 255–259.</li>
+          <li>Romer, C. D. and D. H. Romer (2004). “A New Measure of Monetary Shocks: Derivation and Implications.” <em>American Economic Review</em> 94(4): 1055–1084.</li>
+          <li>Romer, C. D. and D. H. Romer (2023). “Presidential Address: Does Monetary Policy Matter? The Narrative Approach after 35 Years.” <em>American Economic Review</em> 113(6): 1395–1423.</li>
+          <li>Smets, F. and R. Wouters (2007). “Shocks and Frictions in US Business Cycles: A Bayesian DSGE Approach.” <em>American Economic Review</em> 97(3): 586–606.</li>
+          <li>Wieland, J. F. and M.-J. Yang (2020). “Financial Dampening.” <em>Journal of Money, Credit and Banking</em> 52(1): 79–113.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note" data-role="update-note" hidden></p>
+
+  <div class="page-note reveal delay-200">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> The data are from the U.S. Bureau of Economic Analysis, the U.S. Bureau of Labor Statistics and the Board of Governors of the Federal Reserve System via FRED, and from John Fernald at the Federal Reserve Bank of San Francisco; the narrative dates are those of Romer and Romer (2023). The extracted shocks, charts and text are the author’s. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Extracting Shocks for the New Keynesian Model</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/nk-shocks.js" defer></script>
+  
+</body>
+</html>
