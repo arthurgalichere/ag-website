@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock Market Cycles</title>
+  <meta name="description" content="How the US stock market moves over the business cycle: cyclical components of stock prices, dividends, earnings and valuation ratios under three filters, their volatility and co-movement with output, leads and lags, and correlations with the variables of the Real Business Cycles page." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="stock-market-cycles"
+  data-data-url="/assets/data/economics/{country}/financial-stock-market-cycles.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial and Credit Indicators
+  </a>
+  <a class="toolbar-next-link" href="/economics/rbc-model.html">Next: The Canonical RBC Model <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial and Credit Indicators</p>
+    <h1 class="page-title">Stock Market Cycles</h1>
+    <p class="lead">Stock prices are far more volatile than output, and than the dividends they are a claim on (Shiller, 1981). This page measures how the US stock market moves over the business cycle: the cyclical components of stock prices, dividends, earnings and valuation ratios, their volatility and co-movement with output, their leads and lags, and their correlations with the variables of the <a class="text-link" href="/economics/business-cycles.html">Real Business Cycles</a> page. The levels and growth rates of these series are on <a class="text-link" href="/economics/stock-market.html">Main Stock Market Indicators</a>.</p>
+  </header>
+
+  <div class="dashboard-controls reveal delay-120">
+    <div class="segmented-field" data-control="country" hidden>
+      <span class="segmented-label" id="country-label">Country</span>
+      <div class="segmented" role="group" aria-labelledby="country-label">
+        <button type="button" data-value="US" aria-pressed="true">United States</button>
+      </div>
+    </div>
+
+    <div class="segmented-field" data-control="filter">
+      <span class="segmented-label" id="filter-label">Filter</span>
+      <div class="segmented" role="group" aria-labelledby="filter-label">
+        <button type="button" data-value="hp" aria-pressed="true">HP</button>
+        <button type="button" data-value="hamilton" aria-pressed="false">Hamilton</button>
+        <button type="button" data-value="cf" aria-pressed="false">Christiano–Fitzgerald</button>
+        <button type="button" data-value="comparison" aria-pressed="false">Filter comparison</button>
+      </div>
+      <p class="segmented-hint" data-role="filter-hint" hidden>Filter comparison: each chart shows its variable under the three filters; the tables show the HP filter.</p>
+    </div>
+
+    <div class="segmented-field" data-control="price">
+      <span class="segmented-label" id="price-label">Values</span>
+      <div class="segmented" role="group" aria-labelledby="price-label">
+        <button type="button" data-value="real" aria-pressed="true">Real</button>
+        <button type="button" data-value="nominal" aria-pressed="false">Nominal</button>
+      </div>
+    </div>
+
+    <div class="segmented-field" data-control="page-measure">
+      <span class="segmented-label" id="measure-label">Measure</span>
+      <div class="segmented" role="group" aria-labelledby="measure-label">
+        <button type="button" data-value="total" aria-pressed="true">Total</button>
+        <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+      </div>
+    </div>
+
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download cycles</span>
+      <div class="download-row">
+        <a class="button-link" data-download="clean_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> CSV
+        </a>
+        <a class="button-link" data-download="clean_mat" href="#" download>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>The Values switch applies to every variable with a real and a nominal version: stock prices, dividends and earnings, and output, consumption, investment, government spending, exports, imports, hourly compensation and labour productivity. Hours, capital services, TFP, unemployment, participation, inflation and interest rates are the same under both (they have no price dimension, or are nominal already); the real interest rates stay real.</li>
+      <li>Per capita divides the aggregate quantities (output, corporate dividends and the other aggregates of the Real Business Cycles page) by the population; the S&amp;P 500 series, measured per share of the index, and the valuation ratios do not change.</li>
+      <li>Every series is filtered from 1947 Q1, as on Real Business Cycles; charts and statistics start in 1950 Q1. Shaded bands mark US recessions (USRECQ).</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  <section class="content-section reveal delay-160" aria-labelledby="cycles-title">
+    <h2 id="cycles-title" class="section-title">Cyclical components</h2>
+    <p class="section-introduction">Each chart compares the cyclical component of a stock-market series, its percentage deviation from trend, with that of output, drawn in red.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-vars="sp_price" data-against="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Stock prices (S&P 500)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_div" data-against="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Dividends (S&P 500, per share)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_earn" data-against="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Earnings (S&P 500, per share)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="div" data-against="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Corporate dividends (NIPA)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Total or per capita with the switch at the top of the page.</p>
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_pd" data-against="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Price–dividend ratio</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-vars="sp_cape" data-against="y">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Cyclically adjusted price–earnings ratio (CAPE)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+  </section>
+
+  <section class="content-section reveal delay-180" aria-labelledby="summary-title">
+    <h2 id="summary-title" class="section-title">Volatility and co-movement</h2>
+    <p class="section-introduction">The statistics follow the filter, values and measure selected at the top of the page.</p>
+
+    <h3 class="subsection-title">Stock market cycle statistics</h3>
+    <div class="shares" data-table="summary" data-group="summary"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">Leads and lags: cross-correlations with output</h3>
+    <p class="section-introduction">Correlation between each variable \(k\) quarters ahead, \(x_{t+k}\), and output today, \(y_t\). A peak at negative \(k\) means the variable tends to move before output (it leads); at positive \(k\), after output (it lags). The peak is the largest correlation in absolute value, highlighted in each row.</p>
+    <div class="shares" data-table="cross" data-group="summary"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">Correlation matrix: stock market indicators</h3>
+    <p class="section-introduction">Contemporaneous correlations between the cyclical components of the stock-market series. Blue cells are positive, orange cells negative; darker cells are stronger correlations.</p>
+    <div class="shares" data-table="matrix-stock" data-group="summary"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">Correlation matrix: business cycles and the stock market</h3>
+    <p class="section-introduction">The variables of the Real Business Cycles page with stock prices and dividends (S&amp;P 500). Select the variables to show below; the selection also applies to the leads-and-lags matrix.</p>
+    <div class="matrix-picker" data-role="matrix-picker" role="group" aria-label="Variables in the correlation matrices"></div>
+    <div class="shares" data-table="matrix" data-group="summary"><p class="loading-message">Loading…</p></div>
+
+    <div class="table-heading">
+      <h3 class="subsection-title">Leads and lags: cross-correlation matrix</h3>
+      <div class="table-switches">
+        <div class="segmented-field" data-control="leadlag-mode">
+          <span class="visually-hidden" id="leadlag-mode-label">Correlation shown in each cell</span>
+          <div class="segmented" role="group" aria-labelledby="leadlag-mode-label">
+            <button type="button" data-value="strongest" aria-pressed="true">Strongest</button>
+            <button type="button" data-value="highest" aria-pressed="false">Highest</button>
+            <button type="button" data-value="lowest" aria-pressed="false">Lowest</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="section-introduction">For each pair of variables, the correlation between the row variable \(k\) quarters ahead, \(x_{t+k}\), and the column variable today, \(z_t\), for \(k = -4, \dots, +4\). Each cell shows one of these nine correlations and, below it, the \(k\) at which it occurs: the strongest (largest in absolute value), the highest or the lowest, as chosen with the switch. Negative \(k\): the row variable tends to move before the column variable (it leads); positive \(k\): after it (it lags).</p>
+    <div class="shares" data-table="leadlag" data-group="summary"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts and tables on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions and methods</h2>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">The series</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul>
+          <li><strong>Stock prices, dividends and earnings (S&amp;P 500):</strong> quarterly averages of Robert J. Shiller’s monthly data: the price of the S&amp;P Composite index (the S&amp;P 500 from 1957), and dividends and earnings over the past twelve months per share of the index. See <a class="text-link" href="/economics/stock-market.html">Main Stock Market Indicators</a> for their definitions.</li>
+          <li><strong>Corporate dividends (NIPA):</strong> net dividends paid by US corporations in the national income and product accounts (FRED: DIVIDEND), the aggregate counterpart of the dividends of a model economy; per capita, divided by the population (B230RC0Q173SBEA).</li>
+          <li><strong>Price–dividend ratio and CAPE:</strong> the S&amp;P 500 price over twelve-month dividends, and the real price over the average of real earnings in the previous ten years (Campbell and Shiller, 1988).</li>
+          <li><strong>Real values:</strong> nominal values divided by the GDP price index (GDPDEF, 2017 = 100). The ratios are the same in real and nominal terms.</li>
+          <li><strong>Output and the macroeconomic variables:</strong> in real terms, the cycles published on the Real Business Cycles page, unchanged. In nominal terms, the current-dollar series (GDP, PCEC, GPDI, GCE, EXPGS, IMPGS; hourly compensation COMPNFB; nominal output per hour = OPHNFB × IPDNBS / 100, the nonfarm business price deflator), filtered from 1947 Q1 in the same way, total or per capita (BEA population).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Filters and statistics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Every series is filtered as \(100 \times \ln x_t\) on its quarterly values from 1947 Q1, the start of the series of the Real Business Cycles page, so that the stock cycles and the macroeconomic cycles are measured over the same history; a cycle value of 10 means the series is about 10 percent above its trend. The filters are those of Real Business Cycles: Hodrick–Prescott (λ = 1600; Hodrick and Prescott, 1997), Hamilton (2018; h = 8, p = 4) and Christiano–Fitzgerald (2003; 6–32 quarters).</p>
+        <p>The statistics use the quarters from 1950 Q1 that each pair of series covers: the standard deviation of the cycle, its ratio to that of output, the first-order autocorrelation and the correlation with output; the cross-correlations follow Kydland and Prescott (1990).</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Campbell, J. Y. and R. J. Shiller (1988). “Stock Prices, Earnings, and Expected Dividends.” <em>Journal of Finance</em> 43(3): 661–676.</li>
+          <li>Christiano, L. J. and T. J. Fitzgerald (2003). “The Band Pass Filter.” <em>International Economic Review</em> 44(2): 435–465.</li>
+          <li>Hamilton, J. D. (2018). “Why You Should Never Use the Hodrick-Prescott Filter.” <em>Review of Economics and Statistics</em> 100(5): 831–843.</li>
+          <li>Hodrick, R. J. and E. C. Prescott (1997). “Postwar U.S. Business Cycles: An Empirical Investigation.” <em>Journal of Money, Credit and Banking</em> 29(1): 1–16.</li>
+          <li>Kydland, F. E. and E. C. Prescott (1990). “Business Cycles: Real Facts and a Monetary Myth.” Federal Reserve Bank of Minneapolis <em>Quarterly Review</em> 14(2): 3–18.</li>
+          <li>Shiller, R. J. (1981). “Do Stock Prices Move Too Much to Be Justified by Subsequent Changes in Dividends?” <em>American Economic Review</em> 71(3): 421–436.</li>
+          <li>Shiller, R. J. (2015). <em>Irrational Exuberance</em>, 3rd edition. Princeton University Press. Data: <a class="text-link" href="https://shillerdata.com/" rel="noopener">shillerdata.com</a></li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note page-dates"><span class="page-created">Page created on 20/11/2026<span class="visually-hidden">. </span></span><span class="data-updated" data-role="update-note" hidden></span></p>
+
+
+  <nav class="page-navigation reveal delay-260" aria-label="Dashboard navigation">
+  <a href="/economics/stock-market.html" class="page-nav-link is-previous">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Previous dashboard</span>
+      <span class="page-nav-title">Main Stock Market Indicators</span>
+    </span>
+  </a>
+  <a href="/economics/rbc-model.html" class="page-nav-link is-next">
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Next dashboard</span>
+      <span class="page-nav-title">The Canonical RBC Model</span>
+    </span>
+    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+  </a>
+</nav>
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Stock-market data are Robert J. Shiller’s (shillerdata.com); corporate dividends, the GDP price index, population and the macroeconomic series are from the agencies named under each chart, via FRED (Federal Reserve Bank of St. Louis), and from John Fernald at the Federal Reserve Bank of San Francisco. The cycles, statistics, charts and text are the author’s. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Stock Market Cycles</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/business-cycles.js" defer></script>
+  
+</body>
+</html>

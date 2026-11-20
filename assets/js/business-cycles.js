@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-15 20:26 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-20 12:57 UTC (Claude, economics chat) */
 /* =========================================================
    business-cycles.js: /economics/business-cycles.html
    Loads the generated business-cycles JSON for the selected
@@ -14,13 +14,20 @@
    switch per group (data-group).
    Tables: data-table = a section key, "summary", "cross" or
    "matrix". Uses AGDashboards (dashboards.js) and AGSite.
+   Also drives /economics/stock-market-cycles.html
+   (data-dashboard="stock-market-cycles"): its JSON has the same schema
+   with a price dimension (cycles.real|nominal, tables.real|nominal),
+   stock_keys (table "matrix-stock": all of them, no picker) and
+   matrix_default; page switches price (real | nominal: stock variables
+   only, output stays real) and page-measure (total | per capita, for every
+   card and table).
    ========================================================= */
 (() => {
   'use strict';
 
   const D = window.AGDashboards;
   const S = window.AGSite;
-  const body = document.querySelector('[data-dashboard="business-cycles"]');
+  const body = document.querySelector('[data-dashboard="business-cycles"], [data-dashboard="stock-market-cycles"]');
   if (!body || !D || !S) return;
 
   const FILTERS = {
@@ -38,13 +45,14 @@
      400 x dln P becomes 100 x dln P; interest rates per quarter). */
   const RATE_KEYS = new Set(['infl', 'infl_cpi', 'ff', 'tb', 'rff', 'rtb']);
   /* Correlation matrix: variables shown by default (the reader adds others). */
-  const MATRIX_DEFAULT = ['y', 'c', 'i', 'k', 'h', 'w', 'yh', 'tfp', 'u_gap', 'infl', 'rff'];
+  let MATRIX_DEFAULT = ['y', 'c', 'i', 'k', 'h', 'w', 'yh', 'tfp', 'u_gap', 'infl', 'rff'];   /* or payload.matrix_default */
   const BENCHMARK_DASH = '8 4 0.1 4';   /* dash-dot (round caps make the dot) */
   /* Short labels for the correlation matrix. */
   const SYMBOLS = {
     y: 'Y', c: 'C', i: 'I', g: 'G', x: 'X', m: 'M', k: 'K', h: 'h', w: 'w', yh: 'Y/h',
     tfp: 'TFP', tfp_util: 'TFPᵘ', u: 'u', u_gap: 'û*', lfpr: 'PR', infl: 'π', infl_cpi: 'π CPI',
     ff: 'FF', tb: 'TB', rff: 'RFF', rtb: 'RTB',
+    sp_price: 'P', sp_div: 'D', sp_earn: 'E', div: 'Dᴺ', sp_pd: 'P/D', sp_cape: 'CAPE',
   };
 
   /* The same symbols in TeX, typeset by MathJax (math: true on the page). */
@@ -53,6 +61,7 @@
     tfp: '\\mathrm{TFP}', tfp_util: '\\mathrm{TFP}^{u}', u: 'u', u_gap: '\\hat{u}^{*}', lfpr: '\\mathrm{PR}',
     infl: '\\pi', infl_cpi: '\\pi^{\\mathrm{CPI}}', ff: '\\mathrm{FF}', tb: '\\mathrm{TB}',
     rff: '\\mathrm{RFF}', rtb: '\\mathrm{RTB}',
+    sp_price: 'P', sp_div: 'D', sp_earn: 'E', div: 'D^{\\mathrm{NIPA}}', sp_pd: 'P/D', sp_cape: '\\mathrm{CAPE}',
   };
   const math = key => (TEX[key] ? `\\(${TEX[key]}\\)` : S.escapeHTML(SYMBOLS[key] || key));
   /* Typeset new content once MathJax has started; clear old content first. */
@@ -76,8 +85,12 @@
   const state = {
     country: 'US', filter: 'hp', payload: null, charts: new Map(), visible: new Set(),
     measure: new Map(), tableMeasure: new Map(), basis: new Map(), tableBasis: new Map(),
-    matrixKeys: new Set(MATRIX_DEFAULT), leadlagMode: 'strongest',
+    matrixKeys: new Set(MATRIX_DEFAULT), leadlagMode: 'strongest', price: 'real', matrixInit: false,
   };
+  /* Stock Market Cycles: real or nominal stock variables (cycles and tables
+     carry a price level); Real Business Cycles: one level. */
+  const cyc = () => (state.payload.cycles.real ? state.payload.cycles[state.price] : state.payload.cycles);
+  const tablesFor = measure => (state.payload.tables.real ? state.payload.tables[state.price] : state.payload.tables)[measure];
   const cache = new Map();
 
   D.segmented(body.querySelector('[data-control="country"]'), value => { state.country = value; load(); });
@@ -115,6 +128,19 @@
       }).select('total', false);
     }
   });
+  const priceControl = body.querySelector('[data-control="price"]');
+  if (priceControl) {
+    D.segmented(priceControl, value => { state.price = value; refresh(); }).select('real', false);
+  }
+  /* One Total / Per capita switch for the whole page (Stock Market Cycles). */
+  const pageMeasure = body.querySelector('[data-control="page-measure"]');
+  if (pageMeasure) {
+    D.segmented(pageMeasure, value => {
+      cards.forEach(card => state.measure.set(card, value));
+      body.querySelectorAll('[data-table]').forEach(t => state.tableMeasure.set(t.dataset.group, value));
+      refresh();
+    }).select('total', false);
+  }
   const krToggle = body.querySelector('[data-control="king-rebelo"]');
   if (krToggle) {
     krToggle.addEventListener('click', () => {
@@ -165,19 +191,29 @@
   /* Per-capita version of a variable when it exists and is selected. */
   function seriesKey(key, measure) {
     const pc = `${key}_pc`;
-    return measure === 'pc' && state.payload.cycles.hp[pc] ? pc : key;
+    return measure === 'pc' && cyc().hp[pc] ? pc : key;
   }
 
-  /* Output is labelled "Real GDP" on this page. */
+  /* Output is labelled "Real GDP" (or "Nominal GDP") on this page. */
   const LABELS = { y: 'Real GDP' };
+  const NOMINAL_LABELS = { y: 'Nominal GDP' };
 
   function label(key, measure) {
     const v = state.payload.variables[key];
-    return (LABELS[key] || v.label) + (measure === 'pc' && v.per_capita ? ' per capita' : '');
+    const nominal = state.price === 'nominal';
+    let text = LABELS[key] || v.label;
+    if (v.label_nominal) {
+      /* Macroeconomic variables with a nominal counterpart (Stock Market Cycles). */
+      if (nominal) text = NOMINAL_LABELS[key] || v.label_nominal;
+    } else if (v.nominal_differs) {
+      /* Stock variables with real and nominal versions say which is shown. */
+      text = `${nominal ? 'Nominal' : 'Real'} ${text.charAt(0).toLowerCase()}${text.slice(1)}`;
+    }
+    return text + (measure === 'pc' && v.per_capita ? ' per capita' : '');
   }
 
   function values(filter, key, measure) {
-    return state.payload.cycles[filter][seriesKey(key, measure)] || [];
+    return cyc()[filter][seriesKey(key, measure)] || [];
   }
 
   function tableFilter() {
@@ -282,7 +318,9 @@
 
     const sources = Array.from(new Set(keys.map(key => {
       const v = payload.variables[key];
-      return measure === 'pc' && v.source_pc ? v.source_pc : v.source;
+      const nominal = state.price === 'nominal' && v.source_nominal;
+      if (measure === 'pc' && v.per_capita) return (nominal ? v.source_nominal_pc : v.source_pc) || v.source;
+      return nominal ? v.source_nominal : v.source;
     }).filter(Boolean)));
     role('chart-source').textContent = `Source: ${sources.join('; ')}. Cycles: author’s calculations.`;
   }
@@ -411,9 +449,10 @@
       <p class="table-note">Rows: \\(x_{t+k}\\); columns: \\(z_t\\). Negative \\(k\\): the row variable leads; positive \\(k\\): it lags.</p>`;
   }
 
-  function matrixTable(allKeys, fullMatrix) {
-    /* Keep the selected variables, in the order of the summary table. */
-    const index = allKeys.map((key, i) => [key, i]).filter(([key]) => state.matrixKeys.has(key));
+  function matrixTable(allKeys, fullMatrix, everyKey = false) {
+    /* Keep the selected variables (all of them for the stock matrix), in
+       the order of the summary table. */
+    const index = allKeys.map((key, i) => [key, i]).filter(([key]) => everyKey || state.matrixKeys.has(key));
     if (!index.length) return '<p class="empty-message">Select at least one variable above.</p>';
     const keys = index.map(([key]) => key);
     const matrix = index.map(([, r]) => index.map(([, c]) => fullMatrix[r][c]));
@@ -457,11 +496,12 @@
       const which = target.dataset.table;
       tableMeasureNow = state.tableMeasure.get(target.dataset.group) || 'total';
       tableQuarterly = state.tableBasis.get(target.dataset.group) === 'quarterly';
-      const tables = payload.tables[tableMeasureNow][tableFilter()];
+      const tables = tablesFor(tableMeasureNow)[tableFilter()];
       let html = '';
       if (which === 'summary') html = statsTable(tables.summary, null, showKR) + (showKR ? `<p class="table-note">${S.escapeHTML(KR_NOTE)}.</p>` : '');
       else if (which === 'cross') html = crossTable(tables.cross, payload.methods.lags);
       else if (which === 'matrix') html = matrixTable(payload.summary_keys, tables.matrix);
+      else if (which === 'matrix-stock') html = tables.matrix_stock ? matrixTable(payload.stock_keys, tables.matrix_stock, true) : '';
       else if (which === 'leadlag') html = leadLagTable(payload.summary_keys, tables.leadlag);
       else if (tables.sections[which]) {
         const aggregate = target.dataset.aggregate || null;
@@ -470,8 +510,8 @@
       const sample = `${D.quarterLabel(payload.sample.start)}–${D.quarterLabel(payload.sample.end)}`;
       untypeset(target);
       target.innerHTML = html + note
-        + (['matrix', 'cross', 'leadlag'].includes(which) ? '' : `<p class="table-note">${S.escapeHTML(FILTERS[tableFilter()].long)}, ${S.escapeHTML(sample)} (each statistic uses the quarters both series cover). Standard deviations are in percent of trend, or in percentage points for variables marked †${tableQuarterly ? '; inflation and interest rates per quarter (annual rate ÷ 4)' : ''}.</p>`);
-      if (['matrix', 'cross', 'leadlag'].includes(which)) typeset(target);
+        + (['matrix', 'matrix-stock', 'cross', 'leadlag'].includes(which) ? '' : `<p class="table-note">${S.escapeHTML(FILTERS[tableFilter()].long)}, ${S.escapeHTML(sample)} (each statistic uses the quarters both series cover). Standard deviations are in percent of trend, or in percentage points for variables marked †${tableQuarterly ? '; inflation and interest rates per quarter (annual rate ÷ 4)' : ''}.</p>`);
+      if (['matrix', 'matrix-stock', 'cross', 'leadlag'].includes(which)) typeset(target);
     });
   }
 
@@ -504,6 +544,11 @@
   async function load() {
     try {
       state.payload = await fetchCountry(state.country);
+      if (state.payload.matrix_default && !state.matrixInit) {
+        MATRIX_DEFAULT = state.payload.matrix_default;
+        state.matrixKeys = new Set(MATRIX_DEFAULT);
+      }
+      state.matrixInit = true;
       el.pageStatus.hidden = true;
       updateDownloads();
       renderPicker();

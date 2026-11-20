@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-16 11:24 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-20 13:04 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -1145,3 +1145,34 @@ button.button-link { cursor: pointer; font-family: inherit; }
 .shares + .chart-note,
 .shares + .section-introduction { margin-top: 1.5rem; }
 .chart-card .chart-note { margin-top: 0.75rem; }
+
+/* Calibration page (dsge/calibration.html): model switch that wraps, model
+   tags, and a wide source column in left-aligned, justified text. */
+.segmented.segmented-wrap { flex-wrap: wrap; }
+.calibration-page-table td.source-cell {
+  min-width: 15rem;
+  max-width: 34rem;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  text-align: justify;
+  hyphens: auto;
+  white-space: normal;
+}
+.calibration-page-table td.source-cell .source-note { color: var(--muted); }
+.calibration-page-table th.source-col { text-align: left; }
+.calibration-page-table tbody th { min-width: 12rem; }
+.model-tags { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; justify-content: center; }
+.model-tag {
+  padding: 0.1rem 0.45rem;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+/* Calibration page: switch above the table of implied parameters. */
+.implied-controls {
+  margin-bottom: 1.5rem;
+}

@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-15 20:48 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-20 12:28 UTC (Claude, economics chat) */
 /* =========================================================
    financial-indicators.js: the four Financial and Credit
    Indicators subpages (stock market, debt and leverage, banks
@@ -14,6 +14,12 @@
              cyclical component of output; page switch: filter
              (HP, Hamilton, Christiano–Fitzgerald); statistics and
              cross-correlation tables for the selected filter.
+   Optional (Main Stock Market Indicators): page switches trend (HP and
+   Christiano–Fitzgerald trends of level series, from hp_trend / cf_trend in
+   the observations) and price (real | nominal: {price} in the indicator
+   keys); a card switch measure (total | per capita: {pc} in the keys); the
+   growth-rate table (data-role="growth-rates") with a quarterly /
+   annualised switch.
    Uses AGDashboards (dashboards.js) and AGSite (site.js).
    ========================================================= */
 (() => {
@@ -34,6 +40,12 @@
   const MULTI = ['--series-1', '--series-2', '--series-3', '--series-4'];
   const BENCHMARK_DASH = '8 4 0.1 4';
   const TREND_DASH = '6 4';
+  /* Trends of level series, as on Main Indicators. */
+  const TRENDS = {
+    hp: { field: 'hp_trend', label: 'HP trend', color: '--chart-2', dash: '6 4' },
+    cf: { field: 'cf_trend', label: 'Christiano–Fitzgerald trend', color: '--chart-3', dash: '1.5 3.5' },
+  };
+  const TREND_NAMES = { none: 'no trend', hp: 'HP trend', cf: 'Christiano–Fitzgerald trend', comparison: 'trend comparison' };
 
   const el = {
     downloads: body.querySelector('[data-role="downloads"]'),
@@ -42,12 +54,23 @@
     stats: body.querySelector('[data-role="stats-table"]'),
     cross: body.querySelector('[data-role="cross-table"]'),
     growth: body.querySelector('[data-role="growth-table"]'),
+    growthRates: body.querySelector('[data-role="growth-rates"]'),
+    estimatesNote: body.querySelector('[data-role="estimates-note"]'),
     estimates: body.querySelector('[data-role="estimates"]'),
     missing: body.querySelector('[data-role="missing-section"]'),
   };
   const levelCards = Array.from(body.querySelectorAll('figure.chart-card[data-indicators]'));
   const cycleCards = Array.from(body.querySelectorAll('figure.chart-card[data-vars]'));
-  const state = { filter: 'hp', payload: null, charts: new Map(), visible: new Set() };
+  const state = {
+    filter: 'hp', trend: 'none', price: 'real', growthBasis: 'annual',
+    payload: null, charts: new Map(), visible: new Set(), measure: new Map(),
+  };
+  /* {price} and {pc} in a card's indicator keys follow the page and card switches. */
+  const resolve = (card, keys) => keys
+    .replace(/\{price\}/g, state.price)
+    .replace(/\{pc\}/g, state.measure.get(card) === 'pc' ? '_pc' : '');
+  const control = name => body.querySelector(`[data-control="${name}"]`);
+  const rerenderLevels = () => levelCards.forEach(card => { if (state.visible.has(card)) renderLevelCard(card); });
 
   const token = name => getComputedStyle(body).getPropertyValue(name).trim() || '#3b5a75';
   /* Values that round to zero are shown as 0.00, not −0.00. */
@@ -63,12 +86,29 @@
     MJ.startup.promise.then(() => MJ.typesetPromise([element])).catch(() => {});
   }
 
-  const filterControl = D.segmented(body.querySelector('[data-control="filter"]'), value => {
+  const filterControl = control('filter') ? D.segmented(control('filter'), value => {
     state.filter = value;
     cycleCards.forEach(card => { if (state.visible.has(card)) renderCycleCard(card); });
     renderTables();
-  });
+  }) : null;
+  if (control('trend')) {
+    D.segmented(control('trend'), value => { state.trend = value; rerenderLevels(); }).select('none', false);
+  }
+  if (control('price')) {
+    D.segmented(control('price'), value => { state.price = value; rerenderLevels(); }).select('real', false);
+  }
+  if (control('growth-basis')) {
+    D.segmented(control('growth-basis'), value => { state.growthBasis = value; renderGrowthRates(); }).select('annual', false);
+  }
   levelCards.forEach(card => {
+    const measure = card.querySelector('[data-control="measure"]');
+    if (measure) {
+      state.measure.set(card, 'total');
+      D.segmented(measure, value => {
+        state.measure.set(card, value);
+        if (state.visible.has(card)) renderLevelCard(card);
+      }).select('total', false);
+    }
     const variant = card.querySelector('[data-control="variant"]');
     if (!variant) return;
     const control = D.segmented(variant, value => {
@@ -141,7 +181,7 @@
     /* data-benchmark: a reference series (e.g. real GDP growth) drawn last,
        red and dash-dot, as output is on the cycle charts. */
     const bench = card.dataset.benchmark || '';
-    const ids = card.dataset.indicators.split(',').map(id => id.trim()).filter(id => id && id !== bench);
+    const ids = resolve(card, card.dataset.indicators).split(',').map(id => id.trim()).filter(id => id && id !== bench);
     const pairs = ids.concat(bench ? [bench] : [])
       .map(id => [id, state.payload.indicators[id]]).filter(([, item]) => item);
     if (!pairs.length || pairs.every(([id]) => id === bench)) { empty(card, 'No data are available for this chart.'); return; }
@@ -175,14 +215,35 @@
         marks: flags.map((flag, j) => (flag ? j : -1)).filter(j => j >= 0),
       };
     });
+    /* Trends (page switch): only for series that carry them. One series:
+       trends in their own colours; several: in the series' colour, lighter. */
+    const dataSeries = series.slice();
+    const trendKeys = card.dataset.trends === 'off' || state.trend === 'none' ? []
+      : state.trend === 'comparison' ? ['hp', 'cf'] : [state.trend];
+    const trendable = pairs.filter(([key, item]) => key !== bench && !dashed.has(key) && item.observations.hp_trend);
+    trendable.forEach(([, item]) => trendKeys.forEach(key => {
+      const own = dataSeries.find(d => d.label === item.short_title);
+      series.push({
+        label: single ? TRENDS[key].label : `${item.short_title}, ${TRENDS[key].label}`,
+        color: single ? token(TRENDS[key].color) : own.color,
+        dash: TRENDS[key].dash,
+        weight: single ? 1 : 0.85,
+        opacity: single ? 1 : 0.6,
+        values: pick(item, TRENDS[key].field),
+      });
+    }));
+    const withTrends = trendable.length && trendKeys.length;
     const monthly = indicators.every(item => item.frequency === 'Monthly');
     const label = monthly ? D.monthLabel : D.quarterLabel;
     const first = indicators[0];
     const units = Array.from(new Set(indicators.map(item => item.units)));
     const freqText = Array.from(new Set(indicators.map(item => item.frequency.toLowerCase()))).join(' and ');
-    parts(card).subtitle.textContent = `${units.join('; ')} · ${freqText} · ${label(dates[0])}–${label(dates[dates.length - 1])}`;
-    const anyEstimate = series.some(item => item.marks.length);
-    const legend = series.map(swatch)
+    const trendText = withTrends ? ` · ${TREND_NAMES[state.trend]}` : '';
+    parts(card).subtitle.textContent = `${units.join('; ')} · ${freqText}${trendText} · ${label(dates[0])}–${label(dates[dates.length - 1])}`;
+    const anyEstimate = series.some(item => (item.marks || []).length);
+    const legend = (single || !withTrends
+      ? series.map(swatch)
+      : dataSeries.map(swatch).concat(trendKeys.map(key => swatch({ color: token('--muted'), dash: TRENDS[key].dash, label: `${TRENDS[key].label} (lighter, same colour as its series)` }))))
       .concat(anyEstimate ? ['<li><span class="legend-estimate" aria-hidden="true"></span>Estimated value</li>'] : []);
     const sources = Array.from(new Set(indicators.map(item => item.source)));
     const updated = indicators.map(item => item.source_last_updated).filter(Boolean).sort().pop();
@@ -281,7 +342,6 @@
     const mark = key => (growth.variables[key].units.startsWith('Percentage points')
       ? ' <span class="unit-mark" title="In percentage points">†</span>' : '');
     const head = `<tr><th scope="col" class="component-head">Variable</th>
-      <th scope="col">Sample</th>
       <th scope="col">Mean</th>
       <th scope="col">Standard<br>deviation</th>
       <th scope="col">Relative standard deviation<br><span class="unit-label">(to output growth)</span></th>
@@ -289,7 +349,6 @@
       <th scope="col">Correlation with<br>output growth</th></tr>`;
     const bodyRows = growth.stats.map(row => `<tr>
       <th scope="row">${S.escapeHTML(label(row.key))}${mark(row.key)}</th>
-      <td class="sample-cell">${sampleText(row)}</td>
       <td>${fmt(growth.means[row.key])}</td>
       <td>${fmt(row.sd)}</td><td>${fmt(row.rel_sd)}</td><td>${fmt(row.ar1)}</td><td>${fmt(row.corr_y)}</td></tr>`).join('');
     return `<div class="table-scroll"><table class="data-table shares-table bc-table">
@@ -297,12 +356,49 @@
       <thead>${head}</thead><tbody>${bodyRows}</tbody></table></div>`;
   }
 
+  /* Growth rates in the layout of Main Indicators: nominal and real
+     columns for the latest quarter, the last 10 years and the whole
+     sample; per quarter or annualised (x 4). */
+  function renderGrowthRates() {
+    if (!el.growthRates || !state.payload) return;
+    const data = state.payload.growth_table;
+    if (!data) { el.growthRates.innerHTML = '<p class="empty-message">This table will appear after the next data update.</p>'; return; }
+    const p = data.periods;
+    const annual = state.growthBasis === 'annual';
+    const k = annual ? 4 : 1;
+    const f = v => (v == null ? '–' : fmt(v * k, annual ? 1 : 2));
+    const unit = annual ? '(% per year)' : '(% per quarter)';
+    const late = (row, col) => (row[`${col}_last`] && row[`${col}_last`] !== p.latest_quarter
+      ? ` <span class="unit-mark" title="Latest quarter available: ${S.escapeHTML(row[`${col}_last`])}">*</span>` : '');
+    const head = `<tr><th scope="col" rowspan="2" class="component-head">Component<br><span class="unit-label">${unit}</span></th>
+        <th scope="colgroup" colspan="3">Nominal (current dollars)</th>
+        <th scope="colgroup" colspan="3">Real (2017 dollars, GDP price index)</th></tr>
+      <tr>${['nominal', 'real'].map(() => `<th scope="col">${S.escapeHTML(p.latest_quarter)}</th>
+        <th scope="col"><abbr title="${S.escapeHTML(p.recent_range)}">${S.escapeHTML(p.recent)}</abbr></th>
+        <th scope="col"><abbr title="${S.escapeHTML(p.full_range)}">${S.escapeHTML(p.full)}</abbr></th>`).join('')}</tr>`;
+    const rows = data.rows.map(row => `<tr>
+        <th scope="row">${S.escapeHTML(row.component)}</th>
+        <td>${f(row.nominal_latest)}${late(row, 'nominal')}</td><td>${f(row.nominal_recent)}</td><td>${f(row.nominal_full)}</td>
+        <td>${f(row.real_latest)}${late(row, 'real')}</td><td>${f(row.real_recent)}</td><td>${f(row.real_full)}</td></tr>`).join('');
+    const lagged = data.rows.some(row => ['nominal', 'real'].some(col => row[`${col}_last`] && row[`${col}_last`] !== p.latest_quarter));
+    el.growthRates.innerHTML = `<div class="table-scroll"><table class="data-table shares-table">
+      <caption class="visually-hidden">Growth rates of stock prices, dividends and earnings, and returns</caption>
+      <thead>${head}</thead><tbody>${rows}</tbody></table></div>
+      <p class="table-note">${annual
+        ? 'Annualised: four times the quarterly rate. Growth rates are 400 × [ln(X<sub>t</sub>) − ln(X<sub>t−1</sub>)]; returns are four times the quarterly return (not compounded).'
+        : 'Per quarter: growth rates are 100 × [ln(X<sub>t</sub>) − ln(X<sub>t−1</sub>)]; returns are quarterly returns.'}
+      The latest-quarter column is that quarter’s rate; the period columns are averages of quarterly rates, “Last 10 years” over the last 40 quarters of each series and ${S.escapeHTML(p.full)} over ${S.escapeHTML(p.full_range)}.
+      Real values are deflated by the GDP price index; the price–dividend ratio, a ratio of two nominal values, has the same growth rate in both columns, and the excess return over Treasury bills is a nominal measure.${lagged ? ' * Dividends and earnings are published with a lag: their latest quarter is earlier (hover over the mark).' : ''}</p>`;
+  }
+
   function renderTables() {
+    renderGrowthRates();
     if (el.growth) {
       if (state.payload.growth) el.growth.innerHTML = growthTable(state.payload.growth);
       else el.growth.closest('[data-role="growth-block"]').hidden = true;
     }
-    const tables = state.payload.tables[state.filter];
+    const tables = state.payload.tables && state.payload.tables[state.filter];
+    if (!tables) return;
     if (el.stats) el.stats.innerHTML = statsTable(tables.stats);
     if (el.cross) {
       untypeset(el.cross);
@@ -324,6 +420,7 @@
     }));
     if (!groups.size) { if (el.missing) el.missing.hidden = true; return; }
     if (el.missing) el.missing.hidden = false;
+    if (el.estimatesNote) el.estimatesNote.hidden = false;   /* the information card mentions the hollow circles */
     const quarter = date => (date.slice(5, 7) === '01' || date.slice(5, 7) === '04' || date.slice(5, 7) === '07' || date.slice(5, 7) === '10');
     el.estimates.innerHTML = Array.from(groups.entries()).map(([id, g]) => {
       const dates = Array.from(g.dates).sort();
@@ -392,7 +489,7 @@
     }
   }
 
-  filterControl.select('hp', false);
+  if (filterControl) filterControl.select('hp', false);
   load();
 
   /* A link to a ribbon opens it before scrolling. */

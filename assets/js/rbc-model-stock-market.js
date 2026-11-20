@@ -1,7 +1,7 @@
-/* Last edited: 2026-11-16 01:11 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-20 12:57 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model-stock-market.js: /economics/rbc-model-stock-market.html
-   Dividends and stock prices in the RBC model (firm-owned capital,
+   The RBC Model with a Stock Market: dividends and stock prices (firm-owned capital,
    no adjustment costs, log utility, labour-augmenting growth).
    Loads rbc-model-stock-market.json (rbc_stock_market.py) and draws:
    calibration and steady state; simulations of output, the stock
@@ -26,9 +26,13 @@
   const KINDS = { kr: 'linear-trend shocks', hp: 'HP-filtered shocks' };
   const STAT_KEYS = ['y', 'p', 'd'];
   const SYMBOLS = { y: 'Y', p: 'p', d: 'd' };
+  /* Data modes: NIPA aggregate dividends (default) or S&P 500 dividends per
+     share, with output in total or per capita. */
   const DATA_TEXT = {
-    pc: { y: 'real GDP per person', p: 'real S&P 500 price index', d: 'real aggregate dividends per person' },
-    total: { y: 'real GDP', p: 'real S&P 500 price index', d: 'real S&P 500 dividends' },
+    pc: { y: 'real GDP per person', p: 'real S&P 500 price index', d: 'real corporate dividends per person' },
+    total: { y: 'real GDP', p: 'real S&P 500 price index', d: 'real corporate dividends' },
+    sp_pc: { y: 'real GDP per person', p: 'real S&P 500 price index', d: 'real S&P 500 dividends per share' },
+    sp_total: { y: 'real GDP', p: 'real S&P 500 price index', d: 'real S&P 500 dividends per share' },
   };
 
   const inCard = (card, name) => card.querySelector(`[data-role="${name}"]`);
@@ -46,7 +50,9 @@
     statsNote: role('stats-note'),
     irfIntro: role('irf-intro'),
   };
-  const state = { country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr', measure: 'pc', payload: null, charts: new Map() };
+  const state = { country: 'US', form: 'hicks', tfp: 'measured', shocks: 'kr', measure: 'pc', dividends: 'nipa', payload: null, charts: new Map() };
+  /* Key of the data mode in the payload (data, data_sources, stats). */
+  const mode = () => (state.dividends === 'sp' ? 'sp_' : '') + state.measure;
   const token = name => getComputedStyle(body).getPropertyValue(name).trim() || '#3b5a75';
   const fmt = (value, digits = 2) => D.formatNumber(value, digits);
   const esc = text => S.escapeHTML(String(text));
@@ -76,8 +82,9 @@
   }
   const measuresInUse = () => Array.from(new Set(variants().map(v => v.measure)));
   const run = measure => state.payload.runs[state.form][measure];
-  const statsOf = r => r.stats[state.measure];
-  const dataSeries = key => state.payload.data[state.measure][key];
+  const statsOf = r => r.stats[mode()] || r.stats[state.measure];
+  const dataSeries = key => (state.payload.data[mode()] || state.payload.data[state.measure])[key];
+  const dataText = () => DATA_TEXT[state.payload.data[mode()] ? mode() : state.measure];
   const statRow = (rows, key) => (rows || []).find(row => row.key === key) || {};
   const sampleText = dates => `${D.quarterLabel(dates[0])}–${D.quarterLabel(dates[dates.length - 1])}`;
   const swatch = item => `
@@ -123,7 +130,7 @@
     const harrod = state.form === 'harrod';
     table(el.calibration, 'Calibration of the model', 'Parameter', [
       ['Coefficient of relative risk aversion (logarithmic utility)', '\\(\\gamma\\)', same('1')],
-      ['Discount factor', '\\(\\beta\\)', same(fmt(cal.beta, 3))],
+      ['Discount factor', '\\(\\beta\\)', same(fmt(cal.beta, 4))],
       ['Capital’s share of income', '\\(\\alpha\\)', same(fmt(cal.alpha, 3))],
       ['Depreciation rate (per quarter)', '\\(\\delta\\)', same(fmt(cal.delta, 3))],
       ['Weight of leisure in utility', '\\(\\theta\\)', same(fmt(cal.xi, 2))],
@@ -175,7 +182,7 @@
       color: v.color, dash: v.dash, weight: list.length === 1 ? 1.1 : 1,
       values: run(v.measure).series[v.kind][key],
     }));
-    series.push({ label: `US data: ${DATA_TEXT[state.measure][key]}`, color: token('--chart-benchmark'), dash: BENCHMARK_DASH, under: true, values: dataSeries(key) });
+    series.push({ label: `US data: ${dataText()[key]}`, color: token('--chart-benchmark'), dash: BENCHMARK_DASH, under: true, values: dataSeries(key) });
     draw(card, options, series);
     const dataRow = statRow(statsOf(run(list[0].measure)).data, key);
     const parts = list.map(v => {
@@ -185,7 +192,7 @@
     const note = `${parts.join('; ')}. Data: standard deviation ${fmt(dataRow.sd)} percent, correlation with output ${fmt(dataRow.corr_y)}.`;
     inCard(card, 'chart-note').textContent = note.charAt(0).toUpperCase() + note.slice(1);
     const source = inCard(card, 'chart-source');
-    if (source) source.textContent = `Data: ${payload.data_sources[key][state.measure]}. Model: author’s calculations.`;
+    if (source) source.textContent = `Data: ${(payload.data_sources[key][mode()] || payload.data_sources[key][state.measure])}. Model: author’s calculations.`;
   }
 
   /* Statistics ------------------------------------------------------- */
@@ -202,7 +209,7 @@
       <thead><tr><th scope="col" class="component-head"><span class="visually-hidden">Variable</span></th>
         <th scope="col">Standard<br>deviation</th><th scope="col">Relative<br>standard deviation</th>
         <th scope="col">First-order<br>autocorrelation</th><th scope="col">Contemporaneous correlation<br>with output</th></tr></thead>
-      <tbody>${block(`Business-cycle statistics for the US economy (${state.measure === 'pc' ? 'per capita' : 'totals'})`, dataRows)}${blocks}</tbody></table></div>`);
+      <tbody>${block(`Business-cycle statistics for the US economy (${state.measure === 'pc' ? 'per capita' : 'totals'}; ${state.dividends === 'sp' ? 'S&P 500 dividends per share' : 'corporate dividends, NIPA'})`, dataRows)}${blocks}</tbody></table></div>`);
 
     const top = `<tr><th scope="col" class="component-head"></th>${list.map(v => `<th scope="colgroup" colspan="2">RBC model${v.suffix ? `, ${esc(v.suffix)}` : ''}</th>`).join('')}</tr>`;
     const heads = list.map(() => `<th scope="col">Relative standard deviation<br><span class="unit-label">\\(\\sigma_{\\text{Model}} / \\sigma_{\\text{Data}}\\)</span></th>
@@ -216,7 +223,7 @@
       <caption class="visually-hidden">Volatility and correlation of the model’s series relative to the data</caption>
       <thead>${top}<tr><th scope="col" class="component-head"><span class="visually-hidden">Variable</span></th>${heads}</tr></thead>
       <tbody>${rows}</tbody></table></div>`);
-    el.statsNote.textContent = `Note: United States, ${sampleText(state.payload.dates)}. All variables are in logarithms and HP filtered (λ = 1600). Data: ${DATA_TEXT[state.measure].y}, the ${DATA_TEXT[state.measure].p} and ${DATA_TEXT[state.measure].d}, all deflated by the GDP price index. Model: \\(p_t = K_{t+1}\\) and \\(d_t = \\alpha Y_t - I_t\\), driven by the measured technology shocks.`;
+    el.statsNote.textContent = `Note: United States, ${sampleText(state.payload.dates)}. All variables are in logarithms and HP filtered (λ = 1600). Data: ${dataText().y}, the ${dataText().p} and ${dataText().d}, all deflated by the GDP price index. Model: \\(p_t = K_{t+1}\\) and \\(d_t = \\alpha Y_t - I_t\\), driven by the measured technology shocks.`;
     setHTML(el.statsNote, esc(el.statsNote.textContent));
   }
 
@@ -295,6 +302,10 @@
     state.measure = value;
     if (state.payload) { modelCards.forEach(renderModelCard); renderStats(); }
   });
+  const dividendsControl = D.segmented(body.querySelector('[data-control="dividends"]'), value => {
+    state.dividends = value;
+    if (state.payload) { modelCards.forEach(renderModelCard); renderStats(); }
+  });
   let shocksControl = null;
   const tfpControl = D.segmented(body.querySelector('[data-control="tfp"]'), value => {
     state.tfp = value;
@@ -316,5 +327,6 @@
   tfpControl.select('measured', false);
   shocksControl.select('kr', false);
   measureControl.select('pc', false);
+  dividendsControl.select('nipa', false);
   load();
 })();

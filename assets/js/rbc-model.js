@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-12 17:25 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-20 12:57 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model.js: /economics/rbc-model.html
    Loads the generated rbc-model JSON for the selected country and
@@ -326,7 +326,7 @@
     const { measures, head, same, each } = measureColumns();
     const shockSymbol = state.form === 'harrod' ? '\\(\\sigma_{\\varepsilon^Z}\\)' : '\\(\\sigma_{\\varepsilon^A}\\)';
     const rows = [
-      ['Discount factor', '\\(\\beta\\)', same(fmt(cal.beta, 3)), '0.984'],
+      ['Discount factor', '\\(\\beta\\)', same(fmt(cal.beta, 4)), '0.984'],
       ['Capital’s share of income', '\\(\\alpha\\)', same(fmt(cal.alpha, 3)), '0.333'],
       ['Depreciation rate (per quarter)', '\\(\\delta\\)', same(fmt(cal.delta, 3)), '0.025'],
       ['Weight of leisure in utility', '\\(\\theta\\)', same(fmt(cal.xi, 2)), '3.48'],
@@ -369,7 +369,10 @@
     const harrod = state.form === 'harrod'
       ? ' With Harrod-neutral technology, the shocks to \\(Z\\) enter the model as \\(A = Z^{1-\\alpha}\\), so their effect is that of shocks \\(1-\\alpha\\) times as large to total factor productivity.'
       : '';
-    setHTML(el.calibrationNote, `Capital’s share, the depreciation rate and the weight of leisure are those of King and Rebelo (1999, Table 2), and utility is logarithmic in consumption and leisure. The discount factor is set to 0.988 rather than their 0.984 so that, with trend growth, the steady-state real interest rate, \\(r = (1+g_X)/\\beta - 1\\), is about 6.5 percent a year, the return King and Rebelo target; it implies that hours take 20 percent of available time, as in their calibration. Trend growth, persistence and the size of the shocks are estimated from the technology series selected above: the trend growth of \\(X\\) is the trend growth of TFP divided by labour’s share, \\(1-\\alpha\\), close to King and Rebelo’s 1.6 percent a year.${harrod}`);
+    const targets = state.payload.model.calibration_targets;
+    const ret = targets && targets.return_annual;
+    const retText = ret ? `, ${fmt(ret.value, 2)} percent a year over ${esc(ret.sample)}` : '';
+    setHTML(el.calibrationNote, `Capital’s share and the depreciation rate are those of King and Rebelo (1999, Table 2), and utility is logarithmic in consumption and leisure. The discount factor and the weight of leisure are implied by two data targets, given the model: \\(\\beta\\) makes the steady-state real interest rate, \\(r = (1+g_X)/\\beta - 1\\), equal to the average real return on the S&P 500${retText} (in this model the return on capital is also the return on shares), and \\(\\theta\\) makes hours take 20 percent of available time, as in King and Rebelo. Both use the trend growth of the default technology series (Hicks-neutral, measured TFP), so they do not change with the series selected, and the steady-state rate of the other series differs slightly; see the <a class="text-link" href="/dsge/calibration.html">Calibration</a> page. Trend growth, persistence and the size of the shocks are estimated from the technology series selected above: the trend growth of \\(X\\) is the trend growth of TFP divided by labour’s share, \\(1-\\alpha\\), close to King and Rebelo’s 1.6 percent a year.${harrod}`);
     setHTML(el.solution, solutionTable());
     setHTML(el.solutionNote, 'The model is log-linearised around its steady state and solved by the method of Blanchard and Kahn (1980); see <a class="text-link" href="#method-solution" data-open-ribbon>Solving and simulating the model</a>. One eigenvalue lies outside the unit circle, one for the single jump variable, consumption, as the Blanchard–Kahn condition requires; the other two are the persistence of technology and the speed at which capital returns to its steady state. Consumption follows the rule \\(\\hat{c}_t = g_A \\hat{A}_t + g_K \\hat{k}_t\\). The starting values are the percent deviations of technology and capital per capita from trend in the first quarter of the data, measured in the same way as the shocks that follow.');
   }

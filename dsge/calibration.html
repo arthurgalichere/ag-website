@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calibration</title>
+  <meta name="description" content="Calibration of the site&#39;s DSGE models: parameters, their meaning, values and sources, the US data targets they are calibrated to, and the parameters these targets imply." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="calibration"
+  data-data-url="/assets/data/economics/{country}/calibration.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+    <a href="/dsge/" class="back-link">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      Back to DSGE Modelling
+    </a>
+  </div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · DSGE Modelling</p>
+    <h1 class="page-title">Calibration</h1>
+    <p class="lead">Calibrating a model means choosing its parameters so that it reproduces chosen features of the data, usually long-run averages such as the investment share of output or the average interest rate, and then asking how well it accounts for everything else, such as business-cycle fluctuations (Kydland and Prescott, 1982; Cooley and Prescott, 1995). This page collects, for the models of the site, every parameter with its meaning, value and source, and the US data targets they are calibrated to, computed from the data of the site and updated with it.</p>
+  </header>
+
+  <div class="dashboard-controls reveal delay-120">
+    <div class="segmented-field" data-control="model">
+      <span class="segmented-label" id="model-label">Model</span>
+      <div class="segmented segmented-wrap" role="group" aria-labelledby="model-label" data-role="model-buttons">
+        <button type="button" data-value="all" aria-pressed="true">All models</button>
+      </div>
+    </div>
+    <div class="segmented-field" data-control="measure">
+      <span class="segmented-label" id="measure-label">Measure</span>
+      <div class="segmented" role="group" aria-labelledby="measure-label">
+        <button type="button" data-value="total" aria-pressed="true">Total</button>
+        <button type="button" data-value="pc" aria-pressed="false">Per capita</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>The model switch shows the parameters and targets of one model; the measure switch chooses total or per-capita growth rates (ratios, interest rates and stock-market moments do not change).</li>
+      <li>Parameter values are those the model pages use. Data targets are averages over the sample shown in each row, recomputed at every data update.</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  <section class="content-section reveal delay-160" aria-labelledby="parameters-title">
+    <h2 id="parameters-title" class="section-title">Parameters</h2>
+    <p class="section-introduction">Each parameter with its meaning, the value the model pages use, the models that use it and where the value comes from: the literature, Arthur Galichère’s notes and estimates, or estimation on the data of the site.</p>
+    <div class="shares" data-role="parameters"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <section class="content-section reveal delay-180" aria-labelledby="targets-title">
+    <h2 id="targets-title" class="section-title">Data targets</h2>
+    <p class="section-introduction">Features of the US data that the models are calibrated to, or that they should reproduce: the great ratios of output, growth rates, interest rates and inflation, and moments of the stock market. Where a model value is shown, it is the steady state of the model page with its baseline calibration.</p>
+    <div class="shares" data-role="targets"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <section class="content-section reveal delay-200" aria-labelledby="implied-title">
+    <h2 id="implied-title" class="section-title">Parameters implied by the targets</h2>
+    <p class="section-introduction">The steady state of the RBC model links its parameters to the targets above, so the targets imply values for some parameters, a check of the calibration (see <a class="text-link" href="#steady-state-ribbon" data-open-ribbon>From targets to parameters</a>). Trend growth enters every relation. By default it is \(g_X\), the trend growth of labour-augmenting technology that the model pages estimate from TFP, so that the implied values are those of the models; per-capita output growth, which measures \(g_X\) on the balanced growth path, is the alternative.</p>
+    <div class="dashboard-controls implied-controls">
+      <div class="segmented-field" data-control="growth">
+        <span class="segmented-label" id="growth-label">Trend growth</span>
+        <div class="segmented" role="group" aria-labelledby="growth-label">
+          <button type="button" data-value="gx" aria-pressed="true">\(g_X\) (TFP trend)</button>
+          <button type="button" data-value="gy" aria-pressed="false">Per-capita output growth</button>
+        </div>
+      </div>
+    </div>
+    <div class="shares" data-role="implied"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The tables on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">How the parameters relate to the data</h2>
+
+    <details class="ribbon" id="steady-state-ribbon">
+      <summary>
+        <span class="ribbon-title">From targets to parameters: the steady state of the RBC model</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>On the balanced growth path of the canonical RBC model (King and Rebelo, 1999), output, consumption, investment and capital per person grow at the rate \(g_X\) of labour-augmenting technology, and hours per person are constant. Per-capita output growth in the data therefore measures \(g_X\); the model pages instead estimate \(g_X\) from the trend of TFP, \(g_X = g_{\mathrm{TFP}}/(1-\alpha)\), about 1.6 percent a year, against 2.0 percent for output per person since 1950; the switch above the table of implied parameters compares the two. The steady state of the detrended economy gives four relations between parameters and targets, each read in one direction to calibrate:</p>
+        <div class="math-display">\[ \frac{1+g_X}{\beta} = 1 + r , \qquad \frac{I}{K} = g_X + \delta , \qquad r + \delta = \alpha\,\frac{Y}{K} , \qquad \theta\,\frac{C}{1-h} = (1-\alpha)\,\frac{Y}{h} . \]</div>
+        <ul>
+          <li><strong>Discount factor:</strong> the Euler equation with logarithmic utility, \(\beta = (1+g_X)/(1+r)\), with \(r\) the quarterly real return on capital.</li>
+          <li><strong>Depreciation rate:</strong> the law of motion of capital, \(\delta = (I/Y)/(K/Y) - g_X\), with quarterly \(I/Y\) and \(K/Y\).</li>
+          <li><strong>Capital’s share:</strong> the marginal product of capital equals its user cost, \(\alpha = (r + \delta)\,K/Y\). With competitive markets, \(\alpha\) is also capital’s share of income, its usual direct measure.</li>
+          <li><strong>Weight of leisure:</strong> labour supply, \(\theta = (1-\alpha)(Y/C)(1-h)/h\), sets hours \(h\) at the target share of time.</li>
+        </ul>
+        <p>The targets depend on what the data are taken to measure. The model has no government and no trade, so its investment share corresponds to \(I/(C+I)\) in the data rather than \(I/Y\); its capital stock may be all private fixed assets or only nonresidential ones, which changes \(K/Y\), and with it \(\delta\) and \(\alpha\) (Cooley and Prescott, 1995).</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">The discount factor and the risk-free rate</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>In the RBC model there is one return: capital, a bond and a share in the firm all pay \(r\). The data have several. King and Rebelo (1999) target a real return on capital of about 6.5 percent a year, close to the average real return on stocks; with per-capita growth, it implies a discount factor near their 0.984. The average real return on Treasury bills, about 1 percent a year, implies a discount factor above one: with growth, households would have to value the future more than the present to accept such a low return. This is the risk-free rate puzzle (Weil, 1989), the counterpart of the equity premium puzzle (Mehra and Prescott, 1985): models without risk premia cannot match both returns, and must choose which one \(r\) stands for. The RBC models of this site use the stock return: in them, a share is a claim on the capital stock, so the return on shares is the return on capital. Their discount factor is therefore not set by hand but computed at each update from this target and each model’s own Euler equation (with log utility, \(\beta = (1+g_X)/(1+r)\), at the trend growth of the default technology series); the weight of leisure is then set so that hours take 20 percent of available time. A model with a different Euler equation, for example with an exit rate of firms, implies a different \(\beta\) for the same target.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Stock prices and dividends in the RBC model</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>On <a class="text-link" href="/economics/rbc-model-stock-market.html">The RBC Model with a Stock Market</a>, the firm owns the capital stock and pays out what it does not invest: the stock price is the value of next period’s capital, \(p_t = K_{t+1}\), and dividends are \(d_t = \alpha Y_t - I_t\). In the steady state the price–dividend ratio follows from the great ratios, \(P/D = (K/Y)\,/\,(\alpha - I/Y)\) with quarterly \(K/Y\) (divided by four for annual dividends), and dividends are a share \(\alpha - I/Y\) of output. Comparing these with the data targets, the price–dividend ratio of the S&amp;P 500 and the dividends of all US corporations relative to GDP, is a test of the model: no parameter is set to match them.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">The New Keynesian model</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The structural parameters of <a class="text-link" href="/economics/nk-model.html">The Canonical New Keynesian Model</a> are those of Arthur Galichère’s notes. The slope of the Phillips curve depends on price stickiness: with Calvo pricing, \(\kappa = (1-\xi)(1-\xi\beta)/\xi\), and a price lasts \(1/(1-\xi)\) quarters on average, about ten months for \(\xi = 0.7\), in line with the frequency of price changes in US consumer prices (Nakamura and Steinsson, 2008); with Rotemberg pricing, \(\kappa = (\varepsilon-1)/\omega\). The model has zero inflation in the steady state, so average inflation and the average federal funds rate are removed from the data it is compared with. The persistences and sizes of its four shocks are estimated on <a class="text-link" href="/economics/nk-shocks.html">Extracting Shocks for the New Keynesian Model</a>: the persistences are those that the shocks backed out from the data reproduce.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Stock-market moments for a model of stock-market dynamics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>A model of the stock market is usually judged on a standard set of moments: the average and volatility of real stock returns and of the real risk-free rate, the equity premium, and the level, volatility and persistence of the price–dividend ratio, with the growth of dividends and consumption (Campbell and Cochrane, 1999; Bansal and Yaron, 2004). The targets marked for the forthcoming stock-market dynamics model are these moments. Stock prices move far more than dividends (Shiller, 1981), and the price–dividend ratio is very persistent, which is why high valuations predict low returns rather than high dividend growth (Cochrane, 2008). Market capitalisation, new listings and total payouts, including share buybacks, will be added.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">Data and samples</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The targets are computed from the data of the site: great ratios and growth rates from <a class="text-link" href="/economics/main-indicators.html">Main Economic Indicators</a> (Bureau of Economic Analysis, via FRED), interest rates and inflation from the same page, and stock-market moments from <a class="text-link" href="/economics/stock-market.html">Main Stock Market Indicators</a> (Robert J. Shiller’s data; corporate dividends from the national accounts). Each target is the average over all the quarters (or years) available, shown in its row. Growth rates are annualised quarterly log changes; the per-capita measure divides output, consumption and dividends by the population. Annual returns are four times the average quarterly return, and their volatility twice the standard deviation of quarterly returns.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Bansal, R. and A. Yaron (2004). “Risks for the Long Run: A Potential Resolution of Asset Pricing Puzzles.” <em>Journal of Finance</em> 59(4): 1481–1509.</li>
+          <li>Campbell, J. Y. and J. H. Cochrane (1999). “By Force of Habit: A Consumption-Based Explanation of Aggregate Stock Market Behavior.” <em>Journal of Political Economy</em> 107(2): 205–251.</li>
+          <li>Cochrane, J. H. (2008). “The Dog That Did Not Bark: A Defense of Return Predictability.” <em>Review of Financial Studies</em> 21(4): 1533–1575.</li>
+          <li>Cooley, T. F. and E. C. Prescott (1995). “Economic Growth and Business Cycles.” In T. F. Cooley (ed.), <em>Frontiers of Business Cycle Research</em>, Chapter 1: 1–38. Princeton University Press.</li>
+          <li>Fernald, J. G. (2014). “A Quarterly, Utilization-Adjusted Series on Total Factor Productivity.” Federal Reserve Bank of San Francisco Working Paper 2012-19.</li>
+          <li>King, R. G., C. I. Plosser and S. T. Rebelo (1988). “Production, Growth and Business Cycles: I. The Basic Neoclassical Model.” <em>Journal of Monetary Economics</em> 21(2–3): 195–232.</li>
+          <li>King, R. G. and S. T. Rebelo (1999). “Resuscitating Real Business Cycles.” In J. B. Taylor and M. Woodford (eds.), <em>Handbook of Macroeconomics</em>, Vol. 1B, Chapter 14: 927–1007. Elsevier.</li>
+          <li>Kydland, F. E. and E. C. Prescott (1982). “Time to Build and Aggregate Fluctuations.” <em>Econometrica</em> 50(6): 1345–1370.</li>
+          <li>Mehra, R. and E. C. Prescott (1985). “The Equity Premium: A Puzzle.” <em>Journal of Monetary Economics</em> 15(2): 145–161.</li>
+          <li>Nakamura, E. and J. Steinsson (2008). “Five Facts about Prices: A Reevaluation of Menu Cost Models.” <em>Quarterly Journal of Economics</em> 123(4): 1415–1464.</li>
+          <li>Prescott, E. C. (1986). “Theory Ahead of Business-Cycle Measurement.” Federal Reserve Bank of Minneapolis <em>Quarterly Review</em> 10(4): 9–22.</li>
+          <li>Shiller, R. J. (1981). “Do Stock Prices Move Too Much to Be Justified by Subsequent Changes in Dividends?” <em>American Economic Review</em> 71(3): 421–436.</li>
+          <li>Taylor, J. B. (1993). “Discretion versus Policy Rules in Practice.” <em>Carnegie-Rochester Conference Series on Public Policy</em> 39: 195–214.</li>
+          <li>Weil, P. (1989). “The Equity Premium Puzzle and the Risk-Free Rate Puzzle.” <em>Journal of Monetary Economics</em> 24(3): 401–421.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note page-dates"><span class="page-created">Page created on 20/11/2026<span class="visually-hidden">. </span></span><span class="data-updated" data-role="update-note" hidden></span></p>
+
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> The data targets are computed from the Bureau of Economic Analysis and Federal Reserve data via FRED, from John Fernald at the Federal Reserve Bank of San Francisco and from Robert J. Shiller’s data. The tables and text are the author’s. When reusing them, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Calibration</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/calibration.js" defer></script>
+  
+</body>
+</html>

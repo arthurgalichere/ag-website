@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-16 01:11 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-20 12:57 UTC (Claude, economics chat) */
 /* =========================================================
    rbc-model-it-lag.js: /economics/rbc-model-it-lag.html
    The RBC model with firm-owned capital and an investment
@@ -127,7 +127,7 @@
     const { head, same, each } = columns();
     const harrod = state.form === 'harrod';
     const rows = [
-      ['Discount factor', '\\(\\beta\\)', same(fmt(cal.beta, 3))],
+      ['Discount factor', '\\(\\beta\\)', same(fmt(cal.beta, 4))],
       ['Capital’s share of income', '\\(\\alpha\\)', same(fmt(cal.alpha, 3))],
       ['Depreciation rate (per quarter)', '\\(\\delta\\)', same(fmt(cal.delta, 3))],
       ['Weight of leisure in utility', '\\(\\theta\\)', same(fmt(cal.xi, 2))],
@@ -142,7 +142,7 @@
       <caption class="visually-hidden">Calibration of the model</caption>
       <thead><tr><th scope="col" class="component-head">Parameter</th><th scope="col">Symbol</th>${head}</tr></thead>
       <tbody>${rows.map(([n, s, v]) => `<tr><th scope="row">${esc(n)}</th><td class="symbol-cell">${s}</td>${v}</tr>`).join('')}</tbody></table></div>`);
-    setHTML(el.calibrationNote, 'The preferences, technology and trend growth are calibrated as for the <a class="text-link" href="/economics/rbc-model.html#calibration">canonical RBC model</a>: King and Rebelo (1999, Table 2), with a discount factor of 0.988, and the trend, persistence and size of the technology shocks estimated from the technology series selected above. The parameters of the speed of installation are the author’s estimates, provisional.');
+    setHTML(el.calibrationNote, 'The preferences, technology and trend growth are calibrated as for the <a class="text-link" href="/economics/rbc-model.html#calibration">canonical RBC model</a>: King and Rebelo (1999, Table 2), with the discount factor and the weight of leisure implied by the average real return on the S&P 500 and by hours of 20 percent of available time (see the <a class="text-link" href="/dsge/calibration.html">Calibration</a> page), and the trend, persistence and size of the technology shocks estimated from the technology series selected above. The parameters of the speed of installation are the author’s estimates, provisional.');
   }
 
   function renderSteady() {

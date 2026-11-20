@@ -85,7 +85,7 @@
 
         <div class="callout is-warning reveal delay-140" role="status">
           <i class="fas fa-person-digging" aria-hidden="true"></i>
-          <p><strong>Work in progress.</strong> Main Economic Indicators, Real Business Cycles and The Canonical RBC Model are now available. Financial and Credit Indicators is next; the remaining sections will be introduced gradually as the underlying data and modelling tools are completed.</p>
+          <p><strong>Work in progress.</strong> Main Economic Indicators, Real Business Cycles, the stock-market pages of Financial and Credit Indicators, The Canonical RBC Model, The RBC Model with a Stock Market, The Canonical New Keynesian Model and the calibration page of DSGE Modelling are now available; the remaining sections will be introduced gradually as the underlying data and modelling tools are completed.</p>
         </div>
 
         <section class="content-section reveal delay-180" aria-labelledby="data-heading">
@@ -115,17 +115,36 @@
               <i class="fas fa-chevron-right action-arrow" aria-hidden="true"></i>
             </a>
 
-            <!-- Financial and Credit Indicators: under review at /economics/financial-indicators.html;
-                 to activate, make this tile a link (class "tile is-available", href to that page,
-                 no status badge, chevron) and add the four subpages to _data/economics_dashboards.yml. -->
-            <article class="tile is-next">
+            <a class="tile is-available" href="/economics/financial-indicators.html">
               <span class="action-icon" aria-hidden="true"><i class="fas fa-arrow-trend-up"></i></span>
               <div class="action-content">
                 <div class="tile-heading">
                   <h3 class="tile-title">Financial and Credit Indicators</h3>
-                  <span class="status-badge">Next</span>
                 </div>
-                <p class="tile-description">The stock market, debt and leverage, banks and credit supply, and financial conditions and stress, each in levels and over the business cycle.</p>
+                <p class="tile-description">The stock market, its main indicators and its cycles; debt and leverage, banks and credit supply, and financial conditions and stress to follow.</p>
+              </div>
+              <i class="fas fa-chevron-right action-arrow" aria-hidden="true"></i>
+            </a>
+
+            <article class="tile">
+              <span class="action-icon" aria-hidden="true"><i class="fas fa-briefcase"></i></span>
+              <div class="action-content">
+                <div class="tile-heading">
+                  <h3 class="tile-title">Labour Market Indicators</h3>
+                  <span class="status-badge">Planned</span>
+                </div>
+                <p class="tile-description">Employment, unemployment, participation, hours, vacancies and wages: how the US labour market moves over time and over the business cycle.</p>
+              </div>
+            </article>
+
+            <article class="tile">
+              <span class="action-icon" aria-hidden="true"><i class="fas fa-arrow-trend-up"></i></span>
+              <div class="action-content">
+                <div class="tile-heading">
+                  <h3 class="tile-title">Economic Growth Indicators</h3>
+                  <span class="status-badge">Planned</span>
+                </div>
+                <p class="tile-description">Long-run growth of output per person and its sources: capital, hours, productivity and technology, with growth-accounting decompositions.</p>
               </div>
             </article>
 
@@ -158,27 +177,49 @@
               <i class="fas fa-chevron-right action-arrow" aria-hidden="true"></i>
             </a>
 
-            <article class="tile">
+            <a class="tile is-available" href="/economics/rbc-model-stock-market.html">
+              <span class="action-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+              <div class="action-content">
+                <div class="tile-heading">
+                  <h3 class="tile-title">The RBC Model with a Stock Market</h3>
+                </div>
+                <p class="tile-description">The RBC model in which firms own the capital and households hold their shares: the stock price and dividends it implies, compared with the S&amp;P 500 and corporate dividends, with business-cycle statistics and impulse responses.</p>
+              </div>
+              <i class="fas fa-chevron-right action-arrow" aria-hidden="true"></i>
+            </a>
+
+            <a class="tile is-available" href="/economics/nk-model.html">
               <span class="action-icon" aria-hidden="true"><i class="fas fa-building-columns"></i></span>
               <div class="action-content">
                 <div class="tile-heading">
-                  <h3 class="tile-title">New Keynesian Model Simulation and Forecasting</h3>
+                  <h3 class="tile-title">The Canonical New Keynesian Model</h3>
+                </div>
+                <p class="tile-description">Nominal rigidities (Calvo or Rotemberg pricing) and a Taylor rule: the model solved in the browser with adjustable parameters, impulse responses, and the shocks behind US output, inflation and the interest rate.</p>
+              </div>
+              <i class="fas fa-chevron-right action-arrow" aria-hidden="true"></i>
+            </a>
+
+            <article class="tile">
+              <span class="action-icon" aria-hidden="true"><i class="fas fa-cubes"></i></span>
+              <div class="action-content">
+                <div class="tile-heading">
+                  <h3 class="tile-title">The New Keynesian Model with Capital</h3>
                   <span class="status-badge">Planned</span>
                 </div>
-                <p class="tile-description">Simulations of a New Keynesian framework featuring nominal rigidities, monetary-policy rules, macroeconomic shocks, impulse responses, and forecasting applications.</p>
+                <p class="tile-description">The New Keynesian model with capital accumulation and investment, bridging the RBC and New Keynesian models.</p>
               </div>
             </article>
 
-            <article class="tile tile-wide">
+            <a class="tile tile-wide is-available" href="/dsge/">
               <span class="action-icon" aria-hidden="true"><i class="fas fa-gears"></i></span>
               <div class="action-content">
                 <div class="tile-heading">
                   <h3 class="tile-title">DSGE Modelling</h3>
-                  <span class="status-badge">Planned</span>
                 </div>
-                <p class="tile-description">A collection of dynamic stochastic general equilibrium models, ranging from foundational value and market models to richer macro-finance frameworks. This section will present model structures, solution methods, simulations, quantitative implementation, and applications across multiple dedicated subpages.</p>
+                <p class="tile-description">A collection of dynamic stochastic general equilibrium models, ranging from foundational value and market models to richer macro-finance frameworks. It starts with the calibration of the site’s models; model structures, solution methods, simulations, quantitative implementation and applications will follow on dedicated subpages.</p>
               </div>
-            </article>
+              <i class="fas fa-chevron-right action-arrow" aria-hidden="true"></i>
+            </a>
           </div>
 
           <p class="portal-note">Cards will become active links as each resource is completed and published.</p>
