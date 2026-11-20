@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Dynamics</title>
+  <meta name="description" content="Firm startups and exits, establishment openings and closings, and job creation and destruction in the United States: the Census Bureau&#39;s Business Dynamics Statistics (annual, since 1978) and the BLS Business Employment Dynamics (quarterly, since 1992), with statistics for calibration and their cycles." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="business-dynamics"
+  data-data-url="/assets/data/economics/{country}/business-dynamics.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial, Credit and Business Indicators
+  </a>
+  <a class="toolbar-next-link" href="/economics/rbc-model.html">Next: The Canonical RBC Model <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial, Credit and Business Indicators</p>
+    <h1 class="page-title">Business Dynamics</h1>
+    <p class="lead">Every year about one US firm in twelve exits and almost as many start, and the jobs created and destroyed each year are each larger than one in ten. This page measures these flows: firm startups and exits, establishment openings and closings, and job creation and destruction, from the Census Bureau’s annual Business Dynamics Statistics (since 1978) and the quarterly Business Employment Dynamics of the Bureau of Labor Statistics (since 1992). It gives the statistics that calibrate models with firm entry and exit, such as the exit rate of firms, and how these flows move over the business cycle.</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="annual_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Annual (CSV)
+        </a>
+        <a class="button-link" data-download="quarterly_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly (CSV)
+        </a>
+        <a class="button-link" data-download="mat" href="#" download>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li data-role="bds-note">Annual data: a year runs from March of the previous year to March (employment on 12 March), so 2023 is March 2022 to March 2023.</li>
+      <li>Quarterly data: private sector, seasonally adjusted, rates per quarter.</li>
+      <li>Shaded bands mark US recessions (USRECQ).</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  
+  <section class="content-section reveal delay-160" aria-labelledby="firms-title">
+    <h2 id="firms-title" class="section-title">Firms, establishments and employment</h2>
+    <p class="section-introduction">The number of employer businesses in the United States and the jobs they provide, each year in March.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>Firm</dt><dd>a business under common ownership or control; it may have several establishments.</dd></div>
+      <div class="key-term"><dt>Establishment</dt><dd>a single physical location where business is conducted, such as a plant, shop or office.</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="firms,estabs" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Firms and establishments</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="emp" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Employment</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="firm_size" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Average firm size</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Employment divided by the number of firms.</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="entry-exit-title">
+    <h2 id="entry-exit-title" class="section-title">Entry and exit</h2>
+    <p class="section-introduction">How many firms start and stop each year, and how much of employment new and young firms account for. The startup rate has fallen by more than a third since the late 1970s, the decline in business dynamism documented by Decker, Haltiwanger, Jarmin and Miranda (2014).</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>Startup</dt><dd>a new firm, of age 0: all its establishments are new.</dd></div>
+      <div class="key-term"><dt>Firm exit (death)</dt><dd>a firm all of whose establishments close during the year.</dd></div>
+      <div class="key-term"><dt>Rates</dt><dd>relative to the average of the current and previous year’s count, as in the Census Bureau’s own rates; the firm exit rate, a probability, relative to the firms alive a year earlier.</dd></div>
+      
+    </dl>
+    
+    <p class="more-link"><a class="text-link" href="#data-ribbon" data-open-ribbon>More on the definitions <i class="fas fa-arrow-down" aria-hidden="true"></i></a></p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="startup_rate,firm_exit" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Firm startup and exit rates</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="estab_entry,estab_exit" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Establishment entry and exit rates</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="young_emp,startup_emp" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Employment shares of startups and young firms</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Young firms: 0 to 5 years old, from 1983, the first year in which all their ages are observed.</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="jobs-title">
+    <h2 id="jobs-title" class="section-title">Job creation and destruction</h2>
+    <p class="section-introduction">Jobs created at opening and expanding establishments, and destroyed at closing and contracting ones, from March to March, in percent of employment (Davis, Haltiwanger and Schuh, 1996). Their sum, job reallocation, far exceeds the net change in employment.</p>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="jc,jd" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Job creation and destruction rates</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="realloc,net_jc" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net job creation and job reallocation</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="jc_births,jd_deaths" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Job creation by births and destruction by deaths of establishments</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="net_jc_young,net_jc_mature" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net job creation by firm age</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Startups, which only create jobs, are left out; young firms from 1983. Young firms that survive grow fast, but many exit: “up or out” (Haltiwanger, Jarmin and Miranda, 2013).</p>
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="size-title">
+    <h2 id="size-title" class="section-title">Firm size</h2>
+    <p class="section-introduction">Small firms are most firms, but large firms employ most workers. Size is the firm’s average employment in the current and previous year, which limits the bias from firms moving between classes (Haltiwanger, Jarmin and Miranda, 2013).</p>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="emp_large,emp_medium,emp_small" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Employment shares by firm size</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="net_jc_small,net_jc_medium,net_jc_large" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net job creation by firm size</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+    <h3 class="subsection-title">Firm size classes: averages since 1978</h3>
+    <div class="shares" data-table="size"><p class="loading-message">Loading…</p></div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="quarterly-title">
+    <h2 id="quarterly-title" class="section-title">Quarterly job flows and establishment births and deaths</h2>
+    <p class="section-introduction">The BLS Business Employment Dynamics measure the same flows each quarter, for private-sector establishments, seasonally adjusted, from 1992. Quarterly flows are smaller than annual ones: a job created and destroyed within a year does not appear in the annual data.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>Openings and closings</dt><dd>establishments with positive employment this quarter and none the previous quarter, or the reverse; they include seasonal and temporary closures.</dd></div>
+      <div class="key-term"><dt>Births and deaths</dt><dd>openings with no employment in the previous year, and closings with no employment for the next year: permanent entry and exit.</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="gjg,gjl" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Gross job gains and losses</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="net_gj" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net job gains</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="gjg_open,gjl_close" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Job gains at openings and losses at closings</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="est_birth,est_death" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Establishment births and deaths</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Deaths are published three quarters after births: an establishment is counted as dead only after a year without employment.</p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="est_open,est_close" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Establishment openings and closings</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+  </section>
+  
+
+  <section class="content-section reveal delay-180" aria-labelledby="calibration-title">
+    <h2 id="calibration-title" class="section-title">Statistics for calibration</h2>
+    <p class="section-introduction">Averages of the entry and exit rates that models with firm dynamics are calibrated to. An annual probability \(s\) of exit corresponds to a quarterly probability \(1 - (1 - s)^{1/4}\); the quarterly BED rates give the quarterly frequency directly. The annual and quarterly measures differ in coverage and definition (see <a class="text-link" href="#calibration-ribbon" data-open-ribbon>the note on calibration</a>).</p>
+    <div class="shares" data-table="calibration"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title" id="survival-title">Firm survival: steady state and dynamics</h3>
+    <p class="section-introduction">Models with firm exit need the quarterly probability \(s\) that a firm survives, and, if survival varies over time, the persistence \(\rho_s\) and the standard deviation \(\sigma_s\) of the shocks to \(\ln s_t\), a log AR(1) process. The steady state comes from the annual firm exit rate of the Census Bureau; the dynamics from the cycle of annual log survival, converted to a quarterly process that adds up to the annual one (method A), checked against the quarterly establishment death rates of the BLS (B). <a class="text-link" href="#survival-ribbon" data-open-ribbon>How these are computed</a>.</p>
+    <div class="shares" data-table="survival-steady"><p class="loading-message">Loading…</p></div>
+    <div class="shares" data-table="survival-dynamics"><p class="loading-message">Loading…</p></div>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="surv_q" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Quarterly survival rate of firms, from annual exits</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Each year, (1 − exit rate)^(1/4): the constant quarterly survival probability that gives the year’s exits.</p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="est_surv" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Quarterly survival rate of establishments (BED)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">100 minus the quarterly establishment death rate.</p>
+      </figure>
+      
+    </div>
+
+    <h3 class="subsection-title">Annual series (Business Dynamics Statistics)</h3>
+    <p class="section-introduction">Mean, standard deviation, range and latest value of each series, and the average growth rate of counts.</p>
+    <div class="shares" data-table="stats-annual"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">Quarterly series (Business Employment Dynamics)</h3>
+    <div class="shares" data-table="stats-quarterly"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <section class="content-section reveal delay-200" aria-labelledby="cycles-title">
+    <h2 id="cycles-title" class="section-title">Business dynamics over the business cycle</h2>
+    <p class="section-introduction">Cyclical components from the Hodrick–Prescott filter, with λ = 6.25 for the annual series (Ravn and Uhlig, 2002) and λ = 1600 for the quarterly ones, compared with that of real GDP. Rates are in percentage points of deviation from trend; counts, employment and GDP in percent. Startups and job creation are procyclical, exits and job destruction countercyclical (Davis, Haltiwanger and Schuh, 1996; Clementi and Palazzo, 2016).</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="startup_rate" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Firm startup rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="firm_exit" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Firm exit rate</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="jc,jd" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Job creation and destruction rates</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="gjg,gjl" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Gross job gains and losses</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="est_birth,est_death" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Establishment births and deaths</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+    </div>
+
+    <h3 class="subsection-title">Annual cycle statistics</h3>
+    <p class="section-introduction">Standard deviation of the cycle, its ratio to that of real GDP (for counts and employment), first-order autocorrelation, and the correlation of the series \(k\) years ahead, \(x_{t+k}\), with real GDP in year \(t\). A peak at negative \(k\) means the series moves before GDP; the peak is highlighted.</p>
+    <div class="shares" data-table="cycles-annual"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">Quarterly cycle statistics</h3>
+    <p class="section-introduction">As above, with \(k\) in quarters.</p>
+    <div class="shares" data-table="cycles-quarterly"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts and tables on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions and methods</h2>
+
+    <details class="ribbon" id="data-ribbon">
+      <summary>
+        <span class="ribbon-title">The data: Business Dynamics Statistics and Business Employment Dynamics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p><strong>Business Dynamics Statistics (BDS).</strong> Built by the U.S. Census Bureau from the Longitudinal Business Database, which follows every employer establishment in the private nonfarm economy (most of the economy except government, agriculture and the self-employed without employees) and links establishments to the firms that own them. Each year is measured in March, so the flows of year \(t\) are the changes from March of \(t-1\) to March of \(t\).</p>
+        <ul>
+          <li><strong>Firm age</strong> is the age of its oldest establishment when it first appears; a startup (age 0) is a firm all of whose establishments are new. Since the data start in 1977, firms with establishments older than that are “left censored” and counted here as mature; firms of age 1 to 5 are all observed from 1983.</li>
+          <li><strong>Firm exit (death)</strong>: all the firm’s establishments close. A firm that is acquired, or whose establishments are sold, does not die.</li>
+          <li><strong>Rates</strong>: job creation and destruction, and establishment entry and exit, are those published by the Census Bureau, relative to the average of employment (or establishments) in \(t\) and \(t-1\) (Davis, Haltiwanger and Schuh, 1996). The firm startup rate is computed in the same way; the firm exit rate is the number of firm deaths over the firms alive in March of the previous year, the probability that a firm exits within the year.</li>
+          <li><strong>Firm size</strong> is the firm’s average employment in \(t\) and \(t-1\). Classes: 1–19, 20–499 and 500 or more employees, from the ten classes of the Census Bureau.</li>
+        </ul>
+        <p><strong>Business Employment Dynamics (BED).</strong> Built by the Bureau of Labor Statistics from the Quarterly Census of Employment and Wages, the unemployment-insurance records of private-sector establishments (almost all private employment), seasonally adjusted. Gross job gains are the employment increases at opening and expanding establishments, gross job losses the decreases at closing and contracting ones, in percent of average employment. Births are openings with no employment in the previous year, deaths closings that remain without employment for a year, which is why deaths are published later.</p>
+        <p><strong>Annual versus quarterly.</strong> BED establishments are physical locations, without the firm links of the BDS. Annual flows miss the jobs created and destroyed within the same year, which quarterly flows capture, so four quarters of gross flows add up to more than the annual flows.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="calibration-ribbon">
+      <summary>
+        <span class="ribbon-title">Calibration: from the data to model parameters</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>In a quarterly model in which each firm exits with a constant probability \(s\) per quarter, the probability of surviving a year is \((1-s)^4\), so an annual exit rate \(s_A\) implies \(s = 1-(1-s_A)^{1/4}\), and a quarterly rate \(s\) an annual one of \(1-(1-s)^4\). With exit, the Euler equation of the shareholders and the steady-state value of a firm change, and with them the discount factor implied by a return target (see the <a class="text-link" href="/dsge/calibration.html">Calibration</a> page).</p>
+        <p>Which rate to use depends on what exit means in the model. The BDS firm exit rate counts the end of firms, with all their establishments; the establishment exit rate and the BED death rate count locations, and include the closures of establishments of surviving firms. Firm exits are concentrated among small and young firms, so the share of employment, or of capital, that exits is much smaller than the share of firms: the job destruction by establishment deaths, in percent of employment, measures it.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="survival-ribbon">
+      <summary>
+        <span class="ribbon-title">Firm survival: steady state and dynamics</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p><strong>Steady state.</strong> With \(D_t\) the firms that exit between March of \(t-1\) and March of \(t\) and \(N_{t-1}\) the firms alive in March of \(t-1\), the annual exit probability is \(x_t = D_t/N_{t-1}\). A constant quarterly survival probability that gives the same exits satisfies \(s_t^4 = 1 - x_t\), so \(s_t = (1 - x_t)^{1/4}\); the steady state \(s\) is its average. Dividing the annual rate by four is a close but biased approximation: with \(x = 9\) percent, \(x/4 = 2.25\) percent against \(1 - (1-x)^{1/4} = 2.33\) percent a quarter.</p>
+        <p><strong>Dynamics.</strong> In a model, \(\ln s_t = (1-\rho_s)\ln s + \rho_s \ln s_{t-1} + \varepsilon_t\), with \(\varepsilon_t\) in percent, as for the other shocks of the site’s Dynare models. Annual survival is the product of four quarterly survival rates, so annual log survival is the sum of four quarterly ones: \(\ln S_T = \sum_{j=0}^{3} \ln s_{4T-j}\). If quarterly log survival (in deviation from trend) is an AR(1) with persistence \(\rho\) and variance \(\sigma_x^2\), its four-quarter sums have</p>
+        <div class="math-display">\[ \operatorname{Var}(X_T) = \sigma_x^2 \sum_{i=0}^{3}\sum_{j=0}^{3} \rho^{|i-j|}, \qquad \operatorname{Cov}(X_T, X_{T-1}) = \sigma_x^2 \sum_{i=0}^{3}\sum_{j=0}^{3} \rho^{4+j-i}. \]</div>
+        <p>Method A estimates the first-order autocorrelation and the variance of the cycle of \(100 \ln S_T\) (HP filter, λ = 6.25), finds the \(\rho\) whose ratio of covariance to variance equals that autocorrelation, then \(\sigma_x\) from the variance, and \(\sigma_s = \sigma_x\sqrt{1-\rho^2}\). This treats the annual cycle as the sum of quarterly AR(1) deviations; with about 45 annual observations, both estimates are imprecise. Method B estimates the AR(1) directly on the quarterly cycle (λ = 1600) of \(100 \ln(1 - \text{death rate})\) of establishments, a different unit (locations, including those of surviving firms) over a shorter period. Method C, interpolating the annual data to quarters before filtering, gives a smooth quarterly path that the data do not contain: its persistence is close to one by construction and its shocks are too small.</p>
+        <p>In a Dynare model with log variables: <code>s = (1-rhos)*log(sss) + rhos*s(-1) + eps_s;</code> with <code>sss</code> the steady-state survival rate as a fraction and <code>stderr</code> of <code>eps_s</code> equal to \(\sigma_s\) in percent.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="cycles-ribbon">
+      <summary>
+        <span class="ribbon-title">Cycles and timing</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The Hodrick–Prescott filter is applied to \(100 \times \ln x\) for counts, employment and GDP, and to the rates themselves. For annual data, λ = 6.25 matches the quarterly λ = 1600 (Ravn and Uhlig, 2002). Annual real GDP is the average of the four quarters from April to March, the period a BDS year covers; the GDP cycle is filtered on its full history, from 1947. The quarterly GDP cycle is that of the Real Business Cycles page. Statistics use the years, or quarters, that each series covers.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="updates-ribbon">
+      <summary>
+        <span class="ribbon-title">Updates and revisions</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>The Census Bureau releases one BDS vintage a year, in September, about two and a half years after the March it ends with, and each vintage revises the whole history back to 1978. This page uses the latest vintage available at each update: <span data-role="bds-vintage">the 2023 vintage</span>. The BLS publishes Business Employment Dynamics every quarter, about seven months after the quarter ends, with revisions to the recent quarters.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Clementi, G. L. and B. Palazzo (2016). “Entry, Exit, Firm Dynamics, and Aggregate Fluctuations.” <em>American Economic Journal: Macroeconomics</em> 8(3): 1–41.</li>
+          <li>Davis, S. J., J. C. Haltiwanger and S. Schuh (1996). <em>Job Creation and Destruction</em>. MIT Press.</li>
+          <li>Decker, R., J. Haltiwanger, R. Jarmin and J. Miranda (2014). “The Role of Entrepreneurship in US Job Creation and Economic Dynamism.” <em>Journal of Economic Perspectives</em> 28(3): 3–24.</li>
+          <li>Haltiwanger, J., R. S. Jarmin and J. Miranda (2013). “Who Creates Jobs? Small versus Large versus Young.” <em>Review of Economics and Statistics</em> 95(2): 347–361.</li>
+          <li>Hodrick, R. J. and E. C. Prescott (1997). “Postwar U.S. Business Cycles: An Empirical Investigation.” <em>Journal of Money, Credit and Banking</em> 29(1): 1–16.</li>
+          <li>Pugsley, B. W. and A. Şahin (2019). “Grown-up Business Cycles.” <em>Review of Financial Studies</em> 32(3): 1102–1147.</li>
+          <li>Ravn, M. O. and H. Uhlig (2002). “On Adjusting the Hodrick-Prescott Filter for the Frequency of Observations.” <em>Review of Economics and Statistics</em> 84(2): 371–376.</li>
+          <li>U.S. Bureau of Labor Statistics. <em>Business Employment Dynamics</em>. <a class="text-link" href="https://www.bls.gov/bdm/" rel="noopener">bls.gov/bdm</a></li>
+          <li>U.S. Census Bureau. <em>Business Dynamics Statistics</em>. <a class="text-link" href="https://www.census.gov/programs-surveys/bds.html" rel="noopener">census.gov/programs-surveys/bds</a></li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note page-dates"><span class="page-created">Page created on 20/11/2026<span class="visually-hidden">. </span></span><span class="data-updated" data-role="update-note" hidden></span></p>
+
+
+  <nav class="page-navigation reveal delay-260" aria-label="Dashboard navigation">
+  <a href="/economics/stock-market-cycles.html" class="page-nav-link is-previous">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Previous dashboard</span>
+      <span class="page-nav-title">Stock Market Cycles</span>
+    </span>
+  </a>
+  <a href="/economics/rbc-model.html" class="page-nav-link is-next">
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Next dashboard</span>
+      <span class="page-nav-title">The Canonical RBC Model</span>
+    </span>
+    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+  </a>
+</nav>
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> The data are those of the U.S. Census Bureau (Business Dynamics Statistics), the U.S. Bureau of Labor Statistics (Business Employment Dynamics) and the U.S. Bureau of Economic Analysis (real GDP, via FRED). The rates computed here, the statistics, cycles, charts and text are the author’s. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Business Dynamics</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/business-dynamics.js" defer></script>
+  
+</body>
+</html>
