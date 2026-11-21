@@ -112,6 +112,9 @@
         <a class="button-link" data-download="mat" href="#" download>
           <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
         </a>
+        <a class="button-link" data-download="survival_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Survival shocks (CSV)
+        </a>
       </div>
     </div>
   </div>
@@ -467,7 +470,7 @@
     <div class="shares" data-table="calibration"><p class="loading-message">Loading…</p></div>
 
     <h3 class="subsection-title" id="survival-title">Firm survival: steady state and dynamics</h3>
-    <p class="section-introduction">Models with firm exit need the quarterly probability \(s\) that a firm survives, and, if survival varies over time, the persistence \(\rho_s\) and the standard deviation \(\sigma_s\) of the shocks to \(\ln s_t\), a log AR(1) process. The steady state comes from the annual firm exit rate of the Census Bureau; the dynamics from the cycle of annual log survival, converted to a quarterly process that adds up to the annual one (method A), checked against the quarterly establishment death rates of the BLS (B). <a class="text-link" href="#survival-ribbon" data-open-ribbon>How these are computed</a>.</p>
+    <p class="section-introduction">Models with firm exit need the quarterly probability \(s\) that a firm survives, and, if survival varies over time, the persistence \(\rho_s\) and the standard deviation \(\sigma_s\) of the shocks to \(\ln s_t\), a log AR(1) process. The steady state comes from the annual firm exit rate of the Census Bureau; the dynamics from the cycle of annual log survival, converted to a quarterly process that adds up to the annual one (method A, with the Hodrick–Prescott filter, the default), checked against the quarterly establishment death rates of the BLS (B). Detrending matters: with a linear trend instead (L), survival is much more persistent. The annual deviations and their shocks under both are in the download “Survival shocks”. <a class="text-link" href="#survival-ribbon" data-open-ribbon>How these are computed</a>.</p>
     <div class="shares" data-table="survival-steady"><p class="loading-message">Loading…</p></div>
     <div class="shares" data-table="survival-dynamics"><p class="loading-message">Loading…</p></div>
     <div class="chart-stack">
@@ -500,6 +503,43 @@
         <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
         <p class="chart-source" data-role="chart-source"></p>
         <p class="chart-note">100 minus the quarterly establishment death rate.</p>
+      </figure>
+      
+    </div>
+
+    <h3 class="subsection-title" id="entry-value-title">Value of entrants</h3>
+    <p class="section-introduction">In a model in which exiting firms are replaced by entrants whose equity is all new, the steady state needs the value of entrants relative to all firms, \(\varepsilon = I_0/p^A\) per quarter. Then the relative cohort value is \(\kappa = s/(1-\varepsilon)\) and the value of the average firm relative to an entrant \(m = (1-s)/\varepsilon\) (see the <a class="text-link" href="/dsge/calibration.html">Calibration</a> page). For all firms, the employment share of startups is the proxy, from the same data and years as \(s\); the IPO counterpart, for listed firms, is on <a class="text-link" href="/economics/investor-sentiment.html#entry-title">Investor Sentiment and Equity Issuance</a>. <a class="text-link" href="#calibration-ribbon" data-open-ribbon>Caveats</a>.</p>
+    <div class="shares" data-table="entry-value"><p class="loading-message">Loading…</p></div>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="eps_q" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Employment share of startups, per quarter</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Each year, 1 − (1 − x)^(1/4), with x the share of employment in firms of age 0: the quarterly rate that gives the year’s share.</p>
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="startup_rel" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Startup size relative to the average firm</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Employment share of startups over the startup rate: about a quarter of the size of the average firm.</p>
       </figure>
       
     </div>
@@ -631,6 +671,7 @@
       <div class="ribbon-content">
         <p>In a quarterly model in which each firm exits with a constant probability \(s\) per quarter, the probability of surviving a year is \((1-s)^4\), so an annual exit rate \(s_A\) implies \(s = 1-(1-s_A)^{1/4}\), and a quarterly rate \(s\) an annual one of \(1-(1-s)^4\). With exit, the Euler equation of the shareholders and the steady-state value of a firm change, and with them the discount factor implied by a return target (see the <a class="text-link" href="/dsge/calibration.html">Calibration</a> page).</p>
         <p>Which rate to use depends on what exit means in the model. The BDS firm exit rate counts the end of firms, with all their establishments; the establishment exit rate and the BED death rate count locations, and include the closures of establishments of surviving firms. Firm exits are concentrated among small and young firms, so the share of employment, or of capital, that exits is much smaller than the share of firms: the job destruction by establishment deaths, in percent of employment, measures it.</p>
+        <p><strong>Value of entrants.</strong> The BDS do not measure firm values, so the share of employment in startups stands for the share of value in entrants. This is a proxy: startups may be worth less per worker than older firms (less capital, lower productivity), which would make it an upper bound, or more, if their value lies in expected growth. A startup (age 0 in March) is a firm born in the previous twelve months, so its employment share is a flow over a year, converted to a quarter with \(1-(1-x)^{1/4}\). Entry and exit are not equal in the data: since 1979 the startup rate (about 10.0 percent a year) has exceeded the exit rate (8.9 percent), as the number of firms grew, while the model replaces each exiting firm by one entrant. Startups are about a quarter of the size of the average firm, so the employment share of entrants (2.5 percent a year) is much smaller than their share of firms.</p>
       </div>
     </details>
 
@@ -644,6 +685,7 @@
         <p><strong>Dynamics.</strong> In a model, \(\ln s_t = (1-\rho_s)\ln s + \rho_s \ln s_{t-1} + \varepsilon_t\), with \(\varepsilon_t\) in percent, as for the other shocks of the site’s Dynare models. Annual survival is the product of four quarterly survival rates, so annual log survival is the sum of four quarterly ones: \(\ln S_T = \sum_{j=0}^{3} \ln s_{4T-j}\). If quarterly log survival (in deviation from trend) is an AR(1) with persistence \(\rho\) and variance \(\sigma_x^2\), its four-quarter sums have</p>
         <div class="math-display">\[ \operatorname{Var}(X_T) = \sigma_x^2 \sum_{i=0}^{3}\sum_{j=0}^{3} \rho^{|i-j|}, \qquad \operatorname{Cov}(X_T, X_{T-1}) = \sigma_x^2 \sum_{i=0}^{3}\sum_{j=0}^{3} \rho^{4+j-i}. \]</div>
         <p>Method A estimates the first-order autocorrelation and the variance of the cycle of \(100 \ln S_T\) (HP filter, λ = 6.25), finds the \(\rho\) whose ratio of covariance to variance equals that autocorrelation, then \(\sigma_x\) from the variance, and \(\sigma_s = \sigma_x\sqrt{1-\rho^2}\). This treats the annual cycle as the sum of quarterly AR(1) deviations; with about 45 annual observations, both estimates are imprecise. Method B estimates the AR(1) directly on the quarterly cycle (λ = 1600) of \(100 \ln(1 - \text{death rate})\) of establishments, a different unit (locations, including those of surviving firms) over a shorter period. Method C, interpolating the annual data to quarters before filtering, gives a smooth quarterly path that the data do not contain: its persistence is close to one by construction and its shocks are too small.</p>
+        <p><strong>Detrending.</strong> The Hodrick–Prescott filter is the default, as for the other series of the site. With λ = 6.25 it removes movements longer than about eight years, and the annual cycle of log survival that remains is close to serially uncorrelated, so \(\rho_s\) is close to zero. Method L applies the same time aggregation to the deviations from an OLS linear trend over the whole sample: these keep the slow decline in exit rates since the 1980s and the long episodes around recessions, and are far more persistent (an annual autocorrelation of about 0.67, \(\rho_s\) about 0.86 per quarter). Which to use depends on whether the model’s survival shocks should include these slow movements. The download “Survival shocks” has, by year, \(100\ln S_T\), its HP cycle and its linear-trend deviation, and the innovations of the annual AR(1) of each.</p>
         <p>In a Dynare model with log variables: <code>s = (1-rhos)*log(sss) + rhos*s(-1) + eps_s;</code> with <code>sss</code> the steady-state survival rate as a fraction and <code>stderr</code> of <code>eps_s</code> equal to \(\sigma_s\) in percent.</p>
       </div>
     </details>

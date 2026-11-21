@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-21 00:45 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-21 11:23 UTC (Claude, economics chat) */
 /* =========================================================
    calibration.js: /dsge/calibration.html
    Renders calibration.json (built by the private calibration.py):
@@ -73,9 +73,9 @@
     const values = state.payload.model_values || {};
     const out = specs.map(([model, key, scale]) => {
       const v = values[model] && values[model][key];
-      return v == null ? null : `${fmt(v * scale, target.digits ?? 2)} <span class="unit-label">(${esc(SHORT[model])})</span>`;
+      return v == null ? null : `${fmt(v * scale, target.digits ?? 2)}<br><span class="unit-label">(${esc(SHORT[model])})</span>`;
     }).filter(Boolean);
-    return out.length ? out.join('<br>') : '–';
+    return out.length ? out.join('<br><span class="model-value-gap"></span>') : '–';
   }
 
   function renderTargets() {
@@ -94,7 +94,7 @@
         <td>${tags(t.models)}</td>
         <td class="source-cell">${esc(t.definition)} <span class="source-note">Source: ${esc(t.source)}.</span>${t.note ? ` <span class="source-note">${esc(t.note)}</span>` : ''}</td></tr>`;
     });
-    setHTML(role('targets'), `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table calibration-page-table">
+    setHTML(role('targets'), `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table calibration-page-table targets-table">
       <caption class="visually-hidden">Data targets</caption><thead>${head}</thead><tbody>${rows}</tbody></table></div>
       <p class="table-note">Growth rates and returns in percent a year; shares as fractions of output. Model values: the steady state of the model page with its baseline calibration (Hicks-neutral technology, measured TFP).</p>`);
   }
@@ -126,7 +126,7 @@
       <td>${calibrated[i.id] ? fmt(calibrated[i.id].value, i.digits ?? 3) : '–'}</td></tr>`).join('');
     setHTML(role('implied'), `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table">
       <caption class="visually-hidden">Parameters implied by the targets</caption><thead>${head}</thead><tbody>${rows}</tbody></table></div>
-      <p class="table-note">Trend growth \\(g_X\\): ${info ? `${esc(info.text)}, ${fmt(info.annual, 2)} percent a year` : 'per-capita output growth'}. Quarterly rates: \\(r\\) and \\(g_X\\) are the annual rates divided by 400, \\(I/Y\\) the investment share and \\(K/Y\\) the capital–output ratio (all private fixed assets) times four. The implied capital share uses the real stock return.${byBasis[basis].some(i => i.models && keep(i)) ? ' Relative cohort value \\(\\kappa\\) (stock-market dynamics): \\(s\\) is the quarterly survival rate of firms, \\(I_0/p^A\\) gross equity issues over market value, \\(d/p^A\\) the quarterly dividend yield, \\(\\beta\\) that of the RBC models; see the ribbon on stock-market dynamics.' : ''}</p>`);
+      <p class="table-note">Trend growth \\(g_X\\): ${info ? `${esc(info.text)}, ${fmt(info.annual, 2)} percent a year` : 'per-capita output growth'}. Quarterly rates: \\(r\\) and \\(g_X\\) are the annual rates divided by 400, \\(I/Y\\) the investment share and \\(K/Y\\) the capital–output ratio (all private fixed assets) times four. The implied capital share uses the real stock return; \\(\\theta\\) and the implied \\(\\delta\\) are for the RBC models without firm exit.${byBasis[basis].some(i => i.models && keep(i)) ? ' Relative cohort value \\(\\kappa\\) and relative firm value \\(m\\) (stock-market dynamics): \\(s\\) is the quarterly survival rate of firms, \\(\\varepsilon = I_0/p^A\\) the value of entrants over market value per quarter (each measure in the targets), \\(d/p^A\\) the quarterly dividend yield, \\(\\beta\\) that of the RBC models; see the ribbon on stock-market dynamics.' : ''}</p>`);
   }
 
   function render() {

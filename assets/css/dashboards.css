@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-20 13:04 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-21 11:23 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -1171,6 +1171,17 @@ button.button-link { cursor: pointer; font-family: inherit; }
   font-size: 0.72rem;
   white-space: nowrap;
 }
+
+/* Calibration page: the table of data targets fits the page width
+   (Arthur, 21 Nov 2026): narrower label and model columns, model tags
+   stacked, the model value above its model; phones still scroll sideways. */
+.targets-table { width: 100%; }
+.targets-table tbody th { min-width: 9rem; }
+.targets-table td.symbol-cell { white-space: normal; }
+.targets-table td:nth-child(4) { white-space: normal; }
+.targets-table .model-tags { flex-direction: column; align-items: center; }
+.targets-table td.source-cell { min-width: 14rem; }
+.model-value-gap { display: block; height: 0.35rem; }
 
 /* Calibration page: switch above the table of implied parameters. */
 .implied-controls {

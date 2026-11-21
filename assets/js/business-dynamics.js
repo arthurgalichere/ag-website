@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-21 00:36 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-21 11:06 UTC (Claude, economics chat) */
 /* =========================================================
    business-dynamics.js: /economics/business-dynamics.html
    Renders business-dynamics.json (built by the private
@@ -6,8 +6,9 @@
    Dynamics Statistics and quarterly series of the BLS Business Employment
    Dynamics, as chart cards (data-block: annual | quarterly; data-keys;
    data-cycles: HP cycles drawn with the cycle of real GDP), the size-class
-   table, the statistics for calibration, the statistics of each series and
-   their cycle statistics. Charts are drawn when they come into view.
+   table, the statistics for calibration, the value of entrants
+   (entry_value: data-table="entry-value"), the statistics of each series
+   and their cycle statistics. Charts are drawn when they come into view.
    Uses AGDashboards (dashboards.js) and AGSite (site.js).
    ========================================================= */
 (() => {
@@ -194,13 +195,32 @@
       const head = `<tr><th scope="col" class="component-head">Method</th><th scope="col">Persistence<br><span class="unit-label">\\(\\rho_s\\), quarterly</span></th>
         <th scope="col">Shock s.d.<br><span class="unit-label">\\(\\sigma_s\\), quarterly</span></th><th scope="col">Annual AR(1)<br><span class="unit-label">\\(\\rho\\), \\(\\sigma\\)</span></th>
         <th scope="col">Sample</th><th scope="col" class="source-col">Notes</th></tr>`;
-      const rows = surv.dynamics.map(r => `<tr${r.recommended ? ' class="baseline-row"' : ''}><th scope="row">${esc(r.key)}. ${esc(r.label)}${r.recommended ? '<br><span class="unit-label">recommended</span>' : ''}</th>
+      const tag = r => (r.recommended ? '<br><span class="unit-label">default (HP filter)</span>' : r.alternative ? '<br><span class="unit-label">alternative</span>' : '');
+      const rows = surv.dynamics.map(r => `<tr${r.recommended ? ' class="baseline-row"' : ''}><th scope="row">${esc(r.key)}. ${esc(r.label)}${tag(r)}</th>
         <td>${fmt(r.rho, 3)}</td><td>${fmt(r.sigma, 3)}<br><span class="unit-label">${esc(r.units)}</span></td>
         <td>${r.rho_annual == null ? '–' : `${fmt(r.rho_annual, 3)}, ${fmt(r.sigma_annual, 3)}`}</td><td>${esc(r.sample)}</td>
         <td class="source-cell">${esc(r.note)}${r.flag ? ' The annual autocorrelation is not positive: ρ is set to 0.' : ''}</td></tr>`).join('');
       setHTML(dynEl, table('Dynamics of survival', head, rows, 'calibration-page-table')
         + '<p class="table-note">Standard deviations in percent of the survival rate (log points × 100), except C, in percentage points as in the previous approach (almost the same, since s is close to 1).</p>');
     }
+  }
+
+  /* Value of entrants (eps = I_0/p^A): per year, per quarter (converted
+     year by year), subperiods, sample, formula, note, data key. */
+  function renderEntry() {
+    const target = body.querySelector('[data-table="entry-value"]');
+    const rows = state.payload.entry_value;
+    if (!target) return;
+    if (!rows || !rows.length) { target.innerHTML = '<p class="empty-message">Not available yet.</p>'; return; }
+    const head = `<tr><th scope="col" class="component-head">Statistic</th><th scope="col">Per year<br><span class="unit-label">(% or ratio)</span></th>
+      <th scope="col">Per quarter<br><span class="unit-label">(%)</span></th><th scope="col">Subperiods<br><span class="unit-label">(per quarter, %)</span></th>
+      <th scope="col">Sample</th><th scope="col" class="source-col">Method and note</th></tr>`;
+    const body_ = rows.map(r => `<tr><th scope="row">${esc(r.label)}${r.symbol ? `<br><span class="unit-label">\\(${r.symbol}\\)</span>` : ''}<br><span class="unit-label">data: ${esc(r.data_key)}</span></th>
+      <td>${fmt(r.annual, r.digits ?? 3)}</td><td>${r.quarterly == null ? '–' : fmt(r.quarterly, 3)}</td>
+      <td>${(r.subperiods || []).map(x => `${fmt(x.quarterly, 3)} <span class="unit-label">(${esc(x.sample)})</span>`).join('<br>') || '–'}</td>
+      <td>${esc(r.sample)}</td><td class="source-cell">${esc(r.formula)}. ${esc(r.note)}</td></tr>`).join('');
+    setHTML(target, table('Value of entrants', head, body_, 'calibration-page-table')
+      + '<p class="table-note">Rates per quarter: \\(1-(1-x)^{1/4}\\) for each year’s rate \\(x\\), then averaged; ratios of nominal values.</p>');
   }
 
   /* Calibration targets: label, value, units, sample, note. */
@@ -216,6 +236,7 @@
 
   function renderTables() {
     renderTargets();
+    renderEntry();
     renderSize();
     renderCalibration();
     renderSurvival();
