@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investor Sentiment and Equity Issuance</title>
+  <meta name="description" content="US investor sentiment, IPOs and equity issuance: the Baker–Wurgler sentiment index and its components, and new equity issues and buybacks relative to the market value of corporate equities, with statistics for calibration and their cycles." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="investor-sentiment"
+  data-data-url="/assets/data/economics/{country}/investor-sentiment.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial, Credit and Business Indicators
+  </a>
+  <a class="toolbar-next-link" href="/economics/business-dynamics.html">Next: Business Dynamics <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial, Credit and Business Indicators</p>
+    <h1 class="page-title">Investor Sentiment and Equity Issuance</h1>
+    <p class="lead">When investors are optimistic, young and hard-to-value firms are priced high, more firms go public and firms raise more equity. This page shows the investor sentiment index of Baker and Wurgler (2006, 2007) and its components, US equity issuance relative to debt and to the market value of corporate equities, and the statistics they give for calibrating models in which new firms and new shares enter the stock market: the persistence of sentiment and the value of new issues relative to the market.</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="quarterly_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly (CSV)
+        </a>
+        <a class="button-link" data-download="monthly_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Monthly (CSV)
+        </a>
+        <a class="button-link" data-download="mat" href="#" download>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>Quarterly values: sentiment, the fund discount, the dividend premium and the equity share at the end of the quarter; IPOs summed over the quarter, their first-day returns averaged with IPO weights. Monthly data are in the downloads.</li>
+      <li>Shaded bands mark US recessions (USRECQ).</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  
+  <section class="content-section reveal delay-160" aria-labelledby="sentiment-title">
+    <h2 id="sentiment-title" class="section-title">Investor sentiment</h2>
+    <p class="section-introduction">Baker and Wurgler (2006, 2007) measure investor sentiment, the propensity to speculate, from market prices and volumes that move with the demand for young, small, unprofitable and hard-to-value stocks. Their index is the first principal component of five such measures, standardised to mean zero and unit variance. Its orthogonalised version removes the part explained by macroeconomic conditions.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>Sentiment</dt><dd>optimism or pessimism about stocks not justified by fundamentals; it matters most for firms whose value is hardest to judge.</dd></div>
+      <div class="key-term"><dt>Index</dt><dd>a low-frequency level indicator: its components are smoothed or lagged twelve months, so its quarter-to-quarter changes should not be read as changes in sentiment.</dd></div>
+      
+    </dl>
+    
+    <p class="more-link"><a class="text-link" href="#data-ribbon" data-open-ribbon>More on the index and its components <i class="fas fa-arrow-down" aria-hidden="true"></i></a></p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="sent_orth,sent" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Baker–Wurgler sentiment index</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="components-title">
+    <h2 id="components-title" class="section-title">Components of the index</h2>
+    <p class="section-introduction">Each component rises with sentiment: more IPOs and higher first-day returns, a larger share of equity in new issues, a smaller discount on closed-end funds, and a lower premium for dividend payers.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>IPO</dt><dd>initial public offering: a firm sells shares to the public for the first time; its first-day return is the rise of the price on the first day of trading.</dd></div>
+      <div class="key-term"><dt>Closed-end fund discount</dt><dd>how far the shares of closed-end funds trade below the value of the stocks they hold.</dd></div>
+      <div class="key-term"><dt>Dividend premium</dt><dd>the log difference between the average market-to-book ratios of dividend payers and non-payers.</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="nipo" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Number of IPOs</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="ripo" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">First-day return of IPOs</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="cefd" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Closed-end fund discount</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="pdnd" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Dividend premium</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="issuance-title">
+    <h2 id="issuance-title" class="section-title">Equity issuance</h2>
+    <p class="section-introduction">How much equity firms raise, relative to debt and to the value of existing shares. Gross issues count the new shares sold; net issuance subtracts the shares bought back and those retired in mergers and acquisitions, which since the 1980s often exceed new issues.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>Equity share of new issues</dt><dd>equity issues over equity plus debt issues in the past twelve months (Baker and Wurgler, 2000).</dd></div>
+      <div class="key-term"><dt>Market value</dt><dd>the value at market prices of the shares of US nonfinancial corporations (Federal Reserve, Financial Accounts).</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="eq_share" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Equity share of new issues</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="debt_issues,eq_issues" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Gross equity and debt issues</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Federal Reserve Bulletin, as compiled by Baker and Wurgler; the series ends in 2010.</p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="iss_gross,iss_net" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Equity issues relative to market value</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Relative to the market value of nonfinancial corporate equities at the end of the previous quarter.</p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="mv" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Market value of nonfinancial corporate equities</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+  </section>
+  
+
+  <section class="content-section reveal delay-180" aria-labelledby="calibration-title">
+    <h2 id="calibration-title" class="section-title">Statistics for calibration</h2>
+    <p class="section-introduction">In a model in which new firms enter the stock market, the steady-state value of new issues relative to the market can be calibrated to gross equity issues over market value, and the persistence of shocks to the pricing of young firms to that of sentiment. Net issuance measures the other side, the payout to shareholders through buybacks. <a class="text-link" href="#calibration-ribbon" data-open-ribbon>How these relate to the models</a>; <a class="text-link" href="#model-ribbon" data-open-ribbon>sentiment in the data and in the model</a>.</p>
+    <div class="shares" data-table="targets"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">Statistics of the quarterly series</h3>
+    <div class="shares" data-table="stats-quarterly"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <section class="content-section reveal delay-200" aria-labelledby="cycles-title">
+    <h2 id="cycles-title" class="section-title">Sentiment and issuance over the business cycle</h2>
+    <p class="section-introduction">Cyclical components (Hodrick–Prescott filter, λ = 1600) compared with that of real GDP. The sentiment indexes are already stationary, standardised levels: they are shown as deviations from their mean, not filtered.</p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="sent_orth" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Sentiment (orthogonalised)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="nipo" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Number of IPOs</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="iss_net" data-cycles="true" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Net equity issuance relative to market value</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+      </figure>
+      
+    </div>
+    <h3 class="subsection-title">Cycle statistics</h3>
+    <p class="section-introduction">Standard deviation, ratio to that of real GDP (for the market value), first-order autocorrelation, and the correlation of the series \(k\) quarters ahead, \(x_{t+k}\), with real GDP in quarter \(t\); the peak is highlighted.</p>
+    <div class="shares" data-table="cycles-quarterly"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts and tables on this page need JavaScript.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions and methods</h2>
+
+    <details class="ribbon" id="data-ribbon">
+      <summary>
+        <span class="ribbon-title">The Baker–Wurgler index and its components</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Baker and Wurgler (2006) build the index as the first principal component of six proxies for sentiment, each taken with the lag that best fits the others; the version maintained today uses five, since NYSE turnover was dropped (trading has moved to high-frequency institutions and many venues). The proxies are the number of IPOs (sum over the past twelve months), their average first-day return, the closed-end fund discount, the equity share of new issues, and the dividend premium of Baker and Wurgler (2004). SENT⊥ first removes from each proxy its relation with industrial production, consumption, employment and recessions; in 2026 the authors changed this step to detrended rather than year-over-year macro series, to avoid extreme values around the COVID-19 recession.</p>
+        <p>The index is standardised, so its units say nothing about the size of shocks, and its components are smoothed or lagged by twelve months: the authors warn against using its changes. IPO data are from Ibbotson, Sindelar and Ritter (1994) and Jay Ritter’s updates; the fund discount from Neal and Wheatley (1998) and later sources (closed-end funds as a sentiment measure: Lee, Shleifer and Thaler, 1991); equity and debt issues from the Federal Reserve Bulletin. The current file is updated once a year; the dollar levels of equity and debt issuance come from the 2011 file and end in 2010.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="calibration-ribbon">
+      <summary>
+        <span class="ribbon-title">Calibration: entry of new shares and the pricing of young firms</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>When firms exit and new firms enter, the value of the shares of entrants relative to the whole market pins down how much new equity the economy issues in the steady state. Gross equity issues relative to the market value of corporate equities measure it: new firms going public and existing firms selling new shares. The series ends in 2010, when the Federal Reserve Bulletin data used by Baker and Wurgler stop; the coverage of the issues (all corporations) is wider than that of the market value (nonfinancial corporations), which makes the ratio an upper bound.</p>
+        <p>Sentiment concerns how young, small and hard-to-value firms are priced against the rest of the market, so its persistence is a natural benchmark for shocks to the relative price of entrants; its limits, and how it maps to the model, are in <a class="text-link" href="#model-ribbon" data-open-ribbon>Sentiment in the data and in the model</a>.</p>
+        <p>The equity share of new issues of Baker and Wurgler, often written \(s\), is not the survival rate \(s\) of the site’s models; it is called “equity share of new issues” here.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="model-ribbon">
+      <summary>
+        <span class="ribbon-title">Sentiment in the data and in the model</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p><strong>What the index can and cannot tell.</strong> Its persistence, about 0.93 per quarter for the orthogonalised index, supports a persistence of shocks to the pricing of young firms of the order of 0.95. Two caveats limit that use. First, the components are smoothed or lagged over twelve months (IPO numbers summed over the past year, first-day returns averaged over it, the equity share computed over it, the dividend premium lagged a year), which mechanically raises the persistence of the index above that of the sentiment it measures. Second, the index is a first principal component scaled to unit variance: its units have no economic meaning, so it says nothing about the size of the shocks. It can serve as an observable in estimation, where the model sets the scale, but not to calibrate the standard deviation of the shocks.</p>
+        <p><strong>In reality.</strong> Sentiment is the demand of investors for speculative stocks, unrelated to fundamentals: when it is high, young, small, unprofitable, high-volatility and growth firms are priced high relative to old, large and dividend-paying ones, more firms go public, at higher first-day returns, and firms raise more of their funds with equity. Baker and Wurgler (2006) show that these stocks then earn low returns: the mispricing corrects.</p>
+        <p><strong>In the model of stock-market dynamics.</strong> Firms survive each quarter with probability \(s\) and entrants sell new shares. The parameter \(\kappa\) is the price of a cohort of firms relative to the cohort one quarter older, \(p_{t,a-1} = \kappa_t\, p_{t,a}\), with \(s < \kappa < 1\): the higher \(\kappa\), the closer young firms are priced to old ones. A positive shock to \(\kappa_t\), a log AR(1) with persistence \(\rho_\kappa\), is the model’s counterpart of a rise in sentiment: young firms are worth more relative to the market, and the steady-state share of new issues in market value, \(1 - s/\kappa\), rises with \(\kappa\), as IPOs and equity issues rise with sentiment in the data. Literally, then, \(\kappa\) is a relative valuation of cohorts, not the sentiment index itself: the index is an ordinal, standardised measure of the same relative pricing. Two differences remain. In the model, the value of young firms reflects valuation, not mispricing that later reverses unless \(\kappa\) returns to its mean; and entrants issue at the market price, so the first-day return of IPOs (about 17 percent) has no counterpart, and gross issues include the new shares of existing firms, which the model’s entrants do not cover.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Baker, M. and J. Wurgler (2000). “The Equity Share in New Issues and Aggregate Stock Returns.” <em>Journal of Finance</em> 55(5): 2219–2257.</li>
+          <li>Baker, M. and J. Wurgler (2004). “A Catering Theory of Dividends.” <em>Journal of Finance</em> 59(3): 1125–1165.</li>
+          <li>Baker, M. and J. Wurgler (2006). “Investor Sentiment and the Cross-Section of Stock Returns.” <em>Journal of Finance</em> 61(4): 1645–1680.</li>
+          <li>Baker, M. and J. Wurgler (2007). “Investor Sentiment in the Stock Market.” <em>Journal of Economic Perspectives</em> 21(2): 129–152.</li>
+          <li>Board of Governors of the Federal Reserve System. <em>Financial Accounts of the United States (Z.1)</em>, via FRED.</li>
+          <li>Ibbotson, R. G., J. L. Sindelar and J. R. Ritter (1994). “The Market’s Problems with the Pricing of Initial Public Offerings.” <em>Journal of Applied Corporate Finance</em> 7(1): 66–74.</li>
+          <li>Lee, C. M. C., A. Shleifer and R. H. Thaler (1991). “Investor Sentiment and the Closed-End Fund Puzzle.” <em>Journal of Finance</em> 46(1): 75–109.</li>
+          <li>Neal, R. and S. M. Wheatley (1998). “Do Measures of Investor Sentiment Predict Returns?” <em>Journal of Financial and Quantitative Analysis</em> 33(4): 523–547.</li>
+          <li>Baker–Wurgler investor sentiment data: <a class="text-link" href="https://pages.stern.nyu.edu/~jwurgler/" rel="noopener">pages.stern.nyu.edu/~jwurgler</a> and <a class="text-link" href="https://github.com/BWInvestorSentimentIndex/BakerandWurglerInvestorSentimentIndex" rel="noopener">GitHub</a>.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="update-note page-dates"><span class="page-created">Page created on 21/11/2026<span class="visually-hidden">. </span></span><span class="data-updated" data-role="update-note" hidden></span></p>
+
+
+  <nav class="page-navigation reveal delay-260" aria-label="Dashboard navigation">
+  <a href="/economics/stock-market-cycles.html" class="page-nav-link is-previous">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Previous dashboard</span>
+      <span class="page-nav-title">Stock Market Cycles</span>
+    </span>
+  </a>
+  <a href="/economics/business-dynamics.html" class="page-nav-link is-next">
+    <span class="page-nav-copy">
+      <span class="page-nav-direction">Next dashboard</span>
+      <span class="page-nav-title">Business Dynamics</span>
+    </span>
+    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+  </a>
+</nav>
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> The sentiment index and its components are those of Malcolm Baker and Jeffrey Wurgler (please cite Baker and Wurgler, 2006, 2007); IPO data from Jay Ritter; equity market value and net issuance from the Federal Reserve’s Financial Accounts (via FRED). The quarterly conversion, ratios, statistics, cycles, charts and text are the author’s. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Investor Sentiment and Equity Issuance</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/business-dynamics.js" defer></script>
+  
+</body>
+</html>

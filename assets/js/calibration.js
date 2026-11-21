@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-20 13:04 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-21 00:45 UTC (Claude, economics chat) */
 /* =========================================================
    calibration.js: /dsge/calibration.html
    Renders calibration.json (built by the private calibration.py):
@@ -100,10 +100,15 @@
   }
 
   function renderImplied() {
-    const rbcFamily = ['all', 'rbc', 'lag', 'stock'].includes(state.model);
+    /* Rows without "models" belong to the RBC family; κ rows to the
+       stock-market-dynamics model. */
     const section = role('implied').closest('section');
-    section.hidden = !rbcFamily;
-    if (!rbcFamily) return;
+    const byBasis0 = Array.isArray(state.payload.implied) ? { gy: state.payload.implied } : state.payload.implied;
+    const rowModels = i => i.models || ['rbc', 'lag', 'stock'];
+    const keep = i => state.model === 'all' || rowModels(i).includes(state.model);
+    const any = Object.values(byBasis0).some(list => list.some(keep));
+    section.hidden = !any;
+    if (!any) return;
     const params = Object.fromEntries(state.payload.parameters.map(p => [p.id, p]));
     const calibrated = { beta_ret: params.beta, beta_r_bill: params.beta, delta: params.delta, alpha: params.alpha };
     const head = '<tr><th scope="col" class="component-head">Parameter</th><th scope="col">Relation</th><th scope="col">Implied value</th><th scope="col">Calibrated value</th></tr>';
@@ -114,14 +119,14 @@
     const info = (state.payload.growth_bases || {})[basis];
     const control = body.querySelector('[data-control="growth"]');
     if (control) control.hidden = !state.payload.growth_bases;
-    const rows = byBasis[basis].map(i => `<tr>
+    const rows = byBasis[basis].filter(keep).map(i => `<tr>
       <th scope="row">${esc(i.name)}</th>
       <td class="symbol-cell">\\(${i.formula}\\)</td>
-      <td>${fmt(i.value, i.digits ?? 3)}</td>
+      <td>${fmt(i.value, i.digits ?? 3)}${i.valid === false ? '<br><span class="unit-label">outside \\(s < \\kappa < 1\\)</span>' : ''}</td>
       <td>${calibrated[i.id] ? fmt(calibrated[i.id].value, i.digits ?? 3) : '–'}</td></tr>`).join('');
     setHTML(role('implied'), `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table">
       <caption class="visually-hidden">Parameters implied by the targets</caption><thead>${head}</thead><tbody>${rows}</tbody></table></div>
-      <p class="table-note">Trend growth \\(g_X\\): ${info ? `${esc(info.text)}, ${fmt(info.annual, 2)} percent a year` : 'per-capita output growth'}. Quarterly rates: \\(r\\) and \\(g_X\\) are the annual rates divided by 400, \\(I/Y\\) the investment share and \\(K/Y\\) the capital–output ratio (all private fixed assets) times four. The implied capital share uses the real stock return.</p>`);
+      <p class="table-note">Trend growth \\(g_X\\): ${info ? `${esc(info.text)}, ${fmt(info.annual, 2)} percent a year` : 'per-capita output growth'}. Quarterly rates: \\(r\\) and \\(g_X\\) are the annual rates divided by 400, \\(I/Y\\) the investment share and \\(K/Y\\) the capital–output ratio (all private fixed assets) times four. The implied capital share uses the real stock return.${byBasis[basis].some(i => i.models && keep(i)) ? ' Relative cohort value \\(\\kappa\\) (stock-market dynamics): \\(s\\) is the quarterly survival rate of firms, \\(I_0/p^A\\) gross equity issues over market value, \\(d/p^A\\) the quarterly dividend yield, \\(\\beta\\) that of the RBC models; see the ribbon on stock-market dynamics.' : ''}</p>`);
   }
 
   function render() {

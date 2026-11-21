@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-20 15:46 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-21 00:36 UTC (Claude, economics chat) */
 /* =========================================================
    business-dynamics.js: /economics/business-dynamics.html
    Renders business-dynamics.json (built by the private
@@ -15,7 +15,10 @@
 
   const D = window.AGDashboards;
   const S = window.AGSite;
-  const body = document.querySelector('[data-dashboard="business-dynamics"]');
+  /* Also drives Investor Sentiment and Equity Issuance (same payload layout:
+     blocks annual and/or quarterly, variables, recessions, downloads, and a
+     targets table). */
+  const body = document.querySelector('[data-dashboard="business-dynamics"], [data-dashboard="investor-sentiment"]');
   if (!body || !D || !S) return;
 
   const COLOURS = ['--chart-1', '--series-1', '--series-2', '--series-4'];
@@ -200,7 +203,19 @@
     }
   }
 
+  /* Calibration targets: label, value, units, sample, note. */
+  function renderTargets() {
+    const target = body.querySelector('[data-table="targets"]');
+    const rows = state.payload.targets;
+    if (!target || !rows) return;
+    const head = `<tr><th scope="col" class="component-head">Statistic</th><th scope="col">Value</th><th scope="col">Sample</th><th scope="col" class="source-col">Note</th></tr>`;
+    const body_ = rows.map(r => `<tr><th scope="row">${esc(r.label)}</th><td>${fmt(r.value, r.digits ?? 2)}${r.units ? `<br><span class="unit-label">${esc(r.units)}</span>` : ''}</td>
+      <td>${esc(r.sample)}</td><td class="source-cell">${esc(r.note)}</td></tr>`).join('');
+    target.innerHTML = table('Statistics for calibration', head, body_, 'calibration-page-table');
+  }
+
   function renderTables() {
+    renderTargets();
     renderSize();
     renderCalibration();
     renderSurvival();
@@ -251,7 +266,7 @@
     try {
       const response = await S.fetchFresh(body.dataset.dataUrl.replace('{country}', 'us'));
       state.payload = await response.json();
-      if (!state.payload || !state.payload.annual || !state.payload.quarterly) throw new Error('The data file does not contain the expected series.');
+      if (!state.payload || !(state.payload.annual || state.payload.quarterly)) throw new Error('The data file does not contain the expected series.');
       status.hidden = true;
       updatePage();
       renderTables();
