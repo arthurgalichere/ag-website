@@ -1,6 +1,6 @@
 # Data dictionary: business-cycles.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/business-cycles.json (generated 2026-11-20T16:12:55+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/business-cycles.json (generated 2026-11-24T16:53:35+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -54,7 +54,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 |---|---|
 | dashboard | str: business-cycles |
 | country | values: code = US, name = United States |
-| generated_at_utc | str: 2026-11-20T16:12:55+00:00 |
+| generated_at_utc | str: 2026-11-24T16:53:35+00:00 |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | sample | values: start = 1950-01-01, end = 2026-07-01 |
 | methods.hp_lambda | float: 1600.0 |

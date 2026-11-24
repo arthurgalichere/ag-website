@@ -40,14 +40,14 @@ target,eps_ipo_offer,0.2937,,pct_q,Q,0.002937,mean over years of 1 - (1 - x)^(1/
 target,rho_sent_orth,0.9312,,autocorr,Q,,AR(1) of end-of-quarter values,1965 Q3–2025 Q4,smd,Persistence of sentiment (quarterly AR(1))
 target,eq_share,14.1,,pct,-,,mean,1958 Q4–2025 Q4,,Equity share of new issues
 target,iss_net,-0.1557,,pct_q,Q,-0.001557,mean of quarterly ratios,1952 Q1–2026 Q2,,Net equity issuance / market value (per quarter)
-parameter,beta,0.982709,,ratio,Q,,,,rbc lag stock,Discount factor (per quarter)
+parameter,beta,0.9827094467,,ratio,Q,,,,rbc lag stock,Discount factor (per quarter)
 parameter,sigma,1.0,,none,-,,,,rbc lag stock,Relative risk aversion (inverse of the intertemporal elasticity of substitution)
-parameter,theta,3.364102,,none,-,,,,rbc lag stock,Weight of leisure in utility
-parameter,alpha,0.333333,,share,-,,,,rbc lag stock,Capital’s share of income
+parameter,theta,3.3641013957,,none,-,,,,rbc lag stock,Weight of leisure in utility
+parameter,alpha,0.3333333333,,share,-,,,,rbc lag stock,Capital’s share of income
 parameter,delta,0.025,,net_rate_q,Q,,,,rbc lag stock,Depreciation rate (per quarter)
-parameter,g_x,0.00406,,net_rate_q,Q,,,,rbc lag stock,Trend growth of labour-augmenting technology (per quarter)
-parameter,rho_a,0.9761,,autocorr,Q,,,,rbc lag stock,Persistence of technology
-parameter,sigma_a,0.8864,,lp100_q,Q,,,,rbc lag stock,Standard deviation of technology shocks (percent)
+parameter,g_x,0.004063774498,,net_rate_q,Q,,,,rbc lag stock,Trend growth of labour-augmenting technology (per quarter)
+parameter,rho_a,0.976122,,autocorr,Q,,,,rbc lag stock,Persistence of technology
+parameter,sigma_a,0.886379,,lp100_q,Q,,,,rbc lag stock,Standard deviation of technology shocks (percent)
 parameter,phi,0.17,,share,-,,,,lag,Installation parameter (steady state)
 parameter,rho_phi,0.737,,autocorr,Q,,,,lag,Persistence of installation shocks
 parameter,sigma_phi,0.3569,,lp100_q,Q,,,,lag,Standard deviation of installation shocks (percent)
@@ -66,10 +66,10 @@ parameter,nk_sd_a,0.7522296623553304,,lp100_q,Q,,,,nk,Technology shock (percent)
 parameter,nk_sd_th,5.914145755832261,,lp100_q,Q,,,,nk,Labour-preference shock (percent)
 parameter,nk_sd_z,1.7531847272490004,,lp100_q,Q,,,,nk,Demand shock (percent)
 parameter,nk_sd_nu,3.1934880537489927,,pp_y,Q,,,,nk,"Monetary policy shock (percentage points, annual rate)"
-implied,beta_ret,0.9827057525,,ratio,Q,,,,rbc lag stock,"Discount factor, from the real stock return"
-implied,beta_r_bill,1.001807189,,ratio,Q,,,,,"Discount factor, from the real Treasury bill rate"
-implied,delta,0.01581019178,,net_rate_q,Q,,,,,Depreciation rate (per quarter)
-implied,alpha,0.3283558868,,share,-,,,,,Capital’s share of income
+implied,beta_ret,0.9827094467,,ratio,Q,,,,rbc lag stock,"Discount factor, from the real stock return"
+implied,beta_r_bill,1.001810955,,ratio,Q,,,,,"Discount factor, from the real Treasury bill rate"
+implied,delta,0.01580641728,,net_rate_q,Q,,,,,Depreciation rate (per quarter)
+implied,alpha,0.3283228721,,share,-,,,,,Capital’s share of income
 implied,kappa_bds,0.9832551343,,ratio,Q,,,,smd,"Relative cohort value, all firms, BDS employment share of startups"
 implied,m_bds,3.607019743,,ratio,-,,,,smd,"Average firm relative to an entrant, all firms, BDS employment share of startups"
 implied,kappa_ipo,0.9803789739,,ratio,Q,,,,,"Relative cohort value, IPOs over all nonfinancial corporate equities"
@@ -77,4 +77,4 @@ implied,m_ipo,6.639746178,,ratio,-,,,,,"Average firm relative to an entrant, IPO
 implied,kappa_ipo_listed,0.9801606212,,ratio,Q,,,,,"Relative cohort value, IPOs over listed companies"
 implied,m_ipo_listed,7.093990755,,ratio,-,,,,,"Average firm relative to an entrant, IPOs over listed companies"
 implied,kappa_iss,0.980186189,,ratio,Q,,,,,"Relative cohort value, gross equity issues, for comparison"
-implied,kappa_dp,0.9673449327,,ratio,Q,,,,,"Relative cohort value, from the dividend yield"
+implied,kappa_dp,0.9673453758,,ratio,Q,,,,,"Relative cohort value, from the dividend yield"

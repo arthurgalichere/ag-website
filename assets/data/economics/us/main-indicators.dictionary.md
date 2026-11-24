@@ -1,6 +1,6 @@
 # Data dictionary: main-indicators.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/main-indicators.json (generated 2026-11-20T16:12:55+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/main-indicators.json (generated 2026-11-24T16:53:35+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -59,7 +59,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 |---|---|
 | dashboard | str: main-indicators |
 | country | values: code = US, name = United States |
-| generated_at_utc | str: 2026-11-20T16:12:55+00:00 |
+| generated_at_utc | str: 2026-11-24T16:53:35+00:00 |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | trend_methods | values: hp = Hodrick-Prescott filter: lambda = 1600 (quarterly) or 14400 (monthly), cf = Christiano-Fitzgerald band-pass: series minus its 6-32 quarter (18-96 month) component, applied_to = 100 x log level for level series (shown in levels); the rate itself for rates; the value itself for the change … |
 | gdp_shares.periods | values: latest = 2026 Q3, recent = Last 10 years, recent_range = 2016 Q4–2026 Q3, full = 1947–2026, full_range = 1947 Q1–2026 Q3 |

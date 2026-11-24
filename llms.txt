@@ -40,8 +40,8 @@ Machine-readable index of pages and files: https://arthurgalichere.com/assets/da
   - data: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.json (257 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.dictionary.md
   - downloads: CSV https://arthurgalichere.com/downloads/economics/us/us-rbc-stock-market.csv; MATLAB .mat https://arthurgalichere.com/downloads/economics/us/us-rbc-stock-market.mat
 - [Calibration](https://arthurgalichere.com/dsge/calibration.html): Parameters, data targets and implied parameters for the site's DSGE models; plain-text summary in calibration.md and calibration.csv.
-  - data: https://arthurgalichere.com/assets/data/economics/us/calibration.json (45 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md
+  - data: https://arthurgalichere.com/assets/data/economics/us/calibration.json (42 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md
 
 Every source the site downloads is also kept privately as last read; if a source stops publishing or removes data, the site keeps the data it had and says so here.
 
-Latest data update: 2026-11-24T16:28:22+00:00 (UTC).
+Latest data update: 2026-11-24T16:55:48+00:00 (UTC).

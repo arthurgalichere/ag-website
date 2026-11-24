@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-24T16:28:22+00:00",
+  "generated_at_utc": "2026-11-24T16:55:48+00:00",
   "site": "https://arthurgalichere.com",
   "files": {
     "business-cycles": {
@@ -18,7 +18,7 @@
           "url": "/downloads/economics/us/us-business-cycles-clean.mat"
         }
       ],
-      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+      "generated_at_utc": "2026-11-24T16:53:35+00:00"
     },
     "business-dynamics": {
       "json": "/assets/data/economics/us/business-dynamics.json",
@@ -48,7 +48,7 @@
     },
     "calibration": {
       "json": "/assets/data/economics/us/calibration.json",
-      "json_kb": 45,
+      "json_kb": 42,
       "sample": "",
       "dictionary": "/assets/data/economics/us/calibration.dictionary.md",
       "summaries": [
@@ -62,7 +62,7 @@
         }
       ],
       "downloads": [],
-      "generated_at_utc": "2026-11-24T16:28:22+00:00"
+      "generated_at_utc": "2026-11-24T16:55:48+00:00"
     },
     "financial-banking": {
       "json": "/assets/data/economics/us/financial-banking.json",
@@ -220,7 +220,7 @@
           "url": "/downloads/economics/us/us-capital-stock-quarterly.csv"
         }
       ],
-      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+      "generated_at_utc": "2026-11-24T16:53:35+00:00"
     },
     "nk-model": {
       "json": "/assets/data/economics/us/nk-model.json",
@@ -281,7 +281,7 @@
           "url": "/downloads/economics/us/us-rbc-technology-shocks-hp-filtered.mat"
         }
       ],
-      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+      "generated_at_utc": "2026-11-24T16:53:35+00:00"
     },
     "rbc-model-it-lag": {
       "json": "/assets/data/economics/us/rbc-model-it-lag.json",
@@ -290,7 +290,7 @@
       "dictionary": "/assets/data/economics/us/rbc-model-it-lag.dictionary.md",
       "summaries": [],
       "downloads": [],
-      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+      "generated_at_utc": "2026-11-24T16:53:35+00:00"
     },
     "rbc-model-stock-market": {
       "json": "/assets/data/economics/us/rbc-model-stock-market.json",

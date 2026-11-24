@@ -1,6 +1,6 @@
 # Calibration data — arthurgalichere.com
 
-Generated: 2026-11-24T16:28:22+00:00 (UTC). Page: https://arthurgalichere.com/dsge/calibration.html. Full file with definitions, sources and notes: https://arthurgalichere.com/assets/data/economics/us/calibration.json. Data dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md. Site index: https://arthurgalichere.com/llms.txt.
+Generated: 2026-11-24T16:55:48+00:00 (UTC). Page: https://arthurgalichere.com/dsge/calibration.html. Full file with definitions, sources and notes: https://arthurgalichere.com/assets/data/economics/us/calibration.json. Data dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md. Site index: https://arthurgalichere.com/llms.txt.
 
 Values are at full precision. unit_code: share (fraction), years, pct_y (percent a year, annualised quarterly rate), pp_y (percentage points of an annual rate), pct_q (percent a quarter), pct (percent, not a rate per period), ratio, log (natural-log points), lp100_q (log points x 100 per quarter), autocorr, net_rate_q (net rate per quarter, x - 1), none. q_decimal: the value as a decimal per quarter, the form the models use. used_by: models whose decided calibration uses the row (the page's defaults, e.g. HP-filtered survival dynamics, are shown for all models). Models: rbc = The Canonical RBC Model; lag = RBC Model with an Investment Installation Lag; stock = The RBC Model with a Stock Market; nk = The Canonical New Keynesian Model; smd = Stock-market dynamics model (forthcoming).
 
@@ -8,14 +8,14 @@ Values are at full precision. unit_code: share (fraction), years, pct_y (percent
 
 | id | symbol | value | unit | freq | models |
 |---|---|---|---|---|---|
-| beta | \beta | 0.982709 | ratio | Q | rbc, lag, stock |
+| beta | \beta | 0.9827094467 | ratio | Q | rbc, lag, stock |
 | sigma | \sigma | 1 | none | - | rbc, lag, stock |
-| theta | \theta | 3.364102 | none | - | rbc, lag, stock |
-| alpha | \alpha | 0.333333 | share | - | rbc, lag, stock |
+| theta | \theta | 3.364101396 | none | - | rbc, lag, stock |
+| alpha | \alpha | 0.3333333333 | share | - | rbc, lag, stock |
 | delta | \delta | 0.025 | net_rate_q | Q | rbc, lag, stock |
-| g_x | g_X | 0.00406 (gross 1.00406, log 0.00405178044) | net_rate_q | Q | rbc, lag, stock |
-| rho_a | \rho_A | 0.9761 | autocorr | Q | rbc, lag, stock |
-| sigma_a | \sigma_A | 0.8864 | lp100_q | Q | rbc, lag, stock |
+| g_x | g_X | 0.004063774498 (gross 1.004063774, log 0.004055539669) | net_rate_q | Q | rbc, lag, stock |
+| rho_a | \rho_A | 0.976122 | autocorr | Q | rbc, lag, stock |
+| sigma_a | \sigma_A | 0.886379 | lp100_q | Q | rbc, lag, stock |
 | phi | \phi | 0.17 | share | - | lag |
 | rho_phi | \rho_\phi | 0.737 | autocorr | Q | lag |
 | sigma_phi | \sigma_\phi | 0.3569 | lp100_q | Q | lag |
@@ -81,14 +81,14 @@ Values are at full precision. unit_code: share (fraction), years, pct_y (percent
 | eq_share | 14.1 |  | pct | - |  | mean | 1958 Q4–2025 Q4 |  |
 | iss_net | -0.1557 |  | pct_q | Q | -0.001557 | mean of quarterly ratios | 1952 Q1–2026 Q2 |  |
 
-## Implied parameters (trend growth: g_X (trend of TFP), 1.624 percent a year)
+## Implied parameters (trend growth: g_X (trend of TFP), 1.625509799 percent a year)
 
 | id | value | relation | inputs | valid | used_by |
 |---|---|---|---|---|---|
-| beta_ret | 0.9827057525 | \beta = (1 + g_X)/(1 + r) | ret, g |  | rbc, lag, stock |
-| beta_r_bill | 1.001807189 | \beta = (1 + g_X)/(1 + r) | r_bill, g |  |  |
-| delta | 0.01581019178 | \delta = (I/Y)/(K/Y) - g_X | i_y, k_y, g |  |  |
-| alpha | 0.3283558868 | \alpha = (r + \delta)\,K/Y | ret, delta (implied), k_y, g |  |  |
+| beta_ret | 0.9827094467 | \beta = (1 + g_X)/(1 + r) | ret, g |  | rbc, lag, stock |
+| beta_r_bill | 1.001810955 | \beta = (1 + g_X)/(1 + r) | r_bill, g |  |  |
+| delta | 0.01580641728 | \delta = (I/Y)/(K/Y) - g_X | i_y, k_y, g |  |  |
+| alpha | 0.3283228721 | \alpha = (r + \delta)\,K/Y | ret, delta (implied), k_y, g |  |  |
 | kappa_bds | 0.9832551343 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_bds | yes | smd |
 | m_bds | 3.607019743 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_bds |  | smd |
 | kappa_ipo | 0.9803789739 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_ipo | yes |  |
@@ -96,11 +96,11 @@ Values are at full precision. unit_code: share (fraction), years, pct_y (percent
 | kappa_ipo_listed | 0.9801606212 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_ipo_listed | yes |  |
 | m_ipo_listed | 7.093990755 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_ipo_listed |  |  |
 | kappa_iss | 0.980186189 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, iss_gross | yes |  |
-| kappa_dp | 0.9673449327 | \kappa = s\,(1/\beta - d/p^A)^{-1} | s_surv, dp, beta | no (outside s < kappa < 1) |  |
+| kappa_dp | 0.9673453758 | \kappa = s\,(1/\beta - d/p^A)^{-1} | s_surv, dp, beta | no (outside s < kappa < 1) |  |
 
-Implied with trend growth = Per-capita output growth (1.998102346 percent a year): beta_ret 0.9836211174; beta_r_bill 1.002740347; delta 0.01487493592; alpha 0.3201754187; kappa_bds 0.9832551343; m_bds 3.607019743; kappa_ipo 0.9803789739; m_ipo 6.639746178; kappa_ipo_listed 0.9801606212; m_ipo_listed 7.093990755; kappa_iss 0.980186189; kappa_dp 0.9673449327.
+Implied with trend growth = Per-capita output growth (1.998102346 percent a year): beta_ret 0.9836211174; beta_r_bill 1.002740347; delta 0.01487493592; alpha 0.3201754187; kappa_bds 0.9832551343; m_bds 3.607019743; kappa_ipo 0.9803789739; m_ipo 6.639746178; kappa_ipo_listed 0.9801606212; m_ipo_listed 7.093990755; kappa_iss 0.980186189; kappa_dp 0.9673453758.
 
 ## Model steady states (model pages, baseline calibration)
 
 - stock: d_y 0.126; pd_annual 14.21; dp_annual 7.038; return_annual 8.691
-- rbc: hours 0.2; k_y_annual 1.783; i_y 0.207; c_y 0.793; r_annual 8.692
+- rbc: hours 0.2; k_y_annual 1.783292; i_y 0.207317; c_y 0.792683; r_annual 8.692021
