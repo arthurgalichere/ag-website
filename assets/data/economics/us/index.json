@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-24T16:55:48+00:00",
+  "generated_at_utc": "2026-11-24T22:42:53+00:00",
   "site": "https://arthurgalichere.com",
   "files": {
     "business-cycles": {
@@ -44,7 +44,7 @@
           "url": "/downloads/economics/us/us-business-dynamics-survival.csv"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:27:55+00:00"
+      "generated_at_utc": "2026-11-24T22:42:19+00:00"
     },
     "calibration": {
       "json": "/assets/data/economics/us/calibration.json",
@@ -62,7 +62,7 @@
         }
       ],
       "downloads": [],
-      "generated_at_utc": "2026-11-24T16:55:48+00:00"
+      "generated_at_utc": "2026-11-24T22:42:53+00:00"
     },
     "financial-banking": {
       "json": "/assets/data/economics/us/financial-banking.json",
@@ -84,7 +84,7 @@
           "url": "/downloads/economics/us/us-financial-banking.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+      "generated_at_utc": "2026-11-24T22:39:54+00:00"
     },
     "financial-conditions": {
       "json": "/assets/data/economics/us/financial-conditions.json",
@@ -106,7 +106,7 @@
           "url": "/downloads/economics/us/us-financial-conditions.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+      "generated_at_utc": "2026-11-24T22:39:54+00:00"
     },
     "financial-debt-leverage": {
       "json": "/assets/data/economics/us/financial-debt-leverage.json",
@@ -128,7 +128,7 @@
           "url": "/downloads/economics/us/us-financial-debt-leverage.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+      "generated_at_utc": "2026-11-24T22:39:54+00:00"
     },
     "financial-stock-market": {
       "json": "/assets/data/economics/us/financial-stock-market.json",
@@ -150,7 +150,7 @@
           "url": "/downloads/economics/us/us-financial-stock-market.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+      "generated_at_utc": "2026-11-24T22:39:54+00:00"
     },
     "financial-stock-market-cycles": {
       "json": "/assets/data/economics/us/financial-stock-market-cycles.json",
@@ -168,7 +168,7 @@
           "url": "/downloads/economics/us/us-financial-stock-market-cycles.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+      "generated_at_utc": "2026-11-24T22:39:54+00:00"
     },
     "investor-sentiment": {
       "json": "/assets/data/economics/us/investor-sentiment.json",
@@ -194,7 +194,7 @@
           "url": "/downloads/economics/us/us-investor-sentiment.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:28:01+00:00"
+      "generated_at_utc": "2026-11-24T22:42:26+00:00"
     },
     "main-indicators": {
       "json": "/assets/data/economics/us/main-indicators.json",
@@ -229,7 +229,7 @@
       "dictionary": "/assets/data/economics/us/nk-model.dictionary.md",
       "summaries": [],
       "downloads": [],
-      "generated_at_utc": "2026-11-21T11:28:24+00:00"
+      "generated_at_utc": "2026-11-24T22:42:52+00:00"
     },
     "nk-shocks": {
       "json": "/assets/data/economics/us/nk-shocks.json",
@@ -247,7 +247,7 @@
           "url": "/downloads/economics/us/us-nk-shocks.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:28:24+00:00"
+      "generated_at_utc": "2026-11-24T22:42:52+00:00"
     },
     "rbc-model": {
       "json": "/assets/data/economics/us/rbc-model.json",
@@ -308,7 +308,7 @@
           "url": "/downloads/economics/us/us-rbc-stock-market.mat"
         }
       ],
-      "generated_at_utc": "2026-11-21T11:28:23+00:00"
+      "generated_at_utc": "2026-11-24T22:42:51+00:00"
     }
   },
   "sources_from_kept_copy": {},

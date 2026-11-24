@@ -26,20 +26,20 @@ target,nk_infl,3.1723,,pct_y,Q,0.00793075,mean,1954 Q3–2026 Q3,,"Inflation, NK
 target,nk_ff,4.5939,,pct_y,Q,0.01148475,mean,1954 Q3–2026 Q3,,"Federal funds rate, NK sample (percent a year)"
 target,s_surv,97.698,,pct_q,Q,0.97698,mean over years of (1 - exit)^(1/4),1979–2023,smd,Firm survival rate (per quarter)
 target,rho_s,0.0,,autocorr,Q,,"quarterly AR(1), time-aggregated from annual (HP 6.25)",1979–2023,,Persistence of firm survival (per quarter)
-target,sigma_s,0.1612,,lp100_q,Q,0.001612,sd of quarterly AR(1) innovations (HP 6.25),1979–2023,,Standard deviation of survival shocks (percent)
-target,rho_s_lin,0.859,,autocorr,Q,,"quarterly AR(1), time-aggregated from annual (linear trend)",1979–2023,smd,"Persistence of firm survival, linear trend (alternative)"
-target,sigma_s_lin,0.09289,,lp100_q,Q,0.0009289,sd of quarterly AR(1) innovations (linear trend),1979–2023,smd,"Standard deviation of survival shocks, linear trend (alternative)"
-target,eps_bds,0.6382,,pct_q,Q,0.006382,mean over years of 1 - (1 - x)^(1/4),1979–2023,smd,"Entrant share of firm value, all firms (per quarter)"
-target,m_data_bds,3.987,,ratio,-,,inverse of the mean ratio,1979–2023,,Average firm relative to a startup
-target,startup_q,2.591,,pct_q,Q,0.02591,annual mean converted to a quarter,1979–2023,,Firm startup rate (per quarter)
-target,est_death_q,2.936,,pct_q,Q,0.02936,mean,1992 Q3–2025 Q2,,Establishment death rate (per quarter)
-target,iss_gross,0.3271,,pct_q,Q,0.003271,mean of quarterly ratios,1958 Q1–2010 Q4,,Gross equity issues / market value: cash raised by all issuers (per quarter)
-target,eps_ipo,0.3467,,pct_q,Q,0.003467,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs (per quarter)"
-target,eps_ipo_listed,0.3245,,pct_q,Q,0.003245,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs, listed firms only (per quarter)"
-target,eps_ipo_offer,0.2937,,pct_q,Q,0.002937,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs at the offer price (per quarter)"
-target,rho_sent_orth,0.9312,,autocorr,Q,,AR(1) of end-of-quarter values,1965 Q3–2025 Q4,smd,Persistence of sentiment (quarterly AR(1))
-target,eq_share,14.1,,pct,-,,mean,1958 Q4–2025 Q4,,Equity share of new issues
-target,iss_net,-0.1557,,pct_q,Q,-0.001557,mean of quarterly ratios,1952 Q1–2026 Q2,,Net equity issuance / market value (per quarter)
+target,sigma_s,0.161197,,lp100_q,Q,0.00161197,sd of quarterly AR(1) innovations (HP 6.25),1979–2023,,Standard deviation of survival shocks (percent)
+target,rho_s_lin,0.858995,,autocorr,Q,,"quarterly AR(1), time-aggregated from annual (linear trend)",1979–2023,smd,"Persistence of firm survival, linear trend (alternative)"
+target,sigma_s_lin,0.0928927,,lp100_q,Q,0.000928927,sd of quarterly AR(1) innovations (linear trend),1979–2023,smd,"Standard deviation of survival shocks, linear trend (alternative)"
+target,eps_bds,0.638199,,pct_q,Q,0.00638199,mean over years of 1 - (1 - x)^(1/4),1979–2023,smd,"Entrant share of firm value, all firms (per quarter)"
+target,m_data_bds,3.98655,,ratio,-,,inverse of the mean ratio,1979–2023,,Average firm relative to a startup
+target,startup_q,2.59092,,pct_q,Q,0.0259092,annual mean converted to a quarter,1979–2023,,Firm startup rate (per quarter)
+target,est_death_q,2.93636,,pct_q,Q,0.0293636,mean,1992 Q3–2025 Q2,,Establishment death rate (per quarter)
+target,iss_gross,0.327075,,pct_q,Q,0.00327075,mean of quarterly ratios,1958 Q1–2010 Q4,,Gross equity issues / market value: cash raised by all issuers (per quarter)
+target,eps_ipo,0.34665,,pct_q,Q,0.0034665,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs (per quarter)"
+target,eps_ipo_listed,0.324499,,pct_q,Q,0.00324499,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs, listed firms only (per quarter)"
+target,eps_ipo_offer,0.293732,,pct_q,Q,0.00293732,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs at the offer price (per quarter)"
+target,rho_sent_orth,0.931216,,autocorr,Q,,AR(1) of end-of-quarter values,1965 Q3–2025 Q4,smd,Persistence of sentiment (quarterly AR(1))
+target,eq_share,14.1035,,pct,-,,mean,1958 Q4–2025 Q4,,Equity share of new issues
+target,iss_net,-0.155675,,pct_q,Q,-0.00155675,mean of quarterly ratios,1952 Q1–2026 Q2,,Net equity issuance / market value (per quarter)
 parameter,beta,0.9827094467,,ratio,Q,,,,rbc lag stock,Discount factor (per quarter)
 parameter,sigma,1.0,,none,-,,,,rbc lag stock,Relative risk aversion (inverse of the intertemporal elasticity of substitution)
 parameter,theta,3.3641013957,,none,-,,,,rbc lag stock,Weight of leisure in utility
@@ -70,11 +70,11 @@ implied,beta_ret,0.9827094467,,ratio,Q,,,,rbc lag stock,"Discount factor, from t
 implied,beta_r_bill,1.001810955,,ratio,Q,,,,,"Discount factor, from the real Treasury bill rate"
 implied,delta,0.01580641728,,net_rate_q,Q,,,,,Depreciation rate (per quarter)
 implied,alpha,0.3283228721,,share,-,,,,,Capital’s share of income
-implied,kappa_bds,0.9832551343,,ratio,Q,,,,smd,"Relative cohort value, all firms, BDS employment share of startups"
-implied,m_bds,3.607019743,,ratio,-,,,,smd,"Average firm relative to an entrant, all firms, BDS employment share of startups"
-implied,kappa_ipo,0.9803789739,,ratio,Q,,,,,"Relative cohort value, IPOs over all nonfinancial corporate equities"
-implied,m_ipo,6.639746178,,ratio,-,,,,,"Average firm relative to an entrant, IPOs over all nonfinancial corporate equities"
-implied,kappa_ipo_listed,0.9801606212,,ratio,Q,,,,,"Relative cohort value, IPOs over listed companies"
-implied,m_ipo_listed,7.093990755,,ratio,-,,,,,"Average firm relative to an entrant, IPOs over listed companies"
-implied,kappa_iss,0.980186189,,ratio,Q,,,,,"Relative cohort value, gross equity issues, for comparison"
+implied,kappa_bds,0.9832551244,,ratio,Q,,,,smd,"Relative cohort value, all firms, BDS employment share of startups"
+implied,m_bds,3.607025395,,ratio,-,,,,smd,"Average firm relative to an entrant, all firms, BDS employment share of startups"
+implied,kappa_ipo,0.980378482,,ratio,Q,,,,,"Relative cohort value, IPOs over all nonfinancial corporate equities"
+implied,m_ipo,6.64070388,,ratio,-,,,,,"Average firm relative to an entrant, IPOs over all nonfinancial corporate equities"
+implied,kappa_ipo_listed,0.9801606114,,ratio,Q,,,,,"Relative cohort value, IPOs over listed companies"
+implied,m_ipo_listed,7.094012616,,ratio,-,,,,,"Average firm relative to an entrant, IPOs over listed companies"
+implied,kappa_iss,0.9801859432,,ratio,Q,,,,,"Relative cohort value, gross equity issues, for comparison"
 implied,kappa_dp,0.9673453758,,ratio,Q,,,,,"Relative cohort value, from the dividend yield"

@@ -44,4 +44,4 @@ Machine-readable index of pages and files: https://arthurgalichere.com/assets/da
 
 Every source the site downloads is also kept privately as last read; if a source stops publishing or removes data, the site keeps the data it had and says so here.
 
-Latest data update: 2026-11-24T16:55:48+00:00 (UTC).
+Latest data update: 2026-11-24T22:42:53+00:00 (UTC).

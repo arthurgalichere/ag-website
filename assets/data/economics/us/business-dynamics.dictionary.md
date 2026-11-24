@@ -1,6 +1,6 @@
 # Data dictionary: business-dynamics.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/business-dynamics.json (generated 2026-11-21T11:27:55+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/business-dynamics.json (generated 2026-11-24T22:42:19+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -93,7 +93,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 | path | content |
 |---|---|
 | dashboard | str: business-dynamics |
-| generated_at_utc | str: 2026-11-21T11:27:55+00:00 |
+| generated_at_utc | str: 2026-11-24T22:42:19+00:00 |
 | country | values: code = US, name = United States |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | annual.vintage | int: 2023 |

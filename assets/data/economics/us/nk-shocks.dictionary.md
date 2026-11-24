@@ -1,6 +1,6 @@
 # Data dictionary: nk-shocks.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/nk-shocks.json (generated 2026-11-21T11:28:24+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/nk-shocks.json (generated 2026-11-24T22:42:52+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -25,8 +25,8 @@ Values shown for the first version when a block repeats (placeholders as above).
 |---|---|
 | dashboard | str: nk-shocks |
 | country | values: code = US, name = United States |
-| generated_at_utc | str: 2026-11-21T11:28:24+00:00 |
-| data_generated_at_utc | str: 2026-11-20T16:12:55+00:00 |
+| generated_at_utc | str: 2026-11-24T22:42:52+00:00 |
+| data_generated_at_utc | str: 2026-11-24T16:53:35+00:00 |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | structural | values: beta = 0.99, sigma = 1.0, eta = 5.0, eps = 11.0, omega = 75.0, xi = 0.7, phi_pi = 1.5, phi_y = 0.125 |
 | notes_rho | values: a = 0.9, th = 0.9, z = 0.5, nu = 0.0 |

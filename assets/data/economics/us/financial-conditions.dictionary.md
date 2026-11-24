@@ -1,6 +1,6 @@
 # Data dictionary: financial-conditions.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/financial-conditions.json (generated 2026-11-21T11:25:54+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/financial-conditions.json (generated 2026-11-24T22:39:54+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -41,7 +41,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 | dashboard | str: financial-financial-conditions |
 | title | str: Financial Conditions and Stress |
 | country | values: code = US, name = United States |
-| generated_at_utc | str: 2026-11-21T11:25:54+00:00 |
+| generated_at_utc | str: 2026-11-24T22:39:54+00:00 |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | indicators.nfci.estimates | list:  |
 | indicators.anfci.estimates | list:  |

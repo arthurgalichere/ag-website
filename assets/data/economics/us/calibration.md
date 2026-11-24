@@ -1,6 +1,6 @@
 # Calibration data — arthurgalichere.com
 
-Generated: 2026-11-24T16:55:48+00:00 (UTC). Page: https://arthurgalichere.com/dsge/calibration.html. Full file with definitions, sources and notes: https://arthurgalichere.com/assets/data/economics/us/calibration.json. Data dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md. Site index: https://arthurgalichere.com/llms.txt.
+Generated: 2026-11-24T22:42:53+00:00 (UTC). Page: https://arthurgalichere.com/dsge/calibration.html. Full file with definitions, sources and notes: https://arthurgalichere.com/assets/data/economics/us/calibration.json. Data dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md. Site index: https://arthurgalichere.com/llms.txt.
 
 Values are at full precision. unit_code: share (fraction), years, pct_y (percent a year, annualised quarterly rate), pp_y (percentage points of an annual rate), pct_q (percent a quarter), pct (percent, not a rate per period), ratio, log (natural-log points), lp100_q (log points x 100 per quarter), autocorr, net_rate_q (net rate per quarter, x - 1), none. q_decimal: the value as a decimal per quarter, the form the models use. used_by: models whose decided calibration uses the row (the page's defaults, e.g. HP-filtered survival dynamics, are shown for all models). Models: rbc = The Canonical RBC Model; lag = RBC Model with an Investment Installation Lag; stock = The RBC Model with a Stock Market; nk = The Canonical New Keynesian Model; smd = Stock-market dynamics model (forthcoming).
 
@@ -66,20 +66,20 @@ Values are at full precision. unit_code: share (fraction), years, pct_y (percent
 | nk_ff | 4.5939 |  | pct_y | Q | 0.01148475 | mean | 1954 Q3–2026 Q3 |  |
 | s_surv | 97.698 |  | pct_q | Q | 0.97698 | mean over years of (1 - exit)^(1/4) | 1979–2023 | smd |
 | rho_s | 0 |  | autocorr | Q |  | quarterly AR(1), time-aggregated from annual (HP 6.25) | 1979–2023 |  |
-| sigma_s | 0.1612 |  | lp100_q | Q | 0.001612 | sd of quarterly AR(1) innovations (HP 6.25) | 1979–2023 |  |
-| rho_s_lin | 0.859 |  | autocorr | Q |  | quarterly AR(1), time-aggregated from annual (linear trend) | 1979–2023 | smd |
-| sigma_s_lin | 0.09289 |  | lp100_q | Q | 0.0009289 | sd of quarterly AR(1) innovations (linear trend) | 1979–2023 | smd |
-| eps_bds | 0.6382 |  | pct_q | Q | 0.006382 | mean over years of 1 - (1 - x)^(1/4) | 1979–2023 | smd |
-| m_data_bds | 3.987 |  | ratio | - |  | inverse of the mean ratio | 1979–2023 |  |
-| startup_q | 2.591 |  | pct_q | Q | 0.02591 | annual mean converted to a quarter | 1979–2023 |  |
-| est_death_q | 2.936 |  | pct_q | Q | 0.02936 | mean | 1992 Q3–2025 Q2 |  |
-| iss_gross | 0.3271 |  | pct_q | Q | 0.003271 | mean of quarterly ratios | 1958 Q1–2010 Q4 |  |
-| eps_ipo | 0.3467 |  | pct_q | Q | 0.003467 | mean over years of 1 - (1 - x)^(1/4) | 1980–2025 |  |
-| eps_ipo_listed | 0.3245 |  | pct_q | Q | 0.003245 | mean over years of 1 - (1 - x)^(1/4) | 1980–2025 |  |
-| eps_ipo_offer | 0.2937 |  | pct_q | Q | 0.002937 | mean over years of 1 - (1 - x)^(1/4) | 1980–2025 |  |
-| rho_sent_orth | 0.9312 |  | autocorr | Q |  | AR(1) of end-of-quarter values | 1965 Q3–2025 Q4 | smd |
-| eq_share | 14.1 |  | pct | - |  | mean | 1958 Q4–2025 Q4 |  |
-| iss_net | -0.1557 |  | pct_q | Q | -0.001557 | mean of quarterly ratios | 1952 Q1–2026 Q2 |  |
+| sigma_s | 0.161197 |  | lp100_q | Q | 0.00161197 | sd of quarterly AR(1) innovations (HP 6.25) | 1979–2023 |  |
+| rho_s_lin | 0.858995 |  | autocorr | Q |  | quarterly AR(1), time-aggregated from annual (linear trend) | 1979–2023 | smd |
+| sigma_s_lin | 0.0928927 |  | lp100_q | Q | 0.000928927 | sd of quarterly AR(1) innovations (linear trend) | 1979–2023 | smd |
+| eps_bds | 0.638199 |  | pct_q | Q | 0.00638199 | mean over years of 1 - (1 - x)^(1/4) | 1979–2023 | smd |
+| m_data_bds | 3.98655 |  | ratio | - |  | inverse of the mean ratio | 1979–2023 |  |
+| startup_q | 2.59092 |  | pct_q | Q | 0.0259092 | annual mean converted to a quarter | 1979–2023 |  |
+| est_death_q | 2.93636 |  | pct_q | Q | 0.0293636 | mean | 1992 Q3–2025 Q2 |  |
+| iss_gross | 0.327075 |  | pct_q | Q | 0.00327075 | mean of quarterly ratios | 1958 Q1–2010 Q4 |  |
+| eps_ipo | 0.34665 |  | pct_q | Q | 0.0034665 | mean over years of 1 - (1 - x)^(1/4) | 1980–2025 |  |
+| eps_ipo_listed | 0.324499 |  | pct_q | Q | 0.00324499 | mean over years of 1 - (1 - x)^(1/4) | 1980–2025 |  |
+| eps_ipo_offer | 0.293732 |  | pct_q | Q | 0.00293732 | mean over years of 1 - (1 - x)^(1/4) | 1980–2025 |  |
+| rho_sent_orth | 0.931216 |  | autocorr | Q |  | AR(1) of end-of-quarter values | 1965 Q3–2025 Q4 | smd |
+| eq_share | 14.1035 |  | pct | - |  | mean | 1958 Q4–2025 Q4 |  |
+| iss_net | -0.155675 |  | pct_q | Q | -0.00155675 | mean of quarterly ratios | 1952 Q1–2026 Q2 |  |
 
 ## Implied parameters (trend growth: g_X (trend of TFP), 1.625509799 percent a year)
 
@@ -89,18 +89,18 @@ Values are at full precision. unit_code: share (fraction), years, pct_y (percent
 | beta_r_bill | 1.001810955 | \beta = (1 + g_X)/(1 + r) | r_bill, g |  |  |
 | delta | 0.01580641728 | \delta = (I/Y)/(K/Y) - g_X | i_y, k_y, g |  |  |
 | alpha | 0.3283228721 | \alpha = (r + \delta)\,K/Y | ret, delta (implied), k_y, g |  |  |
-| kappa_bds | 0.9832551343 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_bds | yes | smd |
-| m_bds | 3.607019743 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_bds |  | smd |
-| kappa_ipo | 0.9803789739 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_ipo | yes |  |
-| m_ipo | 6.639746178 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_ipo |  |  |
-| kappa_ipo_listed | 0.9801606212 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_ipo_listed | yes |  |
-| m_ipo_listed | 7.093990755 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_ipo_listed |  |  |
-| kappa_iss | 0.980186189 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, iss_gross | yes |  |
+| kappa_bds | 0.9832551244 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_bds | yes | smd |
+| m_bds | 3.607025395 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_bds |  | smd |
+| kappa_ipo | 0.980378482 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_ipo | yes |  |
+| m_ipo | 6.64070388 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_ipo |  |  |
+| kappa_ipo_listed | 0.9801606114 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, eps_ipo_listed | yes |  |
+| m_ipo_listed | 7.094012616 | m = (1 - s)\,/\,\varepsilon | s_surv, eps_ipo_listed |  |  |
+| kappa_iss | 0.9801859432 | \kappa = s\,/\,(1 - \varepsilon) | s_surv, iss_gross | yes |  |
 | kappa_dp | 0.9673453758 | \kappa = s\,(1/\beta - d/p^A)^{-1} | s_surv, dp, beta | no (outside s < kappa < 1) |  |
 
-Implied with trend growth = Per-capita output growth (1.998102346 percent a year): beta_ret 0.9836211174; beta_r_bill 1.002740347; delta 0.01487493592; alpha 0.3201754187; kappa_bds 0.9832551343; m_bds 3.607019743; kappa_ipo 0.9803789739; m_ipo 6.639746178; kappa_ipo_listed 0.9801606212; m_ipo_listed 7.093990755; kappa_iss 0.980186189; kappa_dp 0.9673453758.
+Implied with trend growth = Per-capita output growth (1.998102346 percent a year): beta_ret 0.9836211174; beta_r_bill 1.002740347; delta 0.01487493592; alpha 0.3201754187; kappa_bds 0.9832551244; m_bds 3.607025395; kappa_ipo 0.980378482; m_ipo 6.64070388; kappa_ipo_listed 0.9801606114; m_ipo_listed 7.094012616; kappa_iss 0.9801859432; kappa_dp 0.9673453758.
 
 ## Model steady states (model pages, baseline calibration)
 
-- stock: d_y 0.126; pd_annual 14.21; dp_annual 7.038; return_annual 8.691
+- stock: d_y 0.126; pd_annual 14.21; dp_annual 7.038; return_annual 8.692
 - rbc: hours 0.2; k_y_annual 1.783292; i_y 0.207317; c_y 0.792683; r_annual 8.692021
