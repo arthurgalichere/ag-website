@@ -1,0 +1,80 @@
+table,id,value,value_pc,unit_code,freq,value_q_decimal,stat,sample,used_by,name
+target,c_y,0.6371,,share,-,,mean of quarterly ratios,1947 Q1–2026 Q3,,Consumption share of output
+target,i_y,0.1738,,share,-,,mean of quarterly ratios,1947 Q1–2026 Q3,,Investment share of output
+target,g_y,0.203,,share,-,,mean of quarterly ratios,1947 Q1–2026 Q3,,Government share of output
+target,i_ci,0.2143297571,,share,-,,ratio of mean shares,1947 Q1–2026 Q3,,Investment share of private absorption
+target,k_y,2.186692533,,years,-,,mean of annual ratios,1950–2024,,Capital–output ratio (years)
+target,k_y_nonres,1.167628907,,years,-,,mean of annual ratios,1950–2024,,"Capital–output ratio, nonresidential (years)"
+target,hours,0.2,,share,-,,literature value,,rbc lag stock smd,Hours worked (share of available time)
+target,g_output,3.072474752,1.998102346,pct_y,Q,0.00768118688,mean log growth x 400,1950 Q2–2026 Q3,,Growth of real output (percent a year)
+target,g_consumption,3.179914743,2.105548241,pct_y,Q,0.007949786858,mean log growth x 400,1950 Q2–2026 Q3,,Growth of real consumption (percent a year)
+target,r_bill,0.8994987366,,pct_y,Q,0.002248746842,mean,1950 Q1–2026 Q2,,Real Treasury bill rate (percent a year)
+target,r_bill_sd,2.713009642,,pp_y,Q,0.006782524105,sd,1950 Q1–2026 Q2,,Volatility of the real bill rate (percentage points)
+target,inflation,3.146315664,,pct_y,Q,0.00786578916,mean of annualised quarterly rates,1950 Q1–2026 Q3,,Inflation (percent a year)
+target,fedfunds,4.593876113,,pct_y,Q,0.01148469028,mean,1954 Q3–2026 Q3,,Federal funds rate (percent a year)
+target,tbill,4.05731775,,pct_y,Q,0.01014329438,mean,1950 Q1–2026 Q3,,Nominal Treasury bill rate (percent a year)
+target,pd,40.14128697,,ratio,-,,mean (arithmetic),1950 Q1–2026 Q3,,Price–dividend ratio (annual dividends)
+target,pd_sd,0.4552873381,,log,-,,sd of ln(P/D),1950 Q1–2026 Q3,,Volatility of the log price–dividend ratio
+target,pd_ar1,0.9907955614,,autocorr,Q,,first-order autocorrelation of ln(P/D),1950 Q1–2026 Q3,,Persistence of the log price–dividend ratio (quarterly)
+target,dp,3.053966808,,pct,-,0.00763491702,mean (arithmetic),1950 Q1–2026 Q3,,Dividend yield (percent)
+target,ret,8.692020971,,pct_y,Q,0.02173005243,mean of quarterly returns x 4 (arithmetic),1950 Q1–2026 Q3,rbc lag stock smd,Real stock return (percent a year)
+target,ret_sd,11.75560139,,pct_y,Q,0.05877800695,sd of quarterly returns x 2,1950 Q1–2026 Q3,,Volatility of the real stock return (percent a year)
+target,premium,7.845282932,,pct_y,Q,0.01961320733,mean of quarterly excess returns x 4 (arithmetic),1950 Q1–2026 Q3,,Equity premium (percent a year)
+target,d_y,3.835007948,,pct,-,,mean of quarterly ratios,1950 Q1–2026 Q3,,Dividends as a share of output (percent)
+target,g_dividends,4.12085796,3.046492532,pct_y,Q,0.0103021449,mean log growth x 400,1950 Q2–2026 Q3,,Growth of real corporate dividends (percent a year)
+target,nk_infl,3.1723,,pct_y,Q,0.00793075,mean,1954 Q3–2026 Q3,,"Inflation, NK sample (percent a year)"
+target,nk_ff,4.5939,,pct_y,Q,0.01148475,mean,1954 Q3–2026 Q3,,"Federal funds rate, NK sample (percent a year)"
+target,s_surv,97.698,,pct_q,Q,0.97698,mean over years of (1 - exit)^(1/4),1979–2023,smd,Firm survival rate (per quarter)
+target,rho_s,0.0,,autocorr,Q,,"quarterly AR(1), time-aggregated from annual (HP 6.25)",1979–2023,,Persistence of firm survival (per quarter)
+target,sigma_s,0.1612,,lp100_q,Q,0.001612,sd of quarterly AR(1) innovations (HP 6.25),1979–2023,,Standard deviation of survival shocks (percent)
+target,rho_s_lin,0.859,,autocorr,Q,,"quarterly AR(1), time-aggregated from annual (linear trend)",1979–2023,smd,"Persistence of firm survival, linear trend (alternative)"
+target,sigma_s_lin,0.09289,,lp100_q,Q,0.0009289,sd of quarterly AR(1) innovations (linear trend),1979–2023,smd,"Standard deviation of survival shocks, linear trend (alternative)"
+target,eps_bds,0.6382,,pct_q,Q,0.006382,mean over years of 1 - (1 - x)^(1/4),1979–2023,smd,"Entrant share of firm value, all firms (per quarter)"
+target,m_data_bds,3.987,,ratio,-,,inverse of the mean ratio,1979–2023,,Average firm relative to a startup
+target,startup_q,2.591,,pct_q,Q,0.02591,annual mean converted to a quarter,1979–2023,,Firm startup rate (per quarter)
+target,est_death_q,2.936,,pct_q,Q,0.02936,mean,1992 Q3–2025 Q2,,Establishment death rate (per quarter)
+target,iss_gross,0.3271,,pct_q,Q,0.003271,mean of quarterly ratios,1958 Q1–2010 Q4,,Gross equity issues / market value: cash raised by all issuers (per quarter)
+target,eps_ipo,0.3467,,pct_q,Q,0.003467,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs (per quarter)"
+target,eps_ipo_listed,0.3245,,pct_q,Q,0.003245,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs, listed firms only (per quarter)"
+target,eps_ipo_offer,0.2937,,pct_q,Q,0.002937,mean over years of 1 - (1 - x)^(1/4),1980–2025,,"Entrant share of market value, IPOs at the offer price (per quarter)"
+target,rho_sent_orth,0.9312,,autocorr,Q,,AR(1) of end-of-quarter values,1965 Q3–2025 Q4,smd,Persistence of sentiment (quarterly AR(1))
+target,eq_share,14.1,,pct,-,,mean,1958 Q4–2025 Q4,,Equity share of new issues
+target,iss_net,-0.1557,,pct_q,Q,-0.001557,mean of quarterly ratios,1952 Q1–2026 Q2,,Net equity issuance / market value (per quarter)
+parameter,beta,0.982709,,ratio,Q,,,,rbc lag stock,Discount factor (per quarter)
+parameter,sigma,1.0,,none,-,,,,rbc lag stock,Relative risk aversion (inverse of the intertemporal elasticity of substitution)
+parameter,theta,3.364102,,none,-,,,,rbc lag stock,Weight of leisure in utility
+parameter,alpha,0.333333,,share,-,,,,rbc lag stock,Capital’s share of income
+parameter,delta,0.025,,net_rate_q,Q,,,,rbc lag stock,Depreciation rate (per quarter)
+parameter,g_x,0.00406,,net_rate_q,Q,,,,rbc lag stock,Trend growth of labour-augmenting technology (per quarter)
+parameter,rho_a,0.9761,,autocorr,Q,,,,rbc lag stock,Persistence of technology
+parameter,sigma_a,0.8864,,lp100_q,Q,,,,rbc lag stock,Standard deviation of technology shocks (percent)
+parameter,phi,0.17,,share,-,,,,lag,Installation parameter (steady state)
+parameter,rho_phi,0.737,,autocorr,Q,,,,lag,Persistence of installation shocks
+parameter,sigma_phi,0.3569,,lp100_q,Q,,,,lag,Standard deviation of installation shocks (percent)
+parameter,nk_beta,0.99,,ratio,Q,,,,nk,Discount factor (per quarter)
+parameter,nk_sigma,1.0,,none,-,,,,nk,Relative risk aversion
+parameter,nk_eta,5.0,,none,-,,,,nk,Inverse Frisch elasticity of labour supply
+parameter,nk_eps,11.0,,none,-,,,,nk,Elasticity of substitution between goods
+parameter,nk_xi,0.7,,share,Q,,,,nk,Probability of not resetting the price (Calvo)
+parameter,nk_omega,75.0,,none,-,,,,nk,Price-adjustment cost (Rotemberg)
+parameter,nk_phi_pi,1.5,,none,Q,,,,nk,Policy response to inflation
+parameter,nk_phi_y,0.125,,none,Q,,,,nk,Policy response to the output gap (quarterly rates)
+parameter,nk_rho_a,0.7382997074163256,,autocorr,Q,,,,nk,Persistence of technology
+parameter,nk_rho_th,0.8158590912648485,,autocorr,Q,,,,nk,Persistence of the weight on the disutility of labour
+parameter,nk_rho_z,0.8764921419410383,,autocorr,Q,,,,nk,Persistence of the discount factor (demand)
+parameter,nk_sd_a,0.7522296623553304,,lp100_q,Q,,,,nk,Technology shock (percent)
+parameter,nk_sd_th,5.914145755832261,,lp100_q,Q,,,,nk,Labour-preference shock (percent)
+parameter,nk_sd_z,1.7531847272490004,,lp100_q,Q,,,,nk,Demand shock (percent)
+parameter,nk_sd_nu,3.1934880537489927,,pp_y,Q,,,,nk,"Monetary policy shock (percentage points, annual rate)"
+implied,beta_ret,0.9827057525,,ratio,Q,,,,rbc lag stock,"Discount factor, from the real stock return"
+implied,beta_r_bill,1.001807189,,ratio,Q,,,,,"Discount factor, from the real Treasury bill rate"
+implied,delta,0.01581019178,,net_rate_q,Q,,,,,Depreciation rate (per quarter)
+implied,alpha,0.3283558868,,share,-,,,,,Capital’s share of income
+implied,kappa_bds,0.9832551343,,ratio,Q,,,,smd,"Relative cohort value, all firms, BDS employment share of startups"
+implied,m_bds,3.607019743,,ratio,-,,,,smd,"Average firm relative to an entrant, all firms, BDS employment share of startups"
+implied,kappa_ipo,0.9803789739,,ratio,Q,,,,,"Relative cohort value, IPOs over all nonfinancial corporate equities"
+implied,m_ipo,6.639746178,,ratio,-,,,,,"Average firm relative to an entrant, IPOs over all nonfinancial corporate equities"
+implied,kappa_ipo_listed,0.9801606212,,ratio,Q,,,,,"Relative cohort value, IPOs over listed companies"
+implied,m_ipo_listed,7.093990755,,ratio,-,,,,,"Average firm relative to an entrant, IPOs over listed companies"
+implied,kappa_iss,0.980186189,,ratio,Q,,,,,"Relative cohort value, gross equity issues, for comparison"
+implied,kappa_dp,0.9673449327,,ratio,Q,,,,,"Relative cohort value, from the dividend yield"

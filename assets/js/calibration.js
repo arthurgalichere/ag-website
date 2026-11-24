@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-21 11:23 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-24 16:29 UTC (Claude, economics chat) */
 /* =========================================================
    calibration.js: /dsge/calibration.html
    Renders calibration.json (built by the private calibration.py):
@@ -43,6 +43,13 @@
   const fmt = (v, d) => (v == null || !Number.isFinite(Number(v)) ? '–' : D.formatNumber(Number(v), d));
   const tags = models => `<span class="model-tags">${models.map(m => `<span class="model-tag">${esc(SHORT[m] || m)}</span>`).join('')}</span>`;
   const shown = item => state.model === 'all' || (item.models || []).includes(state.model);
+  /* "Used by" tag: the models whose decided calibration uses the row
+     (calibration.json used_by; the page's defaults stay as they are). */
+  const usedBy = item => (item.used_by && item.used_by.length && !(item.used_by.length >= 3 && item.used_by.includes('rbc'))
+    ? `<span class="used-by">Used by: ${item.used_by.map(m => esc(SHORT[m] || m)).join(', ')}</span>` : '');
+  /* Row anchors (calibration.html#kappa_bds): targets and implied rows by id,
+     parameters as param-<id> (some implied ids repeat parameter ids). */
+  const rowId = (prefix, id) => `id="${esc(prefix + id)}"`;
 
   function groupRows(items, columns, rowHTML) {
     const groups = [];
@@ -58,7 +65,7 @@
     const items = state.payload.parameters.filter(shown);
     if (!items.length) { role('parameters').innerHTML = '<p class="empty-message">This model has no parameters of its own yet.</p>'; return; }
     const head = '<tr><th scope="col" class="component-head">Parameter</th><th scope="col">Symbol</th><th scope="col">Value</th><th scope="col">Models</th><th scope="col" class="source-col">Source or method</th></tr>';
-    const rows = groupRows(items, 5, p => `<tr>
+    const rows = groupRows(items, 5, p => `<tr ${rowId('param-', p.id)}>
       <th scope="row">${esc(p.name)}</th>
       <td class="symbol-cell">\\(${p.symbol}\\)</td>
       <td>${fmt(p.value, p.digits ?? 3)}</td>
@@ -86,8 +93,8 @@
     const rows = groupRows(items, 6, t => {
       const value = pc && t.value_pc != null ? t.value_pc : t.value;
       const marker = t.value_pc != null ? ` <span class="unit-label">(${pc ? 'per capita' : 'total'})</span>` : '';
-      return `<tr>
-        <th scope="row">${esc(t.name)}</th>
+      return `<tr ${rowId('', t.id)}>
+        <th scope="row">${esc(t.name)}${usedBy(t)}</th>
         <td class="symbol-cell">\\(${t.symbol}\\)</td>
         <td>${fmt(value, t.digits ?? 2)}${marker}${t.sample ? `<br><span class="unit-label">${esc(t.sample)}</span>` : ''}</td>
         <td>${modelValue(t)}</td>
@@ -119,8 +126,8 @@
     const info = (state.payload.growth_bases || {})[basis];
     const control = body.querySelector('[data-control="growth"]');
     if (control) control.hidden = !state.payload.growth_bases;
-    const rows = byBasis[basis].filter(keep).map(i => `<tr>
-      <th scope="row">${esc(i.name)}</th>
+    const rows = byBasis[basis].filter(keep).map(i => `<tr ${rowId('', i.id)}>
+      <th scope="row">${esc(i.name)}${usedBy(i)}</th>
       <td class="symbol-cell">\\(${i.formula}\\)</td>
       <td>${fmt(i.value, i.digits ?? 3)}${i.valid === false ? '<br><span class="unit-label">outside \\(s < \\kappa < 1\\)</span>' : ''}</td>
       <td>${calibrated[i.id] ? fmt(calibrated[i.id].value, i.digits ?? 3) : '–'}</td></tr>`).join('');
@@ -150,6 +157,9 @@
       role('page-status').hidden = true;
       buildModelButtons();
       render();
+      /* A link to a row (#kappa_bds): the rows exist only now. */
+      const hashTarget = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+      if (hashTarget && hashTarget.tagName === 'TR') { hashTarget.classList.add('is-target'); hashTarget.scrollIntoView({ block: 'center' }); }
       const note = role('update-note');
       if (note) {
         note.textContent = `Data updated on ${new Date(state.payload.data_generated_at_utc || state.payload.generated_at_utc).toLocaleDateString('en-GB')}`;

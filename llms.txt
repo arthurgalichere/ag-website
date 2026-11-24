@@ -1,0 +1,47 @@
+# Arthur Galichère — economics data and models
+
+> Academic website of Arthur Galichère (University of Warwick). The economics pages publish cleaned US data, statistics for calibration and model simulations. Every page renders its numbers with JavaScript from a JSON file; the files below can be read directly. Each data file has a dictionary (.dictionary.md) giving the meaning, units, transformation and sample of every series. Plain URLs always serve the latest version.
+
+Machine-readable index of pages and files: https://arthurgalichere.com/assets/data/economics/us/index.json
+
+## Calibration (start here for model parameters and targets)
+
+- [Calibration summary, Markdown](https://arthurgalichere.com/assets/data/economics/us/calibration.md): parameters, data targets with units, decimals per quarter and the models that use them, implied parameters
+- [Calibration, CSV](https://arthurgalichere.com/assets/data/economics/us/calibration.csv)
+- [Calibration, JSON with definitions and sources](https://arthurgalichere.com/assets/data/economics/us/calibration.json)
+
+## Pages and data files
+
+- [Main Economic Indicators](https://arthurgalichere.com/economics/main-indicators.html): US macroeconomic aggregates (BEA, BLS, Fed via FRED): real levels, totals and per capita, growth rates, GDP shares, interest rates, HP and CF cycles.
+  - data: https://arthurgalichere.com/assets/data/economics/us/main-indicators.json (537 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/main-indicators.dictionary.md
+  - downloads: Raw data (CSV) https://arthurgalichere.com/downloads/economics/us/us-main-indicators-raw.csv; Clean data (CSV) https://arthurgalichere.com/downloads/economics/us/us-main-indicators-clean.csv; Clean data (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-main-indicators-clean.mat; Capital stock (CSV) https://arthurgalichere.com/downloads/economics/us/us-capital-stock-quarterly.csv
+- [Real Business Cycles](https://arthurgalichere.com/economics/business-cycles.html): Cyclical components of US aggregates (HP 1600, Hamilton, Christiano-Fitzgerald) and their business-cycle statistics.
+  - data: https://arthurgalichere.com/assets/data/economics/us/business-cycles.json (400 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/business-cycles.dictionary.md
+  - downloads: Clean data (CSV) https://arthurgalichere.com/downloads/economics/us/us-business-cycles-clean.csv; Clean data (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-business-cycles-clean.mat
+- [Main Stock Market Indicators](https://arthurgalichere.com/economics/stock-market.html): S&P 500 prices, dividends, earnings, valuation ratios and returns (Shiller), NIPA dividends; growth rates.
+  - data: https://arthurgalichere.com/assets/data/economics/us/financial-stock-market.json (306 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/financial-stock-market.dictionary.md
+  - downloads: Quarterly (CSV) https://arthurgalichere.com/downloads/economics/us/us-financial-stock-market-quarterly.csv; Cycles (CSV) https://arthurgalichere.com/downloads/economics/us/us-financial-stock-market-cycles.csv; MATLAB .mat https://arthurgalichere.com/downloads/economics/us/us-financial-stock-market.mat
+- [Stock Market Cycles](https://arthurgalichere.com/economics/stock-market-cycles.html): Cycles of stock-market and macro variables, volatilities, correlations and cross-correlations (HP, Hamilton, CF).
+  - data: https://arthurgalichere.com/assets/data/economics/us/financial-stock-market-cycles.json (390 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/financial-stock-market-cycles.dictionary.md
+  - downloads: Clean data (CSV) https://arthurgalichere.com/downloads/economics/us/us-financial-stock-market-cycles.csv; Clean data (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-financial-stock-market-cycles.mat
+- [Investor Sentiment and Equity Issuance](https://arthurgalichere.com/economics/investor-sentiment.html): Baker-Wurgler sentiment and components, equity issuance (Z.1), Ritter IPO statistics, entrant shares of market value.
+  - data: https://arthurgalichere.com/assets/data/economics/us/investor-sentiment.json (81 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/investor-sentiment.dictionary.md
+  - downloads: IPOs, annual (CSV) https://arthurgalichere.com/downloads/economics/us/us-investor-sentiment-ipo-annual.csv; Quarterly (CSV) https://arthurgalichere.com/downloads/economics/us/us-investor-sentiment-quarterly.csv; Monthly (CSV) https://arthurgalichere.com/downloads/economics/us/us-investor-sentiment-monthly.csv; MATLAB .mat https://arthurgalichere.com/downloads/economics/us/us-investor-sentiment.mat
+- [Business Dynamics](https://arthurgalichere.com/economics/business-dynamics.html): Firm entry, exit and survival (Census BDS, BLS BED), startup employment shares, survival dynamics for calibration.
+  - data: https://arthurgalichere.com/assets/data/economics/us/business-dynamics.json (74 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/business-dynamics.dictionary.md
+  - downloads: Annual (CSV) https://arthurgalichere.com/downloads/economics/us/us-business-dynamics-annual.csv; Quarterly (CSV) https://arthurgalichere.com/downloads/economics/us/us-business-dynamics-quarterly.csv; MATLAB .mat https://arthurgalichere.com/downloads/economics/us/us-business-dynamics.mat; Survival shocks (CSV) https://arthurgalichere.com/downloads/economics/us/us-business-dynamics-survival.csv
+- [The Canonical RBC Model](https://arthurgalichere.com/economics/rbc-model.html): King-Rebelo RBC model: calibration, steady state, simulations driven by measured TFP shocks against US data.
+  - data: https://arthurgalichere.com/assets/data/economics/us/rbc-model.json (315 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/rbc-model.dictionary.md
+  - downloads: Model simulations (CSV) https://arthurgalichere.com/downloads/economics/us/us-rbc-model-simulations.csv; Model simulations (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-rbc-model-simulations.mat; Technology shocks (CSV) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks.csv; Technology shocks (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks.mat; Technology shocks, HP-filtered TFP (CSV) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks-hp-filtered.csv; Technology shocks, HP-filtered TFP (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks-hp-filtered.mat
+- [Extracting Technology Shocks](https://arthurgalichere.com/economics/tfp-shocks.html): Measured TFP, its trend, the deviation and the AR(1) technology shocks, step by step.
+  - data: https://arthurgalichere.com/assets/data/economics/us/rbc-model.json (315 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/rbc-model.dictionary.md
+  - downloads: Model simulations (CSV) https://arthurgalichere.com/downloads/economics/us/us-rbc-model-simulations.csv; Model simulations (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-rbc-model-simulations.mat; Technology shocks (CSV) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks.csv; Technology shocks (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks.mat; Technology shocks, HP-filtered TFP (CSV) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks-hp-filtered.csv; Technology shocks, HP-filtered TFP (MATLAB .mat) https://arthurgalichere.com/downloads/economics/us/us-rbc-technology-shocks-hp-filtered.mat
+- [The RBC Model with a Stock Market](https://arthurgalichere.com/economics/rbc-model-stock-market.html): The RBC model with a stock market: prices, dividends and returns against the data.
+  - data: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.json (257 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.dictionary.md
+  - downloads: CSV https://arthurgalichere.com/downloads/economics/us/us-rbc-stock-market.csv; MATLAB .mat https://arthurgalichere.com/downloads/economics/us/us-rbc-stock-market.mat
+- [Calibration](https://arthurgalichere.com/dsge/calibration.html): Parameters, data targets and implied parameters for the site's DSGE models; plain-text summary in calibration.md and calibration.csv.
+  - data: https://arthurgalichere.com/assets/data/economics/us/calibration.json (45 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md
+
+Every source the site downloads is also kept privately as last read; if a source stops publishing or removes data, the site keeps the data it had and says so here.
+
+Latest data update: 2026-11-24T16:28:22+00:00 (UTC).

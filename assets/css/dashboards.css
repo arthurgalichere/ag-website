@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-21 11:23 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-24 16:40 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -1187,3 +1187,42 @@ button.button-link { cursor: pointer; font-family: inherit; }
 .implied-controls {
   margin-bottom: 1.5rem;
 }
+
+/* "Data files" line above the dates at the end of every data page: the JSON
+   file, its dictionary and the downloads as plain links, for readers without
+   JavaScript (_includes/economics-data-files.html; 24 Nov 2026). The next
+   paragraph (the dates) keeps its own top margin smaller. */
+.data-files {
+  margin: 3rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  text-align: center;
+}
+.data-files-label {
+  margin-right: 0.5em;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.data-files-size { font-family: var(--mono); font-size: 0.72rem; }
+.data-measures {
+  max-width: 52rem;
+  margin: 0.75rem auto 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-align: justify;
+  hyphens: auto;
+}
+.data-measures .data-files-label { display: block; margin-bottom: 0.2rem; text-align: center; }
+.data-files + .update-note, .data-measures + .update-note { margin-top: 1rem; }
+/* Calibration page: the plain-text versions, under the introduction. */
+.plain-files { color: var(--ink-soft); font-size: 0.9rem; }
+/* Calibration tables: a row reached by its anchor (#kappa_bds), and the tag
+   of the models whose decided calibration uses the row. */
+.calibration-table tr:target > *, .calibration-table tr.is-target > * { background: var(--accent-soft); }
+.used-by { display: block; margin-top: 0.3rem; color: var(--accent-strong); font-size: 0.72rem; font-weight: 600; }
+

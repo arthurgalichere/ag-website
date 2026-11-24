@@ -1,0 +1,461 @@
+{
+  "generated_at_utc": "2026-11-24T16:28:22+00:00",
+  "site": "https://arthurgalichere.com",
+  "files": {
+    "business-cycles": {
+      "json": "/assets/data/economics/us/business-cycles.json",
+      "json_kb": 400,
+      "sample": "1950 Q1–2026 Q3",
+      "dictionary": "/assets/data/economics/us/business-cycles.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Clean data (CSV)",
+          "url": "/downloads/economics/us/us-business-cycles-clean.csv"
+        },
+        {
+          "label": "Clean data (MATLAB .mat)",
+          "url": "/downloads/economics/us/us-business-cycles-clean.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+    },
+    "business-dynamics": {
+      "json": "/assets/data/economics/us/business-dynamics.json",
+      "json_kb": 74,
+      "sample": "1992 Q3–2026 Q1; 1978–2023 (annual data)",
+      "dictionary": "/assets/data/economics/us/business-dynamics.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Annual (CSV)",
+          "url": "/downloads/economics/us/us-business-dynamics-annual.csv"
+        },
+        {
+          "label": "Quarterly (CSV)",
+          "url": "/downloads/economics/us/us-business-dynamics-quarterly.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-business-dynamics.mat"
+        },
+        {
+          "label": "Survival shocks (CSV)",
+          "url": "/downloads/economics/us/us-business-dynamics-survival.csv"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:27:55+00:00"
+    },
+    "calibration": {
+      "json": "/assets/data/economics/us/calibration.json",
+      "json_kb": 45,
+      "sample": "",
+      "dictionary": "/assets/data/economics/us/calibration.dictionary.md",
+      "summaries": [
+        {
+          "label": "Summary (Markdown)",
+          "url": "/assets/data/economics/us/calibration.md"
+        },
+        {
+          "label": "Summary (CSV)",
+          "url": "/assets/data/economics/us/calibration.csv"
+        }
+      ],
+      "downloads": [],
+      "generated_at_utc": "2026-11-24T16:28:22+00:00"
+    },
+    "financial-banking": {
+      "json": "/assets/data/economics/us/financial-banking.json",
+      "json_kb": 210,
+      "sample": "1950 Q1–2026 Q3",
+      "dictionary": "/assets/data/economics/us/financial-banking.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Quarterly (CSV)",
+          "url": "/downloads/economics/us/us-financial-banking-quarterly.csv"
+        },
+        {
+          "label": "Cycles (CSV)",
+          "url": "/downloads/economics/us/us-financial-banking-cycles.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-financial-banking.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+    },
+    "financial-conditions": {
+      "json": "/assets/data/economics/us/financial-conditions.json",
+      "json_kb": 159,
+      "sample": "1971 Q2–2026 Q3",
+      "dictionary": "/assets/data/economics/us/financial-conditions.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Quarterly (CSV)",
+          "url": "/downloads/economics/us/us-financial-conditions-quarterly.csv"
+        },
+        {
+          "label": "Cycles (CSV)",
+          "url": "/downloads/economics/us/us-financial-conditions-cycles.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-financial-conditions.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+    },
+    "financial-debt-leverage": {
+      "json": "/assets/data/economics/us/financial-debt-leverage.json",
+      "json_kb": 331,
+      "sample": "1950 Q1–2026 Q2",
+      "dictionary": "/assets/data/economics/us/financial-debt-leverage.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Quarterly (CSV)",
+          "url": "/downloads/economics/us/us-financial-debt-leverage-quarterly.csv"
+        },
+        {
+          "label": "Cycles (CSV)",
+          "url": "/downloads/economics/us/us-financial-debt-leverage-cycles.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-financial-debt-leverage.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+    },
+    "financial-stock-market": {
+      "json": "/assets/data/economics/us/financial-stock-market.json",
+      "json_kb": 306,
+      "sample": "1950 Q1–2026 Q3",
+      "dictionary": "/assets/data/economics/us/financial-stock-market.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Quarterly (CSV)",
+          "url": "/downloads/economics/us/us-financial-stock-market-quarterly.csv"
+        },
+        {
+          "label": "Cycles (CSV)",
+          "url": "/downloads/economics/us/us-financial-stock-market-cycles.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-financial-stock-market.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+    },
+    "financial-stock-market-cycles": {
+      "json": "/assets/data/economics/us/financial-stock-market-cycles.json",
+      "json_kb": 390,
+      "sample": "1950 Q1–2026 Q3",
+      "dictionary": "/assets/data/economics/us/financial-stock-market-cycles.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Clean data (CSV)",
+          "url": "/downloads/economics/us/us-financial-stock-market-cycles.csv"
+        },
+        {
+          "label": "Clean data (MATLAB .mat)",
+          "url": "/downloads/economics/us/us-financial-stock-market-cycles.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:25:54+00:00"
+    },
+    "investor-sentiment": {
+      "json": "/assets/data/economics/us/investor-sentiment.json",
+      "json_kb": 81,
+      "sample": "1965 Q3–2025 Q4; 1980–2025 (annual data)",
+      "dictionary": "/assets/data/economics/us/investor-sentiment.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "IPOs, annual (CSV)",
+          "url": "/downloads/economics/us/us-investor-sentiment-ipo-annual.csv"
+        },
+        {
+          "label": "Quarterly (CSV)",
+          "url": "/downloads/economics/us/us-investor-sentiment-quarterly.csv"
+        },
+        {
+          "label": "Monthly (CSV)",
+          "url": "/downloads/economics/us/us-investor-sentiment-monthly.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-investor-sentiment.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:28:01+00:00"
+    },
+    "main-indicators": {
+      "json": "/assets/data/economics/us/main-indicators.json",
+      "json_kb": 537,
+      "sample": "1950 Q1–2026 Q3; 1950–2024 (annual data)",
+      "dictionary": "/assets/data/economics/us/main-indicators.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Raw data (CSV)",
+          "url": "/downloads/economics/us/us-main-indicators-raw.csv"
+        },
+        {
+          "label": "Clean data (CSV)",
+          "url": "/downloads/economics/us/us-main-indicators-clean.csv"
+        },
+        {
+          "label": "Clean data (MATLAB .mat)",
+          "url": "/downloads/economics/us/us-main-indicators-clean.mat"
+        },
+        {
+          "label": "Capital stock (CSV)",
+          "url": "/downloads/economics/us/us-capital-stock-quarterly.csv"
+        }
+      ],
+      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+    },
+    "nk-model": {
+      "json": "/assets/data/economics/us/nk-model.json",
+      "json_kb": 17,
+      "sample": "1954 Q3–2026 Q3",
+      "dictionary": "/assets/data/economics/us/nk-model.dictionary.md",
+      "summaries": [],
+      "downloads": [],
+      "generated_at_utc": "2026-11-21T11:28:24+00:00"
+    },
+    "nk-shocks": {
+      "json": "/assets/data/economics/us/nk-shocks.json",
+      "json_kb": 36,
+      "sample": "1954 Q3–2026 Q3",
+      "dictionary": "/assets/data/economics/us/nk-shocks.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "CSV",
+          "url": "/downloads/economics/us/us-nk-shocks.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-nk-shocks.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:28:24+00:00"
+    },
+    "rbc-model": {
+      "json": "/assets/data/economics/us/rbc-model.json",
+      "json_kb": 315,
+      "sample": "1950 Q1–2026 Q3",
+      "dictionary": "/assets/data/economics/us/rbc-model.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "Model simulations (CSV)",
+          "url": "/downloads/economics/us/us-rbc-model-simulations.csv"
+        },
+        {
+          "label": "Model simulations (MATLAB .mat)",
+          "url": "/downloads/economics/us/us-rbc-model-simulations.mat"
+        },
+        {
+          "label": "Technology shocks (CSV)",
+          "url": "/downloads/economics/us/us-rbc-technology-shocks.csv"
+        },
+        {
+          "label": "Technology shocks (MATLAB .mat)",
+          "url": "/downloads/economics/us/us-rbc-technology-shocks.mat"
+        },
+        {
+          "label": "Technology shocks, HP-filtered TFP (CSV)",
+          "url": "/downloads/economics/us/us-rbc-technology-shocks-hp-filtered.csv"
+        },
+        {
+          "label": "Technology shocks, HP-filtered TFP (MATLAB .mat)",
+          "url": "/downloads/economics/us/us-rbc-technology-shocks-hp-filtered.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+    },
+    "rbc-model-it-lag": {
+      "json": "/assets/data/economics/us/rbc-model-it-lag.json",
+      "json_kb": 405,
+      "sample": "1950 Q1–2026 Q3",
+      "dictionary": "/assets/data/economics/us/rbc-model-it-lag.dictionary.md",
+      "summaries": [],
+      "downloads": [],
+      "generated_at_utc": "2026-11-20T16:12:55+00:00"
+    },
+    "rbc-model-stock-market": {
+      "json": "/assets/data/economics/us/rbc-model-stock-market.json",
+      "json_kb": 257,
+      "sample": "1950 Q1–2026 Q3",
+      "dictionary": "/assets/data/economics/us/rbc-model-stock-market.dictionary.md",
+      "summaries": [],
+      "downloads": [
+        {
+          "label": "CSV",
+          "url": "/downloads/economics/us/us-rbc-stock-market.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-rbc-stock-market.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-21T11:28:23+00:00"
+    }
+  },
+  "sources_from_kept_copy": {},
+  "pages": [
+    {
+      "url": "/economics/main-indicators.html",
+      "title": "Main Economic Indicators",
+      "files": [
+        "main-indicators"
+      ],
+      "listed": true,
+      "about": "US macroeconomic aggregates (BEA, BLS, Fed via FRED): real levels, totals and per capita, growth rates, GDP shares, interest rates, HP and CF cycles."
+    },
+    {
+      "url": "/economics/business-cycles.html",
+      "title": "Real Business Cycles",
+      "files": [
+        "business-cycles"
+      ],
+      "listed": true,
+      "about": "Cyclical components of US aggregates (HP 1600, Hamilton, Christiano-Fitzgerald) and their business-cycle statistics."
+    },
+    {
+      "url": "/economics/stock-market.html",
+      "title": "Main Stock Market Indicators",
+      "files": [
+        "financial-stock-market"
+      ],
+      "listed": true,
+      "about": "S&P 500 prices, dividends, earnings, valuation ratios and returns (Shiller), NIPA dividends; growth rates."
+    },
+    {
+      "url": "/economics/stock-market-cycles.html",
+      "title": "Stock Market Cycles",
+      "files": [
+        "financial-stock-market-cycles"
+      ],
+      "listed": true,
+      "about": "Cycles of stock-market and macro variables, volatilities, correlations and cross-correlations (HP, Hamilton, CF)."
+    },
+    {
+      "url": "/economics/investor-sentiment.html",
+      "title": "Investor Sentiment and Equity Issuance",
+      "files": [
+        "investor-sentiment"
+      ],
+      "listed": true,
+      "about": "Baker-Wurgler sentiment and components, equity issuance (Z.1), Ritter IPO statistics, entrant shares of market value."
+    },
+    {
+      "url": "/economics/business-dynamics.html",
+      "title": "Business Dynamics",
+      "files": [
+        "business-dynamics"
+      ],
+      "listed": true,
+      "about": "Firm entry, exit and survival (Census BDS, BLS BED), startup employment shares, survival dynamics for calibration."
+    },
+    {
+      "url": "/economics/rbc-model.html",
+      "title": "The Canonical RBC Model",
+      "files": [
+        "rbc-model"
+      ],
+      "listed": true,
+      "about": "King-Rebelo RBC model: calibration, steady state, simulations driven by measured TFP shocks against US data."
+    },
+    {
+      "url": "/economics/tfp-shocks.html",
+      "title": "Extracting Technology Shocks",
+      "files": [
+        "rbc-model"
+      ],
+      "listed": true,
+      "about": "Measured TFP, its trend, the deviation and the AR(1) technology shocks, step by step."
+    },
+    {
+      "url": "/economics/rbc-model-stock-market.html",
+      "title": "The RBC Model with a Stock Market",
+      "files": [
+        "rbc-model-stock-market"
+      ],
+      "listed": true,
+      "about": "The RBC model with a stock market: prices, dividends and returns against the data."
+    },
+    {
+      "url": "/dsge/calibration.html",
+      "title": "Calibration",
+      "files": [
+        "calibration"
+      ],
+      "listed": true,
+      "about": "Parameters, data targets and implied parameters for the site's DSGE models; plain-text summary in calibration.md and calibration.csv."
+    },
+    {
+      "url": "/economics/banking.html",
+      "title": "Banks and Credit Supply",
+      "files": [
+        "financial-banking"
+      ],
+      "listed": false,
+      "about": ""
+    },
+    {
+      "url": "/economics/debt-leverage.html",
+      "title": "Debt and Leverage",
+      "files": [
+        "financial-debt-leverage"
+      ],
+      "listed": false,
+      "about": ""
+    },
+    {
+      "url": "/economics/financial-conditions.html",
+      "title": "Financial Conditions and Stress",
+      "files": [
+        "financial-conditions"
+      ],
+      "listed": false,
+      "about": ""
+    },
+    {
+      "url": "/economics/nk-model.html",
+      "title": "The Canonical New Keynesian Model",
+      "files": [
+        "nk-model"
+      ],
+      "listed": false,
+      "about": ""
+    },
+    {
+      "url": "/economics/nk-shocks.html",
+      "title": "Extracting Shocks for the New Keynesian Model",
+      "files": [
+        "nk-shocks"
+      ],
+      "listed": false,
+      "about": ""
+    },
+    {
+      "url": "/economics/rbc-model-it-lag.html",
+      "title": "RBC Model with an Investment Installation Lag",
+      "files": [
+        "rbc-model-it-lag"
+      ],
+      "listed": false,
+      "about": ""
+    }
+  ]
+}
