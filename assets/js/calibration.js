@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-24 16:29 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-27 14:10 UTC (Claude, economics chat) */
 /* =========================================================
    calibration.js: /dsge/calibration.html
    Renders calibration.json (built by the private calibration.py):
@@ -6,7 +6,11 @@
    targets (total or per capita) with the steady-state values of the model
    pages, and the parameters implied by the targets. Page switches: model
    (all, or one model) and measure (total, per capita); in the implied
-   table, trend growth g_X (default) or per-capita output growth.
+   table, trend growth g_X (default) or per-capita output growth. Each row
+   also shows its values in the literature and its role in each model's
+   calibration (calibration.json literature, roles; feedback W42-W44), and
+   the literature view lists every value by row, filterable by model type
+   and frequency (W43).
    Uses AGDashboards (dashboards.js) and AGSite (site.js).
    ========================================================= */
 (() => {
@@ -21,7 +25,12 @@
   const esc = text => S.escapeHTML(String(text == null ? '' : text));
   const state = { model: 'all', measure: 'total', growth: 'gx', payload: null };
   /* Short names of the models, for the model tags in the tables. */
-  const SHORT = { rbc: 'RBC', lag: 'Installation lag', stock: 'RBC stock market', nk: 'New Keynesian', smd: 'Stock-market dynamics' };
+  const SHORT = { rbc: 'RBC', lag: 'Installation lag', stock: 'RBC stock market', nk: 'New Keynesian', smd: 'Stock-market dynamics', bbr: 'Banks and bubbles' };
+  const ROLE = { targeted: 'targeted', check: 'check', known_miss: 'known miss', untargeted: 'untargeted', external: 'external target', set: 'set', implied: 'implied' };
+  const HOW = { targeted: 'targeted', calibrated: 'calibrated jointly', estimated: 'estimated', set: 'set', implied: 'implied', from_literature: 'from the literature', from_data: 'from data', check: 'check' };
+  const litState = { type: 'all', freq: 'all' };
+  /* Literature values: as entered, up to 6 decimals (integers without). */
+  const fv = v => (v == null ? '–' : Number.isInteger(Number(v)) ? String(v) : String(Number(Number(v).toPrecision(7))));
   /* Steady-state values of the model pages, by target (model, key, scale). */
   const MODEL_VALUE = {
     hours: [['rbc', 'hours', 1]],
@@ -47,6 +56,13 @@
      (calibration.json used_by; the page's defaults stay as they are). */
   const usedBy = item => (item.used_by && item.used_by.length && !(item.used_by.length >= 3 && item.used_by.includes('rbc'))
     ? `<span class="used-by">Used by: ${item.used_by.map(m => esc(SHORT[m] || m)).join(', ')}</span>` : '');
+  /* Literature and roles under the source text of a row (W42, W44). */
+  const literature = item => {
+    const lit = (item.literature || []).map(e => `${esc(e.paper)}: ${esc(fv(e.value))}${e.freq && e.freq !== '-' ? ` (${e.freq === 'A' ? 'annual' : 'quarterly'})` : ''}, ${esc(HOW[e.how_set] || e.how_set)}${e.where ? `, ${esc(e.where)}` : ''}`);
+    const roles = Object.entries(item.roles || {}).map(([m, r]) => `${esc(SHORT[m] || m)}: ${esc(ROLE[r.role] || r.role)}${r.weight != null ? ` (weight ${esc(r.weight)})` : ''}`);
+    return (lit.length ? ` <span class="source-note literature-note">In the literature: ${lit.join('; ')}. <a class="text-link" href="#lit-${esc(item.id)}">Compare</a>.</span>` : '')
+      + (roles.length ? ` <span class="source-note">Role: ${roles.join('; ')}.</span>` : '');
+  };
   /* Row anchors (calibration.html#kappa_bds): targets and implied rows by id,
      parameters as param-<id> (some implied ids repeat parameter ids). */
   const rowId = (prefix, id) => `id="${esc(prefix + id)}"`;
@@ -70,7 +86,7 @@
       <td class="symbol-cell">\\(${p.symbol}\\)</td>
       <td>${fmt(p.value, p.digits ?? 3)}</td>
       <td>${tags(p.models)}</td>
-      <td class="source-cell">${esc(p.source)}</td></tr>`);
+      <td class="source-cell">${esc(p.source)}${literature(p)}</td></tr>`);
     setHTML(role('parameters'), `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table calibration-page-table">
       <caption class="visually-hidden">Parameters</caption><thead>${head}</thead><tbody>${rows}</tbody></table></div>`);
   }
@@ -99,7 +115,7 @@
         <td>${fmt(value, t.digits ?? 2)}${marker}${t.sample ? `<br><span class="unit-label">${esc(t.sample)}</span>` : ''}</td>
         <td>${modelValue(t)}</td>
         <td>${tags(t.models)}</td>
-        <td class="source-cell">${esc(t.definition)} <span class="source-note">Source: ${esc(t.source)}.</span>${t.note ? ` <span class="source-note">${esc(t.note)}</span>` : ''}</td></tr>`;
+        <td class="source-cell">${esc(t.definition)} <span class="source-note">Source: ${esc(t.source)}.</span>${t.note ? ` <span class="source-note">${esc(t.note)}</span>` : ''}${literature(t)}</td></tr>`;
     });
     setHTML(role('targets'), `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table calibration-page-table targets-table">
       <caption class="visually-hidden">Data targets</caption><thead>${head}</thead><tbody>${rows}</tbody></table></div>
@@ -136,10 +152,50 @@
       <p class="table-note">Trend growth \\(g_X\\): ${info ? `${esc(info.text)}, ${fmt(info.annual, 2)} percent a year` : 'per-capita output growth'}. Quarterly rates: \\(r\\) and \\(g_X\\) are the annual rates divided by 400, \\(I/Y\\) the investment share and \\(K/Y\\) the capital–output ratio (all private fixed assets) times four. The implied capital share uses the real stock return; \\(\\theta\\) and the implied \\(\\delta\\) are for the RBC models without firm exit.${byBasis[basis].some(i => i.models && keep(i)) ? ' Relative cohort value \\(\\kappa\\) and relative firm value \\(m\\) (stock-market dynamics): \\(s\\) is the quarterly survival rate of firms, \\(\\varepsilon = I_0/p^A\\) the value of entrants over market value per quarter (each measure in the targets), \\(d/p^A\\) the quarterly dividend yield, \\(\\beta\\) that of the RBC models; see the ribbon on stock-market dynamics.' : ''}</p>`);
   }
 
+  /* Literature view (W43): every value by row, across papers. */
+  function renderLiterature() {
+    const box = role('literature');
+    if (!box) return;
+    const p = state.payload;
+    const rows = [...p.parameters.map(r => ({ ...r, kind: 'Parameter' })), ...p.targets.map(r => ({ ...r, kind: 'Target' })),
+      ...(Array.isArray(p.implied) ? p.implied : Object.values(p.implied)[0] || []).map(r => ({ ...r, kind: 'Implied' }))]
+      .filter(r => (r.literature || []).length);
+    const section = box.closest('section');
+    section.hidden = !rows.length;
+    if (!rows.length) return;
+    const filters = role('literature-filters');
+    if (filters && !filters.dataset.built) {
+      const types = Array.from(new Set(rows.flatMap(r => r.literature.map(e => e.model_type)))).sort();
+      filters.innerHTML = `<label>Model type <select data-filter="type"><option value="all">All</option>${types.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></label>
+        <label>Frequency <select data-filter="freq"><option value="all">All</option><option value="Q">Quarterly</option><option value="A">Annual</option></select></label>`;
+      filters.querySelectorAll('select').forEach(sel => sel.addEventListener('change', () => { litState[sel.dataset.filter] = sel.value; renderLiterature(); }));
+      filters.dataset.built = '1';
+    }
+    const keep = e => (litState.type === 'all' || e.model_type === litState.type) && (litState.freq === 'all' || e.freq === litState.freq || e.freq === '-');
+    const head = '<tr><th scope="col" class="component-head">Paper and model</th><th scope="col">Country, frequency</th><th scope="col">Value</th><th scope="col">How set</th><th scope="col" class="source-col">Moment, context and differences</th></tr>';
+    const body_ = rows.map(r => {
+      const entries = r.literature.filter(keep);
+      if (!entries.length) return '';
+      const title = `${esc(r.name)}${r.symbol ? ` \\(${r.symbol}\\)` : ''}`;
+      return `<tr class="table-group" id="lit-${esc(r.id)}"><th scope="rowgroup" colspan="5">${title} <span class="unit-label">${esc(r.kind)} · site: ${fmt(r.value, r.digits ?? 4)}</span></th></tr>`
+        + entries.map(e => `<tr><th scope="row">${esc(e.paper)}<br><span class="unit-label">${esc(e.model_type)}</span>${e.checked_against_paper ? '' : '<br><span class="unit-label">to check in the paper</span>'}</th>
+          <td>${esc(e.country)}${e.freq === 'A' ? ', annual' : e.freq === 'Q' ? ', quarterly' : ''}${e.sample ? `<br><span class="unit-label">${esc(e.sample)}</span>` : ''}</td>
+          <td>${fv(e.value)}${e.value_site_units != null ? `<br><span class="unit-label">${fmt(e.value_site_units, 4)} in the site’s units</span>` : ''}</td>
+          <td>${esc(HOW[e.how_set] || e.how_set)}${e.where ? `<br><span class="unit-label">${esc(e.where)}</span>` : ''}</td>
+          <td class="source-cell">${esc(e.moment)}${e.context ? `; ${esc(e.context)}` : ''}.${e.note_on_differences ? ` <span class="source-note">${esc(e.note_on_differences)}</span>` : ''}</td></tr>`).join('');
+    }).join('');
+    const papers = (p.papers || []).map(x => `<li>${esc(x.cite)}</li>`).join('');
+    setHTML(box, `<div class="table-scroll"><table class="data-table shares-table bc-table calibration-table calibration-page-table literature-table">
+      <caption class="visually-hidden">Values in the literature</caption><thead>${head}</thead><tbody>${body_ || '<tr><td colspan="5">No value for this selection.</td></tr>'}</tbody></table></div>
+      <p class="table-note">Values in each paper’s own units and frequency. “To check in the paper”: transcribed from a calibration brief, not yet checked against the paper itself.</p>
+      <ul class="reference-list">${papers}</ul>`);
+  }
+
   function render() {
     renderParameters();
     renderTargets();
     renderImplied();
+    renderLiterature();
   }
 
   function buildModelButtons() {

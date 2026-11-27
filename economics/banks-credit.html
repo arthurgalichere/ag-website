@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bank Rates, Returns and Leverage</title>
+  <meta name="description" content="US banks for calibration: real deposit and loan rates minus GDP growth, the loan–deposit spread, bank leverage (H.8 and FDIC), return on equity, intermediation costs, M2 relative to GDP and corporate leverage, with the targets of Aoki and Nikolov (2015) on four samples." />
+
+  
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon_transparant.png" />
+
+  <!-- Fonts are hosted with the site (assets/fonts, declared in fonts.css). -->
+  <link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/bitter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/fonts.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+
+  
+  <noscript><style>.is-loading .reveal { animation-play-state: running; }</style></noscript>
+  
+
+  
+  <link rel="stylesheet" href="/assets/css/dashboards.css" />
+  
+</head>
+<body id="top" class="is-loading">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content" class="page">
+    <article class="card">
+      
+<nav class="index-nav" aria-label="Academic Directory">
+  <a href="/"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-user" aria-hidden="true"></i>
+      Profile
+    </span>
+  </a>
+
+  <a href="/cv.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-file" aria-hidden="true"></i>
+      CV
+    </span>
+  </a>
+
+  <a href="/research.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      Research
+    </span>
+  </a>
+
+  <a href="/teaching.html"
+     class="index-card"
+     >
+    <span class="idx-label">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Teaching
+    </span>
+  </a>
+
+  <a href="/economics.html"
+     class="index-card is-current"
+     aria-current="page">
+    <span class="idx-label">
+      <i class="fas fa-chart-pie" aria-hidden="true"></i>
+      Economics
+    </span>
+  </a>
+</nav>
+
+      <section
+  class="page-body dashboard-body"
+  data-dashboard="banks-credit"
+  data-data-url="/assets/data/economics/{country}/banks-credit.json"
+  data-site-base="/"
+>
+  <div class="page-toolbar reveal delay-40">
+  <a href="/economics/financial-indicators.html" class="back-link">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    Back to Financial, Credit and Business Indicators
+  </a>
+</div>
+
+  <header class="reveal delay-80">
+    <p class="eyebrow">Economics · Financial, Credit and Business Indicators</p>
+    <h1 class="page-title">Bank Rates, Returns and Leverage</h1>
+    <p class="lead">The data behind the calibration of models in which banks fund firms with deposits and may hold bubbles, after Aoki and Nikolov (2015): real deposit and loan rates relative to growth, the spread between them, bank leverage, return on equity and intermediation costs, deposits relative to GDP and corporate leverage, each up to date and on four samples. Bank lending, funding and loan losses over the business cycle will be on a companion page, Banks and Credit Supply.</p>
+  </header>
+
+  <div class="dashboard-controls downloads-only reveal delay-120">
+    <div class="dashboard-downloads" data-role="downloads" hidden>
+      <span class="segmented-label">Download data</span>
+      <div class="download-row">
+        <a class="button-link" data-download="quarterly_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Quarterly (CSV)
+        </a>
+        <a class="button-link" data-download="annual_csv" href="#" download>
+          <i class="fas fa-file-csv" aria-hidden="true"></i> Annual, FDIC (CSV)
+        </a>
+        <a class="button-link" data-download="mat" href="#" download>
+          <i class="fas fa-file-code" aria-hidden="true"></i> MATLAB (.mat)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout is-quiet dashboard-note">
+    <i class="fas fa-circle-info" aria-hidden="true"></i>
+    <ul class="callout-list">
+      <li>Quarterly values: averages of monthly or weekly data within the quarter, complete quarters only; FDIC annual ratios apply to each quarter of their year where they enter a quarterly series (loan rate after costs).</li>
+      <li>Dashed grey lines: the values of Aoki and Nikolov (2015, Table 1).</li>
+      <li>Shaded bands mark US recessions (USRECQ).</li>
+    </ul>
+  </div>
+
+  <p class="loading-message" data-role="page-status" role="status">Loading data…</p>
+
+  
+  <section class="content-section reveal delay-160" aria-labelledby="rates-title">
+    <h2 id="rates-title" class="section-title">Interest rates and growth</h2>
+    <p class="section-introduction">A rational bubble can exist only if the return it must offer savers is below the growth rate of the economy (Tirole, 1985). Aoki and Nikolov (2015) therefore measure the real deposit rate and the real loan rate as differences from real GDP growth: both are negative on average in the US data, the deposit rate by more, so that bubbles can be held by savers and by banks.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>Real rate minus growth</dt><dd>the nominal rate less year-on-year CPI-U inflation and year-on-year real GDP growth, in percent a year; negative values mean the rate is below growth.</dd></div>
+      <div class="key-term"><dt>Deposit rate</dt><dd>the M2 own rate (Federal Reserve) to 2019 Q2, when it stops, then the FDIC effective deposit cost: interest paid on deposits over average deposits.</dd></div>
+      <div class="key-term"><dt>Loan rate after costs</dt><dd>the prime rate less banks’ noninterest expense over average assets (FDIC), the cost of intermediation; “net” also deducts noninterest income.</dd></div>
+      
+    </dl>
+    
+    <p class="more-link"><a class="text-link" href="#rates-ribbon" data-open-ribbon>More on the rates and their sources <i class="fas fa-arrow-down" aria-hidden="true"></i></a></p>
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="rd_minus_g,rl_minus_g_gross,rl_minus_g,rd_minus_g_mean_rep,rl_minus_g_gross_mean_rep,rl_minus_g_mean_rep" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Real deposit and loan rates minus real GDP growth</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Dashed lines: means over 1959–2012, the replication sample.</p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="spread_l_d,spread_l_d_net" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Loan–deposit spread after costs</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Real loan rate after costs minus real deposit rate (both minus growth, so growth cancels): R^l − R^d in the model.</p>
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="prime,rd_nominal,infl_cpi,g_real" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Nominal rates, inflation and growth</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="deposits-title">
+    <h2 id="deposits-title" class="section-title">The deposit rate after 2019</h2>
+    <p class="section-introduction">The Federal Reserve stopped publishing the M2 own rate in 2019. From 2019 Q3 the deposit rate is the FDIC effective deposit cost of all insured institutions, the interest banks actually pay on their deposits, the measure used by Drechsler, Savov and Schnabl (2017) for the pass-through of policy rates to deposits. It is shown here over its whole sample, from 1984, against the M2 own rate on their overlap.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>M2 own rate</dt><dd>the average return on the components of M2 (currency, deposits, retail money funds), weighted by their amounts; currency pays nothing.</dd></div>
+      <div class="key-term"><dt>Effective deposit cost</dt><dd>interest expense on domestic and foreign deposits over the average of deposits at the end of the quarter and of the previous quarter, at an annual rate.</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="m2_own,dep_cost_qbp" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">M2 own rate and the FDIC deposit cost</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    <div data-table="deposit-overlap"></div>
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="leverage-title">
+    <h2 id="leverage-title" class="section-title">Bank leverage</h2>
+    <p class="section-introduction">Leverage is debt over capital, D/N in the model: total liabilities over equity. Aoki and Nikolov target 10. The weekly H.8 balance sheet of all commercial banks starts in 1973; the FDIC Historical Statistics on Banking give the year-end balance sheet of insured commercial banks from 1934, and its Quarterly Banking Profile that of all insured institutions from 1984.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>H.8 leverage</dt><dd>total liabilities over the residual, assets less liabilities, which approximates equity capital; quarterly averages of weekly data, not seasonally adjusted.</dd></div>
+      <div class="key-term"><dt>FDIC leverage</dt><dd>total liabilities over total equity capital at the end of the year (or quarter).</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="bank_lev_h8,bank_lev_qbp,ref_an_lev" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Bank leverage, quarterly: H.8 and FDIC</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="bank_lev_fdic,ref_an_lev" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Bank leverage, annual: FDIC-insured commercial banks since 1934</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+    <div data-table="h8-breaks"></div>
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="returns-title">
+    <h2 id="returns-title" class="section-title">Bank returns and costs</h2>
+    <p class="section-introduction">Bank return on equity is net income over average equity capital. Aoki and Nikolov use a nominal ROE of 10 percent; the model’s ROE is a real return in an economy without growth, so its closer counterpart deducts inflation and growth, like the rates above. Intermediation costs are the noninterest expenses of banks (salaries, premises, other operating costs) over their assets: they separate the rate borrowers pay from what banks earn.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>ROE minus inflation and growth</dt><dd>nominal ROE less the year’s average CPI-U inflation and real GDP growth: the counterpart of the model’s return, measured like the other rates.</dd></div>
+      <div class="key-term"><dt>Net costs</dt><dd>noninterest expense less noninterest income (fees, service charges, trading income).</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="annual" data-keys="bank_roe,bank_roe_real_g,ref_an_roe" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Bank return on equity</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="bank_roe_qbp,ref_an_roe" data-zero-line="true">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Bank return on equity, quarterly (all insured institutions)</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="annual" data-keys="cost_assets_gross,cost_assets_net" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Intermediation costs relative to assets</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        <p class="chart-note">Noninterest expense, and net of noninterest income, over the average of total assets at the end of the year and of the previous year.</p>
+      </figure>
+      
+    </div>
+    
+    
+  </section>
+  
+  <section class="content-section reveal delay-160" aria-labelledby="balance-title">
+    <h2 id="balance-title" class="section-title">Deposits and corporate leverage</h2>
+    <p class="section-introduction">Deposits relative to output, D/Y, measured by M2 over nominal GDP, and the leverage of nonfinancial corporations, L/Z, debt over net worth in the Financial Accounts, at book and at market value. Aoki and Nikolov target 0.50 for both; for the leverage of indebted firms only they use 2.0, from firm-level Compustat data (Welch, 2004), which cannot be republished: it is kept as an external target.</p>
+    
+    <dl class="key-terms">
+      <div class="key-term"><dt>Book value</dt><dd>net worth with nonfinancial assets at historical cost.</dd></div>
+      <div class="key-term"><dt>Market value</dt><dd>net worth with equities at market prices; it falls in stock market booms as the denominator rises.</dd></div>
+      
+    </dl>
+    
+    
+    <div class="chart-stack">
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="m2_gdp,ref_an_m2" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">M2 relative to nominal GDP</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+      <figure class="chart-card" data-block="quarterly" data-keys="corp_lev_z1_bv,corp_lev_z1_mv,ref_an_corp" data-zero-line="false">
+        <figcaption class="chart-header">
+          <div class="chart-heading">
+            <span class="chart-title">Nonfinancial corporate debt relative to net worth</span>
+            <span class="chart-subtitle" data-role="chart-subtitle"></span>
+          </div>
+        </figcaption>
+        <p class="loading-message" data-role="chart-status">Loading chart…</p>
+        <div class="chart-frame" data-role="chart-frame" hidden></div>
+        <ul class="chart-legend" data-role="chart-legend" aria-label="Chart key" hidden></ul>
+        <p class="chart-readout" data-role="chart-readout" aria-live="polite"></p>
+        <p class="chart-source" data-role="chart-source"></p>
+        
+      </figure>
+      
+    </div>
+    
+    
+  </section>
+  
+
+  <section class="content-section reveal delay-180" aria-labelledby="calibration-title">
+    <h2 id="calibration-title" class="section-title">Targets for calibration</h2>
+    <p class="section-introduction">The targets of Aoki and Nikolov (2015) as the site measures them, on four samples: 1959–2012, to replicate their calibration (the M2 own rate starts in 1959; they do not state their sample), the full sample from 1959 to the latest quarter, the default, and 1985–2019 and 2000 to the latest quarter. In the paper “When Banks Ride the Bubble” (model bbr), the loan–deposit spread and bank leverage are targeted and ROE is a check; the other rows are reported. Parameters, targets and the items still open are in the model’s calibration file, <a class="text-link" href="/assets/data/economics/us/calibration-bbr.md">calibration-bbr.md</a> (<a class="text-link" href="/assets/data/economics/us/calibration-bbr.json">JSON</a>), which the <a class="text-link" href="/dsge/calibration.html">Calibration</a> page will bring together with the other models. <a class="text-link" href="#calibration-ribbon" data-open-ribbon>How the targets relate to the model</a>.</p>
+    <div class="shares" data-table="bbr-targets"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">Are the targets consistent with the model?</h3>
+    <p class="section-introduction">In the model, the return on bank equity is the loan return plus the leveraged spread, paid out at the rate at which bankers exit: \(ROE = R^l + (D/N)(R^l - R^d)/\gamma\), with a survival probability \(\gamma \le 1\). The data must then satisfy \(ROE \ge R^l + (D/N)(R^l - R^d)\). With Aoki and Nikolov’s values the bound is 1.302, above their ROE of 1.10: the four bank targets cannot all hold at once, and the survival rate they imply exceeds one. This is why, for bbr, the spread and leverage are targeted and ROE is only checked.</p>
+    <div class="shares" data-table="consistency"><p class="loading-message">Loading…</p></div>
+
+    <h3 class="subsection-title">How often do bubbles burst? Frequency of systemic crises</h3>
+    <p class="section-introduction">The probability that the bubble survives a year, \(\pi\), has no direct data counterpart. As a first step, the frequency of systemic banking or financial crises gives a benchmark: for the United States, the crises dated by Laeven and Valencia (2026) since 1970, and for advanced economies since 1870, the crises of the Jordà–Schularick–Taylor Macrohistory Database. The draft of bbr sets \(\pi = 0.98\), a burst once in 49 years on average. A burst need not be a systemic crisis, and not every crisis follows a bubble: these frequencies inform \(\pi\) before it is estimated, they do not fix it.</p>
+    <div class="shares" data-table="crises"><p class="loading-message">Loading…</p></div>
+  </section>
+
+  <noscript>
+    <p class="render-error">The charts and tables on this page need JavaScript. The targets are also in plain text in <a href="/assets/data/economics/us/calibration-bbr.md">calibration-bbr.md</a>.</p>
+  </noscript>
+
+  <section class="content-section reveal delay-220" aria-labelledby="methods-title">
+    <h2 id="methods-title" class="section-title">Definitions and methods</h2>
+
+    <details class="ribbon" id="rates-ribbon">
+      <summary>
+        <span class="ribbon-title">Rates, inflation and growth</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p><strong>One method for every rate.</strong> Monthly and weekly data are averaged within each quarter, and a quarter is kept only if all its months (or at least twelve weeks) are published; the one exception is CPI inflation in 2025 Q4 and 2026 Q4, computed from two months because the Bureau of Labor Statistics did not publish the CPI for October 2025. Inflation is the year-on-year change of the CPI-U, averaged within the quarter; growth is the year-on-year change of real GDP. A real rate minus growth is the nominal rate minus inflation minus growth, an arithmetic approximation of \(R/(1+\pi)(1+g)\); Aoki and Nikolov report the gross form \(1 + x/100\), given in the tables.</p>
+        <p><strong>Loan rate.</strong> The prime rate (Federal Reserve H.15), the rate banks charge their best business customers, is the loan rate of Aoki and Nikolov. In the model, the loan rate is what banks earn net of the cost of lending, so the after-costs version deducts the noninterest expense of insured commercial banks over their average assets (FDIC, annual), applied to each quarter of the year. The net version deducts expense less noninterest income. Credit losses are not deducted.</p>
+        <p><strong>Deposit rate.</strong> The M2 own rate stops in 2019 Q2 and cannot be rebuilt from public data (it combined H.6 amounts, money-fund yields and FDIC national rates). After 2019 Q2, the deposit rate is the FDIC effective deposit cost of all insured institutions (Quarterly Banking Profile): interest expense on deposits over average deposits. That series is also published on its own from 1984, so that a deposit target can be computed with one series throughout; it is higher than the M2 own rate because M2 includes currency and demand deposits that pay little or nothing.</p>
+      </div>
+    </details>
+
+    <details class="ribbon" id="calibration-ribbon">
+      <summary>
+        <span class="ribbon-title">Calibration: what each target disciplines</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <p>Aoki and Nikolov calibrate an annual model without growth, so every rate is measured relative to growth. The deposit and loan rates below growth are the conditions under which a bubble is attractive to savers and to banks; the bubble must also be affordable, its return conditional on survival not exceeding growth. These existence conditions come first in the calibration of bbr. Bank leverage disciplines the incentive constraint of bankers, \(\lambda\); the other parameters are calibrated jointly to all the moments, six parameters for seven moments, so the model cannot match every target and the weights matter.</p>
+        <p><strong>Comparisons with the literature.</strong> Gertler and Karadi (2011) target a leverage of 4 for a broader intermediary sector, well below the leverage of commercial banks shown here. Abel, Mankiw, Summers and Zeckhauser (1989) test dynamic efficiency by comparing capital income with investment rather than interest rates with growth; Blanchard (2019) documents that safe US rates have been below growth for most of the postwar period.</p>
+        <p><strong>H.8 breaks.</strong> The H.8 panel and its reporting basis changed several times (benchmark revisions, International Banking Facilities from December 1981); quarters in which leverage moves by more than 15 percent are listed under the leverage charts. The FDIC series offer a consistent check.</p>
+      </div>
+    </details>
+
+    <details class="ribbon">
+      <summary>
+        <span class="ribbon-title">References</span>
+        <i class="fas fa-chevron-down ribbon-chevron" aria-hidden="true"></i>
+      </summary>
+      <div class="ribbon-content">
+        <ul class="reference-list">
+          <li>Abel, A. B., N. G. Mankiw, L. H. Summers and R. J. Zeckhauser (1989). “Assessing Dynamic Efficiency: Theory and Evidence.” <em>Review of Economic Studies</em> 56(1): 1–19.</li>
+          <li>Aoki, K. and K. Nikolov (2015). “Bubbles, Banks and Financial Stability.” <em>Journal of Monetary Economics</em> 74: 33–51.</li>
+          <li>Blanchard, O. (2019). “Public Debt and Low Interest Rates.” <em>American Economic Review</em> 109(4): 1197–1229.</li>
+          <li>Board of Governors of the Federal Reserve System. <em>H.8 Assets and Liabilities of Commercial Banks in the United States</em>; <em>H.15 Selected Interest Rates</em>; <em>Financial Accounts of the United States (Z.1)</em>, table B.103; M2 own rate. Via FRED, Federal Reserve Bank of St. Louis.</li>
+          <li>Drechsler, I., A. Savov and P. Schnabl (2017). “The Deposits Channel of Monetary Policy.” <em>Quarterly Journal of Economics</em> 132(4): 1819–1876.</li>
+          <li>Federal Deposit Insurance Corporation. <em>Historical Statistics on Banking</em> and <em>Quarterly Banking Profile</em>, via the BankFind API and FRED.</li>
+          <li>Gertler, M. and P. Karadi (2011). “A Model of Unconventional Monetary Policy.” <em>Journal of Monetary Economics</em> 58(1): 17–34.</li>
+          <li>Jordà, Ò., M. Schularick and A. M. Taylor (2017). “Macrofinancial History and the New Business Cycle Facts.” <em>NBER Macroeconomics Annual 2016</em> 31: 213–263. Jordà–Schularick–Taylor Macrohistory Database, <a class="text-link" href="https://www.macrohistory.net/database/" rel="noopener">macrohistory.net</a> (CC BY-NC-SA 4.0).</li>
+          <li>Laeven, L. and F. Valencia (2026). “Systemic Banking Crises Database: 1970–2025.” IMF Working Paper 2026/94.</li>
+          <li>Tirole, J. (1985). “Asset Bubbles and Overlapping Generations.” <em>Econometrica</em> 53(6): 1499–1528.</li>
+          <li>Welch, I. (2004). “Capital Structure and Stock Returns.” <em>Journal of Political Economy</em> 112(1): 106–131.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  
+<p class="update-note page-dates"><span class="page-created">Page created on 27/11/2026<span class="visually-hidden">. </span></span><span class="data-updated" data-role="update-note" hidden></span></p>
+
+
+  
+
+  <div class="page-note reveal delay-280">
+    <p><strong>© Arthur Galichère.</strong></p>
+    <ul>
+      <li><strong>Errors:</strong> Every effort has been made to ensure the data and calculations are accurate; any remaining errors are mine. If you believe you have found a mistake, or have a comment or suggestion, please <a class="text-link" href="mailto:arthur.galichere@warwick.ac.uk">let me know</a>.</li>
+      <li><strong>Reuse and citation:</strong> Bank balance sheets and income from the Federal Reserve Board (H.8) and the FDIC; interest rates from the Federal Reserve Board (H.15, M2 own rate); prices from the Bureau of Labor Statistics and GDP from the Bureau of Economic Analysis; corporate balance sheets from the Financial Accounts (Z.1); via FRED and the FDIC BankFind API; crisis dates from Laeven and Valencia (2026) and the Jordà–Schularick–Taylor Macrohistory Database (please cite them). The quarterly conversion, ratios, targets, charts and text are the author’s. When reusing these figures, please cite the original data providers and this website: <strong>Arthur Galichère, <em>Bank Rates, Returns and Leverage</em></strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<script src="/assets/js/dashboards.js" defer></script>
+
+
+      <footer class="foot reveal delay-340">
+  <div class="socials">
+    <a href="mailto:arthur.galichere@warwick.ac.uk" aria-label="Email Arthur Galichère">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.dropbox.com/scl/fi/6gfp5hvfgt76ic6liye70/CV_Arthur_Galichere.pdf?rlkey=g47ostrw9cvmxjdm8t6j2sgbq&amp;st=hik4skpl&amp;dl=1" aria-label="Download Arthur Galichère's CV">
+      <i class="fas fa-file-pdf" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://warwick.ac.uk/fac/soc/economics/staff/agalichere/" target="_blank" rel="noreferrer" aria-label="University profile">
+      <i class="fas fa-university" aria-hidden="true"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/arthurgalichere/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <a href="#top" class="back-to-top" aria-label="Back to the top of the page" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </a>
+
+  <span class="foot-loc">University of Warwick · Coventry, UK</span>
+</footer>
+
+    </article>
+  </main>
+
+  <script src="/assets/js/site.js" defer></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" defer></script>
+  
+  
+  <script src="/assets/js/business-dynamics.js" defer></script>
+  
+</body>
+</html>

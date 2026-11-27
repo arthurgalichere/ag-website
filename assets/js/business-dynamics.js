@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-21 11:06 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-27 14:10 UTC (Claude, economics chat) */
 /* =========================================================
    business-dynamics.js: /economics/business-dynamics.html
    Renders business-dynamics.json (built by the private
@@ -18,8 +18,9 @@
   const S = window.AGSite;
   /* Also drives Investor Sentiment and Equity Issuance (same payload layout:
      blocks annual and/or quarterly, variables, recessions, downloads, and a
-     targets table). */
-  const body = document.querySelector('[data-dashboard="business-dynamics"], [data-dashboard="investor-sentiment"]');
+     targets table), and Bank Rates, Returns and Leverage (banks-credit.json:
+     reference lines, the bbr targets on several samples and their checks). */
+  const body = document.querySelector('[data-dashboard="business-dynamics"], [data-dashboard="investor-sentiment"], [data-dashboard="banks-credit"]');
   if (!body || !D || !S) return;
 
   const COLOURS = ['--chart-1', '--series-1', '--series-2', '--series-4'];
@@ -50,17 +51,22 @@
     const cycles = card.dataset.cycles === 'true';
     const keys = card.dataset.keys.split(',').map(k => k.trim()).filter(k => (cycles ? block.cycles : block.values)[k]);
     const source = cycles ? block.cycles : block.values;
-    const series = keys.map((key, i) => ({
-      label: label(key),
-      color: token(keys.length === 1 ? '--chart-1' : COLOURS[i % COLOURS.length]),
-      values: source[key],
-    }));
+    /* Reference lines (variables flagged reference: a constant or a sample
+       mean): dashed, in the colour of the series they refer to (ref_of) or
+       the benchmark colour; not counted in the colours or the trimming. */
+    const isRef = key => !cycles && variable(key).reference;
+    const data = keys.filter(k => !isRef(k));
+    const colourOf = key => token(data.length === 1 ? '--chart-1' : COLOURS[data.indexOf(key) % COLOURS.length]);
+    const series = keys.map(key => (isRef(key)
+      ? { label: label(key), reference: true, dash: BENCHMARK_DASH, under: true, values: source[key],
+        color: variable(key).ref_of && data.includes(variable(key).ref_of) ? colourOf(variable(key).ref_of) : token('--chart-reference') }
+      : { label: label(key), color: colourOf(key), values: source[key] }));
     if (cycles && source[GDP[card.dataset.block]]) {
       series.push({ label: 'Real GDP', color: token('--chart-benchmark'), dash: BENCHMARK_DASH, under: true,
         values: source[GDP[card.dataset.block]] });
     }
     /* Trim leading and trailing periods without any value. */
-    const has = i => series.some(s => s.values[i] != null);
+    const has = i => series.some(s => !s.reference && s.values[i] != null);
     let first = 0;
     let last = block.dates.length - 1;
     while (first < last && !has(first)) first += 1;
@@ -71,7 +77,7 @@
     const periodLabel = annual ? D.yearLabel : D.quarterLabel;
     const units = cycles
       ? 'Cycles: percentage points (rates), percent (counts, GDP)'
-      : Array.from(new Set(keys.map(k => variable(k).units))).join('; ');
+      : Array.from(new Set(keys.filter(k => !isRef(k)).map(k => variable(k).units))).join('; ');
     role('chart-subtitle').textContent = `${units} · ${annual ? 'annual' : 'quarterly'} · ${periodLabel(dates[0])}–${periodLabel(dates[dates.length - 1])}`;
 
     const prev = state.charts.get(card);
@@ -234,8 +240,80 @@
     target.innerHTML = table('Statistics for calibration', head, body_, 'calibration-page-table');
   }
 
+  /* bbr: targets on several samples (banks-credit.json, bbr_targets). */
+  const ROLE = { targeted: 'targeted', check: 'check', reported: 'reported', input: 'input', external: 'external target' };
+  function renderBbr() {
+    const target = body.querySelector('[data-table="bbr-targets"]');
+    const t = state.payload.bbr_targets;
+    if (!target || !t) return;
+    const samples = t.samples;
+    const sampleHead = s => (s.id === 'replication' ? '1959–2012<br><span class="unit-label">replication</span>'
+      : s.id === 'full' ? 'Full sample<br><span class="unit-label">default</span>' : esc(s.id));
+    const digits = r => (r.unit_code === 'ratio' ? 3 : 2);
+    const cell = (r, s) => {
+      const v = r.samples && r.samples[s.id];
+      if (!v) return '<td>–</td>';
+      return `<td>${fmt(v.value, digits(r))}${v.gross != null ? `<br><span class="unit-label">gross ${fmt(v.gross, 4)}</span>` : ''}<br><span class="unit-label">${esc(v.first)}–${esc(v.last)}</span></td>`;
+    };
+    const head = `<tr><th scope="col" class="component-head">Target</th><th scope="col">Aoki–Nikolov<br><span class="unit-label">Table 1</span></th>
+      ${samples.map(s => `<th scope="col">${sampleHead(s)}</th>`).join('')}<th scope="col" class="source-col">Method</th></tr>`;
+    const unit = r => ({ pct_y: '% a year', pp_y: 'pp a year', ratio: 'ratio' }[r.unit_code] || '');
+    const rows = t.rows.map(r => `<tr id="bbr-${esc(r.id)}"${r.role === 'targeted' ? ' class="is-target"' : ''}><th scope="row">${esc(r.name).replace(/R\^([dl])/g, '\\(R^$1\\)')}<br><span class="unit-label">${esc(unit(r))}, ${r.freq === 'A' ? 'annual' : 'quarterly'} · ${esc(ROLE[r.role] || r.role)} · ${esc(r.id)}</span></th>
+      <td>${r.an_value == null ? '–' : fmt(r.an_value, digits(r))}${r.an_gross != null ? `<br><span class="unit-label">gross ${fmt(r.an_gross, 3)}</span>` : ''}</td>
+      ${samples.map(s => cell(r, s)).join('')}<td class="source-cell">${esc(r.method)}.${r.note ? ` ${esc(r.note)}` : ''}</td></tr>`).join('');
+    const inputs = (t.inputs || []).map(r => `<tr><th scope="row">${esc(r.name)}<br><span class="unit-label">% a year · input</span></th><td>–</td>
+      ${samples.map(s => cell({ ...r, unit_code: 'pct', samples: r.samples }, s)).join('')}<td class="source-cell">sample mean of the quarterly values</td></tr>`).join('');
+    target.innerHTML = table('Calibration targets of bbr on several samples', head, rows + inputs, 'calibration-page-table bbr-table')
+      + '<p class="table-note">Means of the quarterly values (annual FDIC ratios: means of the years) over each sample; below each value, the first and last period actually used. Gross form: \\(1 + x/100\\), as in Aoki and Nikolov. Highlighted rows: targeted in the calibration of bbr (decided 27 November 2026); ROE is a check.</p>';
+    const MJ = window.MathJax;
+    if (MJ && MJ.typesetPromise) MJ.typesetPromise([target]).catch(() => {});
+
+    const dep = body.querySelector('[data-table="deposit-overlap"]');
+    const o = state.payload.deposit_overlap;
+    if (dep && o) {
+      dep.innerHTML = `<p class="table-note">Overlap ${esc(o.first)}–${esc(o.last)} (${o.n} quarters): mean M2 own rate ${fmt(o.mean_m2own)}%, mean FDIC deposit cost ${fmt(o.mean_fdic)}%; mean gap (FDIC − M2 own rate) ${fmt(o.mean_gap)} pp, standard deviation ${fmt(o.sd_gap)} pp; correlation ${fmt(o.corr, 3)}.</p>`;
+    }
+    const cons = body.querySelector('[data-table="consistency"]');
+    const c = state.payload.consistency;
+    if (cons && c) {
+      const h = `<tr><th scope="col" class="component-head">Data</th><th scope="col">Loan rate<br><span class="unit-label">\\(R^l\\), gross</span></th>
+        <th scope="col">Deposit rate<br><span class="unit-label">\\(R^d\\), gross</span></th><th scope="col">Leverage<br><span class="unit-label">\\(D/N\\)</span></th>
+        <th scope="col">ROE<br><span class="unit-label">gross</span></th><th scope="col">Lower bound of ROE<br><span class="unit-label">\\(\\gamma = 1\\)</span></th>
+        <th scope="col">Implied<br><span class="unit-label">\\(\\gamma\\)</span></th><th scope="col">Consistent</th></tr>`;
+      const b = c.map(x => `<tr><th scope="row">${esc(x.case)}<br><span class="unit-label">${esc(x.roe_concept)}</span></th><td>${fmt(x.R_l, 4)}</td><td>${fmt(x.R_d, 4)}</td>
+        <td>${fmt(x.D_N, 2)}</td><td>${fmt(x.ROE, 4)}</td><td>${fmt(x.roe_floor, 4)}</td><td>${x.gamma_implied == null ? '–' : fmt(x.gamma_implied, 2)}</td><td>${x.holds ? 'yes' : 'no'}</td></tr>`).join('');
+      setHTML(cons, table('Consistency of the bank targets', h, b, 'calibration-page-table'));
+    }
+    const brk = body.querySelector('[data-table="h8-breaks"]');
+    const k = state.payload.h8_breaks;
+    if (brk && k) {
+      brk.innerHTML = k.length
+        ? `<p class="table-note">Quarters in which H.8 leverage moves by more than 15 percent: ${k.map(x => `${esc(x.quarter)} (${fmt(x.change_pct, 1)}%, ${fmt(x.level_before, 1)} → ${fmt(x.level, 1)}${x.note ? `; ${esc(x.note)}` : ''})`).join('; ')}.</p>`
+        : '<p class="table-note">No quarter-to-quarter change of H.8 leverage above 15 percent.</p>';
+    }
+  }
+
+  /* bbr, π stage 1: crisis frequencies (banks-credit.json, crisis_frequency). */
+  function renderCrises() {
+    const target = body.querySelector('[data-table="crises"]');
+    const c = state.payload.crisis_frequency;
+    if (!target) return;
+    if (!c || !c.rows || !c.rows.length) { target.innerHTML = '<p class="empty-message">Not available yet.</p>'; return; }
+    const head = `<tr><th scope="col" class="component-head">Source and scope</th><th scope="col">Sample</th><th scope="col">Crises</th>
+      <th scope="col">Years</th><th scope="col">Frequency<br><span class="unit-label">per year</span></th>
+      <th scope="col">1 − frequency<br><span class="unit-label">implied \\(\\pi\\)</span></th><th scope="col">Years per crisis</th></tr>`;
+    const rows = c.rows.map(r => `<tr><th scope="row">${esc(r.source)}<br><span class="unit-label">${esc(r.scope)}</span></th><td>${esc(r.sample)}</td>
+      <td>${r.crises}</td><td>${r.years == null ? '–' : r.years}</td><td>${r.frequency == null ? '–' : fmt(r.frequency, 4)}</td>
+      <td>${r.pi_implied == null ? '–' : fmt(r.pi_implied, 3)}</td><td>${r.years_per_crisis == null ? '–' : fmt(r.years_per_crisis, 1)}</td></tr>`).join('');
+    const us = Object.entries(c.us_crises || {}).map(([k, v]) => `${esc(k)}: ${v.map(esc).join(', ')}`).join('; ');
+    setHTML(target, table('Frequency of systemic crises', head, rows, 'calibration-page-table')
+      + `<p class="table-note">Crises started over years observed; 1 − frequency is the probability that no crisis starts in a year, the counterpart of the bubble’s survival probability \\(\\pi\\) if every burst were a systemic crisis. US crisis start years — ${us}.</p>`);
+  }
+
   function renderTables() {
     renderTargets();
+    renderBbr();
+    renderCrises();
     renderEntry();
     renderSize();
     renderCalibration();

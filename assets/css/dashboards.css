@@ -1,4 +1,4 @@
-/* Last edited: 2026-11-24 16:40 UTC (Claude, economics chat) */
+/* Last edited: 2026-11-27 14:10 UTC (Claude, economics chat) */
 /* =========================================================
    Economics dashboards: /economics/business-cycles.html,
    /economics/main-indicators.html and later dashboards.
@@ -23,6 +23,7 @@
      muted version when it is only context (light grey). */
   --chart-benchmark: #e07000;
   --chart-benchmark-muted: #b9bec4;
+  --chart-reference: #7a828c;   /* reference lines: constants and sample means (banks-credit) */
   --chart-ink: var(--ink-soft);
   --chart-grid: rgba(28, 28, 30, 0.08);
   --chart-zero: rgba(28, 28, 30, 0.42);
@@ -1226,3 +1227,20 @@ button.button-link { cursor: pointer; font-family: inherit; }
 .calibration-table tr:target > *, .calibration-table tr.is-target > * { background: var(--accent-soft); }
 .used-by { display: block; margin-top: 0.3rem; color: var(--accent-strong); font-size: 0.72rem; font-weight: 600; }
 
+/* Bank Rates, Returns and Leverage (economics/banks-credit.html): targets of
+   bbr on four samples; the gross form and the periods used, small, under
+   each value. */
+.bbr-table { width: 100%; }
+.bbr-table td { white-space: nowrap; }
+.bbr-table td .unit-label { color: var(--muted); font-size: 0.74rem; }
+.bbr-table tbody th { min-width: 11rem; }
+.bbr-table tr.is-target th, .bbr-table tr.is-target td { background: var(--accent-soft); }
+
+/* Calibration page: literature view (W43) and its filters. */
+.literature-filters { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; margin-bottom: 1rem; }
+.literature-filters label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--ink-soft); }
+.literature-filters select { font: inherit; padding: 0.25rem 0.5rem; border: 1px solid var(--line-strong); border-radius: 4px; background: #fff; }
+.calibration-page-table .literature-note { display: block; margin-top: 0.35rem; }
+.literature-table { width: 100%; }
+.literature-table td, .literature-table th { white-space: normal; }
+.literature-table td.source-cell { min-width: 12rem; }
