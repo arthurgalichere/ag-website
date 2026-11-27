@@ -1,6 +1,6 @@
 # Data dictionary: investor-sentiment.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/investor-sentiment.json (generated 2026-11-24T22:42:26+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/investor-sentiment.json (generated 2026-11-27T16:11:11+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: . First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -48,7 +48,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 | path | content |
 |---|---|
 | dashboard | str: investor-sentiment |
-| generated_at_utc | str: 2026-11-24T22:42:26+00:00 |
+| generated_at_utc | str: 2026-11-27T16:11:11+00:00 |
 | country | values: code = US, name = United States |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | source | values: url = https://pages.stern.nyu.edu/~jwurgler/data/SENTIMENT.xlsx, from_cache = False, updated = March, 2026, last_month = 2025-12 |

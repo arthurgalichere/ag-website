@@ -1,7 +1,38 @@
 {
-  "generated_at_utc": "2026-11-24T22:42:53+00:00",
+  "generated_at_utc": "2026-11-27T16:12:10+00:00",
   "site": "https://arthurgalichere.com",
   "files": {
+    "banks-credit": {
+      "json": "/assets/data/economics/us/banks-credit.json",
+      "json_kb": 108,
+      "sample": "1959 Q1–2026 Q3; 1934–2025 (annual data)",
+      "dictionary": "/assets/data/economics/us/banks-credit.dictionary.md",
+      "summaries": [
+        {
+          "label": "Calibration file of bbr (Markdown)",
+          "url": "/assets/data/economics/us/calibration-bbr.md"
+        },
+        {
+          "label": "Calibration file of bbr (JSON)",
+          "url": "/assets/data/economics/us/calibration-bbr.json"
+        }
+      ],
+      "downloads": [
+        {
+          "label": "Quarterly (CSV)",
+          "url": "/downloads/economics/us/us-banks-credit-quarterly.csv"
+        },
+        {
+          "label": "Annual (CSV)",
+          "url": "/downloads/economics/us/us-banks-credit-annual.csv"
+        },
+        {
+          "label": "MATLAB .mat",
+          "url": "/downloads/economics/us/us-banks-credit.mat"
+        }
+      ],
+      "generated_at_utc": "2026-11-27T16:11:21+00:00"
+    },
     "business-cycles": {
       "json": "/assets/data/economics/us/business-cycles.json",
       "json_kb": 400,
@@ -44,11 +75,11 @@
           "url": "/downloads/economics/us/us-business-dynamics-survival.csv"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:42:19+00:00"
+      "generated_at_utc": "2026-11-27T16:11:05+00:00"
     },
     "calibration": {
       "json": "/assets/data/economics/us/calibration.json",
-      "json_kb": 42,
+      "json_kb": 66,
       "sample": "",
       "dictionary": "/assets/data/economics/us/calibration.dictionary.md",
       "summaries": [
@@ -62,7 +93,7 @@
         }
       ],
       "downloads": [],
-      "generated_at_utc": "2026-11-24T22:42:53+00:00"
+      "generated_at_utc": "2026-11-27T16:12:10+00:00"
     },
     "financial-banking": {
       "json": "/assets/data/economics/us/financial-banking.json",
@@ -84,7 +115,7 @@
           "url": "/downloads/economics/us/us-financial-banking.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:39:54+00:00"
+      "generated_at_utc": "2026-11-27T16:09:02+00:00"
     },
     "financial-conditions": {
       "json": "/assets/data/economics/us/financial-conditions.json",
@@ -106,7 +137,7 @@
           "url": "/downloads/economics/us/us-financial-conditions.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:39:54+00:00"
+      "generated_at_utc": "2026-11-27T16:09:02+00:00"
     },
     "financial-debt-leverage": {
       "json": "/assets/data/economics/us/financial-debt-leverage.json",
@@ -128,7 +159,7 @@
           "url": "/downloads/economics/us/us-financial-debt-leverage.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:39:54+00:00"
+      "generated_at_utc": "2026-11-27T16:09:02+00:00"
     },
     "financial-stock-market": {
       "json": "/assets/data/economics/us/financial-stock-market.json",
@@ -150,7 +181,7 @@
           "url": "/downloads/economics/us/us-financial-stock-market.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:39:54+00:00"
+      "generated_at_utc": "2026-11-27T16:09:02+00:00"
     },
     "financial-stock-market-cycles": {
       "json": "/assets/data/economics/us/financial-stock-market-cycles.json",
@@ -168,7 +199,7 @@
           "url": "/downloads/economics/us/us-financial-stock-market-cycles.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:39:54+00:00"
+      "generated_at_utc": "2026-11-27T16:09:02+00:00"
     },
     "investor-sentiment": {
       "json": "/assets/data/economics/us/investor-sentiment.json",
@@ -194,7 +225,7 @@
           "url": "/downloads/economics/us/us-investor-sentiment.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:42:26+00:00"
+      "generated_at_utc": "2026-11-27T16:11:11+00:00"
     },
     "main-indicators": {
       "json": "/assets/data/economics/us/main-indicators.json",
@@ -229,7 +260,7 @@
       "dictionary": "/assets/data/economics/us/nk-model.dictionary.md",
       "summaries": [],
       "downloads": [],
-      "generated_at_utc": "2026-11-24T22:42:52+00:00"
+      "generated_at_utc": "2026-11-27T16:12:09+00:00"
     },
     "nk-shocks": {
       "json": "/assets/data/economics/us/nk-shocks.json",
@@ -247,7 +278,7 @@
           "url": "/downloads/economics/us/us-nk-shocks.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:42:52+00:00"
+      "generated_at_utc": "2026-11-27T16:12:09+00:00"
     },
     "rbc-model": {
       "json": "/assets/data/economics/us/rbc-model.json",
@@ -308,7 +339,7 @@
           "url": "/downloads/economics/us/us-rbc-stock-market.mat"
         }
       ],
-      "generated_at_utc": "2026-11-24T22:42:51+00:00"
+      "generated_at_utc": "2026-11-27T16:12:09+00:00"
     }
   },
   "sources_from_kept_copy": {},
@@ -393,6 +424,15 @@
       ],
       "listed": true,
       "about": "The RBC model with a stock market: prices, dividends and returns against the data."
+    },
+    {
+      "url": "/economics/banks-credit.html",
+      "title": "Bank Rates, Returns and Leverage",
+      "files": [
+        "banks-credit"
+      ],
+      "listed": false,
+      "about": "Data behind the calibration of Aoki-Nikolov (2015) banks-and-bubbles models (paper bbr): real deposit and loan rates minus growth, bank leverage (H.8, FDIC), ROE, intermediation costs, M2/GDP, corporate leverage (Z.1); targets on four samples; per-model file calibration-bbr.md."
     },
     {
       "url": "/dsge/calibration.html",

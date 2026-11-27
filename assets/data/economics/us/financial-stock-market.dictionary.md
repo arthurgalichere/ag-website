@@ -1,6 +1,6 @@
 # Data dictionary: financial-stock-market.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/financial-stock-market.json (generated 2026-11-24T22:39:54+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/financial-stock-market.json (generated 2026-11-27T16:09:02+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -50,7 +50,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 | dashboard | str: financial-stock-market |
 | title | str: Stock Market |
 | country | values: code = US, name = United States |
-| generated_at_utc | str: 2026-11-24T22:39:54+00:00 |
+| generated_at_utc | str: 2026-11-27T16:09:02+00:00 |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | indicators.sp_price_real.estimates | list:  |
 | indicators.sp_price_nominal.estimates | list:  |
@@ -105,7 +105,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 | growth.variables.sp_capital_gain_real | values: label = Real capital gain, units = Percent per quarter, source = Robert J. Shiller, shillerdata.com (S&P Composite; from 1957 the S&P 500); GDP price index (GDPDEF) via FRED (Federal Reserve Bank of St. Louis); author's calculation |
 | growth.variables.sp_excess_return | values: label = Excess return over bills, units = Percentage points per quarter, source = Robert J. Shiller, shillerdata.com (S&P Composite; from 1957 the S&P 500); author's calculation; 3-month Treasury bill rate (TB3MS) via FRED (Federal Reserve Bank of St. Louis) |
 | growth.stats | table of 11 rows; fields: key, sd, rel_sd, ar1, corr_y, start, end, n |
-| growth.means | values: y = 0.7782, g_price_real = 1.218, g_dividends_real = 0.6145, g_earnings_real = 0.7767, g_div_nipa_real = 1.063, g_div_nipa_real_pc = 0.794, g_pd = 0.6038, g_dp = -0.6038, sp_return_real = 2.173, sp_capital_gain_real = 1.401, sp_excess_return = 1.961 |
+| growth.means | values: y = 0.7789, g_price_real = 1.219, g_dividends_real = 0.6148, g_earnings_real = 0.777, g_div_nipa_real = 1.063, g_div_nipa_real_pc = 0.7943, g_pd = 0.6038, g_dp = -0.6038, sp_return_real = 2.173, sp_capital_gain_real = 1.401, sp_excess_return = 1.961 |
 | growth_table.periods | values: latest = Latest quarter, latest_quarter = 2026 Q3, recent = Last 10 years, recent_range = the 40 quarters ending in each series' latest quarter (to 2026 Q3), full = 1947–2026, full_range = 1947 Q1–2026 Q3 |
 | growth_table.rows | table of 9 rows; fields: component, kind, nominal_latest, nominal_recent, nominal_full, nominal_last, real_latest, real_recent, real_full, real_last |
 | filter_start | str: 1947-01-01 |

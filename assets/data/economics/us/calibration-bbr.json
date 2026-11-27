@@ -1,0 +1,1343 @@
+{
+  "model": {
+    "id": "bbr",
+    "name": "When Banks Ride the Bubble: Financial Stability and Real Activity (working title)",
+    "based_on": "Aoki, K. and K. Nikolov (2015), Bubbles, banks and financial stability, Journal of Monetary Economics 74, 33–51",
+    "frequency": "annual",
+    "growth": "none in the model; data rates are measured minus growth"
+  },
+  "generated_at_utc": "2026-11-27T16:11:21+00:00",
+  "about": "Per-model calibration file (feedback W37). Parameters: AN Table 2 plus π and ξ of the draft, not yet re-calibrated for bbr. Targets: AN's value and the site's value on each sample; role as decided on 27 Nov 2026 (D6, W48): spread and D/N targeted, ROE a check, the rest reported or external. 'decided' fields are filled by the calibration chat as Arthur decides. Default sample: up to date (W47); 1959–2012 for replication only.",
+  "parameters": [
+    {
+      "id": "eta",
+      "symbol": "η",
+      "name": "Frisch elasticity of labour supply (AN's notation; the draft writes η = 1/5, the inverse Frisch, K14)",
+      "value": 5.0,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "from_literature",
+          "context": "between micro estimates (≈ 0) and Gertler–Kiyotaki (10)",
+          "value_used": 5.0
+        }
+      ]
+    },
+    {
+      "id": "aH_aL",
+      "symbol": "a^H/a^L",
+      "name": "Productivity of productive relative to unproductive entrepreneurs (a^L = 1)",
+      "value": 1.1,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "from_literature",
+          "context": "from Aoki et al. (2010)",
+          "value_used": 1.1
+        }
+      ]
+    },
+    {
+      "id": "xi",
+      "symbol": "ξ",
+      "name": "Share of bubbles one bank may hold (supervision); the draft also uses 0.15 and 0.30",
+      "value": 0.05,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "set",
+          "context": "a bank holding ξ loses 50% of its net worth when the bubble bursts but stays solvent (AN fn. 15)",
+          "value_used": 0.05
+        }
+      ]
+    },
+    {
+      "id": "delta",
+      "symbol": "δ",
+      "name": "Probability that a productive entrepreneur becomes unproductive (annual)",
+      "value": 0.167,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "calibrated",
+          "context": "productive entrepreneurs stay productive 6 years on average",
+          "value_used": 0.167
+        }
+      ]
+    },
+    {
+      "id": "theta",
+      "symbol": "θ",
+      "name": "Collateral constraint parameter",
+      "value": 0.622,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "calibrated",
+          "context": "calibrated with the other parameters to the Table 1 moments",
+          "value_used": 0.622
+        }
+      ]
+    },
+    {
+      "id": "lambda",
+      "symbol": "λ",
+      "name": "Incentive constraint of bankers (Gertler–Kiyotaki)",
+      "value": 0.788,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "calibrated",
+          "context": "calibrated with the other parameters to the Table 1 moments",
+          "value_used": 0.788
+        }
+      ]
+    },
+    {
+      "id": "gamma",
+      "symbol": "γ",
+      "name": "Bankers' survival probability (annual)",
+      "value": 0.907,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "calibrated",
+          "context": "bankers stay in business 10.7 years; pinned by ROE in AN, no longer so for bbr (D6)",
+          "value_used": 0.907
+        }
+      ]
+    },
+    {
+      "id": "beta",
+      "symbol": "β",
+      "name": "Entrepreneurs' discount factor (annual)",
+      "value": 0.958,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "calibrated",
+          "context": "calibrated with the other parameters to the Table 1 moments",
+          "value_used": 0.958
+        }
+      ]
+    },
+    {
+      "id": "n",
+      "symbol": "n",
+      "name": "Switching rate unproductive → productive relative to δ (stationary productive share n/(1 + n))",
+      "value": 0.011,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "calibrated",
+          "context": "productive/unproductive ≈ 1.1%",
+          "value_used": 0.011
+        }
+      ]
+    },
+    {
+      "id": "pi",
+      "symbol": "π",
+      "name": "Bubble survival probability (annual; draft, not in AN)",
+      "value": 0.98,
+      "status": "AN baseline (not yet calibrated for bbr)",
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Galichère, When Banks Ride the Bubble (draft of 13 May 2026)",
+          "model_type": "banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "",
+          "value_used": 0.98,
+          "how_set": "set",
+          "context": "bubble survival; to be calibrated from crisis frequencies (stage 1)"
+        }
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "id": "rd_minus_g",
+      "name": "Real deposit rate minus real GDP growth (R^d)",
+      "unit_code": "pct_y",
+      "freq": "Q",
+      "role": "reported",
+      "method": "M2 own rate (to 2019Q2, then FDIC effective deposit cost) − CPI-U inflation (y/y) − real GDP growth (y/y), quarterly, sample mean",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "rd_minus_g",
+      "an_value": -5.0,
+      "an_gross": 0.95,
+      "site_value_full": -3.962547986,
+      "site_value_replication": -3.844970911,
+      "difference_full_vs_an": 1.03745,
+      "samples": {
+        "replication": {
+          "value": -3.844970911,
+          "first": "1959 Q2",
+          "last": "2012 Q4",
+          "n": 215,
+          "gross": 0.9615502909
+        },
+        "full": {
+          "value": -3.962547986,
+          "first": "1959 Q2",
+          "last": "2026 Q3",
+          "n": 270,
+          "gross": 0.9603745201
+        },
+        "1985–2019": {
+          "value": -3.069201778,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140,
+          "gross": 0.9693079822
+        },
+        "2000–latest": {
+          "value": -3.820132487,
+          "first": "2000 Q1",
+          "last": "2026 Q3",
+          "n": 107,
+          "gross": 0.9617986751
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 0.95
+        }
+      ]
+    },
+    {
+      "id": "rd_m2own_minus_g",
+      "name": "Real deposit rate minus growth, M2 own rate only (AN's source; ends 2019Q2)",
+      "unit_code": "pct_y",
+      "freq": "Q",
+      "role": "reported",
+      "method": "M2 own rate − CPI-U inflation − real GDP growth",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "rd_m2own_minus_g",
+      "an_value": -5.0,
+      "an_gross": 0.95,
+      "site_value_full": -3.837111253,
+      "site_value_replication": -3.844970911,
+      "difference_full_vs_an": 1.16289,
+      "samples": {
+        "replication": {
+          "value": -3.844970911,
+          "first": "1959 Q2",
+          "last": "2012 Q4",
+          "n": 215,
+          "gross": 0.9615502909
+        },
+        "full": {
+          "value": -3.837111253,
+          "first": "1959 Q2",
+          "last": "2019 Q2",
+          "n": 241,
+          "gross": 0.9616288875
+        },
+        "1985–2019": {
+          "value": -3.05389876,
+          "first": "1985 Q1",
+          "last": "2019 Q2",
+          "n": 138,
+          "gross": 0.9694610124
+        },
+        "2000–latest": {
+          "value": -3.379615794,
+          "first": "2000 Q1",
+          "last": "2019 Q2",
+          "n": 78,
+          "gross": 0.9662038421
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 0.95
+        }
+      ]
+    },
+    {
+      "id": "rd_fdic_minus_g",
+      "name": "Real deposit rate minus growth, FDIC deposit cost throughout (from 1984)",
+      "unit_code": "pct_y",
+      "freq": "Q",
+      "role": "reported",
+      "method": "FDIC interest expense on deposits / average deposits (QBP, all insured institutions) − inflation − growth",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "rd_fdic_minus_g",
+      "an_value": null,
+      "an_gross": null,
+      "site_value_full": -2.86905597,
+      "site_value_replication": -2.169310629,
+      "difference_full_vs_an": null,
+      "samples": {
+        "replication": {
+          "value": -2.169310629,
+          "first": "1984 Q2",
+          "last": "2012 Q4",
+          "n": 115,
+          "gross": 0.9783068937
+        },
+        "full": {
+          "value": -2.86905597,
+          "first": "1984 Q2",
+          "last": "2026 Q3",
+          "n": 170,
+          "gross": 0.9713094403
+        },
+        "1985–2019": {
+          "value": -2.454801984,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140,
+          "gross": 0.9754519802
+        },
+        "2000–latest": {
+          "value": -3.494271481,
+          "first": "2000 Q1",
+          "last": "2026 Q3",
+          "n": 107,
+          "gross": 0.9650572852
+        }
+      },
+      "decided": null,
+      "literature": []
+    },
+    {
+      "id": "rl_minus_g_gross",
+      "name": "Real loan rate minus growth, before intermediation costs",
+      "unit_code": "pct_y",
+      "freq": "Q",
+      "role": "reported",
+      "method": "prime rate − CPI-U inflation − real GDP growth",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "rl_minus_g_gross",
+      "an_value": null,
+      "an_gross": null,
+      "site_value_full": 0.2294127706,
+      "site_value_replication": 0.3449010301,
+      "difference_full_vs_an": null,
+      "samples": {
+        "replication": {
+          "value": 0.3449010301,
+          "first": "1959 Q1",
+          "last": "2012 Q4",
+          "n": 216,
+          "gross": 1.00344901
+        },
+        "full": {
+          "value": 0.2294127706,
+          "first": "1959 Q1",
+          "last": "2026 Q3",
+          "n": 271,
+          "gross": 1.002294128
+        },
+        "1985–2019": {
+          "value": 1.075892074,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140,
+          "gross": 1.010758921
+        },
+        "2000–latest": {
+          "value": 0.3034044155,
+          "first": "2000 Q1",
+          "last": "2026 Q3",
+          "n": 107,
+          "gross": 1.003034044
+        }
+      },
+      "decided": null,
+      "literature": []
+    },
+    {
+      "id": "rl_minus_g",
+      "name": "Real loan rate minus growth, after costs (R^l; gross costs)",
+      "unit_code": "pct_y",
+      "freq": "Q",
+      "role": "reported",
+      "method": "prime rate − inflation − growth − FDIC noninterest expense / average assets (annual, commercial banks)",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "rl_minus_g",
+      "an_value": -1.8,
+      "an_gross": 0.982,
+      "site_value_full": -2.595184826,
+      "site_value_replication": -2.53878491,
+      "difference_full_vs_an": -0.795185,
+      "samples": {
+        "replication": {
+          "value": -2.53878491,
+          "first": "1959 Q1",
+          "last": "2012 Q4",
+          "n": 216,
+          "gross": 0.9746121509
+        },
+        "full": {
+          "value": -2.595184826,
+          "first": "1959 Q1",
+          "last": "2025 Q4",
+          "n": 268,
+          "gross": 0.9740481517
+        },
+        "1985–2019": {
+          "value": -2.142227044,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140,
+          "gross": 0.9785777296
+        },
+        "2000–latest": {
+          "value": -2.568838223,
+          "first": "2000 Q1",
+          "last": "2025 Q4",
+          "n": 104,
+          "gross": 0.9743116178
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 0.982
+        }
+      ]
+    },
+    {
+      "id": "rl_minus_g_net",
+      "name": "Real loan rate minus growth, after costs net of noninterest income",
+      "unit_code": "pct_y",
+      "freq": "Q",
+      "role": "reported",
+      "method": "as above, with (noninterest expense − noninterest income) / average assets",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "rl_minus_g_net",
+      "an_value": -1.8,
+      "an_gross": 0.982,
+      "site_value_full": -1.203803022,
+      "site_value_replication": -1.163824327,
+      "difference_full_vs_an": 0.596197,
+      "samples": {
+        "replication": {
+          "value": -1.163824327,
+          "first": "1959 Q1",
+          "last": "2012 Q4",
+          "n": 216,
+          "gross": 0.9883617567
+        },
+        "full": {
+          "value": -1.203803022,
+          "first": "1959 Q1",
+          "last": "2025 Q4",
+          "n": 268,
+          "gross": 0.9879619698
+        },
+        "1985–2019": {
+          "value": -0.2459308633,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140,
+          "gross": 0.9975406914
+        },
+        "2000–latest": {
+          "value": -0.7635834694,
+          "first": "2000 Q1",
+          "last": "2025 Q4",
+          "n": 104,
+          "gross": 0.9923641653
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 0.982
+        }
+      ]
+    },
+    {
+      "id": "spread_l_d",
+      "name": "Loan–deposit spread after costs, R^l − R^d (gross costs)",
+      "unit_code": "pp_y",
+      "freq": "Q",
+      "role": "targeted",
+      "method": "rl_minus_g − rd_minus_g; AN's data imply 3.2 pp (0.982 − 0.950)",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "spread_l_d",
+      "an_value": null,
+      "an_gross": null,
+      "site_value_full": 1.382818631,
+      "site_value_replication": 1.323810004,
+      "difference_full_vs_an": null,
+      "samples": {
+        "replication": {
+          "value": 1.323810004,
+          "first": "1959 Q2",
+          "last": "2012 Q4",
+          "n": 215
+        },
+        "full": {
+          "value": 1.382818631,
+          "first": "1959 Q2",
+          "last": "2025 Q4",
+          "n": 267
+        },
+        "1985–2019": {
+          "value": 0.9269747332,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140
+        },
+        "2000–latest": {
+          "value": 1.250973146,
+          "first": "2000 Q1",
+          "last": "2025 Q4",
+          "n": 104
+        }
+      },
+      "decided": null,
+      "literature": []
+    },
+    {
+      "id": "spread_l_d_net",
+      "name": "Loan–deposit spread after costs (net costs)",
+      "unit_code": "pp_y",
+      "freq": "Q",
+      "role": "targeted",
+      "method": "rl_minus_g_net − rd_minus_g",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "spread_l_d_net",
+      "an_value": null,
+      "an_gross": null,
+      "site_value_full": 2.777143679,
+      "site_value_replication": 2.702349308,
+      "difference_full_vs_an": null,
+      "samples": {
+        "replication": {
+          "value": 2.702349308,
+          "first": "1959 Q2",
+          "last": "2012 Q4",
+          "n": 215
+        },
+        "full": {
+          "value": 2.777143679,
+          "first": "1959 Q2",
+          "last": "2025 Q4",
+          "n": 267
+        },
+        "1985–2019": {
+          "value": 2.823270914,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140
+        },
+        "2000–latest": {
+          "value": 3.056227899,
+          "first": "2000 Q1",
+          "last": "2025 Q4",
+          "n": 104
+        }
+      },
+      "decided": null,
+      "literature": []
+    },
+    {
+      "id": "m2_gdp",
+      "name": "Deposits / GDP: M2 / nominal GDP (D/Y)",
+      "unit_code": "ratio",
+      "freq": "Q",
+      "role": "reported",
+      "method": "quarterly average of M2 / nominal GDP at an annual rate",
+      "source": "Board of Governors, M2 (M2SL); BEA, GDP via FRED (Federal Reserve Bank of St. Louis); author's calculation",
+      "data_key": "m2_gdp",
+      "an_value": 0.5,
+      "an_gross": null,
+      "site_value_full": 0.5813706653,
+      "site_value_replication": 0.5455003152,
+      "difference_full_vs_an": 0.0813707,
+      "samples": {
+        "replication": {
+          "value": 0.5455003152,
+          "first": "1959 Q1",
+          "last": "2012 Q4",
+          "n": 216
+        },
+        "full": {
+          "value": 0.5813706653,
+          "first": "1959 Q1",
+          "last": "2026 Q3",
+          "n": 271
+        },
+        "1985–2019": {
+          "value": 0.5519487189,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140
+        },
+        "2000–latest": {
+          "value": 0.6296803024,
+          "first": "2000 Q1",
+          "last": "2026 Q3",
+          "n": 107
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 0.5
+        }
+      ]
+    },
+    {
+      "id": "bank_lev_h8",
+      "name": "Bank leverage, H.8 (D/N): total liabilities / residual (assets less liabilities)",
+      "unit_code": "ratio",
+      "freq": "Q",
+      "role": "targeted",
+      "method": "quarterly averages of weekly H.8 data, all commercial banks, NSA; ratio of the averages",
+      "source": "Board of Governors of the Federal Reserve System, H.8 (all commercial banks, not seasonally adjusted) via FRED (Federal Reserve Bank of St. Louis); author's calculation",
+      "data_key": "bank_lev_h8",
+      "an_value": 10.0,
+      "an_gross": null,
+      "site_value_full": 11.02567594,
+      "site_value_replication": 11.85326236,
+      "difference_full_vs_an": 1.02568,
+      "samples": {
+        "replication": {
+          "value": 11.85326236,
+          "first": "1973 Q1",
+          "last": "2012 Q4",
+          "n": 160
+        },
+        "full": {
+          "value": 11.02567594,
+          "first": "1973 Q1",
+          "last": "2026 Q3",
+          "n": 215
+        },
+        "1985–2019": {
+          "value": 10.18839504,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140
+        },
+        "2000–latest": {
+          "value": 8.783874179,
+          "first": "2000 Q1",
+          "last": "2026 Q3",
+          "n": 107
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 10.0
+        }
+      ]
+    },
+    {
+      "id": "bank_lev_fdic",
+      "name": "Bank leverage, FDIC (D/N): total liabilities / total equity capital",
+      "unit_code": "ratio",
+      "freq": "A",
+      "role": "targeted",
+      "method": "end of year, insured commercial banks (equity = assets − liabilities before 1984)",
+      "source": "FDIC, Historical Statistics on Banking (FDIC-insured commercial banks), BankFind API; author's calculation",
+      "data_key": "bank_lev_fdic",
+      "an_value": 10.0,
+      "an_gross": null,
+      "site_value_full": 11.74953882,
+      "site_value_replication": 12.54540393,
+      "difference_full_vs_an": 1.74954,
+      "samples": {
+        "replication": {
+          "value": 12.54540393,
+          "first": "1959",
+          "last": "2012",
+          "n": 54
+        },
+        "full": {
+          "value": 11.74953882,
+          "first": "1959",
+          "last": "2025",
+          "n": 67
+        },
+        "1985–2019": {
+          "value": 10.52956625,
+          "first": "1985",
+          "last": "2019",
+          "n": 35
+        },
+        "2000–latest": {
+          "value": 8.758059582,
+          "first": "2000",
+          "last": "2025",
+          "n": 26
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 10.0
+        }
+      ]
+    },
+    {
+      "id": "bank_roe",
+      "name": "Bank return on equity, nominal (FDIC)",
+      "unit_code": "pct_y",
+      "freq": "A",
+      "role": "check",
+      "method": "net income / average equity capital (years t and t − 1)",
+      "source": "FDIC, Historical Statistics on Banking (FDIC-insured commercial banks), BankFind API; author's calculation",
+      "data_key": "bank_roe",
+      "an_value": 10.0,
+      "an_gross": 1.1,
+      "site_value_full": 11.0327868,
+      "site_value_replication": 11.20881377,
+      "difference_full_vs_an": 1.03279,
+      "samples": {
+        "replication": {
+          "value": 11.20881377,
+          "first": "1959",
+          "last": "2012",
+          "n": 54,
+          "gross": 1.112088138
+        },
+        "full": {
+          "value": 11.0327868,
+          "first": "1959",
+          "last": "2025",
+          "n": 67,
+          "gross": 1.110327868
+        },
+        "1985–2019": {
+          "value": 10.65028295,
+          "first": "1985",
+          "last": "2019",
+          "n": 35,
+          "gross": 1.106502829
+        },
+        "2000–latest": {
+          "value": 10.10638063,
+          "first": "2000",
+          "last": "2025",
+          "n": 26,
+          "gross": 1.101063806
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 1.1
+        }
+      ]
+    },
+    {
+      "id": "bank_roe_real_g",
+      "name": "Bank return on equity minus inflation and growth (model units; brief K10)",
+      "unit_code": "pct_y",
+      "freq": "A",
+      "role": "check",
+      "method": "bank_roe − CPI-U inflation − real GDP growth (annual means of the quarters)",
+      "source": "FRED (FRB H.15, M2 own rate, BLS CPI-U, BEA GDP), FDIC; author's calculation",
+      "data_key": "bank_roe_real_g",
+      "an_value": null,
+      "an_gross": null,
+      "site_value_full": 4.249739663,
+      "site_value_replication": 4.032866038,
+      "difference_full_vs_an": null,
+      "samples": {
+        "replication": {
+          "value": 4.032866038,
+          "first": "1959",
+          "last": "2012",
+          "n": 54,
+          "gross": 1.04032866
+        },
+        "full": {
+          "value": 4.249739663,
+          "first": "1959",
+          "last": "2025",
+          "n": 67,
+          "gross": 1.042497397
+        },
+        "1985–2019": {
+          "value": 5.339294071,
+          "first": "1985",
+          "last": "2019",
+          "n": 35,
+          "gross": 1.053392941
+        },
+        "2000–latest": {
+          "value": 5.285580426,
+          "first": "2000",
+          "last": "2025",
+          "n": 26,
+          "gross": 1.052855804
+        }
+      },
+      "decided": null,
+      "literature": []
+    },
+    {
+      "id": "cost_assets_gross",
+      "name": "Intermediation costs / assets, gross (FDIC)",
+      "unit_code": "pct_y",
+      "freq": "A",
+      "role": "input",
+      "method": "noninterest expense / average total assets",
+      "source": "FDIC, Historical Statistics on Banking (FDIC-insured commercial banks), BankFind API; author's calculation",
+      "data_key": "cost_assets_gross",
+      "an_value": null,
+      "an_gross": null,
+      "site_value_full": 2.815209827,
+      "site_value_replication": 2.883685941,
+      "difference_full_vs_an": null,
+      "samples": {
+        "replication": {
+          "value": 2.883685941,
+          "first": "1959",
+          "last": "2012",
+          "n": 54
+        },
+        "full": {
+          "value": 2.815209827,
+          "first": "1959",
+          "last": "2025",
+          "n": 67
+        },
+        "1985–2019": {
+          "value": 3.218119119,
+          "first": "1985",
+          "last": "2019",
+          "n": 35
+        },
+        "2000–latest": {
+          "value": 2.850185452,
+          "first": "2000",
+          "last": "2025",
+          "n": 26
+        }
+      },
+      "decided": null,
+      "literature": []
+    },
+    {
+      "id": "cost_assets_net",
+      "name": "Intermediation costs / assets, net of noninterest income (FDIC)",
+      "unit_code": "pct_y",
+      "freq": "A",
+      "role": "input",
+      "method": "(noninterest expense − noninterest income) / average assets",
+      "source": "FDIC, Historical Statistics on Banking (FDIC-insured commercial banks), BankFind API; author's calculation",
+      "data_key": "cost_assets_net",
+      "an_value": null,
+      "an_gross": null,
+      "site_value_full": 1.423828022,
+      "site_value_replication": 1.508725357,
+      "difference_full_vs_an": null,
+      "samples": {
+        "replication": {
+          "value": 1.508725357,
+          "first": "1959",
+          "last": "2012",
+          "n": 54
+        },
+        "full": {
+          "value": 1.423828022,
+          "first": "1959",
+          "last": "2025",
+          "n": 67
+        },
+        "1985–2019": {
+          "value": 1.321822938,
+          "first": "1985",
+          "last": "2019",
+          "n": 35
+        },
+        "2000–latest": {
+          "value": 1.044930698,
+          "first": "2000",
+          "last": "2025",
+          "n": 26
+        }
+      },
+      "decided": null,
+      "literature": []
+    },
+    {
+      "id": "corp_lev_z1_bv",
+      "name": "Average corporate leverage (L/Z), Z.1 debt / net worth at book value",
+      "unit_code": "ratio",
+      "freq": "Q",
+      "role": "reported",
+      "method": "Z.1 B.103, NCBCMDPNWHC / 100",
+      "source": "Board of Governors of the Federal Reserve System, Financial Accounts of the United States (Z.1), B.103 via FRED (Federal Reserve Bank of St. Louis)",
+      "data_key": "corp_lev_z1_bv",
+      "an_value": 0.5,
+      "an_gross": null,
+      "site_value_full": 0.8267511987,
+      "site_value_replication": 0.8623400657,
+      "difference_full_vs_an": 0.326751,
+      "samples": {
+        "replication": {
+          "value": 0.8623400657,
+          "first": "1959 Q1",
+          "last": "2012 Q4",
+          "n": 216
+        },
+        "full": {
+          "value": 0.8267511987,
+          "first": "1959 Q1",
+          "last": "2026 Q2",
+          "n": 270
+        },
+        "1985–2019": {
+          "value": 0.6519171688,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140
+        },
+        "2000–latest": {
+          "value": 0.6361737431,
+          "first": "2000 Q1",
+          "last": "2026 Q2",
+          "n": 106
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 0.5
+        }
+      ]
+    },
+    {
+      "id": "corp_lev_z1_mv",
+      "name": "Average corporate leverage (L/Z), Z.1 debt / net worth at market value",
+      "unit_code": "ratio",
+      "freq": "Q",
+      "role": "reported",
+      "method": "Z.1 B.103, NCBCMDPNWMV / 100",
+      "source": "Board of Governors of the Federal Reserve System, Financial Accounts of the United States (Z.1), B.103 via FRED (Federal Reserve Bank of St. Louis)",
+      "data_key": "corp_lev_z1_mv",
+      "an_value": 0.5,
+      "an_gross": null,
+      "site_value_full": 0.4405797543,
+      "site_value_replication": 0.435706061,
+      "difference_full_vs_an": -0.0594202,
+      "samples": {
+        "replication": {
+          "value": 0.435706061,
+          "first": "1959 Q1",
+          "last": "2012 Q4",
+          "n": 216
+        },
+        "full": {
+          "value": 0.4405797543,
+          "first": "1959 Q1",
+          "last": "2026 Q2",
+          "n": 270
+        },
+        "1985–2019": {
+          "value": 0.436170245,
+          "first": "1985 Q1",
+          "last": "2019 Q4",
+          "n": 140
+        },
+        "2000–latest": {
+          "value": 0.4361174676,
+          "first": "2000 Q1",
+          "last": "2026 Q2",
+          "n": 106
+        }
+      },
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "targeted",
+          "context": "AN Table 1 data column",
+          "value_used": 0.5
+        }
+      ]
+    },
+    {
+      "id": "corp_lev_indebted",
+      "name": "Leverage of indebted corporates (L/(sZ))",
+      "unit_code": "ratio",
+      "freq": "A",
+      "role": "external",
+      "method": "not computed: needs firm-level Compustat data (Welch 2004), which the site cannot republish",
+      "source": "Aoki, K. and K. Nikolov (2015), Bubbles, banks and financial stability, Journal of Monetary Economics 74, 33–51, Table 1, from Welch, I. (2004), Capital structure and stock returns, Journal of Political Economy 112(1), 106–131",
+      "data_key": null,
+      "an_value": 2.0,
+      "an_gross": null,
+      "site_value_full": null,
+      "site_value_replication": null,
+      "difference_full_vs_an": null,
+      "samples": {},
+      "decided": null,
+      "literature": [
+        {
+          "paper": "Aoki and Nikolov (2015), Journal of Monetary Economics 74, 33–51",
+          "model_type": "financial frictions with banks and bubbles",
+          "country": "US",
+          "freq": "A",
+          "sample": "not stated",
+          "how_set": "external",
+          "context": "AN Table 1 data column",
+          "value_used": 2.0
+        }
+      ]
+    }
+  ],
+  "existence_conditions": [
+    {
+      "id": "exist_rd",
+      "name": "Attractiveness for savers: real deposit rate below growth (R^d < 1)",
+      "input": "rd_minus_g",
+      "condition": "rd_minus_g < 0",
+      "status": "priority constraint (D8)",
+      "values": {
+        "replication": -3.844970911,
+        "full": -3.962547986,
+        "1985–2019": -3.069201778,
+        "2000–latest": -3.820132487
+      }
+    },
+    {
+      "id": "exist_rl",
+      "name": "Attractiveness for banks: real loan rate after costs below growth (R^l < 1)",
+      "input": "rl_minus_g",
+      "condition": "rl_minus_g < 0",
+      "status": "priority constraint (D8)",
+      "values": {
+        "replication": -2.53878491,
+        "full": -2.595184826,
+        "1985–2019": -2.142227044,
+        "2000–latest": -2.568838223
+      }
+    },
+    {
+      "id": "exist_growth",
+      "name": "Affordability: bubble return conditional on survival ≤ growth (no growth in the model: ≤ 1)",
+      "input": "g_real",
+      "condition": "model condition; data input: real GDP growth",
+      "status": "priority constraint (D8)",
+      "values": {
+        "replication": 3.223373884,
+        "full": 3.073478576,
+        "1985–2019": 2.697638174,
+        "2000–latest": 2.241287244
+      }
+    }
+  ],
+  "consistency_checks": [
+    {
+      "case": "Aoki–Nikolov data (Table 1)",
+      "R_l": 0.982,
+      "R_d": 0.95,
+      "D_N": 10.0,
+      "ROE": 1.1,
+      "roe_concept": "nominal ROE, as AN",
+      "roe_floor": 1.302,
+      "gamma_implied": 2.71186,
+      "holds": false
+    },
+    {
+      "case": "Site data, replication sample (1959 Q1–2012 Q4)",
+      "R_l": 0.974612,
+      "R_d": 0.96155,
+      "D_N": 12.5454,
+      "ROE": 1.11209,
+      "roe_concept": "nominal ROE",
+      "roe_floor": 1.13848,
+      "gamma_implied": 1.19196,
+      "holds": false
+    },
+    {
+      "case": "Site data, replication sample (1959 Q1–2012 Q4)",
+      "R_l": 0.974612,
+      "R_d": 0.96155,
+      "D_N": 12.5454,
+      "ROE": 1.04033,
+      "roe_concept": "ROE minus inflation and growth",
+      "roe_floor": 1.13848,
+      "gamma_implied": 2.49353,
+      "holds": false
+    },
+    {
+      "case": "Site data, full sample (1959 Q1–2025 Q4)",
+      "R_l": 0.974048,
+      "R_d": 0.960375,
+      "D_N": 11.7495,
+      "ROE": 1.11033,
+      "roe_concept": "nominal ROE",
+      "roe_floor": 1.13471,
+      "gamma_implied": 1.17889,
+      "holds": false
+    },
+    {
+      "case": "Site data, full sample (1959 Q1–2025 Q4)",
+      "R_l": 0.974048,
+      "R_d": 0.960375,
+      "D_N": 11.7495,
+      "ROE": 1.0425,
+      "roe_concept": "ROE minus inflation and growth",
+      "roe_floor": 1.13471,
+      "gamma_implied": 2.34712,
+      "holds": false
+    }
+  ],
+  "open_for_debate": [
+    {
+      "item": "Targets are mutually inconsistent in the model (ROE ≥ R^l + (D/N)(R^l − R^d))",
+      "status": "decided 27 Nov: target the spread and D/N, ROE a check (D6)"
+    },
+    {
+      "item": "Units of ROE vs rates: model ROE is growth-adjusted real",
+      "status": "open (K10): ROE minus inflation and growth published"
+    },
+    {
+      "item": "Credit losses: loan returns net of charge-offs",
+      "status": "open"
+    },
+    {
+      "item": "Deposit rate concept: M2 own rate includes money funds; Regulation Q before 1986",
+      "status": "partly decided: FDIC cost after 2019Q2 (D3)"
+    },
+    {
+      "item": "Loan rate concept: prime rate vs effective loan yield, C&I rates, Baa",
+      "status": "open"
+    },
+    {
+      "item": "π has no data target: crisis or bust frequencies",
+      "status": "decided: three stages (D7); stage 1 inputs to publish"
+    },
+    {
+      "item": "Over-identification and weights (6 parameters, 7 moments)",
+      "status": "decided: about equal, existence conditions first (D8)"
+    },
+    {
+      "item": "Sample and regime (deregulation 1986, Basel)",
+      "status": "decided: up-to-date samples by default (D9); regimes later"
+    },
+    {
+      "item": "Corporate leverage: Compustat vs Z.1",
+      "status": "decided: Z.1 for the average, AN's 2.0 external for indebted firms (D10)"
+    },
+    {
+      "item": "a^H/a^L = 1.1 and Frisch 5 from earlier papers",
+      "status": "open: sensitivity"
+    },
+    {
+      "item": "Cross-paper consistency of deflators and growth adjustment",
+      "status": "open"
+    },
+    {
+      "item": "Balanced-growth-path version",
+      "status": "later (K16)"
+    }
+  ],
+  "pi_stage1": {
+    "about": "Stage 1 of the calibration of π (bubble survival, decision D7): the annual frequency of systemic banking or financial crises, crises started / years observed, and 1 − frequency. A burst of the model's bubble is not one-to-one with a measured crisis: these are inputs, not a calibration.",
+    "rows": [
+      {
+        "source": "JST",
+        "scope": "18 advanced economies, pooled",
+        "sample": "1870–2020",
+        "crises": 88,
+        "years": 2668,
+        "frequency": 0.0329835,
+        "pi_implied": 0.967016,
+        "years_per_crisis": 30.32
+      },
+      {
+        "source": "JST",
+        "scope": "United States",
+        "sample": "1870–2020",
+        "crises": 6,
+        "years": 151,
+        "frequency": 0.0397351,
+        "pi_implied": 0.960265,
+        "years_per_crisis": 25.17
+      },
+      {
+        "source": "JST",
+        "scope": "18 advanced economies, pooled",
+        "sample": "1946–2020",
+        "crises": 25,
+        "years": 1350,
+        "frequency": 0.0185185,
+        "pi_implied": 0.981481,
+        "years_per_crisis": 54.0
+      },
+      {
+        "source": "JST",
+        "scope": "United States",
+        "sample": "1946–2020",
+        "crises": 2,
+        "years": 75,
+        "frequency": 0.0266667,
+        "pi_implied": 0.973333,
+        "years_per_crisis": 37.5
+      },
+      {
+        "source": "JST",
+        "scope": "18 advanced economies, pooled",
+        "sample": "1970–2020",
+        "crises": 25,
+        "years": 918,
+        "frequency": 0.0272331,
+        "pi_implied": 0.972767,
+        "years_per_crisis": 36.72
+      },
+      {
+        "source": "JST",
+        "scope": "United States",
+        "sample": "1970–2020",
+        "crises": 2,
+        "years": 51,
+        "frequency": 0.0392157,
+        "pi_implied": 0.960784,
+        "years_per_crisis": 25.5
+      }
+    ],
+    "us_crises": {
+      "JST": [
+        1873,
+        1893,
+        1907,
+        1930,
+        1984,
+        2007
+      ]
+    },
+    "jst_countries": 18,
+    "jst_reference": "Jordà, Ò., M. Schularick and A. M. Taylor (2017), Macrofinancial History and the New Business Cycle Facts, NBER Macroeconomics Annual 2016, 31: 213–263; Jordà–Schularick–Taylor Macrohistory Database (CC BY-NC-SA 4.0), variable crisisJST (systemic financial crisis, start year)"
+  },
+  "pending": []
+}

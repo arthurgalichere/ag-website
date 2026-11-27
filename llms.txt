@@ -9,6 +9,7 @@ Machine-readable index of pages and files: https://arthurgalichere.com/assets/da
 - [Calibration summary, Markdown](https://arthurgalichere.com/assets/data/economics/us/calibration.md): parameters, data targets with units, decimals per quarter and the models that use them, implied parameters
 - [Calibration, CSV](https://arthurgalichere.com/assets/data/economics/us/calibration.csv)
 - [Calibration, JSON with definitions and sources](https://arthurgalichere.com/assets/data/economics/us/calibration.json)
+- Per-model file of bbr (banks and bubbles), [Markdown](https://arthurgalichere.com/assets/data/economics/us/calibration-bbr.md) and [JSON](https://arthurgalichere.com/assets/data/economics/us/calibration-bbr.json): parameters, targets on several samples with their role, consistency checks and items open for debate
 
 ## Pages and data files
 
@@ -40,8 +41,8 @@ Machine-readable index of pages and files: https://arthurgalichere.com/assets/da
   - data: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.json (257 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.dictionary.md
   - downloads: CSV https://arthurgalichere.com/downloads/economics/us/us-rbc-stock-market.csv; MATLAB .mat https://arthurgalichere.com/downloads/economics/us/us-rbc-stock-market.mat
 - [Calibration](https://arthurgalichere.com/dsge/calibration.html): Parameters, data targets and implied parameters for the site's DSGE models; plain-text summary in calibration.md and calibration.csv.
-  - data: https://arthurgalichere.com/assets/data/economics/us/calibration.json (42 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md
+  - data: https://arthurgalichere.com/assets/data/economics/us/calibration.json (66 kB); dictionary: https://arthurgalichere.com/assets/data/economics/us/calibration.dictionary.md
 
 Every source the site downloads is also kept privately as last read; if a source stops publishing or removes data, the site keeps the data it had and says so here.
 
-Latest data update: 2026-11-24T22:42:53+00:00 (UTC).
+Latest data update: 2026-11-27T16:12:10+00:00 (UTC).

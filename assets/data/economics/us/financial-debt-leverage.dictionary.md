@@ -1,6 +1,6 @@
 # Data dictionary: financial-debt-leverage.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/financial-debt-leverage.json (generated 2026-11-24T22:39:54+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/financial-debt-leverage.json (generated 2026-11-27T16:09:02+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {filter} = hp, hamilton or cf (the filter). First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -55,7 +55,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 | dashboard | str: financial-debt-leverage |
 | title | str: Debt and Leverage |
 | country | values: code = US, name = United States |
-| generated_at_utc | str: 2026-11-24T22:39:54+00:00 |
+| generated_at_utc | str: 2026-11-27T16:09:02+00:00 |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | indicators.debt_real_total.estimates | table of 6 rows; fields: series_id, date, value, method, reason |
 | indicators.debt_real_households.estimates | table of 6 rows; fields: series_id, date, value, method, reason |

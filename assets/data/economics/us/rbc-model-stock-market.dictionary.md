@@ -1,6 +1,6 @@
 # Data dictionary: rbc-model-stock-market.json
 
-File: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.json (generated 2026-11-24T22:42:51+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {form} = hicks or harrod (Hicks- or Harrod-neutral technology); {tfp} = the TFP measure (e.g. measured; adjusted = utilization-adjusted, Fernald); {kind} = kr (run driven by linear-trend shocks, then HP filtered, as King and Rebelo) or hp (run driven by HP-filtered shocks). First and last dates marked (varies) differ across those versions.
+File: https://arthurgalichere.com/assets/data/economics/us/rbc-model-stock-market.json (generated 2026-11-27T16:12:09+00:00 UTC). Missing values are JSON null. Dates are the first day of the period (quarter, month or year). When a series exists in several versions, one row covers them, with a placeholder in the path: {form} = hicks or harrod (Hicks- or Harrod-neutral technology); {tfp} = the TFP measure (e.g. measured; adjusted = utilization-adjusted, Fernald); {kind} = kr (run driven by linear-trend shocks, then HP filtered, as King and Rebelo) or hp (run driven by HP-filtered shocks). First and last dates marked (varies) differ across those versions.
 
 ## Series
 
@@ -51,7 +51,7 @@ Values shown for the first version when a block repeats (placeholders as above).
 |---|---|
 | dashboard | str: rbc-model-stock-market |
 | country | values: code = US, name = United States |
-| generated_at_utc | str: 2026-11-24T22:42:51+00:00 |
+| generated_at_utc | str: 2026-11-27T16:12:09+00:00 |
 | canonical_generated_at_utc | str: 2026-11-24T16:53:35+00:00 |
 | recessions | recession dates (peak, trough) used to shade the charts |
 | technology.{form}.series.{tfp}.hp_compare | values: corr = 1.0, sd_model = 1.215, sd_data = 1.215 |
